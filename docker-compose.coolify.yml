@@ -83,10 +83,14 @@ services:
       args:
         NODE_ENV: production
     restart: unless-stopped
+    # `expose:` populates Docker's NetworkSettings.Ports so Traefik's docker
+    # provider can auto-discover the upstream port. Without this, Coolify
+    # generates router labels but Traefik logs "port is missing" and returns
+    # HTTP 503 "no available server" — `EXPOSE 3000` in the Dockerfile is not
+    # enough because the multi-stage build's final stage doesn't inherit it.
+    expose:
+      - "3000"
     environment:
-      # Coolify magic var: declares we want FQDN routing for port 3000.
-      # The FQDN is set in Coolify Application > Environment Variables.
-      SERVICE_FQDN_API_3000: tambo-api.awardsapp.ai
       PORT: "3000"
       NODE_ENV: production
       DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-genui}
@@ -134,10 +138,11 @@ services:
       args:
         NODE_ENV: production
     restart: unless-stopped
+    # See api service comment above — `expose:` is required for Traefik's
+    # docker provider to auto-discover the upstream port for FQDN routing.
+    expose:
+      - "3000"
     environment:
-      # Coolify magic var: declares we want FQDN routing for port 3000.
-      # The FQDN is set in Coolify Application > Environment Variables.
-      SERVICE_FQDN_WEB_3000: tambo.awardsapp.ai
       PORT: "3000"
       NODE_ENV: production
       # Browser-side: must use public HTTPS URL (sent in HTML to client)
