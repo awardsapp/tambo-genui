@@ -1,0 +1,185 @@
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-FileCopyrightText: 2026 awardsapp
+#
+# Coolify deployment for awardsapp/tambo-genui (self-hosted Genui).
+#
+# Differences from docker-compose.yml (local dev):
+#   - No host port mappings (Coolify routes via Traefik on FQDN)
+#   - SERVICE_FQDN_* magic vars for automatic FQDN routing
+#   - migrate service runs Drizzle migrations before web/api start
+#   - postgres + minio internal-only (Coolify Docker network)
+#   - container_name omitted (Coolify generates per-deploy names)
+#   - genui-web and genui-api built from this repo (Coolify builds via build context)
+#
+# Required Coolify Application config:
+#   FQDNs:    https://tambo.awardsapp.ai, https://tambo-api.awardsapp.ai
+#   Build:    Dockerfile (per-service, see build.dockerfile entries below)
+#   Branch:   main
+#   Source:   github.com/awardsapp/tambo-genui
+#
+# Required env vars (set in Coolify Application > Environment Variables):
+#   POSTGRES_PASSWORD       - random 32-char (gopass: TAMBO_POSTGRES_PASSWORD)
+#   API_KEY_SECRET          - random 32-char (gopass: TAMBO_API_KEY_SECRET)
+#   PROVIDER_KEY_SECRET     - random 32-char (gopass: TAMBO_PROVIDER_KEY_SECRET)
+#   NEXTAUTH_SECRET         - random 32-char (gopass: TAMBO_NEXTAUTH_SECRET)
+#   OPENAI_API_KEY          - shared with awardsapp web (org OpenAI key)
+#
+# Optional (sentinel "" defaults if unset):
+#   GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET   - Google SSO for dashboard
+#   GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET   - GitHub SSO for dashboard
+#   RESEND_API_KEY                            - email notifications
+#   POSTHOG_API_KEY, POSTHOG_HOST             - usage analytics
+#   LANGFUSE_PUBLIC_KEY, LANGFUSE_SECRET_KEY  - LLM tracing
+#   SENTRY_DSN                                - error tracking
+
+volumes:
+  genui_postgres_data:
+
+services:
+  # ---- Database migrations (runs once, exits 0) ----
+  migrate:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+      target: builder
+    # api/Dockerfile uses npm (not pnpm). Run drizzle-kit directly from the
+    # pruned db package — drizzle.config.ts in packages/db reads DATABASE_URL.
+    working_dir: /workspace/packages/db
+    command: ["npx", "drizzle-kit", "migrate"]
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-genui}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  # ---- PostgreSQL (internal-only, no host port) ----
+  postgres:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-genui}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - genui_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-genui}",
+        ]
+      interval: 8s
+      timeout: 5s
+      retries: 4
+      start_period: 20s
+
+  # ---- API (NestJS) — exposed at https://tambo-api.awardsapp.ai ----
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+      args:
+        NODE_ENV: production
+    restart: unless-stopped
+    environment:
+      # Coolify magic var: declares we want FQDN routing for port 3000.
+      # Set the actual FQDN to https://tambo-api.awardsapp.ai in Coolify UI.
+      - SERVICE_FQDN_API_3000
+      - PORT=3000
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-genui}
+      - API_KEY_SECRET=${API_KEY_SECRET}
+      - PROVIDER_KEY_SECRET=${PROVIDER_KEY_SECRET}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - EXTRACTION_OPENAI_API_KEY=${EXTRACTION_OPENAI_API_KEY:-}
+      - FALLBACK_OPENAI_API_KEY=${FALLBACK_OPENAI_API_KEY:-}
+      - RESEND_API_KEY=${RESEND_API_KEY:-}
+      - RESEND_AUDIENCE_ID=${RESEND_AUDIENCE_ID:-}
+      - LANGFUSE_PUBLIC_KEY=${LANGFUSE_PUBLIC_KEY:-}
+      - LANGFUSE_SECRET_KEY=${LANGFUSE_SECRET_KEY:-}
+      - LANGFUSE_HOST=${LANGFUSE_HOST:-}
+      - SLACK_OAUTH_TOKEN=${SLACK_OAUTH_TOKEN:-}
+      - SLACK_TEAM_ID=${SLACK_TEAM_ID:-}
+      - INTERNAL_SLACK_USER_ID=${INTERNAL_SLACK_USER_ID:-}
+      - DISALLOWED_EMAIL_DOMAINS=${DISALLOWED_EMAIL_DOMAINS:-}
+      - ALLOWED_LOGIN_DOMAIN=${ALLOWED_LOGIN_DOMAIN:-awardsapp.ai}
+      - WEATHER_API_KEY=${WEATHER_API_KEY:-}
+      - ALLOW_LOCAL_MCP_SERVERS=${ALLOW_LOCAL_MCP_SERVERS:-false}
+      - EMAIL_FROM_DEFAULT=${EMAIL_FROM_DEFAULT:-noreply@awardsapp.ai}
+      - EMAIL_FROM_PERSONAL=${EMAIL_FROM_PERSONAL:-marcus@awardsapp.ai}
+      - EMAIL_REPLY_TO_PERSONAL=${EMAIL_REPLY_TO_PERSONAL:-marcus@awardsapp.ai}
+      - EMAIL_REPLY_TO_SUPPORT=${EMAIL_REPLY_TO_SUPPORT:-support@awardsapp.ai}
+      - SENTRY_DSN=${SENTRY_DSN:-}
+      - POSTHOG_API_KEY=${POSTHOG_API_KEY:-}
+      - POSTHOG_HOST=${POSTHOG_HOST:-}
+      - GENUI_TELEMETRY_DISABLED=true
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+
+  # ---- Web (Next.js) — exposed at https://tambo.awardsapp.ai ----
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args:
+        NODE_ENV: production
+    restart: unless-stopped
+    environment:
+      # Coolify magic var: declares we want FQDN routing for port 3000.
+      # Set the actual FQDN to https://tambo.awardsapp.ai in Coolify UI.
+      - SERVICE_FQDN_WEB_3000
+      - PORT=3000
+      - NODE_ENV=production
+      # Browser-side: must use public HTTPS URL (sent in HTML to client)
+      - NEXT_PUBLIC_GENUI_API_URL=${NEXT_PUBLIC_GENUI_API_URL:-https://tambo-api.awardsapp.ai}
+      - NEXT_PUBLIC_GENUI_API_KEY=${NEXT_PUBLIC_GENUI_API_KEY:-}
+      - NEXT_PUBLIC_POSTHOG_HOST=${NEXT_PUBLIC_POSTHOG_HOST:-}
+      - NEXT_PUBLIC_POSTHOG_KEY=${NEXT_PUBLIC_POSTHOG_KEY:-}
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-genui}
+      - API_KEY_SECRET=${API_KEY_SECRET}
+      - PROVIDER_KEY_SECRET=${PROVIDER_KEY_SECRET}
+      - RESEND_API_KEY=${RESEND_API_KEY:-}
+      - RESEND_AUDIENCE_ID=${RESEND_AUDIENCE_ID:-}
+      - WEATHER_API_KEY=${WEATHER_API_KEY:-}
+      - ALLOW_LOCAL_MCP_SERVERS=${ALLOW_LOCAL_MCP_SERVERS:-false}
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+      - EMAIL_FROM_DEFAULT=${EMAIL_FROM_DEFAULT:-noreply@awardsapp.ai}
+      - EMAIL_FROM_PERSONAL=${EMAIL_FROM_PERSONAL:-marcus@awardsapp.ai}
+      - EMAIL_REPLY_TO_SUPPORT=${EMAIL_REPLY_TO_SUPPORT:-support@awardsapp.ai}
+      - EMAIL_REPLY_TO_PERSONAL=${EMAIL_REPLY_TO_PERSONAL:-marcus@awardsapp.ai}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET:-}
+      - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID:-}
+      - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET:-}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - NEXTAUTH_URL=${NEXTAUTH_URL:-https://tambo.awardsapp.ai}
+      - NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN:-}
+      - NEXT_PUBLIC_SENTRY_ORG=${NEXT_PUBLIC_SENTRY_ORG:-}
+      - NEXT_PUBLIC_SENTRY_PROJECT=${NEXT_PUBLIC_SENTRY_PROJECT:-}
+      - GENUI_TELEMETRY_DISABLED=true
+      - GENUI_WHITELABEL_ORG_NAME=${GENUI_WHITELABEL_ORG_NAME:-AwardsApp}
+      - GENUI_WHITELABEL_ORG_LOGO=${GENUI_WHITELABEL_ORG_LOGO:-}
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/api/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    depends_on:
+      postgres:
+        condition: service_healthy
+      api:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
