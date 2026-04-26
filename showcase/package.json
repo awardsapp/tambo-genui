@@ -26,7 +26,6 @@
     "@tailwindcss/postcss": "^4.2.2",
     "@tailwindcss/typography": "^0.5.19",
     "@workspace/react": "*",
-    "@workspace/typescript-sdk": "^0.95.0",
     "@workspace/ui-registry": "*",
     "@tiptap/extension-document": "^3.22.1",
     "@tiptap/extension-hard-break": "^3.22.1",
@@ -62,7 +61,8 @@
     "tailwindcss": "^4.1.18",
     "tailwindcss-animate": "^1.0.7",
     "tippy.js": "^6.3.7",
-    "use-debounce": "^10.1.0"
+    "use-debounce": "^10.1.0",
+    "@tambo-ai/typescript-sdk": "^0.95.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
