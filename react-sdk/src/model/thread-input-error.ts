@@ -1,3 +1,3 @@
-import { TamboAIError } from "@tambo-ai/typescript-sdk";
+import { GenuiAIError } from "@workspace/typescript-sdk";
 
-export class ThreadInputError extends TamboAIError {}
+export class ThreadInputError extends GenuiAIError {}

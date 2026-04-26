@@ -6,8 +6,8 @@ Starter templates for building AI-powered apps with Tambo.
 
 | Template                                                                         | Description         | Stack               |
 | -------------------------------------------------------------------------------- | ------------------- | ------------------- |
-| [tambo-template](https://github.com/tambo-ai/tambo-template)                     | Default starter     | Next.js + Tambo     |
-| [tambo-template-tanstack](https://github.com/tambo-ai/tambo-template-tanstack)   | TanStack Router     | Vite + TanStack     |
+| [tambo-template](https://github.com/awardsapp/tambo-genui-template)                     | Default starter     | Next.js + Tambo     |
+| [tambo-template-tanstack](https://github.com/awardsapp/tambo-genui-template-tanstack)   | TanStack Router     | Vite + TanStack     |
 | [analytics-template](https://github.com/tambo-ai/analytics-template)             | Analytics dashboard | Next.js + Charts    |
 | [demo-mobile-log](https://github.com/tambo-ai/demo-mobile-log)                   | Activity logger     | Expo + React Native |
 | [music-expo-demo](https://github.com/tambo-ai/music-expo-demo)                   | Music companion     | Expo + React Native |
@@ -54,7 +54,7 @@ npm run build     # Must complete successfully
 
 Templates should include:
 
-- **Linting configuration** - Include linting with sensible defaults for the technologies in your template (ESLint is recommended for JS/TS stacks). Most of the Tambo repo uses [our base config](https://github.com/tambo-ai/tambo/blob/main/packages/eslint-config/base.mjs) as a reference point, but templates are not required to use it. Anything materially looser in style/consistency is unlikely to be accepted.
+- **Linting configuration** - Include linting with sensible defaults for the technologies in your template (ESLint is recommended for JS/TS stacks). Most of the Tambo repo uses [our base config](https://github.com/awardsapp/tambo-genui/blob/main/packages/eslint-config/base.mjs) as a reference point, but templates are not required to use it. Anything materially looser in style/consistency is unlikely to be accepted.
 - **TypeScript strict mode** - Enable `"strict": true` in tsconfig.json
 - **No type errors** - Fix all TypeScript errors, don't use `@ts-ignore` or `any` as workarounds
 
@@ -62,7 +62,7 @@ We'll run these checks during review. Templates with lint errors or type issues 
 
 ### Design Requirements
 
-Design quality should match our [official templates](https://github.com/tambo-ai/tambo-template). Or better. Use them as your reference for the visual bar we expect.
+Design quality should match our [official templates](https://github.com/awardsapp/tambo-genui-template). Or better. Use them as your reference for the visual bar we expect.
 
 ### Tambo Integration
 
@@ -74,7 +74,7 @@ We're not expecting a ton of Tambo code. Just **one example** that proves the in
 
 The video should show a conversation with the AI using your integration. Proper component/tool registration with clear descriptions is required.
 
-**No workarounds** - Your template must use Tambo's actual APIs correctly. If you run into issues getting components to render or tools to work, [open a bug issue](https://github.com/tambo-ai/tambo/issues/new) and we'll help. Don't hack around problems - templates that bypass Tambo's rendering system will be rejected.
+**No workarounds** - Your template must use Tambo's actual APIs correctly. If you run into issues getting components to render or tools to work, [open a bug issue](https://github.com/awardsapp/tambo-genui/issues/new) and we'll help. Don't hack around problems - templates that bypass Tambo's rendering system will be rejected.
 
 ### README Quality
 

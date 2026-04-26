@@ -23,8 +23,8 @@ import {
   ApiTags,
 } from "@nestjs/swagger";
 import * as Sentry from "@sentry/nestjs";
-import { AsyncQueue } from "@tambo-ai-cloud/core";
-import { operations } from "@tambo-ai-cloud/db";
+import { AsyncQueue } from "@workspace-cloud/core";
+import { operations } from "@workspace-cloud/db";
 import { type Request, type Response } from "express";
 import { extractContextInfo } from "../common/utils/extract-context-info";
 import { ApiKeyGuard } from "../projects/guards/apikey.guard";

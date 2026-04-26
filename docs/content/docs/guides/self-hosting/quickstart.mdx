@@ -1,10 +1,10 @@
 ---
 title: Self-hosting quickstart
-description: Get a self-hosted Tambo deployment running locally with Docker Compose.
+description: Get a self-hosted Genui deployment running locally with Docker Compose.
 icon: Rocket
 ---
 
-Follow these steps to go from zero to a running Tambo instance on your machine using Docker Compose.
+Follow these steps to go from zero to a running Genui instance on your machine using Docker Compose.
 
 ## Prerequisites
 
@@ -14,14 +14,14 @@ Follow these steps to go from zero to a running Tambo instance on your machine u
 ## 1. Clone the repository
 
 ```bash
-git clone https://github.com/tambo-ai/tambo.git
-cd tambo
+git clone https://github.com/genui-ai/genui.git
+cd genui
 ```
 
 ## 2. Set up environment
 
 ```bash
-./scripts/cloud/tambo-setup.sh
+./scripts/cloud/genui-setup.sh
 ```
 
 This creates `docker.env` from `docker.env.example`.
@@ -45,7 +45,7 @@ See [Environment Variables](/guides/self-hosting/environment-variables) for the 
 ## 4. Start services
 
 ```bash
-./scripts/cloud/tambo-start.sh
+./scripts/cloud/genui-start.sh
 ```
 
 ## 5. Initialize database
@@ -61,7 +61,7 @@ See [Environment Variables](/guides/self-hosting/environment-variables) for the 
 
 ## What's next
 
-You now have a local Tambo deployment. To take it further:
+You now have a local Genui deployment. To take it further:
 
 - [Set up authentication](/guides/self-hosting/authentication) so users can sign in
 - [Deploy to production with Docker Compose](/guides/self-hosting/docker-compose) or [Kubernetes](/guides/self-hosting/kubernetes)

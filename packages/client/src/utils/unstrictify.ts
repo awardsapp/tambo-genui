@@ -150,10 +150,10 @@ function unstrictifyToolCallParams(
  * Unstrictify tool call params using the original JSON Schema.
  *
  * Unlike the private `unstrictifyToolCallParams` which throws on unknown params,
- * this function separates params into schema-defined vs `_tambo_*` pass-through
+ * this function separates params into schema-defined vs `_genui_*` pass-through
  * (server-injected params not in the original schema), unstrictifies only the
  * schema-defined ones, and merges pass-through params back. Unknown keys that
- * aren't in the schema and don't have the `_tambo_` prefix are dropped.
+ * aren't in the schema and don't have the `_genui_` prefix are dropped.
  * @returns The params with strictification-induced nulls stripped for optional
  * non-nullable properties, and pass-through params preserved as-is.
  */
@@ -172,10 +172,10 @@ export function unstrictifyToolCallParamsFromSchema(
   for (const [key, value] of Object.entries(params)) {
     if (key in schemaProperties) {
       schemaDefinedParams[key] = value;
-    } else if (key.startsWith("_tambo_")) {
+    } else if (key.startsWith("_genui_")) {
       passThroughParams[key] = value;
     }
-    // Unknown keys not in schema and not _tambo_* are dropped —
+    // Unknown keys not in schema and not _genui_* are dropped —
     // they're likely hallucinated by the model.
   }
 

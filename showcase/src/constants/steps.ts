@@ -3,7 +3,7 @@ export const newProjectSteps = [
     number: "01",
     title: "Create a new project",
     description: "Create a new project using our template.",
-    code: "npm create tambo-app my-app",
+    code: "npm create genui-app my-app",
     path: "~/",
     isCode: false,
     language: "bash",
@@ -19,9 +19,9 @@ export const newProjectSteps = [
   },
   {
     number: "03",
-    title: "Initialize tambo",
-    description: "Initialize tambo in your project.",
-    code: "npx tambo init",
+    title: "Initialize genui",
+    description: "Initialize genui in your project.",
+    code: "npx genui init",
     path: "~/my-app",
     isCode: false,
     language: "bash",
@@ -39,7 +39,7 @@ export const newProjectSteps = [
     number: "05",
     title: "Add components (optional)",
     description: "Add additional components as needed.",
-    code: "npx tambo add form",
+    code: "npx genui add form",
     path: "~/my-app",
     isCode: false,
     language: "bash",
@@ -49,28 +49,28 @@ export const newProjectSteps = [
 export const existingProjectSteps = [
   {
     number: "01",
-    title: "Install tambo-ai",
+    title: "Install genui-ai",
     description:
       "Run the full-send command to setup your project. This command will setup your project, get an API key, and install components.",
-    code: "npx tambo full-send",
+    code: "npx genui full-send",
     path: "~/your-project",
     isCode: false,
   },
   {
     number: "02",
-    title: "Add TamboProvider",
+    title: "Add GenuiProvider",
     description:
-      "Update your layout.tsx file. Wrap your app with TamboProvider to enable tambo features.",
+      "Update your layout.tsx file. Wrap your app with GenuiProvider to enable genui features.",
     path: "~/your-project/src/app/layout.tsx",
     code: `"use client";
   
-  import { TamboProvider } from "@tambo-ai/react";
+  import { GenuiProvider } from "@workspace/react";
   
   export default function RootLayout({ children }) {
     return (
-      <TamboProvider apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY ?? ""}>
+      <GenuiProvider apiKey={process.env.NEXT_PUBLIC_GENUI_API_KEY ?? ""}>
         {children}
-      </TamboProvider>
+      </GenuiProvider>
     );
   }`,
     isCode: true,
@@ -82,7 +82,7 @@ export const existingProjectSteps = [
     description:
       "Import and use the chat component. Add a complete chat interface to your application.",
     path: "~/your-project/src/app/page.tsx",
-    code: `import { MessageThreadFull } from "@/components/tambo/message-thread-full";
+    code: `import { MessageThreadFull } from "@/components/genui/message-thread-full";
   
   export default function Home() {
     return (
@@ -98,11 +98,11 @@ export const existingProjectSteps = [
     number: "04",
     title: "Register Components",
     description:
-      "Register your components with Tambo. Register your components with Tambo to make them available for AI-driven rendering.",
+      "Register your components with Genui. Register your components with Genui to make them available for AI-driven rendering.",
     path: "~/your-project/src/app/layout.tsx",
     code: `"use client";
   
-  import { TamboProvider } from "@tambo-ai/react";
+  import { GenuiProvider } from "@workspace/react";
   import { z } from "zod/v3";
   import { MyComponent } from "@/components/MyComponent";
   
@@ -123,12 +123,12 @@ export const existingProjectSteps = [
   
   export default function RootLayout({ children }) {
     return (
-      <TamboProvider 
-        apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY ?? ""}
+      <GenuiProvider 
+        apiKey={process.env.NEXT_PUBLIC_GENUI_API_KEY ?? ""}
         components={components}
       >
         {children}
-      </TamboProvider>
+      </GenuiProvider>
     );
   }`,
     isCode: true,

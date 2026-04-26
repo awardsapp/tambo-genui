@@ -104,7 +104,7 @@ describe("convertContentToMarkdown", () => {
         },
       ];
       expect(convertContentToMarkdown(content)).toBe(
-        "[Test File](tambo-resource://file%3A%2F%2F%2Ftest.txt)",
+        "[Test File](genui-resource://file%3A%2F%2F%2Ftest.txt)",
       );
     });
 
@@ -118,7 +118,7 @@ describe("convertContentToMarkdown", () => {
         },
       ];
       expect(convertContentToMarkdown(content)).toBe(
-        "[file:///test.txt](tambo-resource://file%3A%2F%2F%2Ftest.txt)",
+        "[file:///test.txt](genui-resource://file%3A%2F%2F%2Ftest.txt)",
       );
     });
 
@@ -146,7 +146,7 @@ describe("convertContentToMarkdown", () => {
         },
       ];
       expect(convertContentToMarkdown(content)).toBe(
-        "See [docs](tambo-resource://file%3A%2F%2F%2Fdoc.md)",
+        "See [docs](genui-resource://file%3A%2F%2F%2Fdoc.md)",
       );
     });
 
@@ -179,7 +179,7 @@ describe("convertContentToMarkdown", () => {
         },
       ];
       expect(convertContentToMarkdown(content)).toBe(
-        "[File \\[with\\] brackets](tambo-resource://file%3A%2F%2F%2Ftest.txt)",
+        "[File \\[with\\] brackets](genui-resource://file%3A%2F%2F%2Ftest.txt)",
       );
     });
 
@@ -194,7 +194,7 @@ describe("convertContentToMarkdown", () => {
         },
       ];
       expect(convertContentToMarkdown(content)).toBe(
-        "[Line 1 Line 2 Line 3](tambo-resource://file%3A%2F%2F%2Ftest.txt)",
+        "[Line 1 Line 2 Line 3](genui-resource://file%3A%2F%2F%2Ftest.txt)",
       );
     });
 
@@ -209,7 +209,7 @@ describe("convertContentToMarkdown", () => {
         },
       ];
       expect(convertContentToMarkdown(content)).toBe(
-        "[C:\\\\Users\\\\file.txt](tambo-resource://file%3A%2F%2F%2Ftest.txt)",
+        "[C:\\\\Users\\\\file.txt](genui-resource://file%3A%2F%2F%2Ftest.txt)",
       );
     });
 
@@ -224,7 +224,7 @@ describe("convertContentToMarkdown", () => {
         },
       ];
       expect(convertContentToMarkdown(content)).toBe(
-        "[File \\[v1\\] \\\\path New](tambo-resource://file%3A%2F%2F%2Ftest.txt)",
+        "[File \\[v1\\] \\\\path New](genui-resource://file%3A%2F%2F%2Ftest.txt)",
       );
     });
   });

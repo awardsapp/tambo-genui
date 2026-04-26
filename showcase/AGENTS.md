@@ -4,7 +4,7 @@ Detailed guidance for Claude Code agents working with the Showcase package.
 
 ## Project Overview
 
-The Showcase (`@tambo-ai/showcase`) is a Next.js application that demonstrates all Tambo AI components and patterns.
+The Showcase (`@workspace/showcase`) is a Next.js application that demonstrates all Genui AI components and patterns.
 
 ## Essential Commands
 
@@ -29,7 +29,7 @@ src/
 │   │   └── (canvas)/            # Canvas-based components
 │   └── globals.css              # Design tokens (CSS variables)
 ├── components/
-│   ├── ui/                      # Actual Tambo components being showcased
+│   ├── ui/                      # Actual Genui components being showcased
 │   ├── generative/              # AI chat interfaces for demos
 │   ├── component-code-preview.tsx  # Preview/code tab system
 │   └── installation-section.tsx    # CLI installation component

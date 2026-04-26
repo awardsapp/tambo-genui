@@ -122,9 +122,9 @@ export function createBasicProjectStructure(options: {
     structure["/mock-project/package.json"] = createMockPackageJson();
   }
 
-  // Add components in new location (tambo/)
+  // Add components in new location (genui/)
   newComponents.forEach((component) => {
-    structure[`/mock-project/${installPath}/tambo/${component}.tsx`] =
+    structure[`/mock-project/${installPath}/genui/${component}.tsx`] =
       `export const ${component} = () => null;`;
   });
 
@@ -217,15 +217,15 @@ export function createNextProject(): Record<string, string | null> {
 }
 
 /**
- * Creates a project with Tambo SDK dependency and src directory
+ * Creates a project with Genui SDK dependency and src directory
  * Framework-agnostic - no framework dependencies included
  */
-export function createProjectWithTamboSDK(): Record<string, string | null> {
+export function createProjectWithGenuiSDK(): Record<string, string | null> {
   return {
     "/mock-project/package.json": JSON.stringify({
       name: "test-project",
       dependencies: {
-        "@tambo-ai/react": "^1.0.0",
+        "@workspace/react": "^1.0.0",
       },
     }),
     "/mock-project/src": null,
@@ -233,16 +233,16 @@ export function createProjectWithTamboSDK(): Record<string, string | null> {
 }
 
 /**
- * Creates a Next.js project with Tambo SDK dependency and src directory
+ * Creates a Next.js project with Genui SDK dependency and src directory
  * Use this when testing Next.js-specific behavior (e.g., env var prefix detection)
  */
-export function createNextProjectWithTamboSDK(): Record<string, string | null> {
+export function createNextProjectWithGenuiSDK(): Record<string, string | null> {
   return {
     "/mock-project/package.json": JSON.stringify({
       name: "test-project",
       dependencies: {
         next: "^14.0.0",
-        "@tambo-ai/react": "^1.0.0",
+        "@workspace/react": "^1.0.0",
       },
     }),
     "/mock-project/src": null,
@@ -251,20 +251,20 @@ export function createNextProjectWithTamboSDK(): Record<string, string | null> {
 
 /**
  * Creates a Next.js project with existing API key in .env.local
- * Uses Next.js because it references NEXT_PUBLIC_TAMBO_API_KEY
+ * Uses Next.js because it references NEXT_PUBLIC_GENUI_API_KEY
  */
 export function createProjectWithEnv(
   key: string,
 ): Record<string, string | null> {
   return {
     ...createNextProject(),
-    "/mock-project/.env.local": `NEXT_PUBLIC_TAMBO_API_KEY=${key}\n`,
+    "/mock-project/.env.local": `NEXT_PUBLIC_GENUI_API_KEY=${key}\n`,
   };
 }
 
 /**
  * Creates a Next.js project with both .env and .env.local files
- * Uses Next.js because it references NEXT_PUBLIC_TAMBO_API_KEY
+ * Uses Next.js because it references NEXT_PUBLIC_GENUI_API_KEY
  */
 export function createProjectWithBothEnvFiles(
   localKey: string,
@@ -272,23 +272,23 @@ export function createProjectWithBothEnvFiles(
 ): Record<string, string | null> {
   return {
     ...createNextProject(),
-    "/mock-project/.env": `NEXT_PUBLIC_TAMBO_API_KEY=${envKey}\n`,
-    "/mock-project/.env.local": `NEXT_PUBLIC_TAMBO_API_KEY=${localKey}\n`,
+    "/mock-project/.env": `NEXT_PUBLIC_GENUI_API_KEY=${envKey}\n`,
+    "/mock-project/.env.local": `NEXT_PUBLIC_GENUI_API_KEY=${localKey}\n`,
   };
 }
 
 /**
- * Creates a Next.js project with existing tambo.ts file
- * Uses Next.js because this is typically used for init tests that expect NEXT_PUBLIC_TAMBO_API_KEY
+ * Creates a Next.js project with existing genui.ts file
+ * Uses Next.js because this is typically used for init tests that expect NEXT_PUBLIC_GENUI_API_KEY
  */
-export function createProjectWithTamboTs(
+export function createProjectWithGenuiTs(
   content?: string,
 ): Record<string, string | null> {
   return {
     ...createNextProject(),
     "/mock-project/src": null,
-    "/mock-project/src/lib/tambo.ts":
-      content ?? "export const components: TamboComponent[] = [];",
+    "/mock-project/src/lib/genui.ts":
+      content ?? "export const components: GenuiComponent[] = [];",
   };
 }
 
@@ -328,7 +328,7 @@ export function createRegistryFiles(
       description:
         "Full-screen chat interface with history and typing indicators",
       componentName: "MessageThreadFull",
-      dependencies: ["@tambo-ai/react", "class-variance-authority"],
+      dependencies: ["@workspace/react", "class-variance-authority"],
       requires: [
         "thread-content",
         "message-input",
@@ -342,21 +342,21 @@ export function createRegistryFiles(
     "message-thread-panel": {
       description: "Split-view chat with integrated workspace",
       componentName: "MessageThreadPanel",
-      dependencies: ["@tambo-ai/react"],
+      dependencies: ["@workspace/react"],
       requires: [],
       files: ["message-thread-panel.tsx"],
     },
     "message-thread-collapsible": {
       description: "Collapsible chat for sidebars",
       componentName: "MessageThreadCollapsible",
-      dependencies: ["@tambo-ai/react"],
+      dependencies: ["@workspace/react"],
       requires: [],
       files: ["message-thread-collapsible.tsx"],
     },
     "control-bar": {
       description: "Spotlight-style command palette",
       componentName: "ControlBar",
-      dependencies: ["@tambo-ai/react", "radix-ui", "class-variance-authority"],
+      dependencies: ["@workspace/react", "radix-ui", "class-variance-authority"],
       requires: [
         "thread-content",
         "message-input",
@@ -394,7 +394,7 @@ export function createRegistryFiles(
         name: componentName,
         description: `Test component ${componentName}`,
         componentName: componentNamePascal,
-        dependencies: ["@tambo-ai/react"],
+        dependencies: ["@workspace/react"],
         devDependencies: [],
         requires: [],
         files: [
@@ -442,10 +442,10 @@ export function createRegistryFiles(
 }
 
 /**
- * Creates a Next.js project with Tambo SDK, src directory, and registry files
- * This is the most common setup for full-send tests that expect NEXT_PUBLIC_TAMBO_API_KEY
+ * Creates a Next.js project with Genui SDK, src directory, and registry files
+ * This is the most common setup for full-send tests that expect NEXT_PUBLIC_GENUI_API_KEY
  */
-export function createProjectWithTamboSDKAndRegistry(
+export function createProjectWithGenuiSDKAndRegistry(
   components: string[] = [
     "message-thread-full",
     "message-thread-panel",
@@ -454,7 +454,7 @@ export function createProjectWithTamboSDKAndRegistry(
   ],
 ): Record<string, string | null> {
   return {
-    ...createNextProjectWithTamboSDK(),
+    ...createNextProjectWithGenuiSDK(),
     ...createRegistryFiles(components),
   };
 }

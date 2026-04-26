@@ -1,16 +1,16 @@
-import type { TamboThreadMessage, TamboToolUseContent } from "@tambo-ai/react";
+import type { GenuiThreadMessage, GenuiToolUseContent } from "@workspace/react";
 import * as React from "react";
 
 export interface ToolcallInfoContextValue {
   isExpanded: boolean;
   setIsExpanded: (expanded: boolean) => void;
-  toolCallRequest: TamboToolUseContent | undefined;
+  toolCallRequest: GenuiToolUseContent | undefined;
   hasToolError: boolean;
   toolStatusMessage: string;
-  associatedToolResponse: TamboThreadMessage | null;
+  associatedToolResponse: GenuiThreadMessage | null;
   detailsId: string;
   isLoading: boolean | undefined;
-  message: TamboThreadMessage;
+  message: GenuiThreadMessage;
 }
 
 export const ToolcallInfoContext =

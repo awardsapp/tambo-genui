@@ -191,7 +191,7 @@ export class MCPClient {
     const samplingCapability = this.handlers.sampling ? { sampling: {} } : {};
     const client = new Client(
       {
-        name: "tambo-mcp-client",
+        name: "genui-mcp-client",
         version: "1.0.0",
       },
       {

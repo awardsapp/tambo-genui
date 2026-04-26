@@ -1,13 +1,13 @@
 {
-  "extends": "@tambo-ai/typescript-config/base.json",
+  "extends": "@workspace/typescript-config/base.json",
   "compilerOptions": {
     "outDir": "./dist",
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "paths": {
-      "@tambo-ai-cloud/backend": ["../backend/src"],
-      "@tambo-ai-cloud/core": ["../core/src"],
-      "@tambo-ai-cloud/testing": ["../testing/src"]
+      "@workspace-cloud/backend": ["../backend/src"],
+      "@workspace-cloud/core": ["../core/src"],
+      "@workspace-cloud/testing": ["../testing/src"]
     }
   },
   "include": ["src", "drizzle.config.ts"]

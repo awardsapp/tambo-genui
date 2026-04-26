@@ -1,6 +1,6 @@
-import type { ReactTamboThreadMessage } from "@tambo-ai/react";
+import type { ReactGenuiThreadMessage } from "@workspace/react";
 
-export const mockMessages: ReactTamboThreadMessage[] = [
+export const mockMessages: ReactGenuiThreadMessage[] = [
   {
     id: "ex-1",
     role: "user" as const,

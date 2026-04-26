@@ -1,7 +1,7 @@
 "use client";
 
 import { useRender } from "@base-ui/react/use-render";
-import type { ListPromptEntry } from "@tambo-ai/react/mcp";
+import type { ListPromptEntry } from "@workspace/react/mcp";
 import * as React from "react";
 import { useMcpPromptsContext } from "../root/mcp-prompts-context";
 

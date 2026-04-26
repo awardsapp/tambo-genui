@@ -1,11 +1,11 @@
 "use client";
 
 import { DemoPreview } from "@/components/demos/demo-preview";
-import { McpResources } from "@tambo-ai/react-ui-base/mcp-resources";
+import { McpResources } from "@workspace/react-ui-base/mcp-resources";
 import { FileText, Search } from "lucide-react";
 
 export const mcpResourcesDemoCode = `
-import { McpResources } from "@tambo-ai/react-ui-base/mcp-resources";
+import { McpResources } from "@workspace/react-ui-base/mcp-resources";
 import { FileText, Search } from "lucide-react";
 
 export function DemoMcpResources() {

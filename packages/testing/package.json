@@ -1,10 +1,10 @@
 {
-  "name": "@tambo-ai-cloud/testing",
+  "name": "@workspace-cloud/testing",
   "version": "0.0.0",
   "private": true,
   "license": "Apache-2.0",
   "type": "module",
-  "description": "Shared testing utilities for the Tambo AI monorepo",
+  "description": "Shared testing utilities for the Genui AI monorepo",
   "exports": {
     "import": "./src/index.ts"
   },
@@ -21,8 +21,8 @@
     "clean": "rm -rf dist coverage"
   },
   "devDependencies": {
-    "@tambo-ai/eslint-config": "*",
-    "@tambo-ai/typescript-config": "*",
+    "@workspace/eslint-config": "*",
+    "@workspace/typescript-config": "*",
     "@types/jest": "^30.0.0",
     "@types/node": "^22.19.15",
     "jest": "^30.3.0",
@@ -31,8 +31,8 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@tambo-ai-cloud/core": "*",
-    "@tambo-ai-cloud/db": "*",
+    "@workspace-cloud/core": "*",
+    "@workspace-cloud/db": "*",
     "openai": "^6.16.0"
   }
 }

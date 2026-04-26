@@ -1,26 +1,26 @@
 ---
 title: update
-description: Update specific or all installed Tambo components to their latest versions and apply required CSS or Tailwind changes.
+description: Update specific or all installed Genui components to their latest versions and apply required CSS or Tailwind changes.
 ---
 
-`npx tambo update <componentname>` or `npx tambo update installed`
+`npx genui update <componentname>` or `npx genui update installed`
 
-Updates specific Tambo components or all installed components to their latest versions from the registry.
+Updates specific Genui components or all installed components to their latest versions from the registry.
 
 **Examples:**
 
 ```bash
 # Update specific components
-npx tambo update form graph
+npx genui update form graph
 
 # Update ALL installed components at once
-npx tambo update installed
+npx genui update installed
 
 # Update with custom directory
-npx tambo update form --prefix=src/components/ui
+npx genui update form --prefix=src/components/ui
 
 # Skip confirmation prompts
-npx tambo update installed --yes
+npx genui update installed --yes
 ```
 
 ## CSS Configuration Updates

@@ -1,5 +1,5 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import type { MCPClient } from "@tambo-ai-cloud/core";
+import type { MCPClient } from "@workspace-cloud/core";
 
 export type ThreadMcpClient = {
   client: MCPClient;

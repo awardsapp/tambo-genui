@@ -1,6 +1,6 @@
 import { ProjectOverview } from "@/components/dashboard-components/project-overview";
 import { env } from "@/lib/env";
-import { getDb, schema } from "@tambo-ai-cloud/db";
+import { getDb, schema } from "@workspace-cloud/db";
 import { eq } from "drizzle-orm";
 import { Metadata } from "next";
 

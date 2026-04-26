@@ -73,7 +73,7 @@ jobs:
 
       - name: Clone template repository
         env:
-          GITHUB_TOKEN: ${{ secrets.TAMBO_UPGRADE_PAT || secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GENUI_UPGRADE_PAT || secrets.GITHUB_TOKEN }}
         run: |
           git clone https://x-access-token:$GITHUB_TOKEN@github.com/${{ matrix.template-repo }}.git template-repo
           cd template-repo
@@ -110,7 +110,7 @@ jobs:
         if: env.NO_CHANGES != 'true'
         working-directory: template-repo
         env:
-          GITHUB_TOKEN: ${{ secrets.TAMBO_UPGRADE_PAT || secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GENUI_UPGRADE_PAT || secrets.GITHUB_TOKEN }}
           RELEASE_INFO: ${{ needs.check-releases.outputs.release-info }}
           RELEASE_TAG: ${{ env.RELEASE_TAG }}
           BRANCH_NAME: ${{ env.BRANCH_NAME }}

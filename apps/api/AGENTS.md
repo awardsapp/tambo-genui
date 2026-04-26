@@ -1,10 +1,10 @@
 # AGENTS.md
 
-Detailed guidance for Claude Code agents working inside `apps/api`, the NestJS OpenAPI server that powers Tambo Cloud.
+Detailed guidance for Claude Code agents working inside `apps/api`, the NestJS OpenAPI server that powers Genui Cloud.
 
 ## Overview
 
-- **Tech stack**: NestJS 11, TypeScript strict mode, Drizzle ORM (via `@tambo-ai-cloud/db`), Langfuse/Sentry instrumentation, OpenTelemetry traces, Swagger UI.
+- **Tech stack**: NestJS 11, TypeScript strict mode, Drizzle ORM (via `@workspace-cloud/db`), Langfuse/Sentry instrumentation, OpenTelemetry traces, Swagger UI.
 - **Purpose**: Serves the REST + Webhook surface area for projects, threads, registry sync, OAuth flows, MCP server endpoints, and scheduler workflows.
 - **Entry points**: `src/main.ts` bootstraps the Nest application; `app.module.ts` wires domain modules.
 
@@ -15,7 +15,7 @@ npm run dev           # Start Nest in watch mode (port 8261 by default)
 npm run build         # Compile to dist/ for production
 npm run start:prod    # Run the compiled build
 npm run generate-config # Bootstraps runtime config snapshot
-npm run lint          # ESLint with @tambo-ai config
+npm run lint          # ESLint with @workspace config
 npm run check-types   # tsc --noEmit
 npm test              # Jest unit tests (ts-jest)
 npm run test:cov      # Generate coverage report
@@ -65,7 +65,7 @@ apps/api/src
 
 ## Data Access
 
-- All persistence goes through `@tambo-ai-cloud/db` helpers; never inline SQL.
+- All persistence goes through `@workspace-cloud/db` helpers; never inline SQL.
 - Prefer injectable repository/services under `src/common/services` when logic is shared between modules.
 - Keep operations idempotent. If a write can happen twice (webhooks, schedulers), add guards or unique constraints at the database layer.
 

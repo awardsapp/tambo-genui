@@ -1,4 +1,4 @@
-import { McpToolRegistry, prefixToolName } from "@tambo-ai-cloud/backend";
+import { McpToolRegistry, prefixToolName } from "@workspace-cloud/backend";
 import {
   ActionType,
   ContentPartType,
@@ -6,7 +6,7 @@ import {
   MCPClient,
   MessageRole,
   ThreadMessage,
-} from "@tambo-ai-cloud/core";
+} from "@workspace-cloud/core";
 import { callSystemTool, validateToolResponse } from "./tool";
 
 describe("tool utilities", () => {
@@ -154,7 +154,7 @@ describe("tool utilities", () => {
           param1: "value1",
           param2: "value2",
         },
-        { "tambo.co/parentMessageId": "tool-call-msg-1" },
+        { "genui.co/parentMessageId": "tool-call-msg-1" },
       );
 
       expect(result).toEqual({
@@ -255,7 +255,7 @@ describe("tool utilities", () => {
       expect(mockCallPrefixed).toHaveBeenCalledWith(
         baseToolName,
         {},
-        { "tambo.co/parentMessageId": "msg-1" },
+        { "genui.co/parentMessageId": "msg-1" },
       );
     });
 

@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@nestjs/common";
-import type { HydraDatabase } from "@tambo-ai-cloud/db";
+import type { HydraDatabase } from "@workspace-cloud/db";
 import { sql } from "drizzle-orm";
 import { DATABASE } from "./common/database-provider";
 
@@ -11,7 +11,7 @@ export class AppService {
   ) {}
 
   getHello(): string {
-    return "Welcome to the Tambo AI API!";
+    return "Welcome to the Genui AI API!";
   }
 
   async checkHealth(): Promise<{ status: string }> {

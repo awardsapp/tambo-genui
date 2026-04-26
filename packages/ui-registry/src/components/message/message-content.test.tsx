@@ -1,25 +1,25 @@
 /// <reference types="@testing-library/jest-dom" />
 import { beforeEach, describe, expect, it, jest } from "@jest/globals";
-import type { TamboThreadMessage } from "@tambo-ai/react";
-import { useTambo } from "@tambo-ai/react";
+import type { GenuiThreadMessage } from "@workspace/react";
+import { useGenui } from "@workspace/react";
 import { render } from "@testing-library/react";
 import { Message, MessageContent } from "./message";
 
-// @tambo-ai/react is mocked via moduleNameMapper in jest.config.ts
+// @workspace/react is mocked via moduleNameMapper in jest.config.ts
 
 /**
- * Creates a minimal TamboThreadMessage for testing.
+ * Creates a minimal GenuiThreadMessage for testing.
  */
 function createMessage(
-  overrides: Partial<TamboThreadMessage> = {},
-): TamboThreadMessage {
+  overrides: Partial<GenuiThreadMessage> = {},
+): GenuiThreadMessage {
   return {
     id: "test-message-id",
     role: "assistant",
     content: [],
     createdAt: new Date().toISOString(),
     ...overrides,
-  } as TamboThreadMessage;
+  } as GenuiThreadMessage;
 }
 
 function getMessageContentTextSlot(container: HTMLElement): HTMLElement {
@@ -37,10 +37,10 @@ function getMessageContentTextSlot(container: HTMLElement): HTMLElement {
 }
 
 describe("MessageContent rendering", () => {
-  const mockUseTambo = jest.mocked(useTambo);
+  const mockUseGenui = jest.mocked(useGenui);
 
   beforeEach(() => {
-    mockUseTambo.mockReturnValue({
+    mockUseGenui.mockReturnValue({
       thread: {
         messages: [],
         generationStage: "IDLE",
@@ -442,7 +442,7 @@ describe("MessageContent rendering", () => {
       const message = createMessage({
         // The actual component handles string content even though the type is ChatCompletionContentPart[]
         content:
-          "Plain string content" as unknown as TamboThreadMessage["content"],
+          "Plain string content" as unknown as GenuiThreadMessage["content"],
       });
 
       const { container } = render(

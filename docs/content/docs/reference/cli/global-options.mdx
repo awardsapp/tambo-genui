@@ -1,15 +1,15 @@
 ---
 title: Global Options
-description: Learn the global flags supported by the Tambo CLI and how to use them in CI, automation, and common workflows.
+description: Learn the global flags supported by the Genui CLI and how to use them in CI, automation, and common workflows.
 ---
 
-All Tambo CLI commands support these global options. You can use them with any command to modify behavior, skip prompts, or handle common scenarios.
+All Genui CLI commands support these global options. You can use them with any command to modify behavior, skip prompts, or handle common scenarios.
 
 ## Available Options
 
 ### `--version`
 
-Shows the current version of the Tambo CLI.
+Shows the current version of the Genui CLI.
 
 ```bash
 npx tambo --version
@@ -190,7 +190,7 @@ npx tambo update form --yes
 npx tambo --version
 
 # Update to latest
-npm install -g @tambo-ai/cli@latest
+npm install -g @workspace/cli@latest
 ```
 
 **Issue: Permission errors**
@@ -219,7 +219,7 @@ npx tambo list --prefix=src/components/ui
 
 ## Exit Codes
 
-The Tambo CLI uses standard exit codes for shell integration and CI/CD:
+The Genui CLI uses standard exit codes for shell integration and CI/CD:
 
 | Exit Code | Meaning              | Common Causes                                  |
 | --------- | -------------------- | ---------------------------------------------- |
@@ -239,7 +239,7 @@ else
 fi
 
 # CI/CD example with proper exit code handling
-npx tambo init --api-key="$TAMBO_API_KEY"
+npx tambo init --api-key="$GENUI_API_KEY"
 status=$?
 if [ $status -eq 2 ]; then
   echo "Missing required arguments - see guidance above"
@@ -279,7 +279,7 @@ When running in non-interactive mode, use command-line flags to provide all requ
 
 ```bash
 # Initialize with direct API key (simplest for CI)
-npx tambo init --api-key="$TAMBO_API_KEY"
+npx tambo init --api-key="$GENUI_API_KEY"
 
 # Add components without prompts
 npx tambo add form graph --yes

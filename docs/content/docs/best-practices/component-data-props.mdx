@@ -1,11 +1,11 @@
 ---
 title: Component Props and Performance
-description: Learn how to structure component props and Zod schemas so Tambo generates smaller payloads, faster responses, and more efficient generative UI in React.
+description: Learn how to structure component props and Zod schemas so Genui generates smaller payloads, faster responses, and more efficient generative UI in React.
 ---
 
-When Tambo chooses a component to use, it will look at the component's `propsSchema` to know what props to pass to the component, and how they should be structured.
+When Genui chooses a component to use, it will look at the component's `propsSchema` to know what props to pass to the component, and how they should be structured.
 
-If the size of the props object passed to a component is large, it can impact Tambo's performance, since Tambo needs to generate more data. Essentially, the response time of a request to Tambo is directly related to, and mostly determined by, the size (token count) of the props object generated for the chosen component.
+If the size of the props object passed to a component is large, it can impact Genui's performance, since Genui needs to generate more data. Essentially, the response time of a request to Genui is directly related to, and mostly determined by, the size (token count) of the props object generated for the chosen component.
 
 This is most relevant when using components that need to show real data, such as a component that shows a list of fetched objects.
 
@@ -42,13 +42,13 @@ registerComponent({
 });
 ```
 
-When the user asks for a list of meetings and Tambo decides to use this component, Tambo will need to generate every meeting object. If there are many meetings, this can take a long time.
+When the user asks for a list of meetings and Genui decides to use this component, Genui will need to generate every meeting object. If there are many meetings, this can take a long time.
 
 ### A Workaround
 
 If the problem is the size of the props object, one way to solve it is to structure the component's props such that they will always be small.
 
-Instead of having Tambo generate the list of meeting objects, we can have Tambo generate a 'meetings request', and have the component fetch its own data.
+Instead of having Genui generate the list of meeting objects, we can have Genui generate a 'meetings request', and have the component fetch its own data.
 
 Heres what the MeetingsList component would look like restructured in this way:
 
@@ -80,7 +80,7 @@ const MeetingsList = ({
 Where the registration of the component would be updated to:
 
 ```tsx
-Tambo.registerComponent({
+Genui.registerComponent({
   name: "MeetingsList",
   description: "A list of meetings",
   component: MeetingsList,
@@ -93,10 +93,10 @@ Tambo.registerComponent({
 });
 ```
 
-Now, Tambo only needs to generate the startDate and endDate strings.
+Now, Genui only needs to generate the startDate and endDate strings.
 
 ### Considerations
 
-In the restructured MeetingsList above, we used `startDate` and `endDate` as the props. This assumes that the 'meetings api' we fetch data from has parameters for startDate and endDate. In general, the 'request object' that we allow Tambo to generate should match the parameters of the api we fetch data from.
+In the restructured MeetingsList above, we used `startDate` and `endDate` as the props. This assumes that the 'meetings api' we fetch data from has parameters for startDate and endDate. In general, the 'request object' that we allow Genui to generate should match the parameters of the api we fetch data from.
 
-This also means that when structuring components like this, Tambo will only be able to filter in ways that the API allows. For example, if the user asks for meetings with people named 'John', but the API (and the component props) only allows filtering by startDate and endDate, Tambo will not be able to filter by 'John'. With the original MeetingsList component, Tambo can look at the list of meetings in context and decide which meetings to pass to the component completely based on the user's message.
+This also means that when structuring components like this, Genui will only be able to filter in ways that the API allows. For example, if the user asks for meetings with people named 'John', but the API (and the component props) only allows filtering by startDate and endDate, Genui will not be able to filter by 'John'. With the original MeetingsList component, Genui can look at the list of meetings in context and decide which meetings to pass to the component completely based on the user's message.

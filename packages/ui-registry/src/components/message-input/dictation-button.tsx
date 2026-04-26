@@ -1,5 +1,5 @@
-import { Tooltip } from "@tambo-ai/ui-registry/components/message-suggestions";
-import { useTamboThreadInput, useTamboVoice } from "@tambo-ai/react";
+import { Tooltip } from "@workspace/ui-registry/components/message-suggestions";
+import { useTamboThreadInput, useTamboVoice } from "@workspace/react";
 import { Loader2Icon, Mic, Square } from "lucide-react";
 import { useEffect, useRef } from "react";
 

@@ -8,7 +8,7 @@ import { BearerTokenGuard } from "../../projects/guards/bearer-token.guard";
 const mockGetSignedUploadUrl = jest.fn();
 const mockExtractContextInfo = jest.fn();
 
-jest.mock("@tambo-ai-cloud/backend", () => ({
+jest.mock("@workspace-cloud/backend", () => ({
   getSignedUploadUrl: (...args: unknown[]) => mockGetSignedUploadUrl(...args),
 }));
 

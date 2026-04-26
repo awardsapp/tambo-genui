@@ -1,11 +1,11 @@
 import { Inject, Injectable, Logger } from "@nestjs/common";
 import * as Sentry from "@sentry/nestjs";
-import type { ThreadMessage } from "@tambo-ai-cloud/core";
+import type { ThreadMessage } from "@workspace-cloud/core";
 import {
   type ITamboBackend,
   callMemoryExtractionLLM,
-} from "@tambo-ai-cloud/backend";
-import { type HydraDatabase, operations } from "@tambo-ai-cloud/db";
+} from "@workspace-cloud/backend";
+import { type HydraDatabase, operations } from "@workspace-cloud/db";
 import { DATABASE } from "../common/database-provider";
 import { memoryExtractionResponseSchema } from "./memory-extraction-schema";
 

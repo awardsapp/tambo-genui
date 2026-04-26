@@ -37,7 +37,7 @@ export class InkeepToolHandlers {
    * @example
    * ```typescript
    * const handler = new InkeepToolHandlers(config);
-   * const response = await handler.handleQAQuestion("How do I install Tambo?");
+   * const response = await handler.handleQAQuestion("How do I install Genui?");
    * ```
    */
   async handleQAQuestion(question: string): Promise<MCPToolResponse> {

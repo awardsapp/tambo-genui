@@ -1,5 +1,5 @@
 import { Icons } from "@/components/icons";
-import { TamboChatTrigger } from "@/components/tambo-chat-trigger";
+import { GenuiChatTrigger } from "@/components/genui-chat-trigger";
 import { buttonVariants } from "@/components/ui/button";
 import { WhitelabelBadge } from "@/components/whitelabel-badge";
 import { siteConfig } from "@/lib/config";
@@ -38,7 +38,7 @@ export function BlogHeader({
 
           {/* Dashboard button - visible on all screen sizes */}
           <div className="flex items-center gap-2">
-            <TamboChatTrigger />
+            <GenuiChatTrigger />
             <Link
               href="/"
               className={cn(

@@ -26,7 +26,7 @@ export class OAuthLocalProvider implements OAuthClientProvider {
       sessionId,
       serverUrl,
     }: {
-      /** The base URL of the Tambo service, usually from process.env.VERCEL_URL */
+      /** The base URL of the Genui service, usually from process.env.VERCEL_URL */
       baseUrl?: string;
       /** The client information to use for the OAuth client, e.g. client_id, client_secret, etc. */
       clientInformation?: OAuthClientInformation;
@@ -108,7 +108,7 @@ export class OAuthLocalProvider implements OAuthClientProvider {
   get clientMetadata(): OAuthClientMetadata {
     const clientMetadata: OAuthClientMetadata = {
       redirect_uris: [this.redirectUrl],
-      client_name: "Tambo",
+      client_name: "Genui",
     };
     return clientMetadata;
   }

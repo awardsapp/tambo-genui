@@ -1,50 +1,50 @@
 <div align="center">
-  <h1>@tambo-ai/react</h1>
+  <h1>@workspace/react</h1>
   <h3>Build agents that speak your UI</h3>
   <p>The open-source generative UI toolkit for React.</p>
 </div>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/@tambo-ai/react"><img src="https://img.shields.io/npm/v/%40tambo-ai%2Freact?logo=npm" alt="npm version" /></a>
-  <a href="https://github.com/tambo-ai/tambo/blob/main/LICENSE"><img src="https://img.shields.io/github/license/tambo-ai/tambo" alt="License" /></a>
-  <a href="https://github.com/tambo-ai/tambo"><img src="https://img.shields.io/github/stars/tambo-ai/tambo" alt="GitHub stars" /></a>
+  <a href="https://www.npmjs.com/package/@workspace/react"><img src="https://img.shields.io/npm/v/%40genui-ai%2Freact?logo=npm" alt="npm version" /></a>
+  <a href="https://github.com/genui-ai/genui/blob/main/LICENSE"><img src="https://img.shields.io/github/license/genui-ai/genui" alt="License" /></a>
+  <a href="https://github.com/genui-ai/genui"><img src="https://img.shields.io/github/stars/genui-ai/genui" alt="GitHub stars" /></a>
   <a href="https://discord.gg/dJNvPEHth6"><img src="https://img.shields.io/discord/1251581895414911016?color=7289da&label=discord" alt="Discord"></a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/tambo-ai/tambo">⭐ Star us on GitHub</a> •
-  <a href="https://docs.tambo.co">Docs</a> •
+  <a href="https://github.com/genui-ai/genui">⭐ Star us on GitHub</a> •
+  <a href="https://docs.genui.co">Docs</a> •
   <a href="https://discord.gg/dJNvPEHth6">Discord</a>
 </p>
 
 ---
 
-## What is Tambo?
+## What is Genui?
 
-Tambo is a React toolkit for building agents that render UI (also known as generative UI).
+Genui is a React toolkit for building agents that render UI (also known as generative UI).
 
 Register your components with Zod schemas. The agent picks the right one and streams the props so users can interact with them. "Show me sales by region" renders your `<Chart>`. "Add a task" updates your `<TaskBoard>`.
 
 ## Installation
 
 ```bash
-npm create tambo-app my-tambo-app
-cd my-tambo-app
-npx tambo init      # choose cloud or self-hosted
+npm create genui-app my-genui-app
+cd my-genui-app
+npx genui init      # choose cloud or self-hosted
 npm run dev
 ```
 
 Or add to an existing project:
 
 ```bash
-npm install @tambo-ai/react
-npx tambo init
+npm install @workspace/react
+npx genui init
 ```
 
 ## Quick Start
 
 ```tsx
-import { TamboProvider, useTambo, useTamboThreadInput } from "@tambo-ai/react";
+import { GenuiProvider, useGenui, useGenuiThreadInput } from "@workspace/react";
 import { z } from "zod/v4";
 
 // 1. Register components with Zod schemas
@@ -63,20 +63,20 @@ const components = [
 // 2. Wrap your app
 function App() {
   return (
-    <TamboProvider
-      apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY!}
+    <GenuiProvider
+      apiKey={process.env.NEXT_PUBLIC_GENUI_API_KEY!}
       userKey={currentUserId} // Required: identifies thread owner
       components={components}
     >
       <ChatInterface />
-    </TamboProvider>
+    </GenuiProvider>
   );
 }
 
 // 3. Use hooks
 function ChatInterface() {
-  const { messages, isStreaming } = useTambo();
-  const { value, setValue, submit, isPending } = useTamboThreadInput();
+  const { messages, isStreaming } = useGenui();
+  const { value, setValue, submit, isPending } = useGenuiThreadInput();
 
   return (
     <form
@@ -100,28 +100,28 @@ function ChatInterface() {
 
 | Hook                                                                                               | Description                                                 |
 | -------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| [`useTambo()`](https://docs.tambo.co/reference/react-sdk/hooks#usetambo)                           | Primary hook - messages, streaming state, thread management |
-| [`useTamboThreadInput()`](https://docs.tambo.co/reference/react-sdk/hooks#usetambothreadinput)     | Handle user input, image uploads, and message submission    |
-| [`useTamboThread()`](https://docs.tambo.co/concepts/conversation-storage)                          | Fetch a single thread by ID (React Query)                   |
-| [`useTamboThreadList()`](https://docs.tambo.co/concepts/conversation-storage)                      | Fetch thread list with filtering and pagination             |
-| [`useTamboStreamStatus()`](https://docs.tambo.co/reference/react-sdk/hooks#usetambostreamstatus)   | Monitor prop-level streaming status for progressive loading |
-| [`useTamboSuggestions()`](https://docs.tambo.co/guides/build-interfaces/build-chat-interface)      | Generate contextual suggestions                             |
-| [`useTamboComponentState()`](https://docs.tambo.co/concepts/generative-interfaces/component-state) | Bidirectional component state synced with the backend       |
-| [`useTamboVoice()`](https://docs.tambo.co/reference/react-sdk/hooks#usetambovoice)                 | Voice input and transcription                               |
+| [`useGenui()`](https://docs.genui.co/reference/react-sdk/hooks#usegenui)                           | Primary hook - messages, streaming state, thread management |
+| [`useGenuiThreadInput()`](https://docs.genui.co/reference/react-sdk/hooks#usegenuithreadinput)     | Handle user input, image uploads, and message submission    |
+| [`useGenuiThread()`](https://docs.genui.co/concepts/conversation-storage)                          | Fetch a single thread by ID (React Query)                   |
+| [`useGenuiThreadList()`](https://docs.genui.co/concepts/conversation-storage)                      | Fetch thread list with filtering and pagination             |
+| [`useGenuiStreamStatus()`](https://docs.genui.co/reference/react-sdk/hooks#usegenuistreamstatus)   | Monitor prop-level streaming status for progressive loading |
+| [`useGenuiSuggestions()`](https://docs.genui.co/guides/build-interfaces/build-chat-interface)      | Generate contextual suggestions                             |
+| [`useGenuiComponentState()`](https://docs.genui.co/concepts/generative-interfaces/component-state) | Bidirectional component state synced with the backend       |
+| [`useGenuiVoice()`](https://docs.genui.co/reference/react-sdk/hooks#usegenuivoice)                 | Voice input and transcription                               |
 
 ## Features
 
-- **[Generative Components](https://docs.tambo.co/concepts/generative-interfaces/generative-components)** - AI renders the right component based on conversation
-- **[Interactable Components](https://docs.tambo.co/concepts/generative-interfaces/interactable-components)** - Persistent stateful components that update as users refine requests
-- **[MCP Integration](https://docs.tambo.co/concepts/model-context-protocol)** - Connect to Linear, Slack, databases, or your own MCP servers
-- **[Local Tools](https://docs.tambo.co/guides/take-actions/register-tools)** - Define browser-side functions the AI can call
-- **[Streaming](https://docs.tambo.co/reference/react-sdk/hooks#usetambostreamstatus)** - Props stream to components as the LLM generates them
+- **[Generative Components](https://docs.genui.co/concepts/generative-interfaces/generative-components)** - AI renders the right component based on conversation
+- **[Interactable Components](https://docs.genui.co/concepts/generative-interfaces/interactable-components)** - Persistent stateful components that update as users refine requests
+- **[MCP Integration](https://docs.genui.co/concepts/model-context-protocol)** - Connect to Linear, Slack, databases, or your own MCP servers
+- **[Local Tools](https://docs.genui.co/guides/take-actions/register-tools)** - Define browser-side functions the AI can call
+- **[Streaming](https://docs.genui.co/reference/react-sdk/hooks#usegenuistreamstatus)** - Props stream to components as the LLM generates them
 
 ## MCP Dependency Note
 
-`@modelcontextprotocol/sdk` is included automatically when you install `@tambo-ai/react`.
+`@modelcontextprotocol/sdk` is included automatically when you install `@workspace/react`.
 
-If you import from `@tambo-ai/react/mcp` **and** use features that require schema validation (like component prop schemas via `propsSchema`, or tool schemas via `inputSchema`/`outputSchema`), install the optional peer dependencies:
+If you import from `@workspace/react/mcp` **and** use features that require schema validation (like component prop schemas via `propsSchema`, or tool schemas via `inputSchema`/`outputSchema`), install the optional peer dependencies:
 
 Zod 3 (`^3.25.76`) and Zod 4 (`^4`) are both supported. We recommend Zod 4 for new projects. `zod-to-json-schema@^3.25.1` is tested and known to support both.
 
@@ -137,15 +137,15 @@ npm install zod@^3.25.76 zod-to-json-schema@^3.25.1
 
 ## Learn More
 
-- **[GitHub](https://github.com/tambo-ai/tambo)** - Full documentation, examples, and ⭐ star us!
-- **[Docs](https://docs.tambo.co)** - Guides and API reference
-- **[UI Library](https://ui.tambo.co)** - Pre-built components
+- **[GitHub](https://github.com/genui-ai/genui)** - Full documentation, examples, and ⭐ star us!
+- **[Docs](https://docs.genui.co)** - Guides and API reference
+- **[UI Library](https://ui.genui.co)** - Pre-built components
 - **[Discord](https://discord.gg/dJNvPEHth6)** - Community and support
 
 ## License
 
-MIT - see [LICENSE](https://github.com/tambo-ai/tambo/blob/main/LICENSE)
+MIT - see [LICENSE](https://github.com/genui-ai/genui/blob/main/LICENSE)
 
 ---
 
-**For AI/LLM agents:** [docs.tambo.co/llms.txt](https://docs.tambo.co/llms.txt)
+**For AI/LLM agents:** [docs.genui.co/llms.txt](https://docs.genui.co/llms.txt)

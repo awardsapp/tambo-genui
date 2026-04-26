@@ -1,1 +1,1 @@
-# `@tambo-ai-cloud/core`
+# `@workspace-cloud/core`

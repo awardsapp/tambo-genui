@@ -9,7 +9,7 @@ export default function GetStartedPage() {
         Get Started
       </h1>
       <p className="text-base md:text-lg text-muted-foreground mb-8">
-        Follow these steps to get started with tambo-ai.
+        Follow these steps to get started with genui-ai.
       </p>
 
       <Tabs defaultValue="new-project" className="w-full">
@@ -45,7 +45,7 @@ export default function GetStartedPage() {
 
         <TabsContent value="existing-project" className="mt-6">
           <h2 className="text-xl md:text-2xl font-semibold mb-4">
-            Add tambo-ai to an existing project
+            Add genui-ai to an existing project
           </h2>
           {existingProjectSteps.map((step) => (
             <div

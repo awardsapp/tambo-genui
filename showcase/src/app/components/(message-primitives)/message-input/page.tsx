@@ -11,7 +11,7 @@ import {
   MessageInputSubmitButton,
   MessageInputTextarea,
   MessageInputToolbar,
-} from "@tambo-ai/ui-registry/components/message-input";
+} from "@workspace/ui-registry/components/message-input";
 
 export default function MessageInputPage() {
   return (
@@ -51,7 +51,7 @@ export default function MessageInputPage() {
   MessageInputSubmitButton,
   MessageInputError,
   MessageInputToolbar,
-} from "@/components/tambo/message-input";
+} from "@/components/genui/message-input";
 
 export function ChatInput() {
   return (
@@ -90,7 +90,7 @@ export function ChatInput() {
   MessageInputSubmitButton,
   MessageInputError,
   MessageInputToolbar,
-} from "@/components/tambo/message-input";
+} from "@/components/genui/message-input";
 
 export function SolidChatInput() {
   return (
@@ -129,7 +129,7 @@ export function SolidChatInput() {
   MessageInputSubmitButton,
   MessageInputError,
   MessageInputToolbar,
-} from "@/components/tambo/message-input";
+} from "@/components/genui/message-input";
 
 export function BorderedChatInput() {
   return (
@@ -170,7 +170,7 @@ export function BorderedChatInput() {
   MessageInputSubmitButton,
   MessageInputError,
   MessageInputToolbar,
-} from "@/components/tambo/message-input";
+} from "@/components/genui/message-input";
 
 export function FullFeaturedInput() {
   return (
@@ -201,7 +201,7 @@ export function FullFeaturedInput() {
   MessageInput,
   MessageInputTextarea,
   MessageInputError,
-} from "@/components/tambo/message-input";
+} from "@/components/genui/message-input";
 
 export function MinimalInput() {
   return (
@@ -217,7 +217,7 @@ export function MinimalInput() {
       </section>
 
       <section>
-        <InstallationSection cliCommand="npx tambo add message-input" />
+        <InstallationSection cliCommand="npx genui add message-input" />
       </section>
 
       <section className="space-y-6">

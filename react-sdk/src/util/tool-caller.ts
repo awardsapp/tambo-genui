@@ -1,10 +1,10 @@
-import TamboAI from "@tambo-ai/typescript-sdk";
+import GenuiAI from "@workspace/typescript-sdk";
 import {
   ComponentContextTool,
-  TamboTool,
-  TamboToolRegistry,
+  GenuiTool,
+  GenuiToolRegistry,
 } from "../model/component-metadata";
-import { mapTamboToolToContextTool } from "./registry";
+import { mapGenuiToolToContextTool } from "./registry";
 
 /**
  * Process a message from the thread, invoking the appropriate tool and returning the result.
@@ -13,23 +13,23 @@ import { mapTamboToolToContextTool } from "./registry";
  * @returns The result of the tool call along with the tool definition
  */
 export const handleToolCall = async (
-  toolCallRequest: TamboAI.ToolCallRequest,
-  toolRegistry: TamboToolRegistry,
+  toolCallRequest: GenuiAI.ToolCallRequest,
+  toolRegistry: GenuiToolRegistry,
   onCallUnregisteredTool?: (
     toolName: string,
-    args: TamboAI.ToolCallParameter[],
+    args: GenuiAI.ToolCallParameter[],
   ) => Promise<string>,
 ): Promise<{
   result: unknown;
   error?: string;
-  tamboTool?: TamboTool;
+  genuiTool?: GenuiTool;
 }> => {
   if (!toolCallRequest?.toolName) {
     throw new Error("Tool name is required");
   }
 
   try {
-    const { tool, tamboTool } = findTool(
+    const { tool, genuiTool } = findTool(
       toolCallRequest.toolName,
       toolRegistry,
     );
@@ -47,7 +47,7 @@ export const handleToolCall = async (
     }
     return {
       result: await runToolChoice(toolCallRequest, tool),
-      tamboTool,
+      genuiTool,
     };
   } catch (error) {
     console.error("Error in calling tool: ", error);
@@ -60,31 +60,31 @@ export const handleToolCall = async (
 
 const findTool = (
   toolName: string,
-  toolRegistry: TamboToolRegistry,
+  toolRegistry: GenuiToolRegistry,
 ):
   | {
       tool: ComponentContextTool;
-      tamboTool: TamboTool;
+      genuiTool: GenuiTool;
     }
-  | { tool: null; tamboTool: null } => {
+  | { tool: null; genuiTool: null } => {
   const registryTool = toolRegistry[toolName];
 
   if (!registryTool) {
-    return { tool: null, tamboTool: null };
+    return { tool: null, genuiTool: null };
   }
 
-  const contextTool = mapTamboToolToContextTool(registryTool);
+  const contextTool = mapGenuiToolToContextTool(registryTool);
   return {
     tool: {
       getComponentContext: registryTool.tool,
       definition: contextTool,
     },
-    tamboTool: registryTool,
+    genuiTool: registryTool,
   };
 };
 
 const runToolChoice = async (
-  toolCallRequest: TamboAI.ToolCallRequest,
+  toolCallRequest: GenuiAI.ToolCallRequest,
   tool: ComponentContextTool,
 ): Promise<unknown> => {
   const parameters = toolCallRequest.parameters ?? [];

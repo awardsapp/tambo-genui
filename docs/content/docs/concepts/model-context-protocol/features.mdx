@@ -29,7 +29,7 @@ The user doesn't manually invoke tools - the AI orchestrates tool calls automati
 
 ### Rich Content Support
 
-MCP tools automatically support rich content responses. When tools return content arrays (text, images, and other media), Tambo passes them directly to the AI without converting to plain text. This enables tools to seamlessly return images, formatted content, and other rich media.
+MCP tools automatically support rich content responses. When tools return content arrays (text, images, and other media), Genui passes them directly to the AI without converting to plain text. This enables tools to seamlessly return images, formatted content, and other rich media.
 
 ### Connection Type Support
 
@@ -89,7 +89,7 @@ Prompts are always prefixed with the MCP server's `serverKey` (e.g., `linear:new
 
 ### Current Limitations
 
-Prompt parameters are not yet supported. While the MCP specification allows prompts to accept customization parameters, Tambo's current implementation inserts all prompts as-is using their default values. Parameter support is planned for a future release.
+Prompt parameters are not yet supported. While the MCP specification allows prompts to accept customization parameters, Genui's current implementation inserts all prompts as-is using their default values. Parameter support is planned for a future release.
 
 ### Connection Type Support
 
@@ -167,7 +167,7 @@ After selection, the resource appears as a mention in the message (e.g., `@linea
 Resources are always prefixed to identify which MCP server they come from:
 
 - **Server-side resources:** `@serverKey:serverSidePrefix:resourceUri`
-  - Example: `@linear:tambo:issue://TAM-123`
+  - Example: `@linear:genui:issue://TAM-123`
   - Double prefix (client + server)
 - **Client-side resources:** `@serverKey:resourceUri`
   - Example: `@linear:issue://TAM-123`
@@ -181,7 +181,7 @@ How resources are processed depends on the connection type:
 
 **Server-side resources:**
 
-- The resource reference is sent to Tambo's API
+- The resource reference is sent to Genui's API
 - The server fetches resource content from the MCP server
 - Content is injected into the prompt server-side
 - Better for resources requiring server authentication or large content
@@ -190,7 +190,7 @@ How resources are processed depends on the connection type:
 
 - The resource is fetched in the browser
 - Full content is injected into the prompt client-side
-- The complete content is sent to Tambo's API
+- The complete content is sent to Genui's API
 - Better for resources accessible from the browser or reasonably sized content
 
 ### Example Use Cases
@@ -310,7 +310,7 @@ Sampling happens transparently during tool execution:
 5. The tool uses the LLM's response in its result
 6. User receives the enhanced, AI-processed result
 
-Tambo automatically displays sampling interactions in the UI as expandable dropdowns within tool information panels, showing the messages exchanged between the MCP server and the LLM.
+Genui automatically displays sampling interactions in the UI as expandable dropdowns within tool information panels, showing the messages exchanged between the MCP server and the LLM.
 
 ### How It Works
 
@@ -319,19 +319,19 @@ The sampling flow:
 ```mermaid
 sequenceDiagram
     participant User
-    participant Tambo
+    participant Genui
     participant MCPServer as "MCP Server"
     participant LLM
 
-    User->>Tambo: "What's the weather in SF?"
-    Tambo->>MCPServer: Call weather tool
+    User->>Genui: "What's the weather in SF?"
+    Genui->>MCPServer: Call weather tool
     MCPServer->>MCPServer: Fetch raw weather data
-    MCPServer->>Tambo: Sampling request: "Summarize this weather data"
-    Tambo->>LLM: Generate summary
-    LLM->>Tambo: Summary response
-    Tambo->>MCPServer: Sampling result
-    MCPServer->>Tambo: Tool result with summary
-    Tambo->>User: Display formatted weather
+    MCPServer->>Genui: Sampling request: "Summarize this weather data"
+    Genui->>LLM: Generate summary
+    LLM->>Genui: Summary response
+    Genui->>MCPServer: Sampling result
+    MCPServer->>Genui: Tool result with summary
+    Genui->>User: Display formatted weather
 ```
 
 ### Example Use Cases
@@ -343,7 +343,7 @@ sequenceDiagram
 
 ### Server-side Only
 
-Sampling currently only works with server-side MCP connections. Client-side MCP servers cannot make sampling requests at this time. This limitation exists because sampling requests need to be processed through Tambo's backend infrastructure for proper security, rate limiting, and LLM access control.
+Sampling currently only works with server-side MCP connections. Client-side MCP servers cannot make sampling requests at this time. This limitation exists because sampling requests need to be processed through Genui's backend infrastructure for proper security, rate limiting, and LLM access control.
 
 ### Connection Type Support
 

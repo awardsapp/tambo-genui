@@ -7,17 +7,17 @@ import {
   type HydraDatabase,
   operations,
   ThreadNotFoundError,
-} from "@tambo-ai-cloud/db";
+} from "@workspace-cloud/db";
 import { Request } from "express";
 import { type CorrelationLoggerService } from "../../common/services/logger.service";
 import { ProjectId } from "../../projects/guards/apikey.guard";
 import { ContextKey } from "../../projects/guards/bearer-token.guard";
 import { V1ThreadInProjectGuard } from "../guards/v1-thread-in-project-guard";
 
-jest.mock("@tambo-ai-cloud/db", () => {
+jest.mock("@workspace-cloud/db", () => {
   const actual =
-    jest.requireActual<typeof import("@tambo-ai-cloud/db")>(
-      "@tambo-ai-cloud/db",
+    jest.requireActual<typeof import("@workspace-cloud/db")>(
+      "@workspace-cloud/db",
     );
   return {
     ...actual,

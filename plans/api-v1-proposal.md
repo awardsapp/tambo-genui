@@ -1,21 +1,21 @@
-# Tambo API v1 Proposal
+# Genui API v1 Proposal
 
 ## Executive Summary
 
 ### Motivation
 
-As we prepare for the Tambo 1.0 release, the current API has accumulated inconsistencies, redundant fields, and ad-hoc patterns that make it difficult to maintain and document. This proposal defines a clean v1 API that consolidates these patterns, aligns with industry standards, and provides a solid foundation for future development.
+As we prepare for the Genui 1.0 release, the current API has accumulated inconsistencies, redundant fields, and ad-hoc patterns that make it difficult to maintain and document. This proposal defines a clean v1 API that consolidates these patterns, aligns with industry standards, and provides a solid foundation for future development.
 
 ### Overview
 
-This proposal defines the Tambo API v1, a streaming-first API that uses AG-UI events as the wire protocol. The design aligns with industry standards (OpenAI, Anthropic, MCP) while extending them to support Tambo's unique capability: returning streamable UI components with props and state.
+This proposal defines the Genui API v1, a streaming-first API that uses AG-UI events as the wire protocol. The design aligns with industry standards (OpenAI, Anthropic, MCP) while extending them to support Genui's unique capability: returning streamable UI components with props and state.
 
 ### Key Design Decisions
 
 1. **Streaming-only**: No synchronous endpoints - all responses stream via Server-Sent Events (SSE)
 2. **AG-UI Protocol**: Uses the AG-UI event system for all streaming communication
 3. **Industry-aligned Types**: Messages, Content, and Tools follow OpenAI/Anthropic conventions
-4. **First-class Components**: Components appear as content blocks (like tool calls) and stream via dedicated `tambo.component.*` events
+4. **First-class Components**: Components appear as content blocks (like tool calls) and stream via dedicated `genui.component.*` events
 5. **Multi-component Support**: A single response can return multiple components
 6. **Server & Client Tools**: Server-side tools (MCP, pre-registered) execute inline; client-side tools (per-request) pause the stream
 7. **Bidirectional State**: Clients can push state updates to components via dedicated endpoint (when not streaming)
@@ -28,13 +28,13 @@ This proposal defines the Tambo API v1, a streaming-first API that uses AG-UI ev
 ```mermaid
 sequenceDiagram
     participant App as React App
-    participant SDK as Tambo React SDK
-    participant API as Tambo API
-    participant Backend as Tambo Backend
+    participant SDK as Genui React SDK
+    participant API as Genui API
+    participant Backend as Genui Backend
     participant DB as Database
     participant LLM as LLM Provider
 
-    App->>SDK: useTamboThread()
+    App->>SDK: useGenuiThread()
     App->>SDK: sendMessage(text)
     SDK->>API: POST /v1/threads/{id}/runs
     API->>Backend: Create run, prepare context
@@ -45,7 +45,7 @@ sequenceDiagram
         LLM-->>Backend: Token/tool call chunks
         Backend->>DB: Update assistant message (accumulate)
         Backend-->>API: Transform to AG-UI events
-        API-->>SDK: SSE: TEXT_MESSAGE_CONTENT, TOOL_CALL_*, tambo.component.*
+        API-->>SDK: SSE: TEXT_MESSAGE_CONTENT, TOOL_CALL_*, genui.component.*
         SDK->>SDK: Accumulate events into messages
         SDK-->>App: Update thread state (messages, components)
     end
@@ -61,11 +61,11 @@ sequenceDiagram
 flowchart TB
     subgraph Client["Client (Browser)"]
         App[React App]
-        SDK[Tambo React SDK]
+        SDK[Genui React SDK]
         Components[Rendered Components]
     end
 
-    subgraph TamboCloud["Tambo Cloud"]
+    subgraph GenuiCloud["Genui Cloud"]
         API["/v1 REST API"]
         Backend[Backend Services]
         DB[(Database)]
@@ -95,7 +95,7 @@ flowchart TB
 2. **API → Backend**: Backend prepares context (thread history, MCP resources) and calls LLM
 3. **LLM → Backend**: LLM streams tokens and tool calls back to backend
 4. **Backend → API**: Backend transforms LLM output into AG-UI events
-5. **API → SDK**: SSE stream delivers events (`TEXT_MESSAGE_*`, `TOOL_CALL_*`, `tambo.component.*`)
+5. **API → SDK**: SSE stream delivers events (`TEXT_MESSAGE_*`, `TOOL_CALL_*`, `genui.component.*`)
 6. **SDK accumulation**: SDK accumulates events into complete message structures
 7. **SDK → App**: React hooks expose accumulated state (messages, components, loading status)
 
@@ -156,14 +156,14 @@ We use a single `resource` type for all binary/multimodal content (images, audio
  * - resource: Unified binary/multimodal content (MCP-inspired)
  * - tool_use: Tool call from assistant (Anthropic pattern)
  * - tool_result: Tool result from user (Anthropic pattern)
- * - component: UI component (Tambo extension)
+ * - component: UI component (Genui extension)
  */
 type ContentType =
   | "text"
   | "resource" // Unified binary/multimodal content
   | "tool_use" // Tool call (assistant only)
   | "tool_result" // Tool result (user only)
-  | "component"; // UI component (assistant only, Tambo extension)
+  | "component"; // UI component (assistant only, Genui extension)
 
 /**
  * Base content block interface
@@ -244,7 +244,7 @@ interface ToolResultContent extends BaseContent {
 }
 
 /**
- * Component content - UI component to render (Tambo extension)
+ * Component content - UI component to render (Genui extension)
  * Only appears in assistant messages
  */
 interface ComponentContent extends BaseContent {
@@ -368,7 +368,7 @@ type ToolChoice =
   | { name: string }; // Must use specific tool (all APIs support this)
 ```
 
-### 1.5 Components (Tambo Extension)
+### 1.5 Components (Genui Extension)
 
 ```typescript
 /**
@@ -493,28 +493,28 @@ message. `TOOL_CALL_START` creates a `tool_use` content block, `TOOL_CALL_ARGS` 
 The SDK concatenates these chunks and parses the final JSON string into the `ToolUseContent.input`
 field, which is typed as `Record<string, unknown>`.
 
-### 2.2 Tambo CUSTOM Events
+### 2.2 Genui CUSTOM Events
 
 AG-UI provides a `CUSTOM` event type for application-specific extensions. We use this with a
-`tambo.*` namespace for Tambo-specific functionality that AG-UI doesn't cover natively:
+`genui.*` namespace for Genui-specific functionality that AG-UI doesn't cover natively:
 
 1. **Pausing for client-side tool results** - AG-UI doesn't have a "waiting for input" state
-2. **Streaming UI component props/state** - Components are a Tambo-specific concept
+2. **Streaming UI component props/state** - Components are a Genui-specific concept
 3. **Rich run completion data** - We include full message objects on completion
 
 ```typescript
 /**
- * Base interface for Tambo CUSTOM events
+ * Base interface for Genui CUSTOM events
  */
-interface TamboCustomEvent {
+interface GenuiCustomEvent {
   type: "CUSTOM";
-  name: string; // Namespaced: "tambo.*"
+  name: string; // Namespaced: "genui.*"
   value: unknown;
   timestamp?: number;
 }
 
 // ============================================================================
-// TAMBO CUSTOM EVENTS
+// GENUI CUSTOM EVENTS
 // ============================================================================
 
 /**
@@ -524,8 +524,8 @@ interface TamboCustomEvent {
  * Only includes tool call IDs - the tool name and input were already
  * streamed via TOOL_CALL_START/TOOL_CALL_ARGS/TOOL_CALL_END events.
  */
-interface TamboAwaitingInputEvent extends TamboCustomEvent {
-  name: "tambo.run.awaiting_input";
+interface GenuiAwaitingInputEvent extends GenuiCustomEvent {
+  name: "genui.run.awaiting_input";
   value: {
     threadId: string;
     runId: string;
@@ -540,8 +540,8 @@ interface TamboAwaitingInputEvent extends TamboCustomEvent {
  * (identified by messageId). Components accumulate alongside text and tool
  * calls in the order they're streamed, allowing mixed content rendering.
  */
-interface TamboComponentStartEvent extends TamboCustomEvent {
-  name: "tambo.component.start";
+interface GenuiComponentStartEvent extends GenuiCustomEvent {
+  name: "genui.component.start";
   value: {
     componentId: string;
     componentName: string;
@@ -567,8 +567,8 @@ type PropStreamingStatus = "started" | "streaming" | "done";
  *
  * Uses `delta` field name for alignment with AG-UI STATE_DELTA event format.
  */
-interface TamboComponentPropsDeltaEvent extends TamboCustomEvent {
-  name: "tambo.component.props_delta";
+interface GenuiComponentPropsDeltaEvent extends GenuiCustomEvent {
+  name: "genui.component.props_delta";
   value: {
     componentId: string;
     delta: JsonPatchOperation[];
@@ -580,8 +580,8 @@ interface TamboComponentPropsDeltaEvent extends TamboCustomEvent {
  * Emitted for component state updates (JSON Patch).
  * Uses `delta` field name for alignment with AG-UI STATE_DELTA event format.
  */
-interface TamboComponentStateDeltaEvent extends TamboCustomEvent {
-  name: "tambo.component.state_delta";
+interface GenuiComponentStateDeltaEvent extends GenuiCustomEvent {
+  name: "genui.component.state_delta";
   value: {
     componentId: string;
     delta: JsonPatchOperation[];
@@ -591,8 +591,8 @@ interface TamboComponentStateDeltaEvent extends TamboCustomEvent {
 /**
  * Emitted when component streaming ends with final data.
  */
-interface TamboComponentEndEvent extends TamboCustomEvent {
-  name: "tambo.component.end";
+interface GenuiComponentEndEvent extends GenuiCustomEvent {
+  name: "genui.component.end";
   value: {
     componentId: string;
     props: Record<string, unknown>;
@@ -612,14 +612,14 @@ interface JsonPatchOperation {
 }
 
 /**
- * Union of all Tambo CUSTOM events
+ * Union of all Genui CUSTOM events
  */
-type TamboExtensionEvent =
-  | TamboAwaitingInputEvent
-  | TamboComponentStartEvent
-  | TamboComponentPropsDeltaEvent
-  | TamboComponentStateDeltaEvent
-  | TamboComponentEndEvent;
+type GenuiExtensionEvent =
+  | GenuiAwaitingInputEvent
+  | GenuiComponentStartEvent
+  | GenuiComponentPropsDeltaEvent
+  | GenuiComponentStateDeltaEvent
+  | GenuiComponentEndEvent;
 ```
 
 ---
@@ -695,7 +695,7 @@ interface CreateRunRequest {
 
 - Tools submitted in the `tools` array are client-side tools, executed by the frontend
 - When a client-side tool is called:
-  1. `tambo.run.awaiting_input` is emitted with the pending tool call IDs
+  1. `genui.run.awaiting_input` is emitted with the pending tool call IDs
   2. `RUN_FINISHED` is emitted (run ends cleanly)
   3. Client executes the tool and POSTs results with `previousRunId` to start a new run
 - Server-side tools (MCP tools) are pre-registered at the project level, not per-request
@@ -894,11 +894,11 @@ data: {"type":"RUN_STARTED","threadId":"thr_abc123","runId":"run_xyz789"}
 data: {"type":"TEXT_MESSAGE_START","messageId":"msg_001","role":"assistant"}
 data: {"type":"TEXT_MESSAGE_CONTENT","messageId":"msg_001","delta":"Here's the stock chart for Apple (AAPL):"}
 data: {"type":"TEXT_MESSAGE_END","messageId":"msg_001"}
-data: {"type":"CUSTOM","name":"tambo.component.start","value":{"componentId":"comp_001","componentName":"StockChart","messageId":"msg_001"}}
-data: {"type":"CUSTOM","name":"tambo.component.props_delta","value":{"componentId":"comp_001","delta":[],"streaming":{"ticker":"started","timeRange":"started"}}}
-data: {"type":"CUSTOM","name":"tambo.component.props_delta","value":{"componentId":"comp_001","delta":[{"op":"add","path":"/ticker","value":"AAPL"}],"streaming":{"ticker":"done","timeRange":"streaming"}}}
-data: {"type":"CUSTOM","name":"tambo.component.props_delta","value":{"componentId":"comp_001","delta":[{"op":"add","path":"/timeRange","value":"1M"}],"streaming":{"ticker":"done","timeRange":"done"}}}
-data: {"type":"CUSTOM","name":"tambo.component.end","value":{"componentId":"comp_001","props":{"ticker":"AAPL","timeRange":"1M"}}}
+data: {"type":"CUSTOM","name":"genui.component.start","value":{"componentId":"comp_001","componentName":"StockChart","messageId":"msg_001"}}
+data: {"type":"CUSTOM","name":"genui.component.props_delta","value":{"componentId":"comp_001","delta":[],"streaming":{"ticker":"started","timeRange":"started"}}}
+data: {"type":"CUSTOM","name":"genui.component.props_delta","value":{"componentId":"comp_001","delta":[{"op":"add","path":"/ticker","value":"AAPL"}],"streaming":{"ticker":"done","timeRange":"streaming"}}}
+data: {"type":"CUSTOM","name":"genui.component.props_delta","value":{"componentId":"comp_001","delta":[{"op":"add","path":"/timeRange","value":"1M"}],"streaming":{"ticker":"done","timeRange":"done"}}}
+data: {"type":"CUSTOM","name":"genui.component.end","value":{"componentId":"comp_001","props":{"ticker":"AAPL","timeRange":"1M"}}}
 data: {"type":"RUN_FINISHED","threadId":"thr_abc123","runId":"run_xyz789"}
 ```
 
@@ -917,12 +917,12 @@ data: {"type":"RUN_STARTED",...}
 data: {"type":"TEXT_MESSAGE_START",...}
 data: {"type":"TEXT_MESSAGE_CONTENT","messageId":"msg_001","delta":"Here's a side-by-side comparison:"}
 data: {"type":"TEXT_MESSAGE_END",...}
-data: {"type":"CUSTOM","name":"tambo.component.start","value":{"componentId":"comp_001","componentName":"StockChart","messageId":"msg_001"}}
-data: {"type":"CUSTOM","name":"tambo.component.props_delta","value":{"componentId":"comp_001","delta":[{"op":"add","path":"/ticker","value":"AAPL"}],...}}
-data: {"type":"CUSTOM","name":"tambo.component.end","value":{"componentId":"comp_001","props":{"ticker":"AAPL","timeRange":"1M"}}}
-data: {"type":"CUSTOM","name":"tambo.component.start","value":{"componentId":"comp_002","componentName":"StockChart","messageId":"msg_001"}}
-data: {"type":"CUSTOM","name":"tambo.component.props_delta","value":{"componentId":"comp_002","delta":[{"op":"add","path":"/ticker","value":"MSFT"}],...}}
-data: {"type":"CUSTOM","name":"tambo.component.end","value":{"componentId":"comp_002","props":{"ticker":"MSFT","timeRange":"1M"}}}
+data: {"type":"CUSTOM","name":"genui.component.start","value":{"componentId":"comp_001","componentName":"StockChart","messageId":"msg_001"}}
+data: {"type":"CUSTOM","name":"genui.component.props_delta","value":{"componentId":"comp_001","delta":[{"op":"add","path":"/ticker","value":"AAPL"}],...}}
+data: {"type":"CUSTOM","name":"genui.component.end","value":{"componentId":"comp_001","props":{"ticker":"AAPL","timeRange":"1M"}}}
+data: {"type":"CUSTOM","name":"genui.component.start","value":{"componentId":"comp_002","componentName":"StockChart","messageId":"msg_001"}}
+data: {"type":"CUSTOM","name":"genui.component.props_delta","value":{"componentId":"comp_002","delta":[{"op":"add","path":"/ticker","value":"MSFT"}],...}}
+data: {"type":"CUSTOM","name":"genui.component.end","value":{"componentId":"comp_002","props":{"ticker":"MSFT","timeRange":"1M"}}}
 data: {"type":"RUN_FINISHED",...}
 ```
 
@@ -977,7 +977,7 @@ data: {"type":"RUN_FINISHED","threadId":"thr_abc123","runId":"run_xyz789","times
 
 ### 4.5 Client-Side Tool Calls (Browser Tools)
 
-Client-side tools pause the stream with `tambo.run.awaiting_input`. The client executes the tools and continues with a new request.
+Client-side tools pause the stream with `genui.run.awaiting_input`. The client executes the tools and continues with a new request.
 
 **Initial Request:**
 
@@ -1015,7 +1015,7 @@ data: {"type":"TOOL_CALL_ARGS","toolCallId":"tc_001","delta":"{\"productId\":\"S
 
 data: {"type":"TOOL_CALL_END","toolCallId":"tc_001","timestamp":1704067200150}
 
-data: {"type":"CUSTOM","name":"tambo.run.awaiting_input","value":{"threadId":"thr_abc123","runId":"run_xyz789","pendingToolCallIds":["tc_001"]},"timestamp":1704067200200}
+data: {"type":"CUSTOM","name":"genui.run.awaiting_input","value":{"threadId":"thr_abc123","runId":"run_xyz789","pendingToolCallIds":["tc_001"]},"timestamp":1704067200200}
 
 data: {"type":"RUN_FINISHED","threadId":"thr_abc123","runId":"run_xyz789","timestamp":1704067200250}
 ```
@@ -1093,18 +1093,18 @@ This example shows a component that receives state updates as data becomes avail
 
 ```
 data: {"type":"RUN_STARTED","threadId":"thr_abc123","runId":"run_xyz789"}
-data: {"type":"CUSTOM","name":"tambo.component.start","value":{"componentId":"comp_001","componentName":"DataTable","messageId":"msg_001"}}
-data: {"type":"CUSTOM","name":"tambo.component.props_delta","value":{"componentId":"comp_001","delta":[{"op":"add","path":"/title","value":"User Analytics"}]}}
-data: {"type":"CUSTOM","name":"tambo.component.state_delta","value":{"componentId":"comp_001","delta":[{"op":"add","path":"/loading","value":true},{"op":"add","path":"/rows","value":[]},{"op":"add","path":"/totalCount","value":0}]}}
-data: {"type":"CUSTOM","name":"tambo.component.state_delta","value":{"componentId":"comp_001","delta":[{"op":"replace","path":"/totalCount","value":150}]}}
-data: {"type":"CUSTOM","name":"tambo.component.state_delta","value":{"componentId":"comp_001","delta":[{"op":"add","path":"/rows/-","value":{"id":1,"name":"Alice","visits":42}}]}}
-data: {"type":"CUSTOM","name":"tambo.component.state_delta","value":{"componentId":"comp_001","delta":[{"op":"add","path":"/rows/-","value":{"id":2,"name":"Bob","visits":38}}]}}
-data: {"type":"CUSTOM","name":"tambo.component.state_delta","value":{"componentId":"comp_001","delta":[{"op":"replace","path":"/loading","value":false}]}}
-data: {"type":"CUSTOM","name":"tambo.component.end","value":{"componentId":"comp_001","props":{"title":"User Analytics"},"state":{"loading":false,"rows":[...],"totalCount":150}}}
+data: {"type":"CUSTOM","name":"genui.component.start","value":{"componentId":"comp_001","componentName":"DataTable","messageId":"msg_001"}}
+data: {"type":"CUSTOM","name":"genui.component.props_delta","value":{"componentId":"comp_001","delta":[{"op":"add","path":"/title","value":"User Analytics"}]}}
+data: {"type":"CUSTOM","name":"genui.component.state_delta","value":{"componentId":"comp_001","delta":[{"op":"add","path":"/loading","value":true},{"op":"add","path":"/rows","value":[]},{"op":"add","path":"/totalCount","value":0}]}}
+data: {"type":"CUSTOM","name":"genui.component.state_delta","value":{"componentId":"comp_001","delta":[{"op":"replace","path":"/totalCount","value":150}]}}
+data: {"type":"CUSTOM","name":"genui.component.state_delta","value":{"componentId":"comp_001","delta":[{"op":"add","path":"/rows/-","value":{"id":1,"name":"Alice","visits":42}}]}}
+data: {"type":"CUSTOM","name":"genui.component.state_delta","value":{"componentId":"comp_001","delta":[{"op":"add","path":"/rows/-","value":{"id":2,"name":"Bob","visits":38}}]}}
+data: {"type":"CUSTOM","name":"genui.component.state_delta","value":{"componentId":"comp_001","delta":[{"op":"replace","path":"/loading","value":false}]}}
+data: {"type":"CUSTOM","name":"genui.component.end","value":{"componentId":"comp_001","props":{"title":"User Analytics"},"state":{"loading":false,"rows":[...],"totalCount":150}}}
 data: {"type":"RUN_FINISHED","threadId":"thr_abc123","runId":"run_xyz789"}
 ```
 
-_We use `tambo.component.state_delta` CUSTOM events for component state (not AG-UI's generic STATE_SNAPSHOT/STATE_DELTA),
+_We use `genui.component.state_delta` CUSTOM events for component state (not AG-UI's generic STATE_SNAPSHOT/STATE_DELTA),
 keeping component state scoped to the component rather than a global state tree._
 
 ### 4.7 Error Handling
@@ -1152,7 +1152,7 @@ _Note: `RUN_ERROR` is a standard AG-UI event. The `code` field is optional in AG
 
 ### 5.2 Backwards Compatibility
 
-The React SDK will maintain the same interface it has today (`useTamboThread`, `useTamboComponentState`, etc.) and handle the API changes internally:
+The React SDK will maintain the same interface it has today (`useGenuiThread`, `useGenuiComponentState`, etc.) and handle the API changes internally:
 
 - Accumulates AG-UI events into the same message structures the SDK already exposes
 - Translates component content blocks back to the component interface hooks expect
@@ -1170,7 +1170,7 @@ The following design decisions were made during proposal development:
 | **Multimodal content types**  | Unified `resource` type with MIME types (not separate image/audio/file types)                                                    |
 | **Component representation**  | Inline content blocks in `content[]` array (components render in reading order with text)                                        |
 | **Component delta format**    | JSON Patch (RFC 6902) for both props and state; `streaming` map with tri-state (started/streaming/done)                          |
-| **AG-UI extensions**          | Use `CUSTOM` events with `tambo.*` namespace for Tambo-specific functionality                                                    |
+| **AG-UI extensions**          | Use `CUSTOM` events with `genui.*` namespace for Genui-specific functionality                                                    |
 | **Component state ownership** | Bidirectional - server can push state, clients can also update via POST endpoint                                                 |
 | **Client-side tool flow**     | Run ends with `awaiting_input` then `RUN_FINISHED`; client POSTs tool results with `previousRunId` to start new run              |
 | **Server-side tool flow**     | Inline execution within stream, `TOOL_CALL_RESULT` emitted automatically                                                         |
@@ -1203,25 +1203,25 @@ The following operational aspects are intentionally out of scope for this API pr
 
 ## Part 8: SDK Migration Strategy
 
-This section outlines how the `@tambo-ai/react` SDK will be updated to support the v1 API.
+This section outlines how the `@workspace/react` SDK will be updated to support the v1 API.
 
 ### Phase 1: Preview Release
 
-A new `<TamboV1Provider>` will be introduced in a subpackage:
+A new `<GenuiV1Provider>` will be introduced in a subpackage:
 
 ```typescript
-import { TamboV1Provider } from "@tambo-ai/react/v1";
+import { GenuiV1Provider } from "@workspace/react/v1";
 
-// Preview usage - interface mostly identical to current TamboProvider
-<TamboV1Provider apiKey={apiKey} apiBaseUrl={apiBaseUrl}>
+// Preview usage - interface mostly identical to current GenuiProvider
+<GenuiV1Provider apiKey={apiKey} apiBaseUrl={apiBaseUrl}>
   <App />
-</TamboV1Provider>
+</GenuiV1Provider>
 ```
 
 **Key characteristics:**
 
-- Exported from `@tambo-ai/react/v1` subpath (not the main export)
-- Interface largely mirrors existing `<TamboProvider>` for easy migration
+- Exported from `@workspace/react/v1` subpath (not the main export)
+- Interface largely mirrors existing `<GenuiProvider>` for easy migration
 - Uses updated types aligned with this proposal (content blocks, RunStatus, etc.)
 - Connects to `/v1/` API endpoints
 - Marked as preview/experimental in documentation
@@ -1232,24 +1232,24 @@ This allows early adopters to test the new API while the existing provider remai
 
 Once the v1 API is fully implemented and validated:
 
-- The existing `<TamboProvider>` will be updated to use the v1 API
-- `@tambo-ai/react/v1` subpath will be removed entirely
+- The existing `<GenuiProvider>` will be updated to use the v1 API
+- `@workspace/react/v1` subpath will be removed entirely
 - Breaking type changes will be documented in migration guide
 - SDK version bumped to 1.0 to signal stable v1 API support
 
 **Migration path for users:**
 
-1. (Now) Use current `<TamboProvider>` with existing API
-2. (Preview) Optionally test `<TamboV1Provider>` from `/v1` subpath
-3. (1.0 release) Switch back to `<TamboProvider>` (now with v1 types)
+1. (Now) Use current `<GenuiProvider>` with existing API
+2. (Preview) Optionally test `<GenuiV1Provider>` from `/v1` subpath
+3. (1.0 release) Switch back to `<GenuiProvider>` (now with v1 types)
 
 ---
 
 ## Appendix A: Type Alignment Summary
 
-Quick reference for how Tambo v1 types map to common API conventions. See Part 6 for design rationale.
+Quick reference for how Genui v1 types map to common API conventions. See Part 6 for design rationale.
 
-| Concept          | OpenAI                                           | Anthropic                                  | MCP                              | Tambo v1                                 |
+| Concept          | OpenAI                                           | Anthropic                                  | MCP                              | Genui v1                                 |
 | ---------------- | ------------------------------------------------ | ------------------------------------------ | -------------------------------- | ---------------------------------------- |
 | Roles            | user, assistant, system, tool                    | user, assistant                            | user, assistant                  | user, assistant, system                  |
 | Text content     | `{type:"text",text:"..."}`                       | `{type:"text",text:"..."}`                 | `{type:"text",text:"..."}`       | `{type:"text",text:"..."}`               |
@@ -1269,15 +1269,15 @@ See the [AG-UI SDK Types](https://docs.ag-ui.com/sdk/js/core/types) for complete
 Key events we use: `RUN_STARTED`, `RUN_FINISHED`, `RUN_ERROR`, `TEXT_MESSAGE_*`, `TOOL_CALL_START`,
 `TOOL_CALL_ARGS`, `TOOL_CALL_END`, `TOOL_CALL_RESULT`, `CUSTOM`.
 
-### Tambo CUSTOM Events (type: "CUSTOM", name: "tambo.\*")
+### Genui CUSTOM Events (type: "CUSTOM", name: "genui.\*")
 
 | Event Name                  | When Emitted                   | Key Value Fields                                          |
 | --------------------------- | ------------------------------ | --------------------------------------------------------- |
-| tambo.run.awaiting_input    | Paused for client tool results | threadId, runId, pendingToolCallIds[]                     |
-| tambo.component.start       | Begin component streaming      | componentId, componentName, messageId                     |
-| tambo.component.props_delta | Props update (JSON Patch)      | componentId, delta[], streaming? (started/streaming/done) |
-| tambo.component.state_delta | State update (JSON Patch)      | componentId, delta[]                                      |
-| tambo.component.end         | Component complete             | componentId, props, state?                                |
+| genui.run.awaiting_input    | Paused for client tool results | threadId, runId, pendingToolCallIds[]                     |
+| genui.component.start       | Begin component streaming      | componentId, componentName, messageId                     |
+| genui.component.props_delta | Props update (JSON Patch)      | componentId, delta[], streaming? (started/streaming/done) |
+| genui.component.state_delta | State update (JSON Patch)      | componentId, delta[]                                      |
+| genui.component.end         | Component complete             | componentId, props, state?                                |
 
 ## Appendix C: NestJS DTO Implementation
 
@@ -1540,7 +1540,7 @@ export enum PropStreamingStatus {
 }
 
 /**
- * Value payload for tambo.component.props_delta CUSTOM event
+ * Value payload for genui.component.props_delta CUSTOM event
  */
 @ApiSchema({ name: "ComponentPropsDeltaValue" })
 export class ComponentPropsDeltaValueDto {
@@ -1550,7 +1550,7 @@ export class ComponentPropsDeltaValueDto {
 }
 
 /**
- * Value payload for tambo.component.state_delta CUSTOM event
+ * Value payload for genui.component.state_delta CUSTOM event
  */
 @ApiSchema({ name: "ComponentStateDeltaValue" })
 export class ComponentStateDeltaValueDto {
@@ -1559,7 +1559,7 @@ export class ComponentStateDeltaValueDto {
 }
 
 /**
- * Value payload for tambo.component.start CUSTOM event
+ * Value payload for genui.component.start CUSTOM event
  */
 @ApiSchema({ name: "ComponentStartValue" })
 export class ComponentStartValueDto {
@@ -1569,7 +1569,7 @@ export class ComponentStartValueDto {
 }
 
 /**
- * Value payload for tambo.component.end CUSTOM event
+ * Value payload for genui.component.end CUSTOM event
  */
 @ApiSchema({ name: "ComponentEndValue" })
 export class ComponentEndValueDto {
@@ -1579,7 +1579,7 @@ export class ComponentEndValueDto {
 }
 
 /**
- * Value payload for tambo.run.awaiting_input CUSTOM event
+ * Value payload for genui.run.awaiting_input CUSTOM event
  */
 @ApiSchema({ name: "AwaitingInputValue" })
 export class AwaitingInputValueDto {

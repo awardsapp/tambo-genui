@@ -4,8 +4,8 @@ import {
   Injectable,
   UnauthorizedException,
 } from "@nestjs/common";
-import type { HydraDb } from "@tambo-ai-cloud/db";
-import { getDb, operations } from "@tambo-ai-cloud/db";
+import type { HydraDb } from "@workspace-cloud/db";
+import { getDb, operations } from "@workspace-cloud/db";
 import { Request } from "express";
 import { decodeJwt, jwtVerify } from "jose";
 import { CorrelationLoggerService } from "../../common/services/logger.service";
@@ -138,7 +138,7 @@ async function extractProjectIdFromBearerToken(
   // Validate both issuer and audience claims during verification
   const { payload: verifiedPayload } = await jwtVerify(token, signingKey, {
     issuer: projectId,
-    audience: "tambo",
+    audience: "genui",
   });
 
   if (!verifiedPayload.sub || !verifiedPayload.iss) {

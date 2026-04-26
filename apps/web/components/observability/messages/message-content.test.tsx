@@ -1,12 +1,12 @@
 import { MessageContent } from "@/components/observability/messages/message-content";
-import { ChatCompletionContentPart, MessageRole } from "@tambo-ai-cloud/core";
+import { ChatCompletionContentPart, MessageRole } from "@workspace-cloud/core";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 import * as utils from "../utils";
 
 // Mock the markdown components from ui-registry
-jest.mock("@tambo-ai/ui-registry/components/message", () => ({
+jest.mock("@workspace/ui-registry/components/message", () => ({
   createMarkdownComponents: () => ({}),
 }));
 
@@ -31,9 +31,9 @@ jest.mock("usehooks-ts", () => ({
   ],
 }));
 
-// Mock the Tambo React hooks
-jest.mock("@tambo-ai/react", () => ({
-  useTamboThreadInput: () => ({
+// Mock the Genui React hooks
+jest.mock("@workspace/react", () => ({
+  useGenuiThreadInput: () => ({
     value: "",
     setValue: jest.fn(),
     submit: jest.fn(),
@@ -43,11 +43,11 @@ jest.mock("@tambo-ai/react", () => ({
     addImage: jest.fn(),
     removeImage: jest.fn(),
   }),
-  useTamboContextHelpers: () => ({
+  useGenuiContextHelpers: () => ({
     addContextHelper: jest.fn(),
     removeContextHelper: jest.fn(),
   }),
-  useTamboContextAttachment: () => ({
+  useGenuiContextAttachment: () => ({
     attachments: [],
     removeContextAttachment: jest.fn(),
   }),

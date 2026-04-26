@@ -348,8 +348,8 @@ describe("framework-detection", () => {
         }),
       });
 
-      const result = getEnvVarName("TAMBO_API_KEY");
-      expect(result).toBe("NEXT_PUBLIC_TAMBO_API_KEY");
+      const result = getEnvVarName("GENUI_API_KEY");
+      expect(result).toBe("NEXT_PUBLIC_GENUI_API_KEY");
     });
 
     it("adds EXPO_PUBLIC_ prefix for Expo projects", () => {
@@ -360,8 +360,8 @@ describe("framework-detection", () => {
         }),
       });
 
-      const result = getEnvVarName("TAMBO_API_KEY");
-      expect(result).toBe("EXPO_PUBLIC_TAMBO_API_KEY");
+      const result = getEnvVarName("GENUI_API_KEY");
+      expect(result).toBe("EXPO_PUBLIC_GENUI_API_KEY");
     });
 
     it("adds VITE_ prefix for Vite projects", () => {
@@ -372,8 +372,8 @@ describe("framework-detection", () => {
         }),
       });
 
-      const result = getEnvVarName("TAMBO_API_KEY");
-      expect(result).toBe("VITE_TAMBO_API_KEY");
+      const result = getEnvVarName("GENUI_API_KEY");
+      expect(result).toBe("VITE_GENUI_API_KEY");
     });
 
     it("returns base name without prefix for non-framework projects", () => {
@@ -384,8 +384,8 @@ describe("framework-detection", () => {
         }),
       });
 
-      const result = getEnvVarName("TAMBO_API_KEY");
-      expect(result).toBe("TAMBO_API_KEY");
+      const result = getEnvVarName("GENUI_API_KEY");
+      expect(result).toBe("GENUI_API_KEY");
     });
 
     it("works with custom base names", () => {
@@ -402,7 +402,7 @@ describe("framework-detection", () => {
   });
 
   describe("getTamboApiKeyEnvVar", () => {
-    it("returns NEXT_PUBLIC_TAMBO_API_KEY for Next.js projects", () => {
+    it("returns NEXT_PUBLIC_GENUI_API_KEY for Next.js projects", () => {
       vol.fromJSON({
         "/mock-project/package.json": JSON.stringify({
           name: "test-project",
@@ -411,10 +411,10 @@ describe("framework-detection", () => {
       });
 
       const result = getTamboApiKeyEnvVar();
-      expect(result).toBe("NEXT_PUBLIC_TAMBO_API_KEY");
+      expect(result).toBe("NEXT_PUBLIC_GENUI_API_KEY");
     });
 
-    it("returns EXPO_PUBLIC_TAMBO_API_KEY for Expo projects", () => {
+    it("returns EXPO_PUBLIC_GENUI_API_KEY for Expo projects", () => {
       vol.fromJSON({
         "/mock-project/package.json": JSON.stringify({
           name: "test-project",
@@ -423,10 +423,10 @@ describe("framework-detection", () => {
       });
 
       const result = getTamboApiKeyEnvVar();
-      expect(result).toBe("EXPO_PUBLIC_TAMBO_API_KEY");
+      expect(result).toBe("EXPO_PUBLIC_GENUI_API_KEY");
     });
 
-    it("returns TAMBO_API_KEY for non-framework projects", () => {
+    it("returns GENUI_API_KEY for non-framework projects", () => {
       vol.fromJSON({
         "/mock-project/package.json": JSON.stringify({
           name: "test-project",
@@ -435,7 +435,7 @@ describe("framework-detection", () => {
       });
 
       const result = getTamboApiKeyEnvVar();
-      expect(result).toBe("TAMBO_API_KEY");
+      expect(result).toBe("GENUI_API_KEY");
     });
   });
 

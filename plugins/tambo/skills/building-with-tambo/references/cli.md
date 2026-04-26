@@ -1,4 +1,4 @@
-# Tambo CLI
+# Genui CLI
 
 Agent-friendly CLI for project setup and component management.
 

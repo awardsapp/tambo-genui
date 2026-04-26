@@ -1,7 +1,7 @@
 "use client";
 
 import { useRender } from "@base-ui/react/use-render";
-import type { ListResourceEntry } from "@tambo-ai/react/mcp";
+import type { ListResourceEntry } from "@workspace/react/mcp";
 import * as React from "react";
 import { useMcpResourcesContext } from "../root/mcp-resources-context";
 

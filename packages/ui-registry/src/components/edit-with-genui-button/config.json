@@ -1,0 +1,19 @@
+{
+  "name": "edit-with-genui-button",
+  "description": "Inline AI editor button with floating popover for interactable components",
+  "componentName": "EditWithGenuiButton",
+  "dependencies": [
+    "@workspace/react@rc",
+    "lucide-react",
+    "@radix-ui/react-popover",
+    "@radix-ui/react-tooltip"
+  ],
+  "devDependencies": [],
+  "requires": ["message-suggestions"],
+  "files": [
+    {
+      "name": "edit-with-genui-button.tsx",
+      "content": "src/registry/edit-with-genui-button/edit-with-genui-button.tsx"
+    }
+  ]
+}

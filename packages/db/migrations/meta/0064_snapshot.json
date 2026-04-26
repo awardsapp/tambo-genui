@@ -1225,8 +1225,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.tambo_users": {
-      "name": "tambo_users",
+    "public.genui_users": {
+      "name": "genui_users",
       "schema": "",
       "columns": {
         "id": {
@@ -1322,8 +1322,8 @@
         }
       },
       "indexes": {
-        "idx_tambo_users_user_id": {
-          "name": "idx_tambo_users_user_id",
+        "idx_genui_users_user_id": {
+          "name": "idx_genui_users_user_id",
           "columns": [
             {
               "expression": "user_id",
@@ -1337,8 +1337,8 @@
           "method": "btree",
           "with": {}
         },
-        "idx_tambo_users_last_activity": {
-          "name": "idx_tambo_users_last_activity",
+        "idx_genui_users_last_activity": {
+          "name": "idx_genui_users_last_activity",
           "columns": [
             {
               "expression": "last_activity_at",
@@ -1352,8 +1352,8 @@
           "method": "btree",
           "with": {}
         },
-        "idx_tambo_users_reactivation_sent": {
-          "name": "idx_tambo_users_reactivation_sent",
+        "idx_genui_users_reactivation_sent": {
+          "name": "idx_genui_users_reactivation_sent",
           "columns": [
             {
               "expression": "reactivation_email_sent_at",
@@ -1367,8 +1367,8 @@
           "method": "btree",
           "with": {}
         },
-        "idx_tambo_users_welcome_email_sent": {
-          "name": "idx_tambo_users_welcome_email_sent",
+        "idx_genui_users_welcome_email_sent": {
+          "name": "idx_genui_users_welcome_email_sent",
           "columns": [
             {
               "expression": "welcome_email_sent",
@@ -1382,8 +1382,8 @@
           "method": "btree",
           "with": {}
         },
-        "idx_tambo_users_legal_accepted": {
-          "name": "idx_tambo_users_legal_accepted",
+        "idx_genui_users_legal_accepted": {
+          "name": "idx_genui_users_legal_accepted",
           "columns": [
             {
               "expression": "legal_accepted",
@@ -1399,9 +1399,9 @@
         }
       },
       "foreignKeys": {
-        "tambo_users_user_id_users_id_fk": {
-          "name": "tambo_users_user_id_users_id_fk",
-          "tableFrom": "tambo_users",
+        "genui_users_user_id_users_id_fk": {
+          "name": "genui_users_user_id_users_id_fk",
+          "tableFrom": "genui_users",
           "tableTo": "users",
           "schemaTo": "auth",
           "columnsFrom": ["user_id"],
@@ -1409,9 +1409,9 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "tambo_users_project_id_projects_id_fk": {
-          "name": "tambo_users_project_id_projects_id_fk",
-          "tableFrom": "tambo_users",
+        "genui_users_project_id_projects_id_fk": {
+          "name": "genui_users_project_id_projects_id_fk",
+          "tableFrom": "genui_users",
           "tableTo": "projects",
           "columnsFrom": ["project_id"],
           "columnsTo": ["id"],
@@ -1421,22 +1421,22 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "tambo_users_id_unique": {
-          "name": "tambo_users_id_unique",
+        "genui_users_id_unique": {
+          "name": "genui_users_id_unique",
           "nullsNotDistinct": false,
           "columns": ["id"]
         },
-        "tambo_users_user_id_unique": {
-          "name": "tambo_users_user_id_unique",
+        "genui_users_user_id_unique": {
+          "name": "genui_users_user_id_unique",
           "nullsNotDistinct": false,
           "columns": ["user_id"]
         }
       },
       "policies": {},
       "checkConstraints": {
-        "chk_tambo_users_legal_consistency": {
-          "name": "chk_tambo_users_legal_consistency",
-          "value": "(NOT \"tambo_users\".\"legal_accepted\") OR (\"tambo_users\".\"legal_accepted_at\" IS NOT NULL AND \"tambo_users\".\"legal_version\" IS NOT NULL)"
+        "chk_genui_users_legal_consistency": {
+          "name": "chk_genui_users_legal_consistency",
+          "value": "(NOT \"genui_users\".\"legal_accepted\") OR (\"genui_users\".\"legal_accepted_at\" IS NOT NULL AND \"genui_users\".\"legal_version\" IS NOT NULL)"
         }
       },
       "isRLSEnabled": false

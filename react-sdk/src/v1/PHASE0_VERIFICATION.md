@@ -1,10 +1,10 @@
 # Phase 0: SDK Compatibility Verification
 
-This document tracks the verification of `@tambo-ai/typescript-sdk` compatibility with the v1 API implementation.
+This document tracks the verification of `@workspace/typescript-sdk` compatibility with the v1 API implementation.
 
 ## Status: ✅ TYPES IMPORTED FROM PACKAGES
 
-Successfully imported types from `@ag-ui/core` and `@tambo-ai/typescript-sdk` instead of reimplementing them.
+Successfully imported types from `@ag-ui/core` and `@workspace/typescript-sdk` instead of reimplementing them.
 
 The following verifications have been completed or are in progress:
 
@@ -19,9 +19,9 @@ Successfully imported types from existing packages:
 - [x] `EventType` enum
 - [x] `BaseEvent` type
 - [x] All event types: `RunStartedEvent`, `RunFinishedEvent`, `TextMessageStartEvent`, etc.
-- [x] `CustomEvent` type (base for Tambo custom events)
+- [x] `CustomEvent` type (base for Genui custom events)
 
-**From `@tambo-ai/typescript-sdk@^0.84.0`**:
+**From `@workspace/typescript-sdk@^0.84.0`**:
 
 - [x] `TextContent`, `ToolUseContent`, `ToolResultContent`, `ComponentContent`, `ResourceContent` (from `/resources/threads/threads`)
 - [x] `InputMessage` (from `/resources/threads/runs`)
@@ -30,18 +30,18 @@ Successfully imported types from existing packages:
 
 **React-Specific Types (defined in v1 SDK)**:
 
-- [x] `TamboV1Component` - Extends `AvailableComponent` with React `component` field
-- [x] `TamboV1Tool` - Extends `Tool` with implementation function
-- [x] `TamboV1Thread` - Extends thread types with React state fields
-- [x] `TamboV1Message` - Simplified message interface for React state
+- [x] `GenuiV1Component` - Extends `AvailableComponent` with React `component` field
+- [x] `GenuiV1Tool` - Extends `Tool` with implementation function
+- [x] `GenuiV1Thread` - Extends thread types with React state fields
+- [x] `GenuiV1Message` - Simplified message interface for React state
 - [x] `StreamingState` - React-specific streaming status tracking
-- [x] Tambo custom events: `ComponentStartEvent`, `ComponentPropsDeltaEvent`, etc.
+- [x] Genui custom events: `ComponentStartEvent`, `ComponentPropsDeltaEvent`, etc.
 
 **Type Checking**: ✅ All types compile with 0 errors
 
 ## 2. Stream Class Compatibility
 
-**Assumption**: `Stream.fromSSEResponse()` from `@tambo-ai/typescript-sdk/core` works with v1 API responses.
+**Assumption**: `Stream.fromSSEResponse()` from `@workspace/typescript-sdk/core` works with v1 API responses.
 
 **Required Functionality**:
 
@@ -52,7 +52,7 @@ Successfully imported types from existing packages:
 **Verification Method**:
 
 ```typescript
-import { Stream } from '@tambo-ai/typescript-sdk/core';
+import { Stream } from '@workspace/typescript-sdk/core';
 
 // Verify in actual v1 API integration test
 const response = await fetch('/v1/threads/123/runs', { ... });
@@ -65,21 +65,21 @@ for await (const event of stream) {
 **Status**: ❌ Not yet verified
 **Action Required**: Integration test with v1 API endpoint
 
-## 3. TamboAI Client Compatibility
+## 3. GenuiAI Client Compatibility
 
-**Assumption**: The existing `TamboAI` client class works with v1 API endpoints.
+**Assumption**: The existing `GenuiAI` client class works with v1 API endpoints.
 
 **Required Functionality**:
 
-- [ ] `new TamboAI({ apiKey, baseURL, environment })` constructor works as-is
+- [ ] `new GenuiAI({ apiKey, baseURL, environment })` constructor works as-is
 - [ ] Client can make requests to `/v1/threads/{id}/runs` endpoints
-- [ ] Session token management (`useTamboSessionToken`) works with v1 API
+- [ ] Session token management (`useGenuiSessionToken`) works with v1 API
 - [ ] Headers and authentication flow unchanged
 
 **Verification Method**:
 
 ```typescript
-const client = new TamboAI({ apiKey: 'test-key' });
+const client = new GenuiAI({ apiKey: 'test-key' });
 const response = await client.fetch('/v1/threads/123/runs', {
   method: 'POST',
   body: JSON.stringify({ ... }),
@@ -87,25 +87,25 @@ const response = await client.fetch('/v1/threads/123/runs', {
 ```
 
 **Status**: ✅ LIKELY COMPATIBLE (client is API-agnostic HTTP wrapper)
-**Rationale**: `TamboClientProvider` creates a generic HTTP client that should work with any endpoint. The v1 API is just a different path (`/v1/` instead of `/beta/`).
+**Rationale**: `GenuiClientProvider` creates a generic HTTP client that should work with any endpoint. The v1 API is just a different path (`/v1/` instead of `/beta/`).
 
 **Action Required**: Confirm with integration test
 
-## 4. TamboRegistryProvider Compatibility
+## 4. GenuiRegistryProvider Compatibility
 
-**Assumption**: The existing `TamboRegistryProvider` can be reused for v1 without modification.
+**Assumption**: The existing `GenuiRegistryProvider` can be reused for v1 without modification.
 
 **Required Functionality**:
 
 - [ ] Component registration logic is API-agnostic
 - [ ] Tool registration logic is API-agnostic
 - [ ] Schema conversion (Zod → JSON Schema) works for v1 format
-- [ ] `TamboComponent` and `TamboTool` types match or extend v1 requirements
+- [ ] `GenuiComponent` and `GenuiTool` types match or extend v1 requirements
 
 **Verification Method**:
 
-1. Compare `TamboComponent` interface with v1 `AvailableComponent` type
-2. Compare `TamboTool` interface with v1 `Tool` type
+1. Compare `GenuiComponent` interface with v1 `AvailableComponent` type
+2. Compare `GenuiTool` interface with v1 `Tool` type
 3. Verify schema output format matches v1 API expectations
 
 **Status**: 🔄 IN PROGRESS (Phase 0 task)
@@ -115,8 +115,8 @@ const response = await client.fetch('/v1/threads/123/runs', {
 
 | Beta SDK Type    | v1 API Type          | Compatible? | Notes                         |
 | ---------------- | -------------------- | ----------- | ----------------------------- |
-| `TamboComponent` | `AvailableComponent` | TBD         | Need to compare shapes        |
-| `TamboTool`      | `Tool`               | TBD         | Need to compare shapes        |
+| `GenuiComponent` | `AvailableComponent` | TBD         | Need to compare shapes        |
+| `GenuiTool`      | `Tool`               | TBD         | Need to compare shapes        |
 | `Thread` (beta)  | `Thread` (v1)        | TBD         | May have different fields     |
 | `Message` (beta) | `Message` (v1)       | TBD         | Content blocks format differs |
 

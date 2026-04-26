@@ -6,7 +6,7 @@ description: Configure and use advanced reasoning capabilities in models that sh
 Reasoning models are specialized LLMs that expose their internal thought process before generating a final response. These models excel at complex tasks requiring multi-step reasoning, problem-solving, and logical analysis by spending additional compute time "thinking" through the problem.
 
 <Callout type="info" title="Supported Providers">
-  Tambo currently supports reasoning capabilities for **OpenAI** and **Google
+  Genui currently supports reasoning capabilities for **OpenAI** and **Google
   Gemini** models. Each provider uses different parameter names to control
   reasoning behavior.
 </Callout>
@@ -58,14 +58,14 @@ Reasoning models work best for tasks that benefit from step-by-step thinking:
 
 ## Displaying Reasoning in Your App
 
-Tambo components automatically handle reasoning display - no additional code required.
+Genui components automatically handle reasoning display - no additional code required.
 
 ### Built-in Support
 
-When you add Tambo components from the CLI, reasoning support is included out-of-the-box:
+When you add Genui components from the CLI, reasoning support is included out-of-the-box:
 
 ```bash
-npx tambo add message
+npx genui add message
 ```
 
 These components include the `ReasoningInfo` sub-component that:
@@ -76,7 +76,7 @@ These components include the `ReasoningInfo` sub-component that:
 - **Auto-scrolls** to follow reasoning as it streams
 
 <Callout type="tip" title="Zero Configuration">
-  If you're using Tambo's pre-built components (message, thread-content,
+  If you're using Genui's pre-built components (message, thread-content,
   message-thread-full, etc.), reasoning display is already built-in. Just
   configure reasoning parameters in your dashboard and it works automatically.
 </Callout>
@@ -143,7 +143,7 @@ Reasoning tokens are billed separately and typically cost more than standard tok
 
 - Lower your reasoning effort settings (see provider-specific parameter documentation)
 - Create separate projects with different configurations for simple vs. complex queries
-- Monitor token usage in your Tambo Cloud usage dashboard
+- Monitor token usage in your Genui Cloud usage dashboard
 - Consider using non-reasoning models for high-volume, simple tasks
 
 ## Additional Resources

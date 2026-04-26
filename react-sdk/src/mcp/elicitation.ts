@@ -9,39 +9,39 @@ import type {
 import { useCallback, useState } from "react";
 import type {
   MCPElicitationHandler,
-  TamboElicitationRequest,
-  TamboElicitationResponse,
-} from "@tambo-ai/client";
+  GenuiElicitationRequest,
+  GenuiElicitationResponse,
+} from "@workspace/client";
 import {
   toElicitationRequestedSchema as toSchema,
   hasRequestedSchema as hasSchema,
-} from "@tambo-ai/client";
+} from "@workspace/client";
 
-// Re-export types and functions from @tambo-ai/client for barrel consumers
+// Re-export types and functions from @workspace/client for barrel consumers
 export type {
   ElicitationRequestedSchema,
-  TamboElicitationRequest,
-  TamboElicitationResponse,
+  GenuiElicitationRequest,
+  GenuiElicitationResponse,
   ElicitationContextState,
   PrimitiveSchemaDefinition,
-} from "@tambo-ai/client";
+} from "@workspace/client";
 export {
   toElicitationRequestedSchema,
   hasRequestedSchema,
-} from "@tambo-ai/client";
+} from "@workspace/client";
 
 /**
  * Internal hook that manages elicitation state and creates a default handler.
  * This bundles all the state management and handler creation for elicitation.
  *
- * Do not export this hook from this package. It is only intended to be used internally by the TamboMcpProvider.
+ * Do not export this hook from this package. It is only intended to be used internally by the GenuiMcpProvider.
  * @returns Elicitation state and default handler
  */
 export function useElicitation() {
   const [elicitation, setElicitation] =
-    useState<TamboElicitationRequest | null>(null);
+    useState<GenuiElicitationRequest | null>(null);
   const [resolveElicitation, setResolveElicitation] = useState<
-    ((response: TamboElicitationResponse) => void) | null
+    ((response: GenuiElicitationResponse) => void) | null
   >(null);
 
   const defaultElicitationHandler: MCPElicitationHandler = useCallback(

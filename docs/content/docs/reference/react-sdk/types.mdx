@@ -1,21 +1,21 @@
 ---
 title: React SDK Types
-description: TypeScript interfaces and types exported by @tambo-ai/react
+description: TypeScript interfaces and types exported by @workspace/react
 ---
 
-The `@tambo-ai/react` package exports TypeScript types and interfaces for building type-safe AI applications.
+The `@workspace/react` package exports TypeScript types and interfaces for building type-safe AI applications.
 
 ## Thread Types
 
-### TamboThread
+### GenuiThread
 
 Represents a conversation thread with messages and metadata.
 
 ```typescript
-interface TamboThread {
+interface GenuiThread {
   id: string;
   name?: string;
-  messages: TamboThreadMessage[];
+  messages: GenuiThreadMessage[];
   status: RunStatus;
   metadata?: Record<string, unknown>;
   createdAt: string;
@@ -42,7 +42,7 @@ Error information is tracked separately in `StreamingState.error`, not as a run 
 
 ### StreamingState
 
-Detailed streaming state returned by `useTambo()`.
+Detailed streaming state returned by `useGenui()`.
 
 ```typescript
 interface StreamingState {
@@ -60,12 +60,12 @@ interface StreamingState {
 
 ## Authentication Types
 
-### TamboAuthState
+### GenuiAuthState
 
-Discriminated union tracking the SDK's authentication lifecycle. Returned by [`useTambo()`](/reference/react-sdk/hooks#usetambo) as `authState`.
+Discriminated union tracking the SDK's authentication lifecycle. Returned by [`useGenui()`](/reference/react-sdk/hooks#usegenui) as `authState`.
 
 ```typescript
-type TamboAuthState =
+type GenuiAuthState =
   | { status: "identified"; source: "userKey" | "tokenExchange" }
   | { status: "exchanging" }
   | { status: "error"; error: Error }
@@ -84,10 +84,10 @@ type TamboAuthState =
 #### Example: Auth-Aware UI
 
 ```tsx
-import { useTambo } from "@tambo-ai/react";
+import { useGenui } from "@workspace/react";
 
 function AuthAwareChat() {
-  const { authState, isIdentified } = useTambo();
+  const { authState, isIdentified } = useGenui();
 
   if (authState.status === "exchanging") {
     return <div>Authenticating...</div>;
@@ -107,12 +107,12 @@ function AuthAwareChat() {
 
 ## Configuration Types
 
-### TamboConfig
+### GenuiConfig
 
-Configuration interface for the Tambo provider. Passed to [`TamboProvider`](/reference/react-sdk/providers#tamboprovider) or accessed via `useTamboConfig()`.
+Configuration interface for the Genui provider. Passed to [`GenuiProvider`](/reference/react-sdk/providers#genuiprovider) or accessed via `useGenuiConfig()`.
 
 ```typescript
-interface TamboConfig {
+interface GenuiConfig {
   userKey?: string;
   autoGenerateThreadName?: boolean;
   autoGenerateNameThreshold?: number;
@@ -129,7 +129,7 @@ interface TamboConfig {
 
 ### InitialInputMessage
 
-Message type for seeding new threads with initial messages. Re-exported from `@tambo-ai/typescript-sdk`.
+Message type for seeding new threads with initial messages. Re-exported from `@workspace/typescript-sdk`.
 
 ```typescript
 interface InitialInputMessage {
@@ -148,11 +148,11 @@ interface InitialInputMessage {
 #### Example: Seeding a Thread
 
 ```tsx
-import { TamboProvider } from "@tambo-ai/react";
+import { GenuiProvider } from "@workspace/react";
 
 function App() {
   return (
-    <TamboProvider
+    <GenuiProvider
       apiKey="your-api-key"
       initialMessages={[
         {
@@ -170,19 +170,19 @@ function App() {
       ]}
     >
       <Chat />
-    </TamboProvider>
+    </GenuiProvider>
   );
 }
 ```
 
 ## Message Types
 
-### TamboThreadMessage
+### GenuiThreadMessage
 
 A message in a thread, containing an array of content blocks.
 
 ```typescript
-interface TamboThreadMessage {
+interface GenuiThreadMessage {
   id: string;
   role: MessageRole;
   content: Content[];
@@ -215,8 +215,8 @@ Messages contain an array of typed content blocks:
 ```typescript
 type Content =
   | TextContent
-  | TamboComponentContent
-  | TamboToolUseContent
+  | GenuiComponentContent
+  | GenuiToolUseContent
   | ToolResultContent
   | ResourceContent;
 ```
@@ -232,12 +232,12 @@ interface TextContent {
 }
 ```
 
-#### TamboComponentContent
+#### GenuiComponentContent
 
 A rendered component with streaming state. Extends the base `ComponentContent` from the SDK with computed properties.
 
 ```typescript
-interface TamboComponentContent {
+interface GenuiComponentContent {
   type: "component";
   id: string;
   name: string;
@@ -249,35 +249,35 @@ interface TamboComponentContent {
 
 The `renderedComponent` property contains the pre-rendered React element for the component, looked up from the registry.
 
-#### TamboToolUseContent
+#### GenuiToolUseContent
 
-A tool invocation with display metadata. Extends the base `ToolUseContent` from the SDK with computed properties populated by `useTambo()`.
+A tool invocation with display metadata. Extends the base `ToolUseContent` from the SDK with computed properties populated by `useGenui()`.
 
 ```typescript
-interface TamboToolUseContent {
+interface GenuiToolUseContent {
   type: "tool_use";
   id: string;
   name: string;
   input: Record<string, unknown>;
   hasCompleted?: boolean;
   statusMessage?: string;
-  tamboDisplayProps?: TamboToolDisplayProps;
+  genuiDisplayProps?: GenuiToolDisplayProps;
 }
 ```
 
 <Callout type="info">
-  The `input` object has internal `_tambo_*` properties automatically stripped.
-  Display messages are available via `tamboDisplayProps`.
+  The `input` object has internal `_genui_*` properties automatically stripped.
+  Display messages are available via `genuiDisplayProps`.
 </Callout>
 
-#### TamboToolDisplayProps
+#### GenuiToolDisplayProps
 
 Display properties extracted from tool inputs.
 
 ```typescript
-interface TamboToolDisplayProps {
-  _tambo_statusMessage?: string;
-  _tambo_completionStatusMessage?: string;
+interface GenuiToolDisplayProps {
+  _genui_statusMessage?: string;
+  _genui_completionStatusMessage?: string;
 }
 ```
 
@@ -310,18 +310,18 @@ interface ResourceContent {
 
 ## Component Types
 
-### TamboComponent
+### GenuiComponent
 
-Configuration for registering a component with Tambo.
+Configuration for registering a component with Genui.
 
 ```typescript
-interface TamboComponent {
+interface GenuiComponent {
   name: string;
   description: string;
   component: ComponentType<any>;
   propsSchema?: SupportedSchema;
   loadingComponent?: ComponentType<any>;
-  associatedTools?: TamboTool[];
+  associatedTools?: GenuiTool[];
   annotations?: ToolAnnotations;
 }
 ```
@@ -335,7 +335,7 @@ interface TamboComponent {
 | `component`        | `ComponentType`   | Yes      | The React component to render                                      |
 | `propsSchema`      | `SupportedSchema` | No       | Schema for component props (Zod, Valibot, ArkType, or JSON Schema) |
 | `loadingComponent` | `ComponentType`   | No       | Component to render while the component is loading                 |
-| `associatedTools`  | `TamboTool[]`     | No       | Tools associated with this component                               |
+| `associatedTools`  | `GenuiTool[]`     | No       | Tools associated with this component                               |
 | `annotations`      | `ToolAnnotations` | No       | Behavior annotations (see [ToolAnnotations](#toolannotations))     |
 
 ### Example Registration
@@ -349,7 +349,7 @@ const WeatherCardSchema = z.object({
   condition: z.string().describe("Weather condition"),
 });
 
-const components: TamboComponent[] = [
+const components: GenuiComponent[] = [
   {
     name: "WeatherCard",
     description: "Displays current weather for a city",
@@ -365,19 +365,19 @@ Props for the [`ComponentRenderer`](/reference/react-sdk/providers#componentrend
 
 ```typescript
 interface ComponentRendererProps {
-  content: TamboComponentContent;
+  content: GenuiComponentContent;
   threadId: string;
   messageId: string;
   fallback?: React.ReactNode;
 }
 ```
 
-### TamboCurrentComponent
+### GenuiCurrentComponent
 
-Component metadata returned by [`useTamboCurrentComponent`](/reference/react-sdk/hooks#usetambocurrentcomponent). Works for both AI-generated and interactable components.
+Component metadata returned by [`useGenuiCurrentComponent`](/reference/react-sdk/hooks#usegenuicurrentcomponent). Works for both AI-generated and interactable components.
 
 ```typescript
-interface TamboCurrentComponent {
+interface GenuiCurrentComponent {
   componentName?: string;
   props?: Record<string, unknown>;
   interactableId?: string;
@@ -390,8 +390,8 @@ interface TamboCurrentComponent {
 | ---------------- | ------------------------- | ------------------------------------------------------------------ |
 | `componentName`  | `string \| undefined`     | Component name from the message or interactable metadata           |
 | `props`          | `Record<string, unknown>` | Component props from the message content block                     |
-| `interactableId` | `string \| undefined`     | Interactable ID (only for `withTamboInteractable` components)      |
-| `description`    | `string \| undefined`     | Description (only for `withTamboInteractable` components)          |
+| `interactableId` | `string \| undefined`     | Interactable ID (only for `withGenuiInteractable` components)      |
+| `description`    | `string \| undefined`     | Description (only for `withGenuiInteractable` components)          |
 | `threadId`       | `string \| undefined`     | Thread ID (not available on messages directly, always `undefined`) |
 
 ### ComponentContentContext
@@ -416,12 +416,12 @@ interface ComponentContentContext {
 
 ## Tool Types
 
-### TamboTool
+### GenuiTool
 
-The same `TamboTool` interface from the base SDK is used.
+The same `GenuiTool` interface from the base SDK is used.
 
 ```typescript
-interface TamboTool {
+interface GenuiTool {
   name: string;
   description: string;
   title?: string;
@@ -448,12 +448,12 @@ interface TamboTool {
 
 ## Event Types
 
-### TamboCustomEvent
+### GenuiCustomEvent
 
 Custom events emitted during streaming. Each event uses an envelope pattern with a `name` string and a `value` object containing the payload.
 
 ```typescript
-type TamboCustomEvent =
+type GenuiCustomEvent =
   | ComponentStartEvent
   | ComponentPropsDeltaEvent
   | ComponentStateDeltaEvent
@@ -468,7 +468,7 @@ Emitted when component rendering begins.
 
 ```typescript
 type ComponentStartEvent = {
-  name: "tambo.component.start";
+  name: "genui.component.start";
   value: {
     messageId: string;
     componentId: string;
@@ -483,7 +483,7 @@ Emitted when component props are updated (JSON Patch format).
 
 ```typescript
 type ComponentPropsDeltaEvent = {
-  name: "tambo.component.props_delta";
+  name: "genui.component.props_delta";
   value: {
     componentId: string;
     operations: Operation[];
@@ -497,7 +497,7 @@ Emitted when component state is updated (JSON Patch format).
 
 ```typescript
 type ComponentStateDeltaEvent = {
-  name: "tambo.component.state_delta";
+  name: "genui.component.state_delta";
   value: {
     componentId: string;
     operations: Operation[];
@@ -511,7 +511,7 @@ Emitted when component rendering completes.
 
 ```typescript
 type ComponentEndEvent = {
-  name: "tambo.component.end";
+  name: "genui.component.end";
   value: {
     componentId: string;
   };
@@ -524,7 +524,7 @@ Emitted when the run is waiting for client-side tool execution.
 
 ```typescript
 type RunAwaitingInputEvent = {
-  name: "tambo.run.awaiting_input";
+  name: "genui.run.awaiting_input";
   value: {
     pendingToolCalls: PendingToolCall[];
   };
@@ -549,7 +549,7 @@ Emitted when a message was created during the generation of another message (e.g
 
 ```typescript
 type MessageParentEvent = {
-  name: "tambo.message.parent";
+  name: "genui.message.parent";
   value: {
     messageId: string;
     parentMessageId: string;
@@ -562,17 +562,17 @@ type MessageParentEvent = {
 Helper functions for working with events:
 
 ```typescript
-function isTamboCustomEvent(event: {
+function isGenuiCustomEvent(event: {
   name?: string;
-}): event is TamboCustomEvent;
-function asTamboCustomEvent(event: CustomEvent): TamboCustomEvent | undefined;
+}): event is GenuiCustomEvent;
+function asGenuiCustomEvent(event: CustomEvent): GenuiCustomEvent | undefined;
 ```
 
 ## Input Types
 
 ### SubmitOptions
 
-Options passed to `useTamboThreadInput().submit()`.
+Options passed to `useGenuiThreadInput().submit()`.
 
 ```typescript
 interface SubmitOptions {
@@ -605,7 +605,7 @@ type ToolChoice = "auto" | "required" | "none" | { name: string };
 
 ### StreamStatus
 
-Overall streaming status for a component, returned by `useTamboStreamStatus()`.
+Overall streaming status for a component, returned by `useGenuiStreamStatus()`.
 
 ```typescript
 interface StreamStatus {
@@ -627,7 +627,7 @@ interface StreamStatus {
 
 ### PropStatus
 
-Per-prop streaming status, returned by `useTamboStreamStatus()`.
+Per-prop streaming status, returned by `useGenuiStreamStatus()`.
 
 ```typescript
 interface PropStatus {
@@ -653,27 +653,27 @@ Annotations describing a tool's behavior, extending the MCP specification.
 
 ```typescript
 type ToolAnnotations = MCPToolAnnotations & {
-  tamboStreamableHint?: boolean;
+  genuiStreamableHint?: boolean;
 };
 ```
 
 | Property              | Type      | Description                                                                                                                         |
 | --------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `tamboStreamableHint` | `boolean` | When `true`, the tool can be called with partially-streamed arguments as they arrive. Use for read-only tools without side effects. |
+| `genuiStreamableHint` | `boolean` | When `true`, the tool can be called with partially-streamed arguments as they arrive. Use for read-only tools without side effects. |
 
-`ToolAnnotations` can be set on both `TamboTool` and `TamboComponent` via the `annotations` property.
+`ToolAnnotations` can be set on both `GenuiTool` and `GenuiComponent` via the `annotations` property.
 
 ## Interactable Types
 
 ### InteractableComponent
 
-Represents a registered interactable component instance. Extends [`TamboComponent`](#tambocomponent) with instance-specific state. The internal type name is `TamboInteractableComponent`.
+Represents a registered interactable component instance. Extends [`GenuiComponent`](#genuicomponent) with instance-specific state. The internal type name is `GenuiInteractableComponent`.
 
 ```typescript
-interface TamboInteractableComponent<
+interface GenuiInteractableComponent<
   Props = Record<string, unknown>,
   State = Record<string, unknown>,
-> extends TamboComponent {
+> extends GenuiComponent {
   id: string;
   props: Props;
   isSelected?: boolean;
@@ -692,7 +692,7 @@ interface TamboInteractableComponent<
 
 ### InteractableConfig
 
-Configuration passed to `withTamboInteractable()` to make a component interactable.
+Configuration passed to `withGenuiInteractable()` to make a component interactable.
 
 ```typescript
 interface InteractableConfig<
@@ -709,18 +709,18 @@ interface InteractableConfig<
 
 | Property        | Type                     | Required | Description                                      |
 | --------------- | ------------------------ | -------- | ------------------------------------------------ |
-| `componentName` | `string`                 | Yes      | Name used for identification in Tambo            |
+| `componentName` | `string`                 | Yes      | Name used for identification in Genui            |
 | `description`   | `string`                 | Yes      | Description of the component for the AI          |
 | `propsSchema`   | `SupportedSchema<Props>` | No       | Schema for validating prop updates               |
 | `stateSchema`   | `SupportedSchema<State>` | No       | Schema for validating state updates              |
 | `annotations`   | `ToolAnnotations`        | No       | Annotations for the auto-registered update tools |
 
-### WithTamboInteractableProps
+### WithGenuiInteractableProps
 
-Props injected by `withTamboInteractable()` that can be passed to the wrapped component.
+Props injected by `withGenuiInteractable()` that can be passed to the wrapped component.
 
 ```typescript
-interface WithTamboInteractableProps {
+interface WithGenuiInteractableProps {
   interactableId?: string;
   onInteractableReady?: (id: string) => void;
   onPropsUpdate?: (newProps: Record<string, unknown>) => void;
@@ -731,7 +731,7 @@ interface WithTamboInteractableProps {
 | --------------------- | --------------------------------------------- | --------------------------------------------------- |
 | `interactableId`      | `string`                                      | Optional custom ID (auto-generated if not provided) |
 | `onInteractableReady` | `(id: string) => void`                        | Called when the component is registered             |
-| `onPropsUpdate`       | `(newProps: Record<string, unknown>) => void` | Called when Tambo updates the component's props     |
+| `onPropsUpdate`       | `(newProps: Record<string, unknown>) => void` | Called when Genui updates the component's props     |
 
 ## Image Types
 
@@ -791,18 +791,18 @@ The following types are re-exported from the base SDK for convenience:
 
 ### Hook & Provider Types
 
-- `UseTamboReturn` - Return type of [`useTambo()`](/reference/react-sdk/hooks#usetambo)
-- `TamboConfig` - Provider configuration interface
-- `TamboThreadInputContextProps` - Context interface for [`useTamboThreadInput()`](/reference/react-sdk/hooks#usetambothreadinput)
+- `UseGenuiReturn` - Return type of [`useGenui()`](/reference/react-sdk/hooks#usegenui)
+- `GenuiConfig` - Provider configuration interface
+- `GenuiThreadInputContextProps` - Context interface for [`useGenuiThreadInput()`](/reference/react-sdk/hooks#usegenuithreadinput)
 
 ### Component & Tool Types
 
-- `TamboComponent` - Base component registration interface
-- `TamboTool` - Tool definition interface
+- `GenuiComponent` - Base component registration interface
+- `GenuiTool` - Tool definition interface
 - `ComponentRegistry` - Map of registered components
 - `ParameterSpec` - Parameter specification
-- `InteractableComponent` - Alias for `TamboInteractableComponent`
-- `TamboInteractableContext` - Full interactable registry context (see [`useTamboInteractable()`](/reference/react-sdk/hooks#usetambointeractable))
+- `InteractableComponent` - Alias for `GenuiInteractableComponent`
+- `GenuiInteractableContext` - Full interactable registry context (see [`useGenuiInteractable()`](/reference/react-sdk/hooks#usegenuiinteractable))
 
 ### Context Types
 
@@ -828,6 +828,6 @@ The following types are re-exported from the base SDK for convenience:
 
 ### Error Types
 
-- `TamboAIError` - Base error class
+- `GenuiAIError` - Base error class
 - `APIError` - API error
 - `RateLimitError` - Rate limit error

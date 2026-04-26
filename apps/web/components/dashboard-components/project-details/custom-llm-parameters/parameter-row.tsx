@@ -8,7 +8,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { LlmParameterUIType } from "@tambo-ai-cloud/core";
+import { LlmParameterUIType } from "@workspace-cloud/core";
 import { motion } from "framer-motion";
 import { Trash2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";

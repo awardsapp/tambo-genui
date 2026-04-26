@@ -32,15 +32,15 @@ Context attachments are perfect when:
 
 ## Prerequisites
 
-- A Tambo application with `TamboProvider` configured
+- A Genui application with `GenuiProvider` configured
 - Understanding of React hooks
 
 ## Step 1: Import the Hook
 
-Import the `useTamboContextAttachment` hook:
+Import the `useGenuiContextAttachment` hook:
 
 ```tsx
-import { useTamboContextAttachment } from "@tambo-ai/react";
+import { useGenuiContextAttachment } from "@workspace/react";
 ```
 
 ## Step 2: Use the Hook in Your Component
@@ -50,7 +50,7 @@ The hook provides methods to add, remove, and access context attachments:
 ```tsx
 function FileViewer({ file }) {
   const { addContextAttachment, removeContextAttachment, attachments } =
-    useTamboContextAttachment();
+    useGenuiContextAttachment();
 
   return (
     // Your component JSX
@@ -60,7 +60,7 @@ function FileViewer({ file }) {
 
 ### Hook API
 
-The `useTamboContextAttachment` hook returns:
+The `useGenuiContextAttachment` hook returns:
 
 - `attachments`: Array of currently staged attachments
 - `addContextAttachment`: Function to add a new attachment
@@ -73,7 +73,7 @@ Add attachments when users select files, highlight text, or focus on specific co
 
 ```tsx
 function FileViewer({ file }) {
-  const { addContextAttachment } = useTamboContextAttachment();
+  const { addContextAttachment } = useGenuiContextAttachment();
 
   const handleSelectFile = () => {
     addContextAttachment({
@@ -106,7 +106,7 @@ Show users which context has been staged:
 
 ```tsx
 function StagedContextDisplay() {
-  const { attachments, removeContextAttachment } = useTamboContextAttachment();
+  const { attachments, removeContextAttachment } = useGenuiContextAttachment();
 
   if (attachments.length === 0) return null;
 
@@ -135,7 +135,7 @@ Allow users to stage files for AI context:
 ```tsx
 function FileBrowser({ files }) {
   const { attachments, addContextAttachment, removeContextAttachment } =
-    useTamboContextAttachment();
+    useGenuiContextAttachment();
 
   const handleFileClick = (file) => {
     addContextAttachment({
@@ -181,7 +181,7 @@ Stage selected text from your application:
 
 ```tsx
 function TextSelectionHandler() {
-  const { addContextAttachment } = useTamboContextAttachment();
+  const { addContextAttachment } = useGenuiContextAttachment();
 
   const handleTextSelection = () => {
     const selectedText = window.getSelection()?.toString();
@@ -206,7 +206,7 @@ Let users focus the AI on specific workspace elements:
 
 ```tsx
 function WorkspaceElement({ element }) {
-  const { addContextAttachment } = useTamboContextAttachment();
+  const { addContextAttachment } = useGenuiContextAttachment();
 
   const handleFocus = () => {
     addContextAttachment({
@@ -239,7 +239,7 @@ Context attachments are automatically cleared after message submission. You don'
 To manually clear before sending:
 
 ```tsx
-const { clearContextAttachments } = useTamboContextAttachment();
+const { clearContextAttachments } = useGenuiContextAttachment();
 
 <button onClick={clearContextAttachments}>Clear All Staged Context</button>;
 ```
@@ -249,7 +249,7 @@ const { clearContextAttachments } = useTamboContextAttachment();
 Full implementation with file browser and staged context display:
 
 ```tsx
-import { useTamboContextAttachment } from "@tambo-ai/react";
+import { useGenuiContextAttachment } from "@workspace/react";
 
 function ContextStagingDemo({ files }) {
   const {
@@ -257,7 +257,7 @@ function ContextStagingDemo({ files }) {
     addContextAttachment,
     removeContextAttachment,
     clearContextAttachments,
-  } = useTamboContextAttachment();
+  } = useGenuiContextAttachment();
 
   const handleFileClick = (file) => {
     addContextAttachment({

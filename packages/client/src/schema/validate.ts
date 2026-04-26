@@ -22,7 +22,7 @@ function isRecordJsonSchema(schema: JSONSchema7): boolean {
 /**
  * Recursively walks a JSON Schema and throws when it encounters a record type.
  * Records are not supported because they use dynamic keys which don't serialize
- * well for the Tambo backend.
+ * well for the Genui backend.
  * @param schema - The JSON Schema to check
  * @param path - Current path in the schema (for error messages)
  * @param contextName - Human-readable context name for error messages
@@ -135,7 +135,7 @@ function assertNoRecordInJsonSchema(
 
 /**
  * Asserts that a schema does not contain record types (objects with dynamic keys).
- * Records are not serializable to JSON Schema in a way that the Tambo backend
+ * Records are not serializable to JSON Schema in a way that the Genui backend
  * understands, so they are disallowed.
  *
  * This function accepts Standard Schema validators (Zod, Valibot, ArkType, etc.)

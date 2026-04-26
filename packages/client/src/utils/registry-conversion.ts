@@ -2,18 +2,18 @@
  * Registry Conversion Utilities
  *
  * Converts registered component/tool types to API format.
- * Reuses TamboRegistryProvider but provides conversion
+ * Reuses GenuiRegistryProvider but provides conversion
  * utilities for sending component/tool metadata to the API.
  */
 
 import type { JSONSchema7 } from "json-schema";
 import type {
   RegisteredComponent,
-  TamboTool,
-  UnsupportedSchemaTamboTool,
+  GenuiTool,
+  UnsupportedSchemaGenuiTool,
 } from "../model/component-metadata";
 import { schemaToJsonSchema } from "../schema/schema";
-import type { RunCreateParams } from "@tambo-ai/typescript-sdk/resources/threads/runs";
+import type { RunCreateParams } from "@workspace/typescript-sdk/resources/threads/runs";
 
 // Use the SDK's types for API requests
 type AvailableComponent = RunCreateParams.AvailableComponent;
@@ -83,7 +83,7 @@ export function toAvailableComponents(
 /**
  * Convert a registered tool to API format.
  *
- * Transforms TamboTool or UnsupportedSchemaTamboTool (with
+ * Transforms GenuiTool or UnsupportedSchemaGenuiTool (with
  * Standard Schema support) to Tool (API format requiring JSON Schema).
  * Handles both new inputSchema and deprecated toolSchema formats.
  * @param tool - Tool from registry
@@ -91,9 +91,9 @@ export function toAvailableComponents(
  * @throws {Error} if schema conversion fails or schema is missing
  */
 export function toAvailableTool(
-  tool: TamboTool | UnsupportedSchemaTamboTool,
+  tool: GenuiTool | UnsupportedSchemaGenuiTool,
 ): Tool {
-  // Check for inputSchema (modern format - required in TamboTool)
+  // Check for inputSchema (modern format - required in GenuiTool)
   if ("inputSchema" in tool && tool.inputSchema) {
     const inputSchema: JSONSchema7 = schemaToJsonSchema(tool.inputSchema);
     return {
@@ -104,7 +104,7 @@ export function toAvailableTool(
     };
   }
 
-  // Check for deprecated toolSchema format (UnsupportedSchemaTamboTool)
+  // Check for deprecated toolSchema format (UnsupportedSchemaGenuiTool)
   if ("toolSchema" in tool && tool.toolSchema) {
     const inputSchema: JSONSchema7 = schemaToJsonSchema(tool.toolSchema);
     return {
@@ -123,7 +123,7 @@ export function toAvailableTool(
 /**
  * Convert multiple registered tools to API format.
  *
- * Transforms a Record/Map of TamboTools or UnsupportedSchemaTamboTool to an array
+ * Transforms a Record/Map of GenuiTools or UnsupportedSchemaGenuiTool to an array
  * of Tools. Tools without inputSchema/toolSchema will be logged as warnings
  * and skipped.
  * @param tools - Record or Map of tools from registry
@@ -131,8 +131,8 @@ export function toAvailableTool(
  */
 export function toAvailableTools(
   tools:
-    | Record<string, TamboTool | UnsupportedSchemaTamboTool>
-    | Map<string, TamboTool | UnsupportedSchemaTamboTool>,
+    | Record<string, GenuiTool | UnsupportedSchemaGenuiTool>
+    | Map<string, GenuiTool | UnsupportedSchemaGenuiTool>,
 ): Tool[] {
   const results: Tool[] = [];
 

@@ -2,9 +2,9 @@
 
 import { ComponentRenderFn, mergeProps, useRender } from "@base-ui/react";
 import type {
-  TamboElicitationRequest,
-  TamboElicitationResponse,
-} from "@tambo-ai/react/mcp";
+  GenuiElicitationRequest,
+  GenuiElicitationResponse,
+} from "@workspace/react/mcp";
 import * as React from "react";
 import { Elicitation } from "../elicitation";
 import { useMessageInputContext } from "./message-input-context";
@@ -12,13 +12,13 @@ import { useMessageInputContext } from "./message-input-context";
 export interface MessageInputElicitationState {
   slot: string;
   state: "hidden" | "visible";
-  elicitation: TamboElicitationRequest | null;
-  onResponse: ((response: TamboElicitationResponse) => void) | null;
+  elicitation: GenuiElicitationRequest | null;
+  onResponse: ((response: GenuiElicitationResponse) => void) | null;
 }
 
 export type MessageInputElicitationRenderProps = {
-  request?: TamboElicitationRequest;
-  onResponse?: (response: TamboElicitationResponse) => void;
+  request?: GenuiElicitationRequest;
+  onResponse?: (response: GenuiElicitationResponse) => void;
   keepMounted?: boolean;
 };
 

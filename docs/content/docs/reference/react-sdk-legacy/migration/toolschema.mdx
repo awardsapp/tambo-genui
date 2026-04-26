@@ -67,7 +67,7 @@ const fetchUserTool = {
 The `defineTool` helper provides full type inference from your schemas:
 
 ```typescript
-import { defineTool } from "@tambo-ai/react";
+import { defineTool } from "@workspace/react";
 import { z } from "zod";
 
 const fetchUserTool = defineTool({
@@ -95,7 +95,7 @@ const fetchUserTool = defineTool({
 
 ```typescript
 import { z } from "zod";
-import { useTambo } from "@tambo-ai/react";
+import { useGenui } from "@workspace/react";
 
 const weatherSchema = z
   .function()
@@ -103,7 +103,7 @@ const weatherSchema = z
   .returns(z.object({ temperature: z.number(), unit: z.string() }));
 
 function WeatherApp() {
-  const { registerTool } = useTambo();
+  const { registerTool } = useGenui();
 
   useEffect(() => {
     registerTool({
@@ -122,7 +122,7 @@ function WeatherApp() {
 
 ```typescript
 import { z } from "zod";
-import { useTambo, defineTool } from "@tambo-ai/react";
+import { useGenui, defineTool } from "@workspace/react";
 
 const getWeatherTool = defineTool({
   name: "getWeather",
@@ -141,7 +141,7 @@ const getWeatherTool = defineTool({
 });
 
 function WeatherApp() {
-  const { registerTool } = useTambo();
+  const { registerTool } = useGenui();
 
   useEffect(() => {
     registerTool(getWeatherTool);

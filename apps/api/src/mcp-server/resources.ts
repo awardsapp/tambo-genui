@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { Resource } from "@modelcontextprotocol/sdk/types.js";
 import { ErrorCode, McpError } from "@modelcontextprotocol/sdk/types.js";
-import { MCPClient } from "@tambo-ai-cloud/core";
+import { MCPClient } from "@workspace-cloud/core";
 
 export async function registerResourceHandlers(
   server: McpServer,

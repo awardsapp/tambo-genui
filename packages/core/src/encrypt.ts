@@ -31,7 +31,7 @@ export function extractProviderNameAndKey(decrypted: string): {
 const algorithm = "aes-256-cbc";
 const IV_LENGTH = 16; // 16 bytes for AES
 /** Prefix for user-facing API keys – intentionally NOT exported. */
-const TAMBO_PREFIX = "tambo_";
+const GENUI_PREFIX = "genui_";
 
 /** Strict Base64 check (standard "+/=" alphabet, length multiple of 4, no whitespace). */
 const BASE64_REGEX =
@@ -44,10 +44,10 @@ function getHashedKey(key: string): Buffer {
 
 /**
  * Encrypt an internal "stored string" and the raw, plaintext API key into a
- * single tambo-prefixed value that can safely be returned to end-users.
+ * single genui-prefixed value that can safely be returned to end-users.
  *
  * The resulting format is:
- *   tambo_⟨base64( IV ⧺ cipherText )⟩
+ *   genui_⟨base64( IV ⧺ cipherText )⟩
  *
  * 1.  A random 16-byte IV is generated (AES-256-CBC requirement).
  * 2.  The `storedString` and `apiKey` are concatenated with "." to keep them
@@ -55,7 +55,7 @@ function getHashedKey(key: string): Buffer {
  * 3.  AES-256-CBC encryption is performed with a key derived from
  *     `apiKeySecret` (SHA-256 hash → 32 bytes).
  * 4.  IV and cipher text are concatenated, converted to Base64 and prefixed
- *     with `tambo_` so the application can recognise the modern encoding.
+ *     with `genui_` so the application can recognise the modern encoding.
  *
  * @param storedString – Arbitrary internal identifier that needs to be
  *                       preserved alongside the API key.
@@ -63,7 +63,7 @@ function getHashedKey(key: string): Buffer {
  * @param apiKeySecret – Server-side secret used to derive the AES key; **must
  *                       be  kept secure**.
  *
- * @returns Encoded string safe for storage or display (starts with `tambo_`).
+ * @returns Encoded string safe for storage or display (starts with `genui_`).
  */
 export function encryptApiKey(
   storedString: string,
@@ -83,7 +83,7 @@ export function encryptApiKey(
   const encryptedBuf = Buffer.from(encryptedHex, "hex");
   const combined = Buffer.concat([iv, encryptedBuf]);
 
-  return `${TAMBO_PREFIX}${combined.toString("base64")}`;
+  return `${GENUI_PREFIX}${combined.toString("base64")}`;
 }
 
 export function decryptApiKey(
@@ -93,10 +93,10 @@ export function decryptApiKey(
   let rawEncrypted: string;
 
   // ------------------------------------------------------------------
-  // 1.  Decode modern  "tambo_<base64( IV ⧺ cipherText )>" wrapper.
+  // 1.  Decode modern  "genui_<base64( IV ⧺ cipherText )>" wrapper.
   // ------------------------------------------------------------------
-  if (encryptedData.startsWith(TAMBO_PREFIX)) {
-    const base64Part = encryptedData.slice(TAMBO_PREFIX.length);
+  if (encryptedData.startsWith(GENUI_PREFIX)) {
+    const base64Part = encryptedData.slice(GENUI_PREFIX.length);
     // Reject anything that is not valid, padding–correct Base64.
     if (!BASE64_REGEX.test(base64Part)) {
       throw new Error("Invalid Base64 in API key");

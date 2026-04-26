@@ -2,15 +2,15 @@
  * Send Message Utilities
  *
  * Framework-agnostic functions for sending messages and handling streaming
- * responses. Extracted from the React SDK's useTamboSendMessage hook to enable
+ * responses. Extracted from the React SDK's useGenuiSendMessage hook to enable
  * reuse across different UI frameworks.
  */
 
 import { EventType } from "@ag-ui/core";
-import type TamboAI from "@tambo-ai/typescript-sdk";
-import type { Stream } from "@tambo-ai/typescript-sdk/core/streaming";
-import type { ToolResultContent } from "@tambo-ai/typescript-sdk/resources/threads/threads";
-import type { RunCreateParams } from "@tambo-ai/typescript-sdk/resources/threads/runs";
+import type GenuiAI from "@workspace/typescript-sdk";
+import type { Stream } from "@workspace/typescript-sdk/core/streaming";
+import type { ToolResultContent } from "@workspace/typescript-sdk/resources/threads/threads";
+import type { RunCreateParams } from "@workspace/typescript-sdk/resources/threads/runs";
 
 import type { RunAwaitingInputEvent } from "../types/event";
 import type { InitialInputMessage, InputMessage } from "../types/message";
@@ -18,7 +18,7 @@ import type { ToolChoice } from "../types/tool-choice";
 import type { StreamAction } from "./event-accumulator";
 import type {
   ComponentRegistry,
-  TamboToolRegistry,
+  GenuiToolRegistry,
 } from "../model/component-metadata";
 import { toAvailableComponents, toAvailableTools } from "./registry-conversion";
 import { executeAllPendingTools } from "./tool-executor";
@@ -27,12 +27,12 @@ import type { ToolCallTracker } from "./tool-call-tracker";
 /**
  * Stream type for run responses on an existing thread.
  */
-export type RunStream = Stream<TamboAI.Threads.Runs.RunRunResponse>;
+export type RunStream = Stream<GenuiAI.Threads.Runs.RunRunResponse>;
 
 /**
  * Stream type for creating a new thread with a run.
  */
-export type CreateStream = Stream<TamboAI.Threads.Runs.RunCreateResponse>;
+export type CreateStream = Stream<GenuiAI.Threads.Runs.RunCreateResponse>;
 
 /**
  * Options for sending a message.
@@ -65,11 +65,11 @@ export interface SendMessageOptions {
  * Parameters for creating a run stream.
  */
 export interface CreateRunStreamParams {
-  client: TamboAI;
+  client: GenuiAI;
   threadId: string | undefined;
   message: InputMessage;
   componentList: ComponentRegistry;
-  toolRegistry: TamboToolRegistry;
+  toolRegistry: GenuiToolRegistry;
   userKey: string | undefined;
   /**
    * Previous run ID for continuing a thread with existing messages.
@@ -104,9 +104,9 @@ export interface CreateRunStreamResult {
 export interface ExecuteToolsParams {
   event: RunAwaitingInputEvent;
   toolTracker: ToolCallTracker;
-  toolRegistry: TamboToolRegistry;
+  toolRegistry: GenuiToolRegistry;
   componentList: ComponentRegistry;
-  client: TamboAI;
+  client: GenuiAI;
   threadId: string;
   runId: string;
   userKey: string | undefined;

@@ -1,6 +1,6 @@
 ---
 name: building-with-tambo
-description: Integrates Tambo into existing React apps — detects tech stack, installs @tambo-ai/react, wires TamboProvider, registers components with Zod schemas, and sets up tools/context. Use when adding AI-powered generative UI to an existing codebase. Triggers on "add Tambo", "integrate Tambo", "add AI chat to my app", "add generative UI", or when the user has an existing React/Next.js/Vite project and wants to add AI-powered components. For brand-new projects, use generative-ui instead.
+description: Integrates Tambo into existing React apps — detects tech stack, installs @workspace/react, wires TamboProvider, registers components with Zod schemas, and sets up tools/context. Use when adding AI-powered generative UI to an existing codebase. Triggers on "add Tambo", "integrate Tambo", "add AI chat to my app", "add generative UI", or when the user has an existing React/Next.js/Vite project and wants to add AI-powered components. For brand-new projects, use generative-ui instead.
 ---
 
 # Building with Tambo
@@ -25,7 +25,7 @@ Shared references (components, rendering, threads, tools/context, CLI, skills) a
 
 1. **Detect tech stack** - Analyze package.json, lock files, project structure, monorepo layout
 2. **Confirm with user** - Present findings, ask about preferences
-3. **Install dependencies** - Add @tambo-ai/react and zod using the project's package manager
+3. **Install dependencies** - Add @workspace/react and zod using the project's package manager
 4. **Create provider setup** - Wire TamboProvider with apiKey, userKey, components
 5. **Create component registry** - Set up lib/tambo.ts
 6. **Add chat UI** - Install pre-built Tambo components via CLI, set up path aliases and globals.css
@@ -65,15 +65,15 @@ yarn.lock / pnpm-lock.yaml / package-lock.json  # Which package manager
 
 | Lock file           | Manager | Install command               |
 | ------------------- | ------- | ----------------------------- |
-| `package-lock.json` | npm     | `npm install @tambo-ai/react` |
-| `yarn.lock`         | Yarn    | `yarn add @tambo-ai/react`    |
-| `pnpm-lock.yaml`    | pnpm    | `pnpm add @tambo-ai/react`    |
+| `package-lock.json` | npm     | `npm install @workspace/react` |
+| `yarn.lock`         | Yarn    | `yarn add @workspace/react`    |
+| `pnpm-lock.yaml`    | pnpm    | `pnpm add @workspace/react`    |
 
 For **monorepos**, install in the correct workspace:
 
-- Yarn: `yarn workspace <app-name> add @tambo-ai/react`
-- pnpm: `pnpm --filter <app-name> add @tambo-ai/react`
-- npm: `npm install @tambo-ai/react -w <app-name>`
+- Yarn: `yarn workspace <app-name> add @workspace/react`
+- pnpm: `pnpm --filter <app-name> add @workspace/react`
+- npm: `npm install @workspace/react -w <app-name>`
 
 ### Monorepo Detection
 
@@ -122,21 +122,21 @@ Use the project's package manager (detected in Step 1):
 
 ```bash
 # npm
-npm install @tambo-ai/react
+npm install @workspace/react
 npm install zod  # if no Zod installed
 
 # yarn
-yarn add @tambo-ai/react
+yarn add @workspace/react
 yarn add zod
 
 # pnpm
-pnpm add @tambo-ai/react
+pnpm add @workspace/react
 pnpm add zod
 
 # Monorepo (install in the correct workspace)
-yarn workspace <app-name> add @tambo-ai/react zod
-pnpm --filter <app-name> add @tambo-ai/react zod
-npm install @tambo-ai/react zod -w <app-name>
+yarn workspace <app-name> add @workspace/react zod
+pnpm --filter <app-name> add @workspace/react zod
+npm install @workspace/react zod -w <app-name>
 ```
 
 ## Step 4: Create Provider Setup
@@ -146,13 +146,13 @@ npm install @tambo-ai/react zod -w <app-name>
 ```tsx
 // app/providers.tsx
 "use client";
-import { TamboProvider } from "@tambo-ai/react";
+import { TamboProvider } from "@workspace/react";
 import { components } from "@/lib/tambo";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <TamboProvider
-      apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY}
+      apiKey={process.env.NEXT_PUBLIC_GENUI_API_KEY}
       userKey="default-user"
       components={components}
     >
@@ -183,13 +183,13 @@ export default function RootLayout({ children }) {
 
 ```tsx
 // pages/_app.tsx
-import { TamboProvider } from "@tambo-ai/react";
+import { TamboProvider } from "@workspace/react";
 import { components } from "@/lib/tambo";
 
 export default function App({ Component, pageProps }) {
   return (
     <TamboProvider
-      apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY}
+      apiKey={process.env.NEXT_PUBLIC_GENUI_API_KEY}
       userKey="default-user"
       components={components}
     >
@@ -203,13 +203,13 @@ export default function App({ Component, pageProps }) {
 
 ```tsx
 // src/main.tsx
-import { TamboProvider } from "@tambo-ai/react";
+import { TamboProvider } from "@workspace/react";
 import { components } from "./lib/tambo";
 import App from "./App";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <TamboProvider
-    apiKey={import.meta.env.VITE_TAMBO_API_KEY}
+    apiKey={import.meta.env.VITE_GENUI_API_KEY}
     userKey="default-user"
     components={components}
   >
@@ -222,7 +222,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 
 ```tsx
 // lib/tambo.ts (or src/lib/tambo.ts)
-import { TamboComponent } from "@tambo-ai/react";
+import { TamboComponent } from "@workspace/react";
 
 export const components: TamboComponent[] = [
   // Components will be registered here
@@ -357,7 +357,7 @@ Run `npx tambo init --project-name=<app-name>` from the web app directory. This 
 **Monorepo gotchas:**
 
 - **Env vars**: `tambo init` creates `.env.local` in the current directory. Vite loads env from `envDir` (check `vite.config.*`). Ensure the env file is where Vite looks for it.
-- **Dependency hoisting**: Some package managers hoist deps to the monorepo root. If Vite can't resolve a Tambo dependency, install it at the root level too (e.g., `yarn add -W @tambo-ai/react`).
+- **Dependency hoisting**: Some package managers hoist deps to the monorepo root. If Vite can't resolve a Tambo dependency, install it at the root level too (e.g., `yarn add -W @workspace/react`).
 - **Path aliases**: Vite resolves from the `vite.config.*` directory. The `@/` alias must resolve to the correct `src/` directory within the workspace, not the monorepo root.
 
 ## Environment Variables
@@ -368,16 +368,16 @@ If manual setup is needed (monorepo, read-only filesystem), add the appropriate 
 
 | Framework | Variable                    |
 | --------- | --------------------------- |
-| Next.js   | `NEXT_PUBLIC_TAMBO_API_KEY` |
-| Vite      | `VITE_TAMBO_API_KEY`        |
-| CRA       | `REACT_APP_TAMBO_API_KEY`   |
+| Next.js   | `NEXT_PUBLIC_GENUI_API_KEY` |
+| Vite      | `VITE_GENUI_API_KEY`        |
+| CRA       | `REACT_APP_GENUI_API_KEY`   |
 
 ## Verification
 
 After setup, verify by creating a simple test:
 
 ```tsx
-import { useTambo } from "@tambo-ai/react";
+import { useTambo } from "@workspace/react";
 
 function TestComponent() {
   const { thread, isIdle } = useTambo();
@@ -390,7 +390,7 @@ function TestComponent() {
 
 If you encounter any of these while helping a user, suggest filing a GitHub issue:
 
-- A bug in `@tambo-ai/react`, `@tambo-ai/client`, or the `tambo` CLI
+- A bug in `@workspace/react`, `@workspace/client`, or the `tambo` CLI
 - Documentation that contradicts actual behavior
 - Missing or misleading instructions in this skill
 
@@ -420,8 +420,8 @@ What happens instead, including any error messages or stack traces.
 
 **Environment**
 
-- `@tambo-ai/react` version:
-- `@tambo-ai/client` version:
+- `@workspace/react` version:
+- `@workspace/client` version:
 - Framework (Next.js / Vite / CRA) and version:
 - Node.js version:
 - OS:
@@ -436,6 +436,6 @@ Link to relevant docs or skill file path if applicable.
 
 When you hit a problem that looks like a Tambo bug, say something like:
 
-> This looks like a bug in `@tambo-ai/react`. Want me to open a GitHub issue on `tambo-ai/tambo` with the repro steps and environment details?
+> This looks like a bug in `@workspace/react`. Want me to open a GitHub issue on `tambo-ai/tambo` with the repro steps and environment details?
 
 Always wait for the user to confirm before filing.

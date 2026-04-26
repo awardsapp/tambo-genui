@@ -7,7 +7,7 @@ import { ElicitationDemoPreview } from "./_demos/elicitation-demo";
 
 # Elicitation
 
-`Elicitation` in `@tambo-ai/react-ui-base` owns schema parsing, validation, and accept/decline/cancel behavior while exposing composable UI primitives.
+`Elicitation` in `@workspace/react-ui-base` owns schema parsing, validation, and accept/decline/cancel behavior while exposing composable UI primitives.
 
 ## Demo
 
@@ -76,7 +76,7 @@ Use `useElicitationField` inside `Elicitation.Field` to own rendering while keep
 import {
   Elicitation,
   useElicitationField,
-} from "@tambo-ai/react-ui-base/elicitation";
+} from "@workspace/react-ui-base/elicitation";
 
 function CustomInput() {
   const { field, inputId, errorId, invalid, label } = useElicitationField();
@@ -120,8 +120,8 @@ function CustomInput() {
 
 | Prop         | Type                                           | Default  | Description                                      |
 | ------------ | ---------------------------------------------- | -------- | ------------------------------------------------ |
-| `request`    | `TamboElicitationRequest`                      | Required | Incoming elicitation request schema and message. |
-| `onResponse` | `(response: TamboElicitationResponse) => void` | Required | Callback for accept/decline/cancel responses.    |
+| `request`    | `GenuiElicitationRequest`                      | Required | Incoming elicitation request schema and message. |
+| `onResponse` | `(response: GenuiElicitationResponse) => void` | Required | Callback for accept/decline/cancel responses.    |
 
 ### Message
 

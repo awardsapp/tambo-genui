@@ -8,7 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import type { RouterOutputs } from "@/trpc/react";
 import { api } from "@/trpc/react";
 import { extractErrorMessage } from "@/lib/extract-error-message";
-import { parseSkillContent, toSkillSlug } from "@tambo-ai-cloud/core";
+import { parseSkillContent, toSkillSlug } from "@workspace-cloud/core";
 import { Loader2 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 

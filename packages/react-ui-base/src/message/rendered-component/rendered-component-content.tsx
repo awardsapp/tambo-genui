@@ -1,6 +1,6 @@
 import { mergeProps } from "@base-ui/react/merge-props";
 import { useRender } from "@base-ui/react/use-render";
-import type { TamboComponentContent } from "@tambo-ai/react";
+import type { GenuiComponentContent } from "@workspace/react";
 import * as React from "react";
 import { useMessageRootContext } from "../root/message-root-context";
 
@@ -25,7 +25,7 @@ export const MessageRenderedComponentContent = React.forwardRef<
 
   const renderedComponents = message.content
     .filter(
-      (block): block is TamboComponentContent => block.type === "component",
+      (block): block is GenuiComponentContent => block.type === "component",
     )
     .map((block) => block.renderedComponent)
     .filter(Boolean);

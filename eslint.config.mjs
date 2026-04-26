@@ -1,3 +1,3 @@
-import config from "@tambo-ai/eslint-config/base";
+import config from "@workspace/eslint-config/base";
 
 export default config;

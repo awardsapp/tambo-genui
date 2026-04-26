@@ -1,19 +1,19 @@
 import type { CreateMessageRequest } from "@modelcontextprotocol/sdk/types.js";
-import type { ITamboBackend } from "@tambo-ai-cloud/backend";
+import type { IGenuiBackend } from "@workspace-cloud/backend";
 import {
   AsyncQueue,
   ContentPartType,
   GenerationStage,
   MessageRole,
-} from "@tambo-ai-cloud/core";
-import type { HydraDb } from "@tambo-ai-cloud/db";
-import { operations } from "@tambo-ai-cloud/db";
+} from "@workspace-cloud/core";
+import type { HydraDb } from "@workspace-cloud/db";
+import { operations } from "@workspace-cloud/db";
 import { StreamQueueItem } from "../dto/stream-queue-item";
 import { createMcpHandlers } from "./thread-mcp-handlers";
 
 // Mock dependencies
-jest.mock("@tambo-ai-cloud/db", () => {
-  const actual = jest.requireActual("@tambo-ai-cloud/db");
+jest.mock("@workspace-cloud/db", () => {
+  const actual = jest.requireActual("@workspace-cloud/db");
   return {
     ...actual,
     operations: {
@@ -32,7 +32,7 @@ describe("createMcpHandlers", () => {
   const mockDb = {} as HydraDb;
   const mockThreadId = "thread-123";
   let mockQueue: AsyncQueue<StreamQueueItem>;
-  let mockTamboBackend: ITamboBackend;
+  let mockGenuiBackend: IGenuiBackend;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -53,7 +53,7 @@ describe("createMcpHandlers", () => {
       finish: jest.fn(),
     } as any;
 
-    mockTamboBackend = {
+    mockGenuiBackend = {
       llmClient: {
         complete: jest.fn(),
       },
@@ -90,7 +90,7 @@ describe("createMcpHandlers", () => {
           .mockResolvedValueOnce(mockInputMessage as any)
           .mockResolvedValueOnce(mockResponseMessage as any);
 
-        jest.mocked(mockTamboBackend.llmClient.complete).mockResolvedValue({
+        jest.mocked(mockGenuiBackend.llmClient.complete).mockResolvedValue({
           message: {
             role: "assistant",
             content: "Hi there",
@@ -99,7 +99,7 @@ describe("createMcpHandlers", () => {
 
         const handlers = createMcpHandlers(
           mockDb,
-          mockTamboBackend,
+          mockGenuiBackend,
           mockThreadId,
           mockQueue,
         );
@@ -182,13 +182,13 @@ describe("createMcpHandlers", () => {
           .mockResolvedValueOnce(mockInputMessage as any)
           .mockResolvedValueOnce(mockResponseMessage as any);
 
-        jest.mocked(mockTamboBackend.llmClient.complete).mockResolvedValue({
+        jest.mocked(mockGenuiBackend.llmClient.complete).mockResolvedValue({
           message: { role: "assistant", content: "Response" },
         } as any);
 
         const handlers = createMcpHandlers(
           mockDb,
-          mockTamboBackend,
+          mockGenuiBackend,
           mockThreadId,
           mockQueue,
         );
@@ -252,13 +252,13 @@ describe("createMcpHandlers", () => {
           createdAt: new Date(),
         } as any);
 
-        jest.mocked(mockTamboBackend.llmClient.complete).mockResolvedValue({
+        jest.mocked(mockGenuiBackend.llmClient.complete).mockResolvedValue({
           message: { role: "assistant", content: "Response" },
         } as any);
 
         const handlers = createMcpHandlers(
           mockDb,
-          mockTamboBackend,
+          mockGenuiBackend,
           mockThreadId,
           mockQueue,
         );
@@ -273,7 +273,7 @@ describe("createMcpHandlers", () => {
           },
         });
 
-        expect(mockTamboBackend.llmClient.complete).toHaveBeenCalledWith({
+        expect(mockGenuiBackend.llmClient.complete).toHaveBeenCalledWith({
           stream: false,
           promptTemplateName: "sampling",
           promptTemplateParams: {},
@@ -302,13 +302,13 @@ describe("createMcpHandlers", () => {
           createdAt: new Date(),
         } as any);
 
-        jest.mocked(mockTamboBackend.llmClient.complete).mockResolvedValue({
+        jest.mocked(mockGenuiBackend.llmClient.complete).mockResolvedValue({
           message: { role: "assistant", content: "Response" },
         } as any);
 
         const handlers = createMcpHandlers(
           mockDb,
-          mockTamboBackend,
+          mockGenuiBackend,
           mockThreadId,
           mockQueue,
         );
@@ -321,7 +321,7 @@ describe("createMcpHandlers", () => {
             ],
             maxTokens: 1000,
             _meta: {
-              "tambo.co/parentMessageId": parentMsgId,
+              "genui.co/parentMessageId": parentMsgId,
             },
           },
         });
@@ -346,13 +346,13 @@ describe("createMcpHandlers", () => {
           createdAt: new Date(),
         } as any);
 
-        jest.mocked(mockTamboBackend.llmClient.complete).mockResolvedValue({
+        jest.mocked(mockGenuiBackend.llmClient.complete).mockResolvedValue({
           message: { role: "assistant", content: "Response" },
         } as any);
 
         const handlers = createMcpHandlers(
           mockDb,
-          mockTamboBackend,
+          mockGenuiBackend,
           mockThreadId,
           mockQueue,
         );
@@ -389,13 +389,13 @@ describe("createMcpHandlers", () => {
           createdAt: new Date(),
         } as any);
 
-        jest.mocked(mockTamboBackend.llmClient.complete).mockResolvedValue({
+        jest.mocked(mockGenuiBackend.llmClient.complete).mockResolvedValue({
           message: { role: "assistant", content: "Response" },
         } as any);
 
         const handlers = createMcpHandlers(
           mockDb,
-          mockTamboBackend,
+          mockGenuiBackend,
           mockThreadId,
           mockQueue,
         );
@@ -408,7 +408,7 @@ describe("createMcpHandlers", () => {
             ],
             maxTokens: 1000,
             _meta: {
-              "tambo.co/parentMessageId": parentMsgId,
+              "genui.co/parentMessageId": parentMsgId,
             },
           },
         });
@@ -441,13 +441,13 @@ describe("createMcpHandlers", () => {
           createdAt: new Date(),
         } as any);
 
-        jest.mocked(mockTamboBackend.llmClient.complete).mockResolvedValue({
+        jest.mocked(mockGenuiBackend.llmClient.complete).mockResolvedValue({
           message: { role: "assistant", content: "Response" },
         } as any);
 
         const handlers = createMcpHandlers(
           mockDb,
-          mockTamboBackend,
+          mockGenuiBackend,
           mockThreadId,
           mockQueue,
         );
@@ -492,13 +492,13 @@ describe("createMcpHandlers", () => {
           createdAt: new Date(),
         } as any);
 
-        jest.mocked(mockTamboBackend.llmClient.complete).mockResolvedValue({
+        jest.mocked(mockGenuiBackend.llmClient.complete).mockResolvedValue({
           message: { role: "assistant", content: "Response" },
         } as any);
 
         const handlers = createMcpHandlers(
           mockDb,
-          mockTamboBackend,
+          mockGenuiBackend,
           mockThreadId,
           mockQueue,
         );
@@ -541,13 +541,13 @@ describe("createMcpHandlers", () => {
           createdAt: new Date(),
         } as any);
 
-        jest.mocked(mockTamboBackend.llmClient.complete).mockResolvedValue({
+        jest.mocked(mockGenuiBackend.llmClient.complete).mockResolvedValue({
           message: { role: "assistant", content: "Response" },
         } as any);
 
         const handlers = createMcpHandlers(
           mockDb,
-          mockTamboBackend,
+          mockGenuiBackend,
           mockThreadId,
           mockQueue,
         );
@@ -560,7 +560,7 @@ describe("createMcpHandlers", () => {
             ],
             maxTokens: 1000,
             _meta: {
-              "tambo.co/parentMessageId": parentMsgId,
+              "genui.co/parentMessageId": parentMsgId,
             },
           },
         });
@@ -601,13 +601,13 @@ describe("createMcpHandlers", () => {
           } as any;
         });
 
-        jest.mocked(mockTamboBackend.llmClient.complete).mockResolvedValue({
+        jest.mocked(mockGenuiBackend.llmClient.complete).mockResolvedValue({
           message: { role: "assistant", content: "Response" },
         } as any);
 
         const handlers = createMcpHandlers(
           mockDb,
-          mockTamboBackend,
+          mockGenuiBackend,
           mockThreadId,
           mockQueue,
         );
@@ -672,13 +672,13 @@ describe("createMcpHandlers", () => {
           createdAt: new Date(),
         } as any);
 
-        jest.mocked(mockTamboBackend.llmClient.complete).mockResolvedValue({
+        jest.mocked(mockGenuiBackend.llmClient.complete).mockResolvedValue({
           message: { role: "assistant", content: "Response" },
         } as any);
 
         const handlers = createMcpHandlers(
           mockDb,
-          mockTamboBackend,
+          mockGenuiBackend,
           mockThreadId,
           mockQueue,
         );
@@ -710,13 +710,13 @@ describe("createMcpHandlers", () => {
           createdAt: new Date(),
         } as any);
 
-        jest.mocked(mockTamboBackend.llmClient.complete).mockResolvedValue({
+        jest.mocked(mockGenuiBackend.llmClient.complete).mockResolvedValue({
           message: { role: "assistant", content: "Response" },
         } as any);
 
         const handlers = createMcpHandlers(
           mockDb,
-          mockTamboBackend,
+          mockGenuiBackend,
           mockThreadId,
           mockQueue,
         );
@@ -731,7 +731,7 @@ describe("createMcpHandlers", () => {
           },
         });
 
-        expect(mockTamboBackend.llmClient.complete).toHaveBeenCalledWith(
+        expect(mockGenuiBackend.llmClient.complete).toHaveBeenCalledWith(
           expect.objectContaining({
             messages: [
               expect.objectContaining({
@@ -762,13 +762,13 @@ describe("createMcpHandlers", () => {
           createdAt: new Date(),
         } as any);
 
-        jest.mocked(mockTamboBackend.llmClient.complete).mockResolvedValue({
+        jest.mocked(mockGenuiBackend.llmClient.complete).mockResolvedValue({
           message: { role: "assistant", content: "Response" },
         } as any);
 
         const handlers = createMcpHandlers(
           mockDb,
-          mockTamboBackend,
+          mockGenuiBackend,
           mockThreadId,
           mockQueue,
         );
@@ -790,7 +790,7 @@ describe("createMcpHandlers", () => {
           },
         });
 
-        expect(mockTamboBackend.llmClient.complete).toHaveBeenCalledWith(
+        expect(mockGenuiBackend.llmClient.complete).toHaveBeenCalledWith(
           expect.objectContaining({
             messages: [
               expect.objectContaining({
@@ -829,13 +829,13 @@ describe("createMcpHandlers", () => {
           createdAt: new Date(),
         } as any);
 
-        jest.mocked(mockTamboBackend.llmClient.complete).mockResolvedValue({
+        jest.mocked(mockGenuiBackend.llmClient.complete).mockResolvedValue({
           message: { role: "assistant", content: "Response" },
         } as any);
 
         const handlers = createMcpHandlers(
           mockDb,
-          mockTamboBackend,
+          mockGenuiBackend,
           mockThreadId,
           mockQueue,
         );
@@ -857,7 +857,7 @@ describe("createMcpHandlers", () => {
           },
         });
 
-        expect(mockTamboBackend.llmClient.complete).toHaveBeenCalledWith(
+        expect(mockGenuiBackend.llmClient.complete).toHaveBeenCalledWith(
           expect.objectContaining({
             messages: [
               expect.objectContaining({
@@ -897,13 +897,13 @@ describe("createMcpHandlers", () => {
           createdAt: new Date(),
         } as any);
 
-        jest.mocked(mockTamboBackend.llmClient.complete).mockResolvedValue({
+        jest.mocked(mockGenuiBackend.llmClient.complete).mockResolvedValue({
           message: { role: "assistant", content: "Response" },
         } as any);
 
         const handlers = createMcpHandlers(
           mockDb,
-          mockTamboBackend,
+          mockGenuiBackend,
           mockThreadId,
           mockQueue,
         );
@@ -925,7 +925,7 @@ describe("createMcpHandlers", () => {
           },
         });
 
-        expect(mockTamboBackend.llmClient.complete).toHaveBeenCalledWith(
+        expect(mockGenuiBackend.llmClient.complete).toHaveBeenCalledWith(
           expect.objectContaining({
             messages: [
               expect.objectContaining({
@@ -966,13 +966,13 @@ describe("createMcpHandlers", () => {
           createdAt: new Date(),
         } as any);
 
-        jest.mocked(mockTamboBackend.llmClient.complete).mockResolvedValue({
+        jest.mocked(mockGenuiBackend.llmClient.complete).mockResolvedValue({
           message: { role: "assistant", content: "Response" },
         } as any);
 
         const handlers = createMcpHandlers(
           mockDb,
-          mockTamboBackend,
+          mockGenuiBackend,
           mockThreadId,
           mockQueue,
         );
@@ -994,7 +994,7 @@ describe("createMcpHandlers", () => {
           },
         });
 
-        expect(mockTamboBackend.llmClient.complete).toHaveBeenCalledWith(
+        expect(mockGenuiBackend.llmClient.complete).toHaveBeenCalledWith(
           expect.objectContaining({
             messages: [
               expect.objectContaining({
@@ -1038,13 +1038,13 @@ describe("createMcpHandlers", () => {
           createdAt: new Date(),
         } as any);
 
-        jest.mocked(mockTamboBackend.llmClient.complete).mockResolvedValue({
+        jest.mocked(mockGenuiBackend.llmClient.complete).mockResolvedValue({
           message: { role: "assistant", content: "Response" },
         } as any);
 
         const handlers = createMcpHandlers(
           mockDb,
-          mockTamboBackend,
+          mockGenuiBackend,
           mockThreadId,
           mockQueue,
         );
@@ -1066,7 +1066,7 @@ describe("createMcpHandlers", () => {
           },
         });
 
-        expect(mockTamboBackend.llmClient.complete).toHaveBeenCalledWith(
+        expect(mockGenuiBackend.llmClient.complete).toHaveBeenCalledWith(
           expect.objectContaining({
             messages: [
               expect.objectContaining({
@@ -1110,13 +1110,13 @@ describe("createMcpHandlers", () => {
           createdAt: new Date(),
         } as any);
 
-        jest.mocked(mockTamboBackend.llmClient.complete).mockResolvedValue({
+        jest.mocked(mockGenuiBackend.llmClient.complete).mockResolvedValue({
           message: { role: "assistant", content: "Response" },
         } as any);
 
         const handlers = createMcpHandlers(
           mockDb,
-          mockTamboBackend,
+          mockGenuiBackend,
           mockThreadId,
           mockQueue,
         );
@@ -1177,13 +1177,13 @@ describe("createMcpHandlers", () => {
           createdAt: new Date(),
         } as any);
 
-        jest.mocked(mockTamboBackend.llmClient.complete).mockResolvedValue({
+        jest.mocked(mockGenuiBackend.llmClient.complete).mockResolvedValue({
           message: { role: "assistant", content: "Response" },
         } as any);
 
         const handlers = createMcpHandlers(
           mockDb,
-          mockTamboBackend,
+          mockGenuiBackend,
           mockThreadId,
           mockQueue,
         );
@@ -1237,13 +1237,13 @@ describe("createMcpHandlers", () => {
           createdAt: new Date(),
         } as any);
 
-        jest.mocked(mockTamboBackend.llmClient.complete).mockResolvedValue({
+        jest.mocked(mockGenuiBackend.llmClient.complete).mockResolvedValue({
           message: { role: "assistant", content: "" },
         } as any);
 
         const handlers = createMcpHandlers(
           mockDb,
-          mockTamboBackend,
+          mockGenuiBackend,
           mockThreadId,
           mockQueue,
         );
@@ -1271,13 +1271,13 @@ describe("createMcpHandlers", () => {
           createdAt: new Date(),
         } as any);
 
-        jest.mocked(mockTamboBackend.llmClient.complete).mockResolvedValue({
+        jest.mocked(mockGenuiBackend.llmClient.complete).mockResolvedValue({
           message: { role: "assistant", content: null as any },
         } as any);
 
         const handlers = createMcpHandlers(
           mockDb,
-          mockTamboBackend,
+          mockGenuiBackend,
           mockThreadId,
           mockQueue,
         );
@@ -1295,8 +1295,8 @@ describe("createMcpHandlers", () => {
         expect(result.content).toEqual({ type: "text", text: "" });
       });
 
-      it("should use correct model from tamboBackend.modelOptions", async () => {
-        const customMockTamboBackend = {
+      it("should use correct model from genuiBackend.modelOptions", async () => {
+        const customMockGenuiBackend = {
           llmClient: {
             complete: jest.fn(),
           },
@@ -1316,14 +1316,14 @@ describe("createMcpHandlers", () => {
         } as any);
 
         jest
-          .mocked(customMockTamboBackend.llmClient.complete)
+          .mocked(customMockGenuiBackend.llmClient.complete)
           .mockResolvedValue({
             message: { role: "assistant", content: "Response" },
           } as any);
 
         const handlers = createMcpHandlers(
           mockDb,
-          customMockTamboBackend,
+          customMockGenuiBackend,
           mockThreadId,
           mockQueue,
         );
@@ -1347,7 +1347,7 @@ describe("createMcpHandlers", () => {
     it("should throw 'Not implemented yet' error", () => {
       const handlers = createMcpHandlers(
         mockDb,
-        mockTamboBackend,
+        mockGenuiBackend,
         mockThreadId,
         mockQueue,
       );

@@ -1,8 +1,8 @@
 import type { ReadResourceResult } from "@modelcontextprotocol/sdk/types.js";
-import { ServerType } from "@tambo-ai/client";
-import type { McpServer } from "../mcp/tambo-mcp-provider";
+import { ServerType } from "@workspace/client";
+import type { McpServer } from "../mcp/genui-mcp-provider";
 import type { ResourceSource } from "../model/resource-info";
-import { MCPTransport } from "@tambo-ai/client";
+import { MCPTransport } from "@workspace/client";
 
 import {
   resolveResourceContents,
@@ -27,9 +27,9 @@ describe("extractResourceUris", () => {
   });
 
   it("should extract resource URIs with internal server prefix", () => {
-    const text = "Check @tambo-abc123:tambo:test://resource/1";
+    const text = "Check @genui-abc123:genui:test://resource/1";
     const result = extractResourceUris(text);
-    expect(result).toEqual(["tambo-abc123:tambo:test://resource/1"]);
+    expect(result).toEqual(["genui-abc123:genui:test://resource/1"]);
   });
 
   it("should extract resource URIs with hyphens in server key", () => {
@@ -87,10 +87,10 @@ describe("resolveResourceContents", () => {
     ({
       key: serverKey,
       serverKey,
-      url: "https://api.tambo.co/mcp",
-      name: "__tambo_internal_mcp_server__",
+      url: "https://api.genui.co/mcp",
+      name: "__genui_internal_mcp_server__",
       transport: MCPTransport.HTTP,
-      serverType: ServerType.TAMBO_INTERNAL,
+      serverType: ServerType.GENUI_INTERNAL,
       connectionError: undefined, // No client for internal servers
     }) as unknown as McpServer;
 
@@ -167,13 +167,13 @@ describe("resolveResourceContents", () => {
     });
   });
 
-  it("should skip internal server resources (serverType: TAMBO_INTERNAL)", async () => {
+  it("should skip internal server resources (serverType: GENUI_INTERNAL)", async () => {
     const mockGetResource = jest.fn();
     const resourceSource = createMockResourceSource(mockGetResource);
-    const internalServer = createMockInternalServer("tambo-abc123");
+    const internalServer = createMockInternalServer("genui-abc123");
 
     const result = await resolveResourceContents(
-      ["tambo-abc123:tambo:test://resource/1"],
+      ["genui-abc123:genui:test://resource/1"],
       [internalServer],
       resourceSource,
     );
@@ -211,12 +211,12 @@ describe("resolveResourceContents", () => {
       contents: [{ uri: "file:///doc.txt", text: "registry content" }],
     });
     const resourceSource = createMockResourceSource(mockGetResource);
-    const internalServer = createMockInternalServer("tambo-abc123");
+    const internalServer = createMockInternalServer("genui-abc123");
 
     const result = await resolveResourceContents(
       [
         "registry:file:///doc.txt", // client-side registry
-        "tambo-abc123:tambo:test://resource/1", // internal - should skip
+        "genui-abc123:genui:test://resource/1", // internal - should skip
       ],
       [internalServer], // Only internal server needed - registry handled directly
       resourceSource,
@@ -226,7 +226,7 @@ describe("resolveResourceContents", () => {
     expect(mockGetResource).toHaveBeenCalledTimes(1);
     expect(result.size).toBe(1);
     expect(result.has("registry:file:///doc.txt")).toBe(true);
-    expect(result.has("tambo-abc123:tambo:test://resource/1")).toBe(false);
+    expect(result.has("genui-abc123:genui:test://resource/1")).toBe(false);
   });
 
   it("should gracefully handle registry resource fetch failure", async () => {

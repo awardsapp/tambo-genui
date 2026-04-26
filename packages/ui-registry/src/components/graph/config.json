@@ -5,7 +5,7 @@
   "dependencies": [
     "class-variance-authority",
     "recharts",
-    "@tambo-ai/react@rc"
+    "@workspace/react@rc"
   ],
   "devDependencies": [],
   "requires": [],

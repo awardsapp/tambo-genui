@@ -1,18 +1,18 @@
 import type {
   ResourceItem,
   ResourceProvider,
-} from "@tambo-ai/ui-registry/components/message-input";
+} from "@workspace/ui-registry/components/message-input";
 import {
   useCurrentInteractablesSnapshot,
-  useTamboContextAttachment,
-} from "@tambo-ai/react";
+  useGenuiContextAttachment,
+} from "@workspace/react";
 import { Cuboid } from "lucide-react";
 import * as React from "react";
 
 /**
  * Creates a resource provider that combines interactable components with optional external resources.
  *
- * This hook is specific to apps/web and handles the Tambo-specific interactables system.
+ * This hook is specific to apps/web and handles the Genui-specific interactables system.
  * It should NOT be synced to the CLI registry.
  *
  * **Note:** Since MessageInputTextarea now handles ref forwarding internally, this hook
@@ -24,7 +24,7 @@ import * as React from "react";
 export const useInteractablesResourceProvider = (
   externalResourceProvider?: ResourceProvider,
 ) => {
-  const { addContextAttachment } = useTamboContextAttachment();
+  const { addContextAttachment } = useGenuiContextAttachment();
   const interactables = useCurrentInteractablesSnapshot();
 
   // Create a combined resource provider that includes interactables + external provider

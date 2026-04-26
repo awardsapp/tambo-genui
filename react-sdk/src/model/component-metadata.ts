@@ -1,11 +1,11 @@
-// Re-exported from @tambo-ai/client, with React-specific overrides for
-// TamboComponent and RegisteredComponent which use ComponentType<any>
+// Re-exported from @workspace/client, with React-specific overrides for
+// GenuiComponent and RegisteredComponent which use ComponentType<any>
 // instead of the client's framework-agnostic `unknown`.
 import type { ComponentType } from "react";
 import type {
-  TamboComponent as BaseTamboComponent,
+  GenuiComponent as BaseGenuiComponent,
   RegisteredComponent as BaseRegisteredComponent,
-} from "@tambo-ai/client";
+} from "@workspace/client";
 
 // Re-export everything from client that doesn't need React-specific overrides
 export type {
@@ -14,18 +14,18 @@ export type {
   ParameterSpec,
   ComponentContextToolMetadata,
   ComponentContextTool,
-  TamboToolRegistry,
+  GenuiToolRegistry,
   JSONSchemaLite,
-  TamboTool,
-  TamboToolJSONSchema,
-  TamboToolUnknown,
-  TamboToolStandardSchema,
-  UnsupportedSchemaTamboTool,
-  TamboToolAssociations,
+  GenuiTool,
+  GenuiToolJSONSchema,
+  GenuiToolUnknown,
+  GenuiToolStandardSchema,
+  UnsupportedSchemaGenuiTool,
+  GenuiToolAssociations,
   RegisterToolsFn,
   RegisterToolFn,
   DefineToolFn,
-} from "@tambo-ai/client";
+} from "@workspace/client";
 
 /**
  * React-specific RegisteredComponent with ComponentType fields.
@@ -41,10 +41,10 @@ export interface RegisteredComponent extends Omit<
 export type ComponentRegistry = Record<string, RegisteredComponent>;
 
 /**
- * React-specific TamboComponent with ComponentType fields.
+ * React-specific GenuiComponent with ComponentType fields.
  */
-export interface TamboComponent extends Omit<
-  BaseTamboComponent,
+export interface GenuiComponent extends Omit<
+  BaseGenuiComponent,
   "component" | "loadingComponent"
 > {
   /**
@@ -63,7 +63,7 @@ export interface TamboComponent extends Omit<
    *
    * ```tsx
    * const components = [MyComponent];
-   * <TamboRegistryProvider components={components} />
+   * <GenuiRegistryProvider components={components} />
    * ```
    */
   component: ComponentType<any>;

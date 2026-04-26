@@ -107,7 +107,7 @@ export function TemplateCard({
                   Navigate to your project: <code>cd my-app</code>
                 </li>
                 <li>
-                  Initialize Tambo: <code>npx tambo init</code>
+                  Initialize Genui: <code>npx genui init</code>
                 </li>
                 <li>
                   Start development: <code>npm run dev</code>

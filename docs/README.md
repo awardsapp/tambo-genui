@@ -1,6 +1,6 @@
-# Tambo AI Documentation
+# Genui AI Documentation
 
-This repository contains the documentation for [Tambo AI](https://tambo.co).
+This repository contains the documentation for [Genui AI](https://genui.co).
 
 ## Development
 
@@ -23,12 +23,12 @@ This documentation is built using [Fumadocs.](https://fumadocs.dev/)
 
 ## License
 
-MIT License - see the [LICENSE](https://github.com/tambo-ai/tambo/blob/main/LICENSE) file for details.
+MIT License - see the [LICENSE](https://github.com/genui-ai/genui/blob/main/LICENSE) file for details.
 
 ## Join the Community
 
 Help build tools for the future of user interfaces.
 
-**[Star this repo](https://github.com/tambo-ai/tambo)** to support our work.
+**[Star this repo](https://github.com/genui-ai/genui)** to support our work.
 
 **[Join our Discord](https://discord.gg/dJNvPEHth6)** to connect with other developers.

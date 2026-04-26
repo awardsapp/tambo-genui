@@ -1,14 +1,14 @@
 "use client";
 
-import { createMarkdownComponents } from "@tambo-ai/ui-registry/components/message";
-import { cn } from "@tambo-ai/ui-registry/utils";
+import { createMarkdownComponents } from "@workspace/ui-registry/components/message";
+import { cn } from "@workspace/ui-registry/utils";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
-import { type McpServerInfo, MCPTransport } from "@tambo-ai/react";
+import { type McpServerInfo, MCPTransport } from "@workspace/react";
 import { motion } from "framer-motion";
 import { ChevronDown, Trash2, X } from "lucide-react";
 import React from "react";
@@ -19,7 +19,7 @@ import { Streamdown } from "streamdown";
  * Modal component for configuring client-side MCP (Model Context Protocol) servers.
  *
  * This component provides a user interface for managing MCP server connections that
- * will be used to extend the capabilities of the tambo application. The servers are
+ * will be used to extend the capabilities of the genui application. The servers are
  * stored in browser localStorage and connected directly from the client-side.
  *
  * @param props - Component props
@@ -143,10 +143,10 @@ After configuring your MCP servers below, integrate them into your application.
 #### 1. Import the required hook
 
 \`\`\`tsx
-import { useMcpServers } from "@tambo-ai/ui-registry/components/mcp-config-modal";
+import { useMcpServers } from "@workspace/ui-registry/components/mcp-config-modal";
 \`\`\`
 
-#### 2. Load MCP servers and pass to TamboProvider:
+#### 2. Load MCP servers and pass to GenuiProvider:
 
 \`\`\`tsx
 const mcpServers = useMcpServers();
@@ -159,14 +159,14 @@ function MyApp() {
   const mcpServers = useMcpServers(); // Reactive - updates when servers change
 
   return (
-    <TamboProvider
+    <GenuiProvider
       apiKey={apiKey}
       components={components}
       tools={tools}
       mcpServers={mcpServers}
     >
       {/* Your app components */}
-    </TamboProvider>
+    </GenuiProvider>
   );
 }
 \`\`\`
@@ -230,12 +230,12 @@ function MyApp() {
             <p className="text-foreground mb-3 text-sm leading-relaxed">
               Configure{" "}
               <span className="font-semibold text-foreground">client-side</span>{" "}
-              MCP servers to extend the capabilities of your tambo application.
+              MCP servers to extend the capabilities of your genui application.
               These servers will be connected{" "}
               <i>
                 <b>from the browser</b>
               </i>{" "}
-              and exposed as tools to tambo.
+              and exposed as tools to genui.
             </p>
           </div>
 
@@ -401,7 +401,7 @@ function MyApp() {
             <p className="text-foreground text-sm leading-relaxed">
               The{" "}
               <a
-                href="https://docs.tambo.co/concepts/model-context-protocol"
+                href="https://docs.genui.co/concepts/model-context-protocol"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-medium underline underline-offset-2 hover:text-foreground"
@@ -410,7 +410,7 @@ function MyApp() {
               </a>{" "}
               is a standard that allows applications to communicate with
               external tools and services. By configuring MCP servers, your
-              tambo application will be able to make calls to these tools.
+              genui application will be able to make calls to these tools.
             </p>
           </div>
 
@@ -418,7 +418,7 @@ function MyApp() {
             <p className="text-sm text-muted-foreground">
               <span className="font-semibold text-foreground">Learn more:</span>{" "}
               <a
-                href="https://docs.tambo.co/concepts/model-context-protocol/clientside-mcp-connection"
+                href="https://docs.genui.co/concepts/model-context-protocol/clientside-mcp-connection"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-foreground underline underline-offset-2"
@@ -427,7 +427,7 @@ function MyApp() {
               </a>{" "}
               |{" "}
               <a
-                href="https://docs.tambo.co/concepts/model-context-protocol/serverside-mcp-connection"
+                href="https://docs.genui.co/concepts/model-context-protocol/serverside-mcp-connection"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-foreground underline underline-offset-2"
@@ -469,9 +469,9 @@ export type McpServer = string | { url: string };
  *   // Returns: [{ url: "https://api.example.com" }, "https://api2.example.com"]
  *
  *   return (
- *     <TamboProvider mcpServers={mcpServers}>
+ *     <GenuiProvider mcpServers={mcpServers}>
  *       {children}
- *     </TamboProvider>
+ *     </GenuiProvider>
  *   );
  * }
  * ```

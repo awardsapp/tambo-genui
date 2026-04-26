@@ -1,7 +1,7 @@
 import { LEGAL_CONFIG, needsLegalAcceptance } from "@/lib/legal-config";
-import { REFERRAL_SOURCES } from "@tambo-ai-cloud/core";
+import { REFERRAL_SOURCES } from "@workspace-cloud/core";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
-import { operations, schema } from "@tambo-ai-cloud/db";
+import { operations, schema } from "@workspace-cloud/db";
 import { z } from "zod/v3";
 
 export const userRouter = createTRPCRouter({
@@ -58,7 +58,7 @@ export const userRouter = createTRPCRouter({
       return { success: true };
     }),
 
-  // Save referral source (how the user heard about Tambo)
+  // Save referral source (how the user heard about Genui)
   saveReferralSource: protectedProcedure
     .input(
       z.object({

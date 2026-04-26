@@ -2,7 +2,7 @@
   "name": "thread-content",
   "description": "Displays the messages within a thread",
   "componentName": "ThreadContent",
-  "dependencies": ["class-variance-authority", "@tambo-ai/react@rc"],
+  "dependencies": ["class-variance-authority", "@workspace/react@rc"],
   "devDependencies": [],
   "requires": ["message"],
   "files": [

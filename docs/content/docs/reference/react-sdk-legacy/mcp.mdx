@@ -1,9 +1,9 @@
 ---
 title: MCP Reference
-description: Model Context Protocol hooks, types, and utilities from @tambo-ai/react/mcp
+description: Model Context Protocol hooks, types, and utilities from @workspace/react/mcp
 ---
 
-The `@tambo-ai/react/mcp` subpath provides hooks and types for Model Context Protocol (MCP) integrations. MCP enables AI models to interact with external tools, resources, and prompts through a standardized protocol.
+The `@workspace/react/mcp` subpath provides hooks and types for Model Context Protocol (MCP) integrations. MCP enables AI models to interact with external tools, resources, and prompts through a standardized protocol.
 
 ## Installation
 
@@ -16,21 +16,21 @@ npm install @modelcontextprotocol/sdk zod zod-to-json-schema
 Then import from the `/mcp` subpath:
 
 ```tsx
-import { TamboMcpProvider, useTamboMcpServers } from "@tambo-ai/react/mcp";
+import { GenuiMcpProvider, useGenuiMcpServers } from "@workspace/react/mcp";
 ```
 
 ## Provider Setup
 
-MCP servers are configured on `TamboProvider` and connected via `TamboMcpProvider`:
+MCP servers are configured on `GenuiProvider` and connected via `GenuiMcpProvider`:
 
 ```tsx
-import { TamboProvider } from "@tambo-ai/react";
-import { TamboMcpProvider } from "@tambo-ai/react/mcp";
+import { GenuiProvider } from "@workspace/react";
+import { GenuiMcpProvider } from "@workspace/react/mcp";
 
 function App() {
   return (
-    <TamboProvider
-      apiKey={process.env.TAMBO_API_KEY}
+    <GenuiProvider
+      apiKey={process.env.GENUI_API_KEY}
       mcpServers={[
         {
           name: "my-server",
@@ -40,29 +40,29 @@ function App() {
         },
       ]}
     >
-      <TamboMcpProvider>
+      <GenuiMcpProvider>
         <YourApp />
-      </TamboMcpProvider>
-    </TamboProvider>
+      </GenuiMcpProvider>
+    </GenuiProvider>
   );
 }
 ```
 
 ## Hooks
 
-### useTamboMcpServers
+### useGenuiMcpServers
 
 Access connected MCP servers and their clients.
 
 ```tsx
-const mcpServers = useTamboMcpServers();
+const mcpServers = useGenuiMcpServers();
 ```
 
 Returns `McpServer[]` - an array of connected (or failed) MCP servers.
 
 ```tsx
 function McpStatus() {
-  const servers = useTamboMcpServers();
+  const servers = useGenuiMcpServers();
 
   return (
     <ul>
@@ -76,7 +76,7 @@ function McpStatus() {
 }
 ```
 
-### useTamboMcpResourceList
+### useGenuiMcpResourceList
 
 Get resources from all connected MCP servers and the local registry.
 
@@ -88,7 +88,7 @@ const {
   isError,
   error,
   refetch,
-} = useTamboMcpResourceList(search?: string);
+} = useGenuiMcpResourceList(search?: string);
 ```
 
 | Parameter | Type     | Description                                |
@@ -97,7 +97,7 @@ const {
 
 ```tsx
 function ResourceList() {
-  const { data: resources, isPending } = useTamboMcpResourceList();
+  const { data: resources, isPending } = useGenuiMcpResourceList();
 
   if (isPending) return <Spinner />;
 
@@ -113,7 +113,7 @@ function ResourceList() {
 }
 ```
 
-### useTamboMcpResource
+### useGenuiMcpResource
 
 Fetch a specific resource by URI.
 
@@ -124,14 +124,14 @@ const {
   isSuccess,
   isError,
   error,
-} = useTamboMcpResource(resourceUri?: string);
+} = useGenuiMcpResource(resourceUri?: string);
 ```
 
 | Parameter     | Type     | Description                                         |
 | ------------- | -------- | --------------------------------------------------- |
 | `resourceUri` | `string` | Prefixed resource URI (e.g., `"linear:file://foo"`) |
 
-### useTamboMcpPromptList
+### useGenuiMcpPromptList
 
 Get prompts from all connected MCP servers.
 
@@ -143,14 +143,14 @@ const {
   isError,
   error,
   refetch,
-} = useTamboMcpPromptList(search?: string);
+} = useGenuiMcpPromptList(search?: string);
 ```
 
 | Parameter | Type     | Description                              |
 | --------- | -------- | ---------------------------------------- |
 | `search`  | `string` | Optional search string to filter prompts |
 
-### useTamboMcpPrompt
+### useGenuiMcpPrompt
 
 Fetch a specific prompt by name with arguments.
 
@@ -161,7 +161,7 @@ const {
   isSuccess,
   isError,
   error,
-} = useTamboMcpPrompt(promptName?: string, args?: Record<string, string>);
+} = useGenuiMcpPrompt(promptName?: string, args?: Record<string, string>);
 ```
 
 | Parameter    | Type                     | Description                                  |
@@ -169,12 +169,12 @@ const {
 | `promptName` | `string`                 | Prompt name (can be prefixed with serverKey) |
 | `args`       | `Record<string, string>` | Arguments to pass to the prompt              |
 
-### useTamboMcpElicitation
+### useGenuiMcpElicitation
 
 Access MCP elicitation state for handling user input requests from servers.
 
 ```tsx
-const { elicitation, resolveElicitation } = useTamboMcpElicitation();
+const { elicitation, resolveElicitation } = useGenuiMcpElicitation();
 ```
 
 Returns:
@@ -184,7 +184,7 @@ Returns:
 
 ```tsx
 function ElicitationHandler() {
-  const { elicitation, resolveElicitation } = useTamboMcpElicitation();
+  const { elicitation, resolveElicitation } = useGenuiMcpElicitation();
 
   if (!elicitation) return null;
 
@@ -204,9 +204,9 @@ function ElicitationHandler() {
 }
 ```
 
-### useTamboElicitationContext
+### useGenuiElicitationContext
 
-**Deprecated**: Use `useTamboMcpElicitation` instead.
+**Deprecated**: Use `useGenuiMcpElicitation` instead.
 
 ## Types
 
@@ -298,7 +298,7 @@ interface ProviderMCPHandlers {
 
 ### ListResourceEntry
 
-A resource entry from `useTamboMcpResourceList`.
+A resource entry from `useGenuiMcpResourceList`.
 
 ```typescript
 type ListResourceEntry = RegistryResourceEntry | McpResourceEntry;
@@ -316,7 +316,7 @@ interface McpResourceEntry {
 
 ### ListPromptEntry
 
-A prompt entry from `useTamboMcpPromptList`.
+A prompt entry from `useGenuiMcpPromptList`.
 
 ```typescript
 interface ListPromptEntry {
@@ -325,23 +325,23 @@ interface ListPromptEntry {
 }
 ```
 
-### TamboElicitationRequest
+### GenuiElicitationRequest
 
 An elicitation request from an MCP server.
 
 ```typescript
-interface TamboElicitationRequest {
+interface GenuiElicitationRequest {
   message: string;
   requestedSchema?: ElicitationRequestedSchema;
 }
 ```
 
-### TamboElicitationResponse
+### GenuiElicitationResponse
 
 Response to an elicitation request.
 
 ```typescript
-interface TamboElicitationResponse {
+interface GenuiElicitationResponse {
   action: "accept" | "decline";
   content?: Record<string, unknown>;
 }
@@ -349,7 +349,7 @@ interface TamboElicitationResponse {
 
 ### McpServerInfo
 
-Configuration for an MCP server (passed to `TamboProvider`).
+Configuration for an MCP server (passed to `GenuiProvider`).
 
 ```typescript
 interface McpServerInfo {
@@ -384,9 +384,9 @@ interface NormalizedMcpServerInfo {
 Type guard to narrow a `ListResourceEntry` to an MCP-backed resource.
 
 ```typescript
-import { isMcpResourceEntry } from "@tambo-ai/react/mcp";
+import { isMcpResourceEntry } from "@workspace/react/mcp";
 
-const { data: resources } = useTamboMcpResourceList();
+const { data: resources } = useGenuiMcpResourceList();
 
 resources.forEach((entry) => {
   if (isMcpResourceEntry(entry)) {

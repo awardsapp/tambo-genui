@@ -1,11 +1,11 @@
 "use client";
 
-import { cn } from "@tambo-ai/ui-registry/utils";
+import { cn } from "@workspace/ui-registry/utils";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import {
   ThreadDropdown as BaseThreadDropdown,
   type ThreadListItem,
-} from "@tambo-ai/react-ui-base";
+} from "@workspace/react-ui-base";
 import { ChevronDownIcon, PlusIcon } from "lucide-react";
 import * as React from "react";
 

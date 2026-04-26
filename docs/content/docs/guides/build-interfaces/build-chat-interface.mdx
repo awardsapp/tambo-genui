@@ -3,9 +3,9 @@ title: Build a Custom Chat Interface
 description: This guide helps you create your own chat interface using the React SDK to access and display stored conversations.
 ---
 
-Tambo provides [pre-built components](https://ui.tambo.co) to help you create common conversation interfaces quickly, but if you prefer to build your own from scratch you can use the React SDK.
+Genui provides [pre-built components](https://ui.genui.co) to help you create common conversation interfaces quickly, but if you prefer to build your own from scratch you can use the React SDK.
 
-The Tambo React SDK provides hooks for accessing stored conversation data, allowing you to build custom interfaces that match your application's design. Whether you're building a traditional chat, a canvas-style workspace, or a hybrid interface, the SDK handles data fetching, real-time updates, and state management while you control the presentation.
+The Genui React SDK provides hooks for accessing stored conversation data, allowing you to build custom interfaces that match your application's design. Whether you're building a traditional chat, a canvas-style workspace, or a hybrid interface, the SDK handles data fetching, real-time updates, and state management while you control the presentation.
 
 This guide walks through building a complete custom conversation interface from scratch.
 
@@ -14,7 +14,7 @@ This guide walks through building a complete custom conversation interface from 
 Before building custom conversation UI:
 
 - Understand how [Conversation Storage](/concepts/conversation-storage) works
-- Set up the `TamboProvider` in your application
+- Set up the `GenuiProvider` in your application
 
 ## Single Conversation Interface
 
@@ -23,10 +23,10 @@ Before building custom conversation UI:
 Show the conversation history using the current thread's messages:
 
 ```tsx
-import { useTambo } from "@tambo-ai/react";
+import { useGenui } from "@workspace/react";
 
 export default function MessageList() {
-  const { messages } = useTambo();
+  const { messages } = useGenui();
 
   return (
     <div className="messages">
@@ -65,18 +65,18 @@ export default function MessageList() {
 }
 ```
 
-Messages contain an array of content blocks — text, tool calls, tool results, and components. Content blocks with `type: "component"` include a `renderedComponent` property containing any component Tambo created. Tool call blocks (`type: "tool_use"`) show which tools the AI invoked, useful for debugging or transparency.
+Messages contain an array of content blocks — text, tool calls, tool results, and components. Content blocks with `type: "component"` include a `renderedComponent` property containing any component Genui created. Tool call blocks (`type: "tool_use"`) show which tools the AI invoked, useful for debugging or transparency.
 
 **Alternative: Canvas-Style Display**
 
 For interfaces showing only the latest component (dashboards, workspaces), walk backwards through messages to find the most recent component:
 
 ```tsx
-import { useTambo } from "@tambo-ai/react";
+import { useGenui } from "@workspace/react";
 import { type ReactNode } from "react";
 
 function CanvasView() {
-  const { messages } = useTambo();
+  const { messages } = useGenui();
 
   // Find the most recent rendered component by scanning forward (last wins)
   let latestComponent: ReactNode | null = null;
@@ -93,7 +93,7 @@ function CanvasView() {
       {latestComponent ? (
         latestComponent
       ) : (
-        <p>Ask Tambo to create something...</p>
+        <p>Ask Genui to create something...</p>
       )}
     </div>
   );
@@ -107,10 +107,10 @@ This pattern is useful when you want a clean workspace that updates with each AI
 Create an input form that sends messages to the current thread:
 
 ```tsx
-import { useTamboThreadInput } from "@tambo-ai/react";
+import { useGenuiThreadInput } from "@workspace/react";
 
 function MessageInput() {
-  const { value, setValue, submit, isPending, error } = useTamboThreadInput();
+  const { value, setValue, submit, isPending, error } = useGenuiThreadInput();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -136,7 +136,7 @@ function MessageInput() {
 }
 ```
 
-The `useTamboThreadInput` hook manages input state and submission, providing the current value, a setter function, a submit function, pending state, and any errors.
+The `useGenuiThreadInput` hook manages input state and submission, providing the current value, a setter function, a submit function, pending state, and any errors.
 
 ## Multiple Conversations
 
@@ -145,10 +145,10 @@ The `useTamboThreadInput` hook manages input state and submission, providing the
 Show users their available conversations:
 
 ```tsx
-import { useTamboThreadList } from "@tambo-ai/react";
+import { useGenuiThreadList } from "@workspace/react";
 
 export default function ThreadList() {
-  const { data, isLoading, error, refetch } = useTamboThreadList();
+  const { data, isLoading, error, refetch } = useGenuiThreadList();
 
   return (
     <div className="thread-list">
@@ -171,11 +171,11 @@ The `data.threads` array contains all stored conversations.
 Allow users to select and view different conversations:
 
 ```tsx
-import { useTambo, useTamboThreadList } from "@tambo-ai/react";
+import { useGenui, useGenuiThreadList } from "@workspace/react";
 
 export default function ThreadList() {
-  const { data, isLoading, error, refetch } = useTamboThreadList();
-  const { currentThreadId, switchThread } = useTambo();
+  const { data, isLoading, error, refetch } = useGenuiThreadList();
+  const { currentThreadId, switchThread } = useGenui();
 
   return (
     <div className="thread-list">
@@ -207,14 +207,14 @@ Show AI-generated suggestions after each assistant message to help users discove
 
 ### Display Suggestions
 
-Use the `useTamboSuggestions` hook to get and display suggestions:
+Use the `useGenuiSuggestions` hook to get and display suggestions:
 
 ```tsx
-import { useTambo, useTamboSuggestions } from "@tambo-ai/react";
+import { useGenui, useGenuiSuggestions } from "@workspace/react";
 
 function MessageThread() {
-  const { messages } = useTambo();
-  const { suggestions, isLoading, isAccepting, accept } = useTamboSuggestions({
+  const { messages } = useGenui();
+  const { suggestions, isLoading, isAccepting, accept } = useGenuiSuggestions({
     maxSuggestions: 3, // Optional: 1-10, default 3
   });
 

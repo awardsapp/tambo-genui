@@ -70,7 +70,7 @@ function HeroIllustration() {
           {shouldUseGif ? (
             <Image
               src="/assets/landing/hero/Octo-5-transparent-lossy.gif"
-              alt="Tambo Octopus Animation"
+              alt="Genui Octopus Animation"
               unoptimized={true}
               className="w-full h-full object-contain"
               width={1000}
@@ -84,7 +84,7 @@ function HeroIllustration() {
               playsInline
               onError={handleVideoError}
               className="w-full h-full object-contain"
-              aria-label="Tambo Octopus Animation"
+              aria-label="Genui Octopus Animation"
             >
               <source
                 src="/assets/landing/hero/Octo-5-animated-vp9-small.webm"

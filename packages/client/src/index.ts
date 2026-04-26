@@ -1,5 +1,5 @@
 /**
- * `@tambo-ai/client` - Framework-agnostic client for Tambo AI
+ * `@workspace/client` - Framework-agnostic client for Genui AI
  *
  * Provides streaming, tool execution, and thread management
  * without React dependencies.
@@ -10,16 +10,16 @@
 export const CLIENT_VERSION = "1.0.0";
 
 // -- Core classes --
-export { TamboClient } from "./tambo-client";
+export { GenuiClient } from "./genui-client";
 export type {
-  TamboClientOptions,
+  GenuiClientOptions,
   RunOptions,
   ClientState,
   BeforeRunContext,
   ContextHelperFn,
-} from "./tambo-client";
-export { TamboStream } from "./tambo-stream";
-export type { StreamEvent, TamboStreamOptions } from "./tambo-stream";
+} from "./genui-client";
+export { GenuiStream } from "./genui-stream";
+export type { StreamEvent, GenuiStreamOptions } from "./genui-stream";
 
 // -- Send message utilities --
 export {
@@ -39,12 +39,12 @@ export type {
 } from "./utils/send-message";
 
 // -- Types --
-export type { TamboThread, StreamingState, RunStatus } from "./types/thread";
+export type { GenuiThread, StreamingState, RunStatus } from "./types/thread";
 export type {
-  TamboThreadMessage,
-  TamboComponentContent,
-  TamboToolUseContent,
-  TamboToolDisplayProps,
+  GenuiThreadMessage,
+  GenuiComponentContent,
+  GenuiToolUseContent,
+  GenuiToolDisplayProps,
   Content,
   MessageRole,
   ComponentStreamingState,
@@ -57,11 +57,11 @@ export type {
   ComponentEndEvent,
   RunAwaitingInputEvent,
   MessageParentEvent,
-  TamboCustomEvent,
+  GenuiCustomEvent,
   PendingToolCall as PendingToolCallEvent,
 } from "./types/event";
-export { isTamboCustomEvent, asTamboCustomEvent } from "./types/event";
-export type { TamboAuthState } from "./types/auth";
+export { isGenuiCustomEvent, asGenuiCustomEvent } from "./types/event";
+export type { GenuiAuthState } from "./types/auth";
 export type { ToolChoice } from "./types/tool-choice";
 
 // Re-export SDK types that are part of the public API
@@ -88,15 +88,15 @@ export type {
   ComponentContextTool,
   RegisteredComponent,
   ComponentRegistry,
-  TamboToolRegistry,
+  GenuiToolRegistry,
   JSONSchemaLite,
-  TamboTool,
-  TamboToolJSONSchema,
-  TamboToolUnknown,
-  TamboToolStandardSchema,
-  UnsupportedSchemaTamboTool,
-  TamboToolAssociations,
-  TamboComponent,
+  GenuiTool,
+  GenuiToolJSONSchema,
+  GenuiToolUnknown,
+  GenuiToolStandardSchema,
+  UnsupportedSchemaGenuiTool,
+  GenuiToolAssociations,
+  GenuiComponent,
   RegisterToolsFn,
   RegisterToolFn,
   DefineToolFn,
@@ -133,8 +133,8 @@ export type {
   MCPSamplingHandler,
   MCPHandlers,
   ElicitationRequestedSchema,
-  TamboElicitationRequest,
-  TamboElicitationResponse,
+  GenuiElicitationRequest,
+  GenuiElicitationResponse,
   ElicitationContextState,
   PrimitiveSchemaDefinition,
 } from "./mcp/index";

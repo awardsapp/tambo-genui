@@ -1,6 +1,6 @@
 import type { ToolAnnotations as MCPToolAnnotations } from "@modelcontextprotocol/sdk/types.js";
 import type { StandardSchemaV1 } from "@standard-schema/spec";
-import TamboAI from "@tambo-ai/typescript-sdk";
+import GenuiAI from "@workspace/typescript-sdk";
 import { JSONSchema7 } from "json-schema";
 
 /**
@@ -28,20 +28,20 @@ export type ToolAnnotations = MCPToolAnnotations & {
    * being streamed. This is typically used for read-only tools that do not
    * cause side effects.
    */
-  tamboStreamableHint?: boolean;
+  genuiStreamableHint?: boolean;
 };
 
-/** Extension of the ToolParameters interface from Tambo AI to include JSONSchema definition */
-export type ParameterSpec = TamboAI.ToolParameters & {
+/** Extension of the ToolParameters interface from Genui AI to include JSONSchema definition */
+export type ParameterSpec = GenuiAI.ToolParameters & {
   schema?: JSONSchema7;
 };
 
 /**
- * Extends the base ContextTool interface from Tambo AI to include schema information
+ * Extends the base ContextTool interface from Genui AI to include schema information
  * for parameter validation.
  */
 export interface ComponentContextToolMetadata
-  extends TamboAI.ComponentContextToolMetadata {
+  extends GenuiAI.ComponentContextToolMetadata {
   parameters: ParameterSpec[];
   /**
    * Optional per-tool call limit. When set, this overrides the project's
@@ -62,14 +62,14 @@ export interface ComponentContextTool {
   definition: ComponentContextToolMetadata;
 }
 
-export interface RegisteredComponent extends TamboAI.AvailableComponent {
+export interface RegisteredComponent extends GenuiAI.AvailableComponent {
   component: unknown;
   loadingComponent?: unknown;
 }
 
 export type ComponentRegistry = Record<string, RegisteredComponent>;
 
-export type TamboToolRegistry = Record<string, TamboTool>;
+export type GenuiToolRegistry = Record<string, GenuiTool>;
 
 /**
  * A JSON Schema that is compatible with the MCP.
@@ -84,13 +84,13 @@ export type JSONSchemaLite = JSONSchema7 & {
 type MaybeAsync<T> = T | Promise<T>;
 
 /**
- * TamboTool is a type that represents a tool that can be registered with Tambo.
+ * GenuiTool is a type that represents a tool that can be registered with Genui.
  *
  * It is preferable to use the `defineTool` helper function to create tools, as
  * it provides better type inference and safety.
  * @example
  * ```ts
- * import { TamboTool, defineTool } from "@tambo-ai/react";
+ * import { GenuiTool, defineTool } from "@workspace/react";
  * import { z } from "zod";
  *
  * const locationToLatLon = defineTool({
@@ -108,7 +108,7 @@ type MaybeAsync<T> = T | Promise<T>;
  * });
  * ```
  */
-export interface TamboTool<
+export interface GenuiTool<
   Params = any,
   Returns = any,
   Rest extends any[] = [],
@@ -134,15 +134,15 @@ export interface TamboTool<
   maxCalls?: number;
   /**
    * Annotations describing the tool's behavior, aligned with the MCP specification.
-   * Use `tamboStreamableHint: true` to enable streaming execution of partial tool calls.
+   * Use `genuiStreamableHint: true` to enable streaming execution of partial tool calls.
    * @see {@link ToolAnnotations}
    * @example
    * ```ts
-   * const setTextTool: TamboTool<{ text: string }> = {
+   * const setTextTool: GenuiTool<{ text: string }> = {
    *   name: "set_text",
    *   description: "Set the displayed text",
    *   annotations: {
-   *     tamboStreamableHint: true, // tool is safe for streaming calls
+   *     genuiStreamableHint: true, // tool is safe for streaming calls
    *   },
    *   tool: ({ text }) => setText(text),
    *   inputSchema: z.object({ text: z.string() }),
@@ -154,7 +154,7 @@ export interface TamboTool<
 
   /**
    * The function that implements the tool's logic. This function will be called
-   * by Tambo when the model decides to invoke the tool.
+   * by Genui when the model decides to invoke the tool.
    * @param params - The input parameters for the tool. These are validated
    * against the inputSchema before being passed so are guaranteed to be correct
    * when called by the model.
@@ -191,8 +191,8 @@ export interface TamboTool<
   transformToContent?: (
     result: any,
   ) =>
-    | Promise<TamboAI.Beta.Threads.ChatCompletionContentPart[]>
-    | TamboAI.Beta.Threads.ChatCompletionContentPart[];
+    | Promise<GenuiAI.Beta.Threads.ChatCompletionContentPart[]>
+    | GenuiAI.Beta.Threads.ChatCompletionContentPart[];
 }
 
 /**
@@ -200,10 +200,10 @@ export interface TamboTool<
  * This does not provide type safety for the tool's parameters and return value.
  * @internal
  */
-export type TamboToolJSONSchema<
+export type GenuiToolJSONSchema<
   Args extends unknown[] = unknown[],
   Returns = unknown,
-> = Omit<TamboTool<Args, Returns>, "tool" | "inputSchema" | "outputSchema"> & {
+> = Omit<GenuiTool<Args, Returns>, "tool" | "inputSchema" | "outputSchema"> & {
   tool: (...args: Args) => MaybeAsync<Returns>;
   inputSchema: JSONSchemaLite;
   outputSchema: JSONSchemaLite;
@@ -214,8 +214,8 @@ export type TamboToolJSONSchema<
  * This means type safety cannot be guaranteed.
  * @internal
  */
-export type TamboToolUnknown = Omit<
-  TamboTool,
+export type GenuiToolUnknown = Omit<
+  GenuiTool,
   "tool" | "inputSchema" | "outputSchema"
 > & {
   tool: (...args: unknown[]) => MaybeAsync<unknown>;
@@ -228,11 +228,11 @@ export type TamboToolUnknown = Omit<
  * This provides full type safety for the tool's parameters and return value.
  * @internal
  */
-export type TamboToolStandardSchema<
+export type GenuiToolStandardSchema<
   Input extends StandardSchemaV1 = StandardSchemaV1,
   Output extends StandardSchemaV1 = StandardSchemaV1,
 > = Omit<
-  TamboTool<
+  GenuiTool<
     StandardSchemaV1.InferOutput<Input>,
     StandardSchemaV1.InferOutput<Output>
   >,
@@ -247,16 +247,16 @@ export type TamboToolStandardSchema<
 
 /**
  * If you're seeing this type, it means that you are using a deprecated and now
- * unsupported schema type for defining Tambo tools.
+ * unsupported schema type for defining Genui tools.
  *
  * Follow the migration guide to update your tool definitions to use
  * inputSchema and outputSchema with either Standard Schema compliant validators
  * (like Zod 3.25.76, Zod 4.x) or raw JSON Schema objects.
  * @deprecated replace `toolSchema` with `inputSchema` and `outputSchema` instead.
- * @see {@link https://docs.tambo.co/reference/react-sdk/migration}
+ * @see {@link https://docs.genui.co/reference/react-sdk/migration}
  */
-export type UnsupportedSchemaTamboTool = Omit<
-  TamboTool,
+export type UnsupportedSchemaGenuiTool = Omit<
+  GenuiTool,
   "tool" | "inputSchema" | "outputSchema"
 > & {
   /**
@@ -268,12 +268,12 @@ export type UnsupportedSchemaTamboTool = Omit<
   outputSchema?: never;
 };
 
-export type TamboToolAssociations = Record<string, string[]>;
+export type GenuiToolAssociations = Record<string, string[]>;
 /**
- * A component that can be registered with the TamboRegistryProvider.
+ * A component that can be registered with the GenuiRegistryProvider.
  */
 
-export interface TamboComponent {
+export interface GenuiComponent {
   /** The name of the component */
   name: string;
   /** The description of the component */
@@ -296,7 +296,7 @@ export interface TamboComponent {
    * ```typescript
    * import { z } from "zod/v4";
    *
-   * const component: TamboComponent = {
+   * const component: GenuiComponent = {
    *   name: "MyComponent",
    *   description: "A sample component",
    *   component: MyComponent,
@@ -317,7 +317,7 @@ export interface TamboComponent {
   /** The loading component to render while the component is loading */
   loadingComponent?: unknown;
   /** The tools that are associated with the component */
-  associatedTools?: TamboTool[];
+  associatedTools?: GenuiTool[];
   /** Annotations describing the component's behavior. */
   annotations?: ToolAnnotations;
 }
@@ -328,74 +328,74 @@ type OptionalSchemaProps<T> = Omit<T, "inputSchema" | "outputSchema"> & {
 };
 
 /**
- * Registers one or more Tambo tools.
- * @param tools - An array of Tambo tools to register
+ * Registers one or more Genui tools.
+ * @param tools - An array of Genui tools to register
  * @param warnOnOverwrite - Whether to warn if any tool is being overwritten
  */
 export interface RegisterToolsFn {
   /**
-   * @deprecated Follow the {@link https://docs.tambo.co/reference/react-sdk/migration | Migration Guide} to update
+   * @deprecated Follow the {@link https://docs.genui.co/reference/react-sdk/migration | Migration Guide} to update
    * your tool definitions to use `inputSchema` and `outputSchema` instead.
    */
-  (tools: UnsupportedSchemaTamboTool[], warnOnOverwrite?: boolean): void;
+  (tools: UnsupportedSchemaGenuiTool[], warnOnOverwrite?: boolean): void;
   /**
-   * Register one or more Tambo tools. For better type inference, consider registering tools individually using the
+   * Register one or more Genui tools. For better type inference, consider registering tools individually using the
    * `registerTool` function or use the `defineTool` helper when defining your tools.
    * @example
    * ```typescript
-   * import { defineTool } from "@tambo-ai/react";
+   * import { defineTool } from "@workspace/react";
    * const tools = [
    *   defineTool({...});
    *   defineTool({...});
    * ];
    * registerTools(tools);
-   * @param tools - An array of Tambo tools to register
+   * @param tools - An array of Genui tools to register
    * @param warnOnOverwrite - Whether to warn if any tool is being overwritten
    */
-  (tools: TamboTool[], warnOnOverwrite?: boolean): void;
+  (tools: GenuiTool[], warnOnOverwrite?: boolean): void;
 }
 
 /**
- * Function interface for registering a Tambo tool with full type inference.
+ * Function interface for registering a Genui tool with full type inference.
  * This function has multiple overloads to handle different schema types. This
  * is a utility function and does not perform any runtime logic.
  */
 export interface RegisterToolFn {
   <Args extends StandardSchemaV1, Returns extends StandardSchemaV1>(
-    tool: TamboToolStandardSchema<Args, Returns>,
+    tool: GenuiToolStandardSchema<Args, Returns>,
     warnOnOverwrite?: boolean,
   ): void;
   <Args extends any[], Returns = any>(
-    tool: TamboToolJSONSchema<Args, Returns>,
+    tool: GenuiToolJSONSchema<Args, Returns>,
     warnOnOverwrite?: boolean,
   ): void;
-  (tool: TamboToolUnknown, warnOnOverwrite?: boolean): void;
-  (tool: TamboTool, warnOnOverwrite?: boolean): void;
+  (tool: GenuiToolUnknown, warnOnOverwrite?: boolean): void;
+  (tool: GenuiTool, warnOnOverwrite?: boolean): void;
   /**
-   * @deprecated Follow the {@link https://docs.tambo.co/reference/react-sdk/migration | Migration Guide} to update
+   * @deprecated Follow the {@link https://docs.genui.co/reference/react-sdk/migration | Migration Guide} to update
    * your tool definitions to use `inputSchema` and `outputSchema` instead.
-   * @param tool - The unsupported schema Tambo tool to register
+   * @param tool - The unsupported schema Genui tool to register
    * @param warnOnOverwrite - Whether to warn if the tool is being overwritten
    */
-  (tool: UnsupportedSchemaTamboTool, warnOnOverwrite?: boolean): void;
+  (tool: UnsupportedSchemaGenuiTool, warnOnOverwrite?: boolean): void;
 }
 
 /**
- * Function interface for defining a Tambo tool with full type inference. This function has multiple overloads to handle
+ * Function interface for defining a Genui tool with full type inference. This function has multiple overloads to handle
  * different schema types. This is a utility function and does not perform any runtime logic.
  */
 export interface DefineToolFn {
   /**
-   * @deprecated Follow the {@link https://docs.tambo.co/reference/react-sdk/migration | Migration Guide} to update
+   * @deprecated Follow the {@link https://docs.genui.co/reference/react-sdk/migration | Migration Guide} to update
    * your tool definitions to use `inputSchema` and `outputSchema` instead.
    * @param tool The tool definition to register
    * @returns The registered tool definition
    */
-  (tool: UnsupportedSchemaTamboTool): typeof tool;
+  (tool: UnsupportedSchemaGenuiTool): typeof tool;
   /**
-   * Provides type safety for defining a Tambo Tool.
+   * Provides type safety for defining a Genui Tool.
    *
-   * Tambo uses the [standard-schema.dev](https://standard-schema.dev) spec which means you can use any Standard Schema
+   * Genui uses the [standard-schema.dev](https://standard-schema.dev) spec which means you can use any Standard Schema
    * compliant validator (Zod 3.24+, Zod 4.x). This definition ensures the input and output types are correctly
    * inferred from the provided schemas.
    * @example
@@ -417,10 +417,10 @@ export interface DefineToolFn {
    * @returns The registered tool definition
    */
   <Input extends StandardSchemaV1, Output extends StandardSchemaV1>(
-    tool: OptionalSchemaProps<TamboToolStandardSchema<Input, Output>>,
-  ): TamboToolStandardSchema<Input, Output>;
+    tool: OptionalSchemaProps<GenuiToolStandardSchema<Input, Output>>,
+  ): GenuiToolStandardSchema<Input, Output>;
   /**
-   * Provides type safety for defining a Tambo Tool with JSON Schema input and output.
+   * Provides type safety for defining a Genui Tool with JSON Schema input and output.
    *
    * This overload is used when providing raw JSON Schema objects instead of StandardSchema validators.
    * Type inference is limited when using raw JSON Schema.
@@ -429,23 +429,23 @@ export interface DefineToolFn {
    * @returns The registered tool definition
    */
   <I extends any[], O = any>(
-    tool: OptionalSchemaProps<TamboToolJSONSchema<I, O>>,
-  ): TamboToolJSONSchema<I, O>;
+    tool: OptionalSchemaProps<GenuiToolJSONSchema<I, O>>,
+  ): GenuiToolJSONSchema<I, O>;
   /**
-   * Provides type safety for defining a Tambo Tool.
+   * Provides type safety for defining a Genui Tool.
    *
    * This overload is used when the schema types could not be matched to known types.
    * Type safety cannot be guaranteed.
    * @param tool The tool definition to register
    * @returns The registered tool definition
    */
-  (tool: OptionalSchemaProps<TamboToolUnknown>): TamboToolUnknown;
+  (tool: OptionalSchemaProps<GenuiToolUnknown>): GenuiToolUnknown;
   /**
-   * Provides type safety for defining a Tambo Tool.
+   * Provides type safety for defining a Genui Tool.
    *
-   * This overload is used when providing a fully defined TamboTool.
+   * This overload is used when providing a fully defined GenuiTool.
    * @param tool The tool definition to register
    * @returns The registered tool definition
    */
-  (tool: OptionalSchemaProps<TamboTool>): TamboTool;
+  (tool: OptionalSchemaProps<GenuiTool>): GenuiTool;
 }

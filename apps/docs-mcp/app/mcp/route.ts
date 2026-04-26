@@ -1,5 +1,5 @@
 /**
- * @fileoverview MCP server route handler for tambo documentation
+ * @fileoverview MCP server route handler for genui documentation
  * @module mcp/route
  */
 

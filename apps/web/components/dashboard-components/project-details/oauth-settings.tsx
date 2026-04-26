@@ -12,13 +12,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Switch } from "@/components/ui/switch";
-import { EditWithTamboButton } from "@/components/ui/tambo/edit-with-tambo-button";
+import { EditWithGenuiButton } from "@/components/ui/genui/edit-with-genui-button";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { api } from "@/trpc/react";
-import { OAuthValidationMode } from "@tambo-ai-cloud/core";
-import type { Suggestion } from "@tambo-ai/react";
-import { withTamboInteractable } from "@tambo-ai/react";
+import { OAuthValidationMode } from "@workspace-cloud/core";
+import type { Suggestion } from "@workspace/react";
+import { withGenuiInteractable } from "@workspace/react";
 import { motion } from "framer-motion";
 import {
   AlertTriangle,
@@ -246,42 +246,42 @@ export function OAuthSettings({
     }
   }, [initialIsTokenRequired]);
 
-  // When Tambo sends setValidationMode, change the mode
+  // When Genui sends setValidationMode, change the mode
   useEffect(() => {
     if (setValidationMode !== undefined) {
       handleModeChange(setValidationMode);
     }
   }, [setValidationMode, handleModeChange]);
 
-  // When Tambo sends setTokenRequired, update the state
+  // When Genui sends setTokenRequired, update the state
   useEffect(() => {
     if (setTokenRequired !== undefined) {
       setIsTokenRequiredState(setTokenRequired);
     }
   }, [setTokenRequired]);
 
-  // When Tambo sends setSecretKeyValue, update the secret key
+  // When Genui sends setSecretKeyValue, update the secret key
   useEffect(() => {
     if (setSecretKeyValue) {
       setSecretKey(setSecretKeyValue);
     }
   }, [setSecretKeyValue]);
 
-  // When Tambo sends setPublicKeyValue, update the public key
+  // When Genui sends setPublicKeyValue, update the public key
   useEffect(() => {
     if (setPublicKeyValue) {
       setPublicKey(setPublicKeyValue);
     }
   }, [setPublicKeyValue]);
 
-  // When Tambo sends setUserinfoEndpointValue, update the userinfo endpoint
+  // When Genui sends setUserinfoEndpointValue, update the userinfo endpoint
   useEffect(() => {
     if (setUserinfoEndpointValue) {
       setUserinfoEndpoint(setUserinfoEndpointValue);
     }
   }, [setUserinfoEndpointValue]);
 
-  // When Tambo sends triggerSave, save the settings
+  // When Genui sends triggerSave, save the settings
   useEffect(() => {
     if (triggerSave === true) {
       handleSave().catch(console.error);
@@ -382,7 +382,7 @@ export function OAuthSettings({
       <CardHeader>
         <CardTitle className="text-lg font-semibold">
           OAuth Token Validation
-          <EditWithTamboButton description="Manage OAuth token validation settings for this project." />
+          <EditWithGenuiButton description="Manage OAuth token validation settings for this project." />
         </CardTitle>
         <p className="text-sm font-sans text-foreground">
           Configure how OAuth bearer tokens are validated for your
@@ -481,7 +481,7 @@ export function OAuthSettings({
                       <div className="flex gap-2 p-2.5 rounded-md bg-amber-50 border border-amber-200 text-amber-800">
                         <AlertTriangle className="h-4 w-4 shrink-0 mt-0.5" />
                         <p className="text-xs">
-                          Without a User Info Endpoint, Tambo cannot verify
+                          Without a User Info Endpoint, Genui cannot verify
                           opaque access tokens (e.g., GitHub) and users will be
                           identified by a token hash instead. This means user
                           identity may change when tokens are refreshed.
@@ -626,7 +626,7 @@ export function OAuthSettings({
   );
 }
 
-export const InteractableOAuthSettings = withTamboInteractable(OAuthSettings, {
+export const InteractableOAuthSettings = withGenuiInteractable(OAuthSettings, {
   componentName: COMPONENT_NAME,
   description:
     "Manages OAuth token validation settings for a project. Configure how OAuth bearer tokens are validated, including validation mode (Manual, Symmetric, Asymmetric Auto, Asymmetric Manual), token required setting, secret keys, public keys, and userinfo endpoint. Users can view current settings and update them.",

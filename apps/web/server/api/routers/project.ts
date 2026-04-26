@@ -52,9 +52,9 @@ import {
   OAuthValidationMode,
   SKILLS_SUPPORTED_PROVIDERS,
   validateMcpServer,
-} from "@tambo-ai-cloud/core";
-import type { HydraDb } from "@tambo-ai-cloud/db";
-import { operations, schema } from "@tambo-ai-cloud/db";
+} from "@workspace-cloud/core";
+import type { HydraDb } from "@workspace-cloud/db";
+import { operations, schema } from "@workspace-cloud/db";
 import { TRPCError } from "@trpc/server";
 import {
   and,

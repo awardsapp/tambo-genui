@@ -1,5 +1,5 @@
 import { EventType } from "@ag-ui/core";
-import { handleEventStream } from "@tambo-ai/client";
+import { handleEventStream } from "@workspace/client";
 
 describe("handleEventStream", () => {
   it("yields events from the stream", async () => {

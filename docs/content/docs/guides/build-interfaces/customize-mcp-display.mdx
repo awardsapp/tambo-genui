@@ -3,7 +3,7 @@ title: Customize How MCP Features Display
 description: This guide helps you build custom user interfaces for MCP prompts, resources, and elicitations that match your application design.
 ---
 
-This guide shows you how to build custom UI components for MCP features using the React SDK hooks. While Tambo provides built-in UI components for prompts, resources, and elicitations, you can create your own interfaces that match your application's design.
+This guide shows you how to build custom UI components for MCP features using the React SDK hooks. While Genui provides built-in UI components for prompts, resources, and elicitations, you can create your own interfaces that match your application's design.
 
 For an overview of MCP features, see [MCP Features](/concepts/model-context-protocol/features).
 
@@ -22,13 +22,13 @@ Build a custom interface for browsing and inserting MCP prompts.
 
 ### Step 1: List Available Prompts
 
-Use `useTamboMcpPromptList` to fetch all prompts from connected servers:
+Use `useGenuiMcpPromptList` to fetch all prompts from connected servers:
 
 ```tsx
-import { useTamboMcpPromptList } from "@tambo-ai/react/mcp";
+import { useGenuiMcpPromptList } from "@workspace/react/mcp";
 
 function CustomPromptPicker() {
-  const { data: prompts, isLoading, error } = useTamboMcpPromptList();
+  const { data: prompts, isLoading, error } = useGenuiMcpPromptList();
 
   if (isLoading) {
     return <div className="loading">Loading prompts...</div>;
@@ -63,15 +63,15 @@ function CustomPromptPicker() {
 
 ### Step 2: Fetch and Insert Prompt Content
 
-Use `useTamboMcpPrompt` to get the full prompt content when a user selects a prompt:
+Use `useGenuiMcpPrompt` to get the full prompt content when a user selects a prompt:
 
 ```tsx
-import { useTamboMcpPrompt } from "@tambo-ai/react/mcp";
+import { useGenuiMcpPrompt } from "@workspace/react/mcp";
 import { useState } from "react";
 
 function PromptInserter() {
   const [selectedPrompt, setSelectedPrompt] = useState<string | null>(null);
-  const { data: prompt } = useTamboMcpPrompt(selectedPrompt ?? "", {
+  const { data: prompt } = useGenuiMcpPrompt(selectedPrompt ?? "", {
     enabled: !!selectedPrompt,
   });
 
@@ -129,14 +129,14 @@ Build a custom interface for browsing and referencing MCP resources.
 
 ### Step 1: List Available Resources
 
-Use `useTamboMcpResourceList` to fetch all resources:
+Use `useGenuiMcpResourceList` to fetch all resources:
 
 ```tsx
-import { useTamboMcpResourceList } from "@tambo-ai/react/mcp";
+import { useGenuiMcpResourceList } from "@workspace/react/mcp";
 import { useState } from "react";
 
 function CustomResourceSelector() {
-  const { data: resources, isLoading, error } = useTamboMcpResourceList();
+  const { data: resources, isLoading, error } = useGenuiMcpResourceList();
   const [searchQuery, setSearchQuery] = useState("");
 
   if (isLoading) {
@@ -200,13 +200,13 @@ function ResourceInserter({ onInsert }: { onInsert: (text: string) => void }) {
 
 ### Step 3: Display Resource Content (Optional)
 
-Use `useTamboMcpResource` to fetch and display resource content:
+Use `useGenuiMcpResource` to fetch and display resource content:
 
 ```tsx
-import { useTamboMcpResource } from "@tambo-ai/react/mcp";
+import { useGenuiMcpResource } from "@workspace/react/mcp";
 
 function ResourcePreview({ resourceUri }: { resourceUri: string }) {
-  const { data: resource, isLoading } = useTamboMcpResource(resourceUri);
+  const { data: resource, isLoading } = useGenuiMcpResource(resourceUri);
 
   if (isLoading) {
     return <div className="loading">Loading resource...</div>;
@@ -269,13 +269,13 @@ Build custom UI for handling elicitation requests from MCP servers.
 
 ### Step 1: Access Elicitation Context
 
-Use `useTamboElicitationContext` to access the current elicitation request:
+Use `useGenuiElicitationContext` to access the current elicitation request:
 
 ```tsx
-import { useTamboElicitationContext } from "@tambo-ai/react/mcp";
+import { useGenuiElicitationContext } from "@workspace/react/mcp";
 
 function CustomElicitationUI() {
-  const { elicitation, resolveElicitation } = useTamboElicitationContext();
+  const { elicitation, resolveElicitation } = useGenuiElicitationContext();
 
   if (!elicitation) {
     return null;
@@ -299,7 +299,7 @@ Render form fields based on the requested schema:
 
 ```tsx
 function ElicitationForm() {
-  const { elicitation, resolveElicitation } = useTamboElicitationContext();
+  const { elicitation, resolveElicitation } = useGenuiElicitationContext();
   const [formData, setFormData] = useState<Record<string, unknown>>({});
 
   if (!elicitation) return null;
@@ -413,7 +413,7 @@ function renderField(
 For programmatic control over elicitation flow, provide a handler function:
 
 ```tsx
-import { TamboProvider } from "@tambo-ai/react";
+import { GenuiProvider } from "@workspace/react";
 
 function App() {
   const handleElicitation = async (request, extra, serverInfo) => {
@@ -429,14 +429,14 @@ function App() {
   };
 
   return (
-    <TamboProvider
+    <GenuiProvider
       mcpServers={[...]}
       mcpHandlers={{
         elicitation: handleElicitation,
       }}
     >
       <YourApp />
-    </TamboProvider>
+    </GenuiProvider>
   );
 }
 ```
@@ -444,7 +444,7 @@ function App() {
 Per-server handlers take precedence over provider-level handlers:
 
 ```tsx
-<TamboProvider
+<GenuiProvider
   mcpServers={[
     {
       url: "https://github-mcp.example.com",
@@ -459,7 +459,7 @@ Per-server handlers take precedence over provider-level handlers:
   ]}
 >
   <YourApp />
-</TamboProvider>
+</GenuiProvider>
 ```
 
 ## Complete Example
@@ -469,17 +469,17 @@ Here's a complete example integrating all MCP UI customizations:
 ```tsx
 import { useState } from "react";
 import {
-  useTamboMcpPromptList,
-  useTamboMcpResourceList,
-} from "@tambo-ai/react/mcp";
+  useGenuiMcpPromptList,
+  useGenuiMcpResourceList,
+} from "@workspace/react/mcp";
 
 function MCPEnabledChatInput() {
   const [message, setMessage] = useState("");
   const [showPrompts, setShowPrompts] = useState(false);
   const [showResources, setShowResources] = useState(false);
 
-  const { data: prompts } = useTamboMcpPromptList();
-  const { data: resources } = useTamboMcpResourceList();
+  const { data: prompts } = useGenuiMcpPromptList();
+  const { data: resources } = useGenuiMcpResourceList();
 
   const hasPrompts = prompts && prompts.length > 0;
   const hasResources = resources && resources.length > 0;

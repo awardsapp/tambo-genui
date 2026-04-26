@@ -4,8 +4,8 @@ import {
   ThreadHistory as BaseThreadHistory,
   type ThreadHistoryListState,
   type ThreadListItem,
-} from "@tambo-ai/react-ui-base";
-import { cn } from "@tambo-ai/ui-registry/utils";
+} from "@workspace/react-ui-base";
+import { cn } from "@workspace/ui-registry/utils";
 import {
   ArrowLeftToLine,
   ArrowRightToLine,
@@ -136,7 +136,7 @@ const ThreadHistoryHeader = React.forwardRef<
             : "opacity-100 max-w-none transition-all duration-300 delay-75",
         )}
       >
-        Tambo Conversations
+        Genui Conversations
       </h2>
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}

@@ -1,20 +1,20 @@
 ---
-title: "Building an AI-Powered Spreadsheet with Tambo"
+title: "Building an AI-Powered Spreadsheet with Genui"
 date: "2025-10-28"
 description: "How I built a spreadsheet that understands natural language using markdown tables, custom tools, and selection-aware context."
 author: "Michael Magán"
 ---
 
-I've been wanting to build an AI-powered spreadsheet for a while now, and honestly, Google's Gemini integration for Sheets hasn't impressed me yet. So I decided to see what we could do with [Tambo](https://github.com/tambo-ai/tambo) (please give us a star if you find it useful!).
+I've been wanting to build an AI-powered spreadsheet for a while now, and honestly, Google's Gemini integration for Sheets hasn't impressed me yet. So I decided to see what we could do with [Genui](https://github.com/genui-ai/genui) (please give us a star if you find it useful!).
 
 <video
   src="https://github.com/user-attachments/assets/d7b89bf0-5070-4027-99ab-0be3edf7c91d"
   controls
 />
 
-Try it yourself: [cheatsheet.tambo.co](https://cheatsheet.tambo.co)
+Try it yourself: [cheatsheet.genui.co](https://cheatsheet.genui.co)
 
-The timing worked out perfectly. I'd been looking for a good excuse to show off some of Tambo's more advanced patterns, and when I found ReactGrid (this solid open-source spreadsheet library), I knew I had to build something with it. The whole project is completely open source and built with Tambo (a React SDK for adding a natural language interface to an application) and ReactGrid, so if you want to see how it works or build something similar, [the code is all there](https://github.com/michaelmagan/cheatsheet).
+The timing worked out perfectly. I'd been looking for a good excuse to show off some of Genui's more advanced patterns, and when I found ReactGrid (this solid open-source spreadsheet library), I knew I had to build something with it. The whole project is completely open source and built with Genui (a React SDK for adding a natural language interface to an application) and ReactGrid, so if you want to see how it works or build something similar, [the code is all there](https://github.com/michaelmagan/cheatsheet).
 
 ## Making a Spreadsheet "AI-Aware"
 
@@ -40,7 +40,7 @@ Let me walk through each layer of the architecture.
 
 Let me start with the simplest case: tab management.
 
-Tabs are just lightweight metadata: an ID and a name. The standard [interactable pattern](https://docs.tambo.co/concepts/generative-interfaces/interactable-components) works great for this.
+Tabs are just lightweight metadata: an ID and a name. The standard [interactable pattern](https://docs.genui.co/concepts/generative-interfaces/interactable-components) works great for this.
 
 The interactable wrapper basically subscribes to the tab store and publishes a simple state object whenever anything changes:
 
@@ -77,7 +77,7 @@ export const InteractableTabs = withInteractable(TabsInteractableWrapper, {
 });
 ```
 
-This is way lighter than the full spreadsheet data, so it's fine to just emit it as structured metadata. The AI can see tab names, rename them, switch between them, whatever. And because it's using the standard interactable pattern, it all just works with Tambo's built-in machinery.
+This is way lighter than the full spreadsheet data, so it's fine to just emit it as structured metadata. The AI can see tab names, rename them, switch between them, whatever. And because it's using the standard interactable pattern, it all just works with Genui's built-in machinery.
 
 [Full code: src/components/ui/interactable-tabs.tsx](https://github.com/michaelmagan/cheatsheet/blob/main/src/components/ui/interactable-tabs.tsx)
 
@@ -87,7 +87,7 @@ I initially tried just passing the raw JSON of the spreadsheet data to the AI. I
 
 So I tried a few different formats and found that markdown tables worked surprisingly well. JSON is inherently noisy. All those brackets, quotes, and keys add a lot of extra tokens that don't really help the model understand the tabular structure. Markdown tables are much cleaner, and I think LLMs have probably seen millions of them in their training data, so they just naturally understand rows and columns.
 
-Tambo's [context helper feature](https://docs.tambo.co/concepts/additional-context) makes this super easy. I just write a function that formats the data, register it, and it automatically gets included with every message. I don't have to think about when or how to inject that context. It's just always there.
+Genui's [context helper feature](https://docs.genui.co/concepts/additional-context) makes this super easy. I just write a function that formats the data, register it, and it automatically gets included with every message. I don't have to think about when or how to inject that context. It's just always there.
 
 Here's the basic idea:
 
@@ -204,7 +204,7 @@ export const spreadsheetSelectionContextHelper = () => {
 };
 ```
 
-Pretty simple. The spreadsheet component calls `updateSpreadsheetSelection()` whenever the selection changes, and Tambo's context helper system picks it up automatically.
+Pretty simple. The spreadsheet component calls `updateSpreadsheetSelection()` whenever the selection changes, and Genui's context helper system picks it up automatically.
 
 [Full code: src/lib/spreadsheet-selection-context.ts](https://github.com/michaelmagan/cheatsheet/blob/main/src/lib/spreadsheet-selection-context.ts)
 

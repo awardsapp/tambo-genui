@@ -1,4 +1,4 @@
-import { createPromptTemplate } from "@tambo-ai-cloud/core";
+import { createPromptTemplate } from "@workspace-cloud/core";
 import Ajv from "ajv";
 import zodToJsonSchema from "zod-to-json-schema";
 import { z } from "zod/v3";

@@ -36,7 +36,7 @@ const socialProofTweets: Tweet[] = [
       avatar: "/assets/landing/avatars/@thorwebdev.png",
     },
     content:
-      "This is super cool 🤩 Streaming hyper personalised UI components into your app with @tambo_ai and @supabase MCP server!",
+      "This is super cool 🤩 Streaming hyper personalised UI components into your app with @genui_ai and @supabase MCP server!",
   },
   {
     id: "3",
@@ -45,7 +45,7 @@ const socialProofTweets: Tweet[] = [
       username: "izadoesdev",
       avatar: "/assets/landing/avatars/@izadoesdev.png",
     },
-    content: "@tambo_ai this is for you <3",
+    content: "@genui_ai this is for you <3",
   },
   {
     id: "4",
@@ -55,7 +55,7 @@ const socialProofTweets: Tweet[] = [
       avatar: "/assets/landing/avatars/@SeyamAlam1.png",
     },
     content:
-      "Thanks. Though wish I'd known about @tambo_ai sooner. Would have saved me at least a hundred hours in a separate project.",
+      "Thanks. Though wish I'd known about @genui_ai sooner. Would have saved me at least a hundred hours in a separate project.",
   },
   {
     id: "5",
@@ -69,20 +69,20 @@ const socialProofTweets: Tweet[] = [
 ];
 
 function renderTweetContent(content: string) {
-  // Replace @tambo_ai with clickable link
-  const parts = content.split(/(@tambo_ai)/);
+  // Replace @genui_ai with clickable link
+  const parts = content.split(/(@genui_ai)/);
 
   return parts.map((part, index) => {
-    if (part === "@tambo_ai") {
+    if (part === "@genui_ai") {
       return (
         <a
           key={index}
-          href="https://x.com/tambo_ai"
+          href="https://x.com/genui_ai"
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-500 hover:text-blue-600 hover:underline"
         >
-          @tambo_ai
+          @genui_ai
         </a>
       );
     }
@@ -216,7 +216,7 @@ export function SocialProof() {
           Join our Discord
         </a>
         <a
-          href="https://github.com/tambo-ai/tambo"
+          href="https://github.com/genui-ai/genui"
           target="_blank"
           rel="noopener noreferrer"
           className={cn(

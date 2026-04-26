@@ -27,11 +27,11 @@ export interface DependencyInconsistency {
   /** Main component name */
   main: string;
   /** Location of the main component */
-  mainLocation: "ui" | "tambo";
+  mainLocation: "ui" | "genui";
   /** Dependency component name */
   dependency: string;
   /** Location of the dependency component */
-  depLocation: "ui" | "tambo";
+  depLocation: "ui" | "genui";
 }
 
 /**
@@ -63,7 +63,7 @@ export function findComponentLocation(
         : null;
     }
 
-    // Check new location first (tambo/)
+    // Check new location first (genui/)
     if (fs.existsSync(newPath)) {
       return {
         componentPath: newPath,
@@ -134,9 +134,9 @@ export async function detectCrossLocationDependencies(
         if (isMainInLegacy !== isDepInLegacy) {
           inconsistencies.push({
             main: component.name,
-            mainLocation: isMainInLegacy ? "ui" : "tambo",
+            mainLocation: isMainInLegacy ? "ui" : "genui",
             dependency: depName,
-            depLocation: isDepInLegacy ? "ui" : "tambo",
+            depLocation: isDepInLegacy ? "ui" : "genui",
           });
         }
       }
@@ -163,9 +163,9 @@ export async function detectCrossLocationDependencies(
           if (isMainInLegacy !== isSupportInLegacy) {
             inconsistencies.push({
               main: component.name,
-              mainLocation: isMainInLegacy ? "ui" : "tambo",
+              mainLocation: isMainInLegacy ? "ui" : "genui",
               dependency: supportComponentName,
-              depLocation: isSupportInLegacy ? "ui" : "tambo",
+              depLocation: isSupportInLegacy ? "ui" : "genui",
             });
           }
         }

@@ -3,16 +3,16 @@ import { ConfigService } from "@nestjs/config";
 import * as Sentry from "@sentry/nestjs";
 import {
   convertMetadataToTools,
-  createTamboBackend,
+  createGenuiBackend,
   DecisionStreamItem,
   generateChainId,
   getToolsFromSources,
-  ITamboBackend,
+  IGenuiBackend,
   McpToolRegistry,
   ModelOptions,
   Provider,
   ToolRegistry,
-} from "@tambo-ai-cloud/backend";
+} from "@workspace-cloud/backend";
 import {
   ActionType,
   AsyncQueue,
@@ -31,13 +31,13 @@ import {
   throttle,
   ToolCallRequest,
   unstrictifyToolCallRequest,
-} from "@tambo-ai-cloud/core";
-import type { HydraDatabase, HydraDb } from "@tambo-ai-cloud/db";
+} from "@workspace-cloud/core";
+import type { HydraDatabase, HydraDb } from "@workspace-cloud/db";
 import {
   dbMessageToThreadMessage,
   operations,
   schema,
-} from "@tambo-ai-cloud/db";
+} from "@workspace-cloud/db";
 import { eq } from "drizzle-orm";
 import OpenAI from "openai";
 import { DATABASE } from "../common/database-provider";
@@ -103,14 +103,14 @@ import {
   memoryToolDefinitions,
 } from "../memory/memory-tools";
 import { SkillsService } from "../skills/skills.service";
-import type { ProviderSkillConfig } from "@tambo-ai-cloud/core";
+import type { ProviderSkillConfig } from "@workspace-cloud/core";
 import {
   formatMemoriesForPrompt,
   MEMORY_TOKEN_BUDGET,
   selectMemoriesWithinBudget,
-} from "@tambo-ai-cloud/core";
+} from "@workspace-cloud/core";
 
-const TAMBO_ANON_CONTEXT_KEY = "tambo:anon-user";
+const GENUI_ANON_CONTEXT_KEY = "genui:anon-user";
 @Injectable()
 export class ThreadsService {
   constructor(
@@ -133,17 +133,17 @@ export class ThreadsService {
   }
 
   /**
-   * Create a TamboBackend instance configured for a specific thread.
+   * Create a GenuiBackend instance configured for a specific thread.
    * Used by V1 API and internal thread operations for AI generation.
    *
    * @param threadId - Thread ID to create backend for
    * @param userId - User/context key for the backend
-   * @returns Configured TamboBackend instance
+   * @returns Configured GenuiBackend instance
    */
-  async createTamboBackendForThread(
+  async createGenuiBackendForThread(
     threadId: string,
     userId: string,
-  ): Promise<ITamboBackend> {
+  ): Promise<IGenuiBackend> {
     const chainId = await generateChainId(threadId);
 
     const threadData = await this.getDb().query.threads.findFirst({
@@ -196,7 +196,7 @@ export class ThreadsService {
       );
     }
 
-    return await createTamboBackend(apiKey, chainId, userId, {
+    return await createGenuiBackend(apiKey, chainId, userId, {
       provider: providerName as Provider,
       model: modelName,
       baseURL: baseURL ?? undefined,
@@ -730,7 +730,7 @@ export class ThreadsService {
   ): Promise<SuggestionDto[]> {
     try {
       const message = await this.getMessage(messageId);
-      const contextKey = message.thread.contextKey ?? TAMBO_ANON_CONTEXT_KEY;
+      const contextKey = message.thread.contextKey ?? GENUI_ANON_CONTEXT_KEY;
 
       // Add breadcrumb
       Sentry.addBreadcrumb({
@@ -743,12 +743,12 @@ export class ThreadsService {
       const threadMessages = await this.getMessages({
         threadId: message.threadId,
       });
-      const tamboBackend = await this.createTamboBackendForThread(
+      const genuiBackend = await this.createGenuiBackendForThread(
         message.threadId,
         contextKey,
       );
 
-      const suggestions = await tamboBackend.generateSuggestions(
+      const suggestions = await genuiBackend.generateSuggestions(
         threadMessages,
         generateSuggestionsDto.maxSuggestions ?? 3,
         generateSuggestionsDto.availableComponents ?? [],
@@ -860,11 +860,11 @@ export class ThreadsService {
       throw new NotFoundError("No messages found for thread");
     }
 
-    const tamboBackend = await this.createTamboBackendForThread(
+    const genuiBackend = await this.createGenuiBackendForThread(
       threadId,
-      `${projectId}-${contextKey ?? TAMBO_ANON_CONTEXT_KEY}`,
+      `${projectId}-${contextKey ?? GENUI_ANON_CONTEXT_KEY}`,
     );
-    const generatedName = await tamboBackend.generateThreadName(messages);
+    const generatedName = await genuiBackend.generateThreadName(messages);
 
     const updatedThread = await operations.updateThread(
       this.getDb(),
@@ -1077,10 +1077,10 @@ export class ThreadsService {
         );
       }
 
-      // Use the shared method to create the TamboBackend instance
-      const tamboBackend = await this.createTamboBackendForThread(
+      // Use the shared method to create the GenuiBackend instance
+      const genuiBackend = await this.createGenuiBackendForThread(
         thread.id,
-        `${projectId}-${contextKey ?? TAMBO_ANON_CONTEXT_KEY}`,
+        `${projectId}-${contextKey ?? GENUI_ANON_CONTEXT_KEY}`,
       );
 
       const messages = await this.getMessages({
@@ -1139,7 +1139,7 @@ export class ThreadsService {
       if (advanceRequestDto.messageToAppend.role === MessageRole.User) {
         const projectOwnerUserId = project?.members[0]?.userId;
         this.analytics.capture(
-          projectOwnerUserId ?? contextKey ?? TAMBO_ANON_CONTEXT_KEY,
+          projectOwnerUserId ?? contextKey ?? GENUI_ANON_CONTEXT_KEY,
           "message_sent",
           {
             projectId,
@@ -1154,7 +1154,7 @@ export class ThreadsService {
         throw new Error("No messages found");
       }
       const systemToolsStart = Date.now();
-      const mcpHandlers = createMcpHandlers(db, tamboBackend, thread.id, queue);
+      const mcpHandlers = createMcpHandlers(db, genuiBackend, thread.id, queue);
 
       const systemTools =
         cachedSystemTools ??
@@ -1198,7 +1198,7 @@ export class ThreadsService {
         contextInfo,
         thread.id,
         db,
-        tamboBackend,
+        genuiBackend,
         queue,
         messages,
         userMessage,
@@ -1350,7 +1350,7 @@ export class ThreadsService {
     contextInfo: ContextInfo,
     threadId: string,
     db: HydraDatabase,
-    tamboBackend: ITamboBackend,
+    genuiBackend: IGenuiBackend,
     queue: AsyncQueue<StreamQueueItem>,
     messages: ThreadMessage[],
     userMessage: ThreadMessage,
@@ -1389,7 +1389,7 @@ export class ThreadsService {
           contextInfo,
           threadId,
           db,
-          tamboBackend,
+          genuiBackend,
           queue,
           messages,
           userMessage,
@@ -1411,7 +1411,7 @@ export class ThreadsService {
     contextInfo: ContextInfo,
     threadId: string,
     db: HydraDatabase,
-    tamboBackend: ITamboBackend,
+    genuiBackend: IGenuiBackend,
     queue: AsyncQueue<StreamQueueItem>,
     messages: ThreadMessage[],
     userMessage: ThreadMessage,
@@ -1506,7 +1506,7 @@ export class ThreadsService {
 
         // Track decision loop execution
         const decisionLoopSpan = Sentry.startInactiveSpan({
-          name: "tambo.runDecisionLoop",
+          name: "genui.runDecisionLoop",
           op: "ai.decision",
           attributes: {
             threadId,
@@ -1526,7 +1526,7 @@ export class ThreadsService {
           );
         }
 
-        const messageStream = await tamboBackend.runDecisionLoop({
+        const messageStream = await genuiBackend.runDecisionLoop({
           messages,
           strictTools,
           resourceFetchers,
@@ -1550,7 +1550,7 @@ export class ThreadsService {
           toolCallCounts,
           mcpAccessToken,
           maxToolCallLimit,
-          tamboBackend.modelOptions,
+          genuiBackend.modelOptions,
           abortController,
         );
 
@@ -1596,7 +1596,7 @@ export class ThreadsService {
 
       // Track decision loop execution with performance monitoring
       const decisionLoopSpan = Sentry.startInactiveSpan({
-        name: "tambo.runDecisionLoop",
+        name: "genui.runDecisionLoop",
         op: "ai.decision",
         attributes: {
           threadId,
@@ -1617,7 +1617,7 @@ export class ThreadsService {
         );
       }
 
-      const streamedResponseMessages = await tamboBackend.runDecisionLoop({
+      const streamedResponseMessages = await genuiBackend.runDecisionLoop({
         messages,
         strictTools,
         forceToolChoice: advanceRequestDto.forceToolChoice,
@@ -1653,7 +1653,7 @@ export class ThreadsService {
         toolCallCounts,
         mcpAccessToken,
         maxToolCallLimit,
-        tamboBackend.modelOptions,
+        genuiBackend.modelOptions,
         abortController,
       );
     } catch (error) {
@@ -1717,7 +1717,7 @@ export class ThreadsService {
     });
     // ttfb: time to first byte span is used to track the time it takes for the first token to be generated
     const ttfbSpan = Sentry.startInactiveSpan({
-      name: "tambo.time_to_first_token",
+      name: "genui.time_to_first_token",
       op: "stream.ttfb",
       attributes: {
         projectId,

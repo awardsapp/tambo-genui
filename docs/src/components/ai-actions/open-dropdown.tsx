@@ -18,10 +18,10 @@ type LinkItem = {
   internal?: boolean;
 };
 
-const TamboLogo = () => (
+const GenuiLogo = () => (
   <Image
     src="/logo/icon/Octo-Icon.svg"
-    alt="Tambo"
+    alt="Genui"
     width={24}
     height={24}
     className="w-6 h-6"
@@ -32,7 +32,7 @@ export function OpenDropdown({ markdownUrl, githubUrl }: OpenDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const encodedUrl = encodeURIComponent(markdownUrl);
-  const encodedTamboQuery = encodeURIComponent(
+  const encodedGenuiQuery = encodeURIComponent(
     "I want to ask questions about this page.",
   );
 
@@ -44,10 +44,10 @@ export function OpenDropdown({ markdownUrl, githubUrl }: OpenDropdownProps) {
       description: "View source on GitHub",
     },
     {
-      name: "tambo",
-      url: `${markdownUrl}?q=${encodedTamboQuery}`,
-      icon: TamboLogo,
-      description: "Ask questions to tambo",
+      name: "genui",
+      url: `${markdownUrl}?q=${encodedGenuiQuery}`,
+      icon: GenuiLogo,
+      description: "Ask questions to genui",
       internal: true,
     },
     {

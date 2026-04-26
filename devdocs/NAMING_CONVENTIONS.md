@@ -1,12 +1,12 @@
-# Tambo React Naming Conventions
+# Genui React Naming Conventions
 
 ### Naming Prefixes
 
-- Components: `Tambo`
-- Hooks: `useTambo`
-- Types: `Tambo`
-- Props Interface: `TamboNameProps`
-- Context: `TamboNameContext`
+- Components: `Genui`
+- Hooks: `useGenui`
+- Types: `Genui`
+- Props Interface: `GenuiNameProps`
+- Context: `GenuiNameContext`
 - Boolean props:
   - `is` → Current state/condition (isLoading, isActive)
   - `can` → Permissions/abilities (canEdit, canSubmit)
@@ -18,41 +18,41 @@
 - Use `Readonly<T>` for props
 
 ```typescript
-export const TamboMessage: React.FC<Readonly<TamboMessageProps>> = () => {
+export const GenuiMessage: React.FC<Readonly<GenuiMessageProps>> = () => {
   /* ... */
 };
 ```
 
 ## Hooks
 
-- Prefix: `useTambo` + Feature
+- Prefix: `useGenui` + Feature
 - Specific action last
 - Keep single responsibility
 
 ```typescript
-useTamboMessage(); // ✓ Core hook
-useTamboMessageState(); // ✓ State management
-useMessageTambo(); // ✗ Wrong prefix order
+useGenuiMessage(); // ✓ Core hook
+useGenuiMessageState(); // ✓ State management
+useMessageGenui(); // ✗ Wrong prefix order
 ```
 
 ## Props & Types
 
 ```typescript
 // Props - Always Readonly
-interface TamboMessageProps extends Readonly<{
+interface GenuiMessageProps extends Readonly<{
   id: string; // Required props first
-  onUpdate: (message: TamboMessage) => void; // Callbacks use 'on' prefix
+  onUpdate: (message: GenuiMessage) => void; // Callbacks use 'on' prefix
   isLoading?: boolean; // Optional props last
 }> {}
 
 // Types - Clear hierarchy
-type TamboMessage = {
+type GenuiMessage = {
   /* ... */
 }; // Core type
-type TamboMessageState = {
+type GenuiMessageState = {
   /* ... */
 }; // State type
-type TamboMessageConfig = {
+type GenuiMessageConfig = {
   /* ... */
 }; // Config type
 ```

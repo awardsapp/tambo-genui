@@ -1,6 +1,6 @@
 # Hero Animation Optimization
 
-This directory contains various optimized versions of the Tambo octopus animation used in the hero section of the website.
+This directory contains various optimized versions of the Genui octopus animation used in the hero section of the website.
 
 # To Do
 

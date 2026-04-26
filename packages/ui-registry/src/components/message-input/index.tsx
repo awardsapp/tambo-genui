@@ -19,4 +19,4 @@ export type {
   MessageInputTextareaProps,
   ResourceProvider,
 } from "./message-input";
-export type { PromptItem, ResourceItem, TamboEditor } from "./text-editor";
+export type { PromptItem, ResourceItem, GenuiEditor } from "./text-editor";

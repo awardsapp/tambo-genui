@@ -7,7 +7,7 @@ import { SyntaxHighlighter } from "@/components/ui/syntax-highlighter";
 import dynamic from "next/dynamic";
 
 const Map = dynamic(
-  async () => (await import("@tambo-ai/ui-registry/components/map")).Map,
+  async () => (await import("@workspace/ui-registry/components/map")).Map,
   { ssr: false },
 );
 
@@ -113,7 +113,7 @@ export function SeattleLandmarks() {
             component={<MapChatInterface />}
             code={`import { Map, mapSchema } from "@/components/tambo/map";
 import { MessageThreadFull } from "@/components/tambo/message-thread-full";
-import { useTambo } from "@tambo-ai/react";
+import { useTambo } from "@workspace/react";
 import { useEffect } from "react";
 
 export function MapDemo() {
@@ -165,7 +165,7 @@ export function MapDemo() {
               language="tsx"
               code={`import { Map, mapSchema } from "@/components/tambo/map";
 import { MessageThreadFull } from "@/components/tambo/message-thread-full";
-import { useTambo } from "@tambo-ai/react";
+import { useTambo } from "@workspace/react";
 import { useEffect } from "react";
 
 export function App() {

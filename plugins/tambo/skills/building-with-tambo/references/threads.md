@@ -16,7 +16,7 @@ Manages conversations, suggestions, voice input, and image attachments.
 ## Quick Start
 
 ```tsx
-import { useTambo, useTamboThreadInput } from "@tambo-ai/react";
+import { useTambo, useTamboThreadInput } from "@workspace/react";
 
 const { thread, messages, isIdle } = useTambo();
 const { value, setValue, submit } = useTamboThreadInput();
@@ -33,7 +33,7 @@ import {
   useTambo,
   useTamboThreadInput,
   ComponentRenderer,
-} from "@tambo-ai/react";
+} from "@workspace/react";
 
 function Chat() {
   const {
@@ -145,7 +145,7 @@ await submit({
 To fetch a specific thread (e.g., for a detail view), use `useTamboThread(threadId)`:
 
 ```tsx
-import { useTamboThread } from "@tambo-ai/react";
+import { useTamboThread } from "@workspace/react";
 
 function ThreadView({ threadId }: { threadId: string }) {
   const { data: thread, isLoading, isError } = useTamboThread(threadId);
@@ -164,7 +164,7 @@ This is a React Query hook - use it for read-only thread fetching, not for the a
 Manage multiple conversations:
 
 ```tsx
-import { useTambo, useTamboThreadList } from "@tambo-ai/react";
+import { useTambo, useTamboThreadList } from "@workspace/react";
 
 function ThreadSidebar() {
   const { data, isLoading } = useTamboThreadList();
@@ -211,7 +211,7 @@ const { data } = useTamboThreadList({
 AI-generated follow-up suggestions after each assistant message:
 
 ```tsx
-import { useTamboSuggestions } from "@tambo-ai/react";
+import { useTamboSuggestions } from "@workspace/react";
 
 function Suggestions() {
   const { suggestions, isLoading, accept, isAccepting } = useTamboSuggestions({
@@ -299,7 +299,7 @@ const { generate, isGenerating } = useTamboSuggestions({
 Speech-to-text transcription:
 
 ```tsx
-import { useTamboVoice } from "@tambo-ai/react";
+import { useTamboVoice } from "@workspace/react";
 
 function VoiceButton() {
   const {
@@ -342,7 +342,7 @@ function VoiceButton() {
 Images are managed via `useTamboThreadInput()`:
 
 ```tsx
-import { useTamboThreadInput } from "@tambo-ai/react";
+import { useTamboThreadInput } from "@workspace/react";
 
 function ImageInput() {
   const { images, addImage, addImages, removeImage, clearImages } =
@@ -387,7 +387,7 @@ function ImageInput() {
 Enable per-user thread isolation:
 
 ```tsx
-import { TamboProvider } from "@tambo-ai/react";
+import { TamboProvider } from "@workspace/react";
 
 function App() {
   return (

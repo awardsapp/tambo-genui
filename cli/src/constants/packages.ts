@@ -2,8 +2,8 @@
  * Known safe packages that can be safely updated when using the upgrade command
  */
 export const KNOWN_SAFE_PACKAGES = [
-  "@tambo-ai/react",
-  "@tambo-ai/typescript-sdk",
+  "@workspace/react",
+  "@workspace/typescript-sdk",
   "tailwindcss",
   "postcss",
   "autoprefixer",

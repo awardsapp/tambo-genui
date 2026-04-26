@@ -1,9 +1,9 @@
 import { S3Client } from "@aws-sdk/client-s3";
 import { createAttachmentFetcher } from "./attachment-fetcher";
-import { buildStorageKey } from "@tambo-ai-cloud/core";
+import { buildStorageKey } from "@workspace-cloud/core";
 
 // Mock the backend storage module
-jest.mock("@tambo-ai-cloud/backend", () => ({
+jest.mock("@workspace-cloud/backend", () => ({
   getFile: jest.fn(),
 }));
 
@@ -19,7 +19,7 @@ describe("attachment-fetcher", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockS3Client = {} as S3Client;
-    mockGetFile = jest.requireMock("@tambo-ai-cloud/backend").getFile;
+    mockGetFile = jest.requireMock("@workspace-cloud/backend").getFile;
   });
 
   describe("createAttachmentFetcher", () => {

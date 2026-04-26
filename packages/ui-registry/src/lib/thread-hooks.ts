@@ -1,4 +1,4 @@
-import type { TamboThreadMessage } from "@tambo-ai/react";
+import type { GenuiThreadMessage } from "@workspace/react";
 import * as React from "react";
 import { useEffect, useState } from "react";
 
@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
  * @returns A markdown string ready for streamdown rendering
  */
 export function convertContentToMarkdown(
-  content: TamboThreadMessage["content"] | React.ReactNode | undefined | null,
+  content: GenuiThreadMessage["content"] | React.ReactNode | undefined | null,
 ): string {
   if (!content) return "";
   if (typeof content === "string") return content;
@@ -32,10 +32,10 @@ export function convertContentToMarkdown(
           // Use resource name for display, fallback to URI if no name
           const displayName = resource?.name ?? uri;
           // Use a custom protocol that looks more standard to avoid blocking
-          // Format: tambo-resource://<encoded-uri>
+          // Format: genui-resource://<encoded-uri>
           // We'll detect this in the link component and decode the URI
           const encodedUri = encodeURIComponent(uri);
-          parts.push(`[${displayName}](tambo-resource://${encodedUri})`);
+          parts.push(`[${displayName}](genui-resource://${encodedUri})`);
         }
       }
     }
@@ -195,7 +195,7 @@ export function usePositioning(
  * @returns A renderable string or React element.
  */
 export function getSafeContent(
-  content: TamboThreadMessage["content"] | React.ReactNode | undefined | null,
+  content: GenuiThreadMessage["content"] | React.ReactNode | undefined | null,
 ): string | React.ReactElement {
   if (!content) return "";
   if (typeof content === "string") return content;
@@ -256,7 +256,7 @@ function hasContentInItem(item: unknown): boolean {
  * @returns True if there is content, false otherwise.
  */
 export function checkHasContent(
-  content: TamboThreadMessage["content"] | React.ReactNode | undefined | null,
+  content: GenuiThreadMessage["content"] | React.ReactNode | undefined | null,
 ): boolean {
   if (!content) return false;
   if (typeof content === "string") return content.trim().length > 0;

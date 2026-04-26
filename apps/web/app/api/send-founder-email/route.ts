@@ -1,7 +1,7 @@
 import { validateEmail } from "@/lib/email-validation";
 import { env } from "@/lib/env";
 import { NextResponse } from "next/server";
-import { isResendEmailUnsubscribed } from "@tambo-ai-cloud/core";
+import { isResendEmailUnsubscribed } from "@workspace-cloud/core";
 import { Resend } from "resend";
 
 // Define the expected request body shape
@@ -13,7 +13,7 @@ interface FounderEmailRequest {
 
 // The email address where founder emails should be sent
 // Ideally this would be in your environment variables
-const FOUNDER_EMAIL = "magan@tambo.co";
+const FOUNDER_EMAIL = "magan@genui.co";
 
 export async function POST(req: Request) {
   if (!env.RESEND_API_KEY) {
@@ -104,12 +104,12 @@ export async function POST(req: Request) {
     // Send the email to founders
     console.log("Attempting to send email via Resend");
     const data = await resend.emails.send({
-      from: "Tambo Demo <noreply@updates.tambo.co>",
+      from: "Genui Demo <noreply@updates.genui.co>",
       to: FOUNDER_EMAIL,
       cc: usersEmail,
       replyTo: usersEmail,
       // Always embed the user's email in the subject to guarantee uniqueness
-      subject: `[Tambo Demo] ${subject} (${usersEmail})`,
+      subject: `[Genui Demo] ${subject} (${usersEmail})`,
       html: `
         <div>
           ${body.replaceAll("\n", "<br />")}

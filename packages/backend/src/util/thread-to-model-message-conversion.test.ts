@@ -3,7 +3,7 @@ import {
   MessageRole,
   LegacyComponentDecision,
   ThreadAssistantMessage,
-} from "@tambo-ai-cloud/core";
+} from "@workspace-cloud/core";
 import { convertAssistantMessage } from "./thread-to-model-message-conversion";
 
 const baseAssistantMessage: Omit<

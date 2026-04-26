@@ -3,10 +3,10 @@
 import {
   Tooltip,
   TooltipProvider,
-} from "@tambo-ai/ui-registry/components/message-suggestions";
-import { cn } from "@tambo-ai/ui-registry/utils";
+} from "@workspace/ui-registry/components/message-suggestions";
+import { cn } from "@workspace/ui-registry/utils";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import { McpPrompts, McpResources } from "@tambo-ai/react-ui-base";
+import { McpPrompts, McpResources } from "@workspace/react-ui-base";
 import { AlertCircle, AtSign, FileText, Search } from "lucide-react";
 import * as React from "react";
 

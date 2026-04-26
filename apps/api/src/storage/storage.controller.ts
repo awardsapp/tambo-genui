@@ -14,12 +14,12 @@ import {
   ApiSecurity,
   ApiTags,
 } from "@nestjs/swagger";
-import { getSignedUploadUrl } from "@tambo-ai-cloud/backend";
+import { getSignedUploadUrl } from "@workspace-cloud/backend";
 import {
   buildAttachmentUri,
   buildStorageKey,
   ATTACHMENT_ID_LENGTH,
-} from "@tambo-ai-cloud/core";
+} from "@workspace-cloud/core";
 import { customAlphabet } from "nanoid";
 import { parse as parseContentType } from "content-type";
 import { Request } from "express";

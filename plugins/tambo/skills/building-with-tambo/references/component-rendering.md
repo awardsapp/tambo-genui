@@ -23,7 +23,7 @@ if (streamStatus.isStreaming) return <LoadingIndicator />;
 Track overall and per-prop streaming status:
 
 ```tsx
-import { useTamboStreamStatus } from "@tambo-ai/react";
+import { useTamboStreamStatus } from "@workspace/react";
 
 function MyComponent({ title, items }: Props) {
   const { streamStatus, propStatus } = useTamboStreamStatus<Props>();
@@ -66,7 +66,7 @@ function MyComponent({ title, items }: Props) {
 Make state visible to AI and persist across sessions:
 
 ```tsx
-import { useTamboComponentState, useTamboStreamStatus } from "@tambo-ai/react";
+import { useTamboComponentState, useTamboStreamStatus } from "@workspace/react";
 
 function EditableCard({ title: streamedTitle }: { title?: string }) {
   const [title, setTitle, { isPending, flush }] = useTamboComponentState(

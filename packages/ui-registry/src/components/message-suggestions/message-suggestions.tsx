@@ -2,9 +2,9 @@
 
 import { MessageGenerationStage } from "./message-generation-stage";
 import { Tooltip, TooltipProvider } from "./suggestions-tooltip";
-import { cn } from "@tambo-ai/ui-registry/utils";
-import type { Suggestion, TamboThreadMessage } from "@tambo-ai/react";
-import { useTambo, useTamboSuggestions } from "@tambo-ai/react";
+import { cn } from "@workspace/ui-registry/utils";
+import type { Suggestion, GenuiThreadMessage } from "@workspace/react";
+import { useGenui, useGenuiSuggestions } from "@workspace/react";
 import * as React from "react";
 import { useEffect, useRef } from "react";
 
@@ -15,7 +15,7 @@ import { useEffect, useRef } from "react";
  * @property {function} accept - Function to accept a suggestion
  * @property {boolean} isGenerating - Whether suggestions are being generated
  * @property {Error|null} error - Any error from generation
- * @property {object} thread - The current Tambo thread
+ * @property {object} thread - The current Genui thread
  */
 interface MessageSuggestionsContextValue {
   suggestions: Suggestion[];
@@ -23,7 +23,7 @@ interface MessageSuggestionsContextValue {
   accept: (options: { suggestion: Suggestion }) => Promise<void>;
   isGenerating: boolean;
   error: Error | null;
-  messages: TamboThreadMessage[];
+  messages: GenuiThreadMessage[];
   isStreaming: boolean;
   isMac: boolean;
 }
@@ -90,14 +90,14 @@ const MessageSuggestions = React.forwardRef<
     },
     ref,
   ) => {
-    const { messages, isStreaming } = useTambo();
+    const { messages, isStreaming } = useGenui();
     const {
       suggestions: generatedSuggestions,
       selectedSuggestionId,
       accept,
       isGenerating,
       error,
-    } = useTamboSuggestions({ maxSuggestions });
+    } = useGenuiSuggestions({ maxSuggestions });
 
     // Combine initial and generated suggestions, but only use initial ones when thread is empty
     const suggestions = React.useMemo(() => {

@@ -1,4 +1,4 @@
-import { MCPTransport, isValidServerKey } from "@tambo-ai-cloud/core";
+import { MCPTransport, isValidServerKey } from "@workspace-cloud/core";
 import { z } from "zod/v3";
 
 /**

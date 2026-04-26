@@ -10,7 +10,7 @@ import {
   V1RunStatus,
   GenerationStage,
   MessageRole,
-} from "@tambo-ai-cloud/core";
+} from "@workspace-cloud/core";
 import { V1Service } from "../v1.service";
 import {
   encodeV1CompoundCursor,
@@ -30,7 +30,7 @@ jest.mock("@sentry/nestjs", () => ({
 }));
 
 // Mock the database operations module
-jest.mock("@tambo-ai-cloud/db", () => ({
+jest.mock("@workspace-cloud/db", () => ({
   dbMessageToThreadMessage: jest.fn((msg: unknown) => msg),
   operations: {
     createThread: jest.fn(),
@@ -78,7 +78,7 @@ jest.mock("@tambo-ai-cloud/db", () => ({
 }));
 
 // Import after mock to get the mocked version
-import { operations, type HydraDatabase } from "@tambo-ai-cloud/db";
+import { operations, type HydraDatabase } from "@workspace-cloud/db";
 const mockOperations = operations as jest.Mocked<typeof operations>;
 
 // Mock db type for testing - only implements the query methods used by V1Service
@@ -974,7 +974,7 @@ describe("V1Service", () => {
       expect(result.content[0].type).toBe("text");
     });
 
-    it("should include _tambo_* status params in tool_use input from componentDecision", async () => {
+    it("should include _genui_* status params in tool_use input from componentDecision", async () => {
       const messageWithToolCallAndStatus = {
         ...mockMessage,
         role: "assistant",
@@ -1004,12 +1004,12 @@ describe("V1Service", () => {
       expect(toolUseBlock).toBeDefined();
       expect((toolUseBlock as any).input).toEqual({
         location: "San Francisco",
-        _tambo_statusMessage: "Getting weather for San Francisco...",
-        _tambo_completionStatusMessage: "Got weather for San Francisco",
+        _genui_statusMessage: "Getting weather for San Francisco...",
+        _genui_completionStatusMessage: "Got weather for San Francisco",
       });
     });
 
-    it("should not include _tambo_* params when componentDecision is missing", async () => {
+    it("should not include _genui_* params when componentDecision is missing", async () => {
       const messageWithToolCallNoDecision = {
         ...mockMessage,
         role: "assistant",
@@ -1032,7 +1032,7 @@ describe("V1Service", () => {
       expect((toolUseBlock as any).input).toEqual({
         location: "NYC",
       });
-      expect((toolUseBlock as any).input._tambo_statusMessage).toBeUndefined();
+      expect((toolUseBlock as any).input._genui_statusMessage).toBeUndefined();
     });
 
     it("should skip empty displayMessage in tool_use input", async () => {
@@ -1062,10 +1062,10 @@ describe("V1Service", () => {
       const toolUseBlock = result.content.find((c) => c.type === "tool_use");
       expect((toolUseBlock as any).input).toEqual({
         location: "LA",
-        _tambo_statusMessage: "Getting weather...",
+        _genui_statusMessage: "Getting weather...",
       });
       // Empty/whitespace displayMessage should NOT be included
-      expect((toolUseBlock as any).input._tambo_displayMessage).toBeUndefined();
+      expect((toolUseBlock as any).input._genui_displayMessage).toBeUndefined();
     });
 
     it("should NOT include tool_use block for show_component_* UI tools", async () => {

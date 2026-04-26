@@ -1,11 +1,11 @@
 "use client";
 
 import { DemoPreview } from "@/components/demos/demo-preview";
-import { ThreadDropdown } from "@tambo-ai/react-ui-base/thread-dropdown";
+import { ThreadDropdown } from "@workspace/react-ui-base/thread-dropdown";
 import { ChevronDown, Plus } from "lucide-react";
 
 export const threadDropdownDemoCode = `
-import { ThreadDropdown } from "@tambo-ai/react-ui-base/thread-dropdown";
+import { ThreadDropdown } from "@workspace/react-ui-base/thread-dropdown";
 import { ChevronDown, Plus } from "lucide-react";
 
 export function DemoThreadDropdown() {

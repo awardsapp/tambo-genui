@@ -9,7 +9,7 @@ import {
   ThreadMessage,
   ToolCallRequest,
   UI_TOOLNAME_PREFIX,
-} from "@tambo-ai-cloud/core";
+} from "@workspace-cloud/core";
 import OpenAI from "openai";
 import { parse } from "partial-json";
 import { generateDecisionLoopPrompt } from "../../prompt/decision-loop-prompts";
@@ -28,7 +28,7 @@ import {
   addParametersToTools,
   filterOutStandardToolParameters,
   standardToolParameters,
-  TamboToolParameters,
+  GenuiToolParameters,
 } from "../tool/tool-service";
 import type { ProviderOptions } from "@ai-sdk/provider-utils";
 
@@ -225,7 +225,7 @@ export async function* runDecisionLoop(
           (tool) => getToolName(tool) === toolCall.function.name,
         );
 
-      let toolArgs: Partial<TamboToolParameters> = {};
+      let toolArgs: Partial<GenuiToolParameters> = {};
       if (toolCall?.type === "function") {
         try {
           //partial parse tool params to allow streaming in-progress params
@@ -234,10 +234,10 @@ export async function* runDecisionLoop(
           // Ignore parse errors for incomplete JSON
         }
       }
-      const statusMessage = toolArgs._tambo_statusMessage;
-      const completionStatusMessage = toolArgs._tambo_completionStatusMessage;
+      const statusMessage = toolArgs._genui_statusMessage;
+      const completionStatusMessage = toolArgs._genui_completionStatusMessage;
 
-      // Filter out Tambo parameters for both UI and non-UI tools
+      // Filter out Genui parameters for both UI and non-UI tools
       let filteredToolArgs = toolArgs;
       if (toolCall?.type === "function" && Object.keys(toolArgs).length > 0) {
         const filtered = filterOutStandardToolParameters(
@@ -252,7 +252,7 @@ export async function* runDecisionLoop(
             [parameterName]: parameterValue,
           }),
           {},
-        ) as Partial<TamboToolParameters>;
+        ) as Partial<GenuiToolParameters>;
       }
 
       // Build tool call request for both UI and non-UI tools (even if incomplete)
@@ -266,7 +266,7 @@ export async function* runDecisionLoop(
         false,
       );
 
-      // Extract componentId from tambo.component.start event if present.
+      // Extract componentId from genui.component.start event if present.
       // This ID is generated during streaming and used by V1 API for component
       // state updates. The start event is only emitted once (on the first delta),
       // so we preserve the accumulated componentId if we don't have a new one.
@@ -349,7 +349,7 @@ function buildToolCallRequest(
     return undefined;
   }
 
-  // Filter out standard Tambo parameters
+  // Filter out standard Genui parameters
   const filteredArgs = filterOutStandardToolParameters(
     toolCall,
     tools,
@@ -367,14 +367,14 @@ function buildToolCallRequest(
 }
 
 /**
- * Extract componentId from tambo.component.start event if present.
+ * Extract componentId from genui.component.start event if present.
  *
  * The componentId is generated during streaming by ComponentStreamTracker
- * and emitted in tambo.component.start custom events. This ID is used by
+ * and emitted in genui.component.start custom events. This ID is used by
  * V1 API to reference components for state updates.
  *
  * @param events - AG-UI events from the current stream item
- * @returns The componentId if a tambo.component.start event is present
+ * @returns The componentId if a genui.component.start event is present
  */
 function extractComponentIdFromEvents(events: BaseEvent[]): string | undefined {
   for (const event of events) {
@@ -384,7 +384,7 @@ function extractComponentIdFromEvents(events: BaseEvent[]): string | undefined {
         value?: { componentId?: string };
       };
       if (
-        customEvent.name === "tambo.component.start" &&
+        customEvent.name === "genui.component.start" &&
         customEvent.value?.componentId
       ) {
         return customEvent.value.componentId;

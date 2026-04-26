@@ -13,7 +13,7 @@ import {
 } from "class-validator";
 import { Type } from "class-transformer";
 import { V1InitialMessageDto, V1MessageDto } from "./message.dto";
-import { V1RunStatus } from "@tambo-ai-cloud/core";
+import { V1RunStatus } from "@workspace-cloud/core";
 
 /**
  * Error information from a failed run.

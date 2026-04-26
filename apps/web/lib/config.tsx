@@ -4,7 +4,7 @@ import { env } from "@/lib/env";
 export const BLUR_FADE_DELAY = 0.15;
 
 export const siteConfig = {
-  name: "tambo-ai",
+  name: "genui-ai",
   description:
     "An open-source AI orchestration framework for your React front end.",
   url: env.NEXT_PUBLIC_APP_URL || "http://localhost:8260",
@@ -35,21 +35,21 @@ export const siteConfig = {
     "MCP Client Server",
   ],
   links: {
-    email: "support@tambo.co",
-    twitter: "https://x.com/tambo_ai",
+    email: "support@genui.co",
+    twitter: "https://x.com/genui_ai",
     discord: "https://discord.gg/dJNvPEHth6",
-    github: "https://github.com/tambo-ai/tambo",
+    github: "https://github.com/genui-ai/genui",
     docs: process.env.NEXT_PUBLIC_DOCS_URL || "/docs",
   },
   metadata: {
-    title: "Add React UI to your AI agent/copilot | tambo-ai",
+    title: "Add React UI to your AI agent/copilot | genui-ai",
     description:
       "An open-source AI orchestration framework for your React front end.",
     icons: {
       icon: "/favicon.ico",
     },
     openGraph: {
-      title: "Add React UI to your AI agent/copilot | tambo-ai",
+      title: "Add React UI to your AI agent/copilot | genui-ai",
       description:
         "An open-source AI orchestration framework for your React front end.",
       images: [
@@ -57,13 +57,13 @@ export const siteConfig = {
           url: "/opengraph-image.png",
           width: 1200,
           height: 630,
-          alt: "Screenshot of tambo-ai's adaptive UI component selection interface",
+          alt: "Screenshot of genui-ai's adaptive UI component selection interface",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "Add React UI to your AI agent/copilot | tambo-ai",
+      title: "Add React UI to your AI agent/copilot | genui-ai",
       description:
         "An open-source AI orchestration framework for your React front end.",
       images: [
@@ -71,7 +71,7 @@ export const siteConfig = {
           url: "/twitter-image.png",
           width: 1200,
           height: 630,
-          alt: "Screenshot of tambo-ai's adaptive UI component selection interface",
+          alt: "Screenshot of genui-ai's adaptive UI component selection interface",
         },
       ],
     },
@@ -80,11 +80,11 @@ export const siteConfig = {
     socialLinks: [
       {
         icon: <Icons.github className="h-5 w-5" />,
-        url: "https://github.com/tambo-ai/tambo",
+        url: "https://github.com/genui-ai/genui",
       },
       {
         icon: <Icons.twitter className="h-4 w-4" />,
-        url: "https://x.com/tambo_ai",
+        url: "https://x.com/genui_ai",
       },
       {
         icon: <Icons.discord className="h-5 w-5" />,
@@ -98,7 +98,7 @@ export const siteConfig = {
       { text: "Terms of Use", url: "/terms" },
     ],
     bottomText: "Fractal Dynamics Inc © 2025",
-    brandText: "tambo-ai",
+    brandText: "genui-ai",
   },
 };
 

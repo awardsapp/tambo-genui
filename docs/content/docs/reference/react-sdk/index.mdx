@@ -1,39 +1,39 @@
 ---
 title: React SDK Reference
-description: API reference for @tambo-ai/react - Tambo's React SDK with streaming-first architecture and explicit thread management.
+description: API reference for @workspace/react - Genui's React SDK with streaming-first architecture and explicit thread management.
 ---
 
-The `@tambo-ai/react` package is Tambo's React SDK, featuring a streaming-first architecture, explicit thread management, and React Query integration.
+The `@workspace/react` package is Genui's React SDK, featuring a streaming-first architecture, explicit thread management, and React Query integration.
 
 ## Installation
 
 ```bash
-npm install @tambo-ai/react
+npm install @workspace/react
 ```
 
 ## Quick Start
 
 ```tsx
-import { TamboProvider, useTambo, useTamboThreadInput } from "@tambo-ai/react";
+import { GenuiProvider, useGenui, useGenuiThreadInput } from "@workspace/react";
 ```
 
 ## Quick Links
 
 - [Hooks](/reference/react-sdk/hooks) - React hooks for thread management, messaging, suggestions, and component state
 - [Types](/reference/react-sdk/types) - TypeScript interfaces and types
-- [Providers](/reference/react-sdk/providers) - Provider components for configuring Tambo
+- [Providers](/reference/react-sdk/providers) - Provider components for configuring Genui
 
 ## Overview
 
 The React SDK is organized around a simplified provider hierarchy with React Query for data fetching:
 
 ```tsx
-import { TamboProvider } from "@tambo-ai/react";
+import { GenuiProvider } from "@workspace/react";
 
 function App() {
   return (
-    <TamboProvider
-      apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY}
+    <GenuiProvider
+      apiKey={process.env.NEXT_PUBLIC_GENUI_API_KEY}
       userKey={userId}
       components={
         [
@@ -47,19 +47,19 @@ function App() {
       }
     >
       <YourApp />
-    </TamboProvider>
+    </GenuiProvider>
   );
 }
 ```
 
-Inside the provider, use hooks to access Tambo functionality:
+Inside the provider, use hooks to access Genui functionality:
 
 ```tsx
-import { useTambo, useTamboThreadInput } from "@tambo-ai/react";
+import { useGenui, useGenuiThreadInput } from "@workspace/react";
 
 function Chat() {
-  const { messages, isStreaming, startNewThread } = useTambo();
-  const { value, setValue, submit } = useTamboThreadInput();
+  const { messages, isStreaming, startNewThread } = useGenui();
+  const { value, setValue, submit } = useGenuiThreadInput();
 
   return (
     <div>
@@ -80,11 +80,11 @@ function Chat() {
 
 | Feature          | Implementation                                                                         |
 | ---------------- | -------------------------------------------------------------------------------------- |
-| Import path      | `@tambo-ai/react`                                                                      |
-| Main hook        | `useTambo()`                                                                           |
+| Import path      | `@workspace/react`                                                                      |
+| Main hook        | `useGenui()`                                                                           |
 | User scoping     | `userKey` prop                                                                         |
-| Thread input     | `useTamboThreadInput()`                                                                |
+| Thread input     | `useGenuiThreadInput()`                                                                |
 | Message format   | Content blocks (text, component, tool_use, etc.)                                       |
-| Component state  | `useTamboComponentState()` (bidirectional sync)                                        |
+| Component state  | `useGenuiComponentState()` (bidirectional sync)                                        |
 | Streaming status | `streamingState.status` (typed as [`RunStatus`](/reference/react-sdk/types#runstatus)) |
 | Data fetching    | React Query hooks                                                                      |

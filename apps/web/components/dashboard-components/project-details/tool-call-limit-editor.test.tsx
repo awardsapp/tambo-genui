@@ -22,31 +22,31 @@ jest.mock("@/trpc/react", () => ({
   },
 }));
 
-// Mock the Tambo React hooks
-jest.mock("@tambo-ai/react", () => ({
-  useTamboContextHelpers: () => ({
+// Mock the Genui React hooks
+jest.mock("@workspace/react", () => ({
+  useGenuiContextHelpers: () => ({
     addContextHelper: jest.fn(),
     removeContextHelper: jest.fn(),
   }),
-  withTamboInteractable: (Component: React.ComponentType) => Component,
-  useTamboContextAttachment: () => ({
+  withGenuiInteractable: (Component: React.ComponentType) => Component,
+  useGenuiContextAttachment: () => ({
     attachments: [],
     removeContextAttachment: jest.fn(),
     setCustomSuggestions: jest.fn(),
     addContextAttachment: jest.fn(),
   }),
-  useTamboCurrentComponent: () => null,
-  useTambo: () => ({
+  useGenuiCurrentComponent: () => null,
+  useGenui: () => ({
     isIdle: true,
     messages: [],
     isStreaming: false,
   }),
-  useTamboThreadInput: () => ({
+  useGenuiThreadInput: () => ({
     value: "",
     setValue: jest.fn(),
     submit: jest.fn(),
   }),
-  useTamboInteractable: () => ({
+  useGenuiInteractable: () => ({
     setInteractableSelected: jest.fn(),
   }),
 }));

@@ -1,5 +1,5 @@
-import { V1RunStatus } from "@tambo-ai-cloud/core";
-import { operations, type HydraDb } from "@tambo-ai-cloud/db";
+import { V1RunStatus } from "@workspace-cloud/core";
+import { operations, type HydraDb } from "@workspace-cloud/db";
 
 // We need to test the actual implementation, not mocks
 // This tests the db operations module directly

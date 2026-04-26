@@ -2,20 +2,20 @@
 
 import { useDemoControls } from "@/components/demos/demo-controls";
 import { DemoPreview } from "@/components/demos/demo-preview";
-import type { Content, TamboThreadMessage } from "@tambo-ai/react";
-import { ToolcallInfo } from "@tambo-ai/react-ui-base/toolcall-info";
+import type { Content, GenuiThreadMessage } from "@workspace/react";
+import { ToolcallInfo } from "@workspace/react-ui-base/toolcall-info";
 import { ChevronDown } from "lucide-react";
 import { useMemo } from "react";
 
 export const toolcallInfoDemoCode = `
-import { ToolcallInfo } from "@tambo-ai/react-ui-base/toolcall-info";
-import type { TamboThreadMessage } from "@tambo-ai/react";
+import { ToolcallInfo } from "@workspace/react-ui-base/toolcall-info";
+import type { GenuiThreadMessage } from "@workspace/react";
 import { ChevronDown } from "lucide-react";
 
 export function DemoToolcallInfo({
   message,
 }: {
-  message: TamboThreadMessage;
+  message: GenuiThreadMessage;
 }) {
   return (
     <ToolcallInfo.Root message={message} defaultExpanded>
@@ -64,7 +64,7 @@ function ToolcallInfoDemo() {
             hasCompleted: state === "completed",
           } satisfies Content,
         ],
-      }) satisfies TamboThreadMessage,
+      }) satisfies GenuiThreadMessage,
     [state],
   );
 

@@ -1,13 +1,13 @@
 ---
 title: CSS & Tailwind Configuration
-description: See how the Tambo CLI configures CSS and Tailwind for installed components, and how to customize or recreate the setup in your own project.
+description: See how the Genui CLI configures CSS and Tailwind for installed components, and how to customize or recreate the setup in your own project.
 ---
 
-The Tambo CLI automatically configures your CSS and Tailwind setup based on your project's Tailwind CSS version. This page explains what changes are made and how to configure them manually if needed.
+The Genui CLI automatically configures your CSS and Tailwind setup based on your project's Tailwind CSS version. This page explains what changes are made and how to configure them manually if needed.
 
 ## What Gets Configured
 
-When you run Tambo CLI commands (`full-send`, `add`, `update`, `upgrade`), the CLI:
+When you run Genui CLI commands (`full-send`, `add`, `update`, `upgrade`), the CLI:
 
 1. **Detects your framework** (Next.js, Expo, Vite, or other) and **Tailwind CSS version** (v3 or v4)
 2. **Sets up the Tailwind v4 build toolchain** if needed (see below)
@@ -58,25 +58,25 @@ export default {
 
 ## CSS Variables Added
 
-Tambo components require specific CSS variables to function properly. The CLI adds these in the appropriate format for your Tailwind version:
+Genui components require specific CSS variables to function properly. The CLI adds these in the appropriate format for your Tailwind version:
 
 ### Core Tailwind Variables
 
-These standard Tailwind CSS variables are added with Tambo's default color scheme:
+These standard Tailwind CSS variables are added with Genui's default color scheme:
 
 ```css
 /* Light mode */
 --background: /* White or appropriate light background */ --foreground:
   /* Dark text color */
-  --primary: /* Tambo brand primary color */
+  --primary: /* Genui brand primary color */
   --secondary: /* Secondary accent color */
   --muted: /* Muted backgrounds and borders */ --border: /* Border colors */
   /* ... additional standard Tailwind variables */;
 ```
 
-### Tambo-Specific Variables
+### Genui-Specific Variables
 
-These custom variables control Tambo component layouts and behavior:
+These custom variables control Genui component layouts and behavior:
 
 ```css
 /* Layout dimensions */
@@ -92,7 +92,7 @@ These custom variables control Tambo component layouts and behavior:
 ```
 
 <Callout type="warn" title="Required Variables">
-  The Tambo-specific variables (`--panel-left-width`, `--panel-right-width`,
+  The Genui-specific variables (`--panel-left-width`, `--panel-right-width`,
   `--sidebar-width`, `--container`, `--backdrop`, `--muted-backdrop`) are
   essential for proper component functionality. Removing these will break
   component layouts.
@@ -113,7 +113,7 @@ The default CSS file location depends on your framework: `app/globals.css` for N
 
 @layer base {
   :root {
-    /* Default Tailwind CSS Variables customized with tambo colors */
+    /* Default Tailwind CSS Variables customized with genui colors */
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
@@ -138,7 +138,7 @@ The default CSS file location depends on your framework: `app/globals.css` for N
     --chart-4: 160 60% 45.1%;
     --chart-5: 280 64.7% 60%;
 
-    /* Tambo Specific Variables needed for tambo components */
+    /* Genui Specific Variables needed for genui components */
     --radius: 0.5rem;
     --container: 210 29% 97%;
     --backdrop: 210 88% 14% / 0.25;
@@ -148,7 +148,7 @@ The default CSS file location depends on your framework: `app/globals.css` for N
     --sidebar-width: 3rem;
   }
   .dark {
-    /* Default Tailwind CSS Variables customized with tambo colors */
+    /* Default Tailwind CSS Variables customized with genui colors */
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
     --card: 240 10% 3.9%;
@@ -173,7 +173,7 @@ The default CSS file location depends on your framework: `app/globals.css` for N
     --chart-4: 160 60% 45.1%;
     --chart-5: 280 64.7% 60%;
 
-    /* Tambo Specific Variables needed for tambo components */
+    /* Genui Specific Variables needed for genui components */
     --radius: 0.5rem;
     --container: 210 29% 97%;
     --backdrop: 210 88% 14% / 0.25;
@@ -224,7 +224,7 @@ The default CSS file location depends on your framework: `app/globals.css` for N
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  /* Tailwind CSS Variables customized with tambo colors */
+  /* Tailwind CSS Variables customized with genui colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -249,14 +249,14 @@ The default CSS file location depends on your framework: `app/globals.css` for N
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
 
-  /* Tambo Specific Variables needed for tambo components */
+  /* Genui Specific Variables needed for genui components */
   --color-container: var(--container);
   --color-backdrop: var(--backdrop);
   --color-muted-backdrop: var(--muted-backdrop);
 }
 
 :root {
-  /* Default Tailwind CSS Variables customized with tambo colors */
+  /* Default Tailwind CSS Variables customized with genui colors */
   --background: oklch(1 0 0);
   --foreground: oklch(0.14 0 285);
   --card: oklch(1 0 0);
@@ -281,7 +281,7 @@ The default CSS file location depends on your framework: `app/globals.css` for N
   --chart-4: oklch(0.7 0.13 165);
   --chart-5: oklch(0.62 0.2 313);
 
-  /* Tambo Specific Variables needed for tambo components */
+  /* Genui Specific Variables needed for genui components */
   --container: oklch(0.98 0 247);
   --backdrop: oklch(0.25 0.07 252 / 0.25);
   --muted-backdrop: oklch(0.25 0.07 252 / 0.1);
@@ -292,7 +292,7 @@ The default CSS file location depends on your framework: `app/globals.css` for N
 }
 
 .dark {
-  /* Dark Mode Tailwind CSS Variables customized with tambo colors */
+  /* Dark Mode Tailwind CSS Variables customized with genui colors */
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -317,7 +317,7 @@ The default CSS file location depends on your framework: `app/globals.css` for N
   --chart-4: oklch(0.7 0.13 165);
   --chart-5: oklch(0.62 0.2 313);
 
-  /* Tambo Specific Variables needed for tambo components */
+  /* Genui Specific Variables needed for genui components */
   --container: oklch(0.98 0 247);
   --backdrop: oklch(0.25 0.07 252 / 0.25);
   --muted-backdrop: oklch(0.25 0.07 252 / 0.1);
@@ -364,7 +364,7 @@ For v3, ensure your `tailwind.config.ts` includes `darkMode: "class"` and the pr
 
 ### 4. Verify Required Variables
 
-Ensure these Tambo-specific variables are present:
+Ensure these Genui-specific variables are present:
 
 - `--panel-left-width`
 - `--panel-right-width`
@@ -384,14 +384,14 @@ Ensure these Tambo-specific variables are present:
 
 ### If you have existing CSS variables:
 
-1. **Keep your existing variables** that aren't listed in the Tambo configuration
-2. **Add missing Tambo variables** from the appropriate version above
-3. **Update conflicting variables** if you want to use Tambo's color scheme
+1. **Keep your existing variables** that aren't listed in the Genui configuration
+2. **Add missing Genui variables** from the appropriate version above
+3. **Update conflicting variables** if you want to use Genui's color scheme
 4. **Preserve your custom styling** outside of the CSS variables
 
 ### If you have existing `@layer base` blocks:
 
-For Tailwind v3, add the Tambo variables inside your existing `@layer base` block rather than creating a duplicate.
+For Tailwind v3, add the Genui variables inside your existing `@layer base` block rather than creating a duplicate.
 
 ## Troubleshooting
 
@@ -425,7 +425,7 @@ For Tailwind v3, add the Tambo variables inside your existing `@layer base` bloc
 
 **Problem**: Panels or sidebars have wrong dimensions
 
-**Solution**: Ensure Tambo layout variables (`--panel-left-width`, etc.) are defined and have appropriate values
+**Solution**: Ensure Genui layout variables (`--panel-left-width`, etc.) are defined and have appropriate values
 
 ### Existing Styles Overridden
 
@@ -452,5 +452,5 @@ For Tailwind v3, add the Tambo variables inside your existing `@layer base` bloc
 
 <Callout type="info" title="Safe Configuration">
   The CLI is designed to be safe and non-destructive. It preserves your existing
-  configuration and only adds what's needed for Tambo components to work.
+  configuration and only adds what's needed for Genui components to work.
 </Callout>

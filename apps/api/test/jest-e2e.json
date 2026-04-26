@@ -17,7 +17,7 @@
   "extensionsToTreatAsEsm": [".ts", ".tsx"],
   "moduleNameMapper": {
     "^src/(.*)$": "<rootDir>/src/$1",
-    "^@tambo-ai-cloud/(.*)$": "<rootDir>/../../packages/$1/src"
+    "^@workspace-cloud/(.*)$": "<rootDir>/../../packages/$1/src"
   },
   "transformIgnorePatterns": [
     "node_modules/(?!(superjson|is-what|copy-anything|uuid|@react-email)/)"

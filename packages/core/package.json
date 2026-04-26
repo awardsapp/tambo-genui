@@ -1,5 +1,5 @@
 {
-  "name": "@tambo-ai-cloud/core",
+  "name": "@workspace-cloud/core",
   "version": "0.0.0",
   "private": true,
   "license": "Apache-2.0",
@@ -23,8 +23,8 @@
     "test:watch": "jest --watch"
   },
   "devDependencies": {
-    "@tambo-ai/eslint-config": "*",
-    "@tambo-ai/typescript-config": "*",
+    "@workspace/eslint-config": "*",
+    "@workspace/typescript-config": "*",
     "@types/jest": "^30.0.0",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^22.19.15",

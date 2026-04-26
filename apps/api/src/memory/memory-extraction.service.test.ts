@@ -3,14 +3,14 @@ import {
   ContentPartType,
   MessageRole,
   type ThreadMessage,
-} from "@tambo-ai-cloud/core";
-import type { operations as dbOperations } from "@tambo-ai-cloud/db";
+} from "@workspace-cloud/core";
+import type { operations as dbOperations } from "@workspace-cloud/db";
 import { DATABASE } from "../common/database-provider";
 import { MemoryExtractionService } from "./memory-extraction.service";
 
 // Mock the backend LLM call
-jest.mock("@tambo-ai-cloud/backend", () => {
-  const actual = jest.requireActual("@tambo-ai-cloud/backend");
+jest.mock("@workspace-cloud/backend", () => {
+  const actual = jest.requireActual("@workspace-cloud/backend");
   return {
     ...actual,
     callMemoryExtractionLLM: jest.fn(),
@@ -18,11 +18,11 @@ jest.mock("@tambo-ai-cloud/backend", () => {
 });
 
 const { callMemoryExtractionLLM }: { callMemoryExtractionLLM: jest.Mock } =
-  jest.requireMock("@tambo-ai-cloud/backend");
+  jest.requireMock("@workspace-cloud/backend");
 
 // Mock DB operations
-jest.mock("@tambo-ai-cloud/db", () => {
-  const actual = jest.requireActual("@tambo-ai-cloud/db");
+jest.mock("@workspace-cloud/db", () => {
+  const actual = jest.requireActual("@workspace-cloud/db");
   return {
     ...actual,
     operations: {
@@ -46,7 +46,7 @@ const {
       | "evictExcessMemories"
     >
   >;
-} = jest.requireMock("@tambo-ai-cloud/db");
+} = jest.requireMock("@workspace-cloud/db");
 
 function makeMessages(count: number): ThreadMessage[] {
   return Array.from({ length: count }, (_, i) => ({

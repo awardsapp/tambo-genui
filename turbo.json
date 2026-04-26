@@ -42,9 +42,9 @@
     "NEXT_PUBLIC_SENTRY_ENVIRONMENT",
     "NEXT_PUBLIC_SENTRY_ORG",
     "NEXT_PUBLIC_SENTRY_PROJECT",
-    "NEXT_PUBLIC_SMOKETEST_TAMBO_API_KEY",
-    "NEXT_PUBLIC_TAMBO_API_KEY",
-    "NEXT_PUBLIC_TAMBO_API_URL",
+    "NEXT_PUBLIC_SMOKETEST_GENUI_API_KEY",
+    "NEXT_PUBLIC_GENUI_API_KEY",
+    "NEXT_PUBLIC_GENUI_API_URL",
     "NEXTAUTH_SECRET",
     "NEXTAUTH_URL",
     "NODE_ENV",
@@ -68,11 +68,11 @@
     "SUPABASE_SERVICE_ROLE_KEY",
     "SUPABASE_URL",
     "JEST_SHOW_LOGS",
-    "TAMBO_SERVER_URL",
-    "TAMBO_TELEMETRY_DISABLED",
-    "TAMBO_TELEMETRY_HOST",
-    "TAMBO_WHITELABEL_ORG_LOGO",
-    "TAMBO_WHITELABEL_ORG_NAME",
+    "GENUI_SERVER_URL",
+    "GENUI_TELEMETRY_DISABLED",
+    "GENUI_TELEMETRY_HOST",
+    "GENUI_WHITELABEL_ORG_LOGO",
+    "GENUI_WHITELABEL_ORG_NAME",
     "TERM",
     "VERCEL_URL",
     "WEATHER_API_KEY",
@@ -82,9 +82,9 @@
     "XDG_DATA_HOME"
   ],
   "globalPassThroughEnv": [
-    "TAMBO_REGISTRY_PATH",
-    "TAMBO_CLI_CONSOLE_BASE_URL",
-    "TAMBO_TOKEN"
+    "GENUI_REGISTRY_PATH",
+    "GENUI_CLI_CONSOLE_BASE_URL",
+    "GENUI_TOKEN"
   ],
   "tasks": {
     "build": {
@@ -104,17 +104,17 @@
       ],
       "outputs": ["dist/**"]
     },
-    "@tambo-ai/showcase#build": {
+    "@workspace/showcase#build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".next/**", "!.next/cache/**"]
     },
     "lint": { "dependsOn": ["^lint"] },
-    "@tambo-ai/react#lint": {
+    "@workspace/react#lint": {
       "dependsOn": ["^build", "^lint"]
     },
-    "@tambo-ai/ui-registry#lint": {
-      "dependsOn": ["@tambo-ai/ui-registry#verify-exports"]
+    "@workspace/ui-registry#lint": {
+      "dependsOn": ["@workspace/ui-registry#verify-exports"]
     },
     "verify-exports": {
       "inputs": ["package.json", "src/**", "scripts/**"],
@@ -126,16 +126,16 @@
       "cache": false,
       "persistent": true
     },
-    "@tambo-ai/react#dev": {
+    "@workspace/react#dev": {
       "cache": false,
       "persistent": true
     },
-    "@tambo-ai/showcase#dev": {
+    "@workspace/showcase#dev": {
       "dependsOn": ["^build"],
       "cache": false,
       "persistent": true
     },
-    "@tambo-ai-cloud/api#dev": {
+    "@workspace-cloud/api#dev": {
       "dependsOn": ["^build"],
       "cache": false,
       "persistent": true,

@@ -9,7 +9,7 @@ import {
 import type {
   ComponentStartEvent,
   ComponentEndEvent,
-} from "./tambo-custom-events";
+} from "./genui-custom-events";
 
 describe("component-streaming", () => {
   it("partial-json parse returns fresh objects for identical input", () => {
@@ -83,7 +83,7 @@ describe("component-streaming", () => {
       expect(events).toHaveLength(1);
       const startEvent = events[0] as ComponentStartEvent;
       expect(startEvent.type).toBe(EventType.CUSTOM);
-      expect(startEvent.name).toBe("tambo.component.start");
+      expect(startEvent.name).toBe("genui.component.start");
       expect(startEvent.value).toEqual({
         messageId: "msg_123",
         componentId: "comp_123",
@@ -105,7 +105,7 @@ describe("component-streaming", () => {
 
       // Should have props_delta event for the complete property
       const propsDeltaEvent = events2.find(
-        (e) => e.name === "tambo.component.props_delta",
+        (e) => e.name === "genui.component.props_delta",
       );
 
       expect(propsDeltaEvent).toBeDefined();
@@ -126,7 +126,7 @@ describe("component-streaming", () => {
       const events = tracker.processJsonDelta('{"foo/bar": 1, "til~de": 2}');
 
       const propsDeltaEvent = events.find(
-        (e) => e.name === "tambo.component.props_delta",
+        (e) => e.name === "genui.component.props_delta",
       );
 
       expect(propsDeltaEvent).toBeDefined();
@@ -153,7 +153,7 @@ describe("component-streaming", () => {
       const events = tracker.processJsonDelta('lo"}');
 
       const propsDeltaEvent = events.find(
-        (e) => e.name === "tambo.component.props_delta",
+        (e) => e.name === "genui.component.props_delta",
       );
 
       expect(propsDeltaEvent).toBeDefined();
@@ -173,7 +173,7 @@ describe("component-streaming", () => {
 
       const events = tracker.processJsonDelta('{"": 1}');
       const propsDeltaEvent = events.find(
-        (e) => e.name === "tambo.component.props_delta",
+        (e) => e.name === "genui.component.props_delta",
       );
 
       expect(propsDeltaEvent).toBeDefined();
@@ -198,7 +198,7 @@ describe("component-streaming", () => {
       const events = tracker.processJsonDelta(', "location": "NYC"}');
 
       const propsDeltaEvent = events.find(
-        (e) => e.name === "tambo.component.props_delta",
+        (e) => e.name === "genui.component.props_delta",
       );
 
       expect(propsDeltaEvent).toBeDefined();
@@ -220,7 +220,7 @@ describe("component-streaming", () => {
 
       expect(endEvents).toHaveLength(1);
       const endEvent = endEvents[0] as ComponentEndEvent;
-      expect(endEvent.name).toBe("tambo.component.end");
+      expect(endEvent.name).toBe("genui.component.end");
       expect(endEvent.value.finalProps).toEqual({
         temperature: 72,
         location: "NYC",
@@ -242,7 +242,7 @@ describe("component-streaming", () => {
 
       // Should detect the change
       const propsDeltaEvent = events.find(
-        (e) => e.name === "tambo.component.props_delta",
+        (e) => e.name === "genui.component.props_delta",
       );
 
       expect(propsDeltaEvent).toBeDefined();
@@ -263,7 +263,7 @@ describe("component-streaming", () => {
 
       // Find any props_delta event
       const propsDeltaEvents = allEvents.filter(
-        (e) => e.name === "tambo.component.props_delta",
+        (e) => e.name === "genui.component.props_delta",
       );
 
       // At least one props_delta should have been emitted
@@ -277,7 +277,7 @@ describe("component-streaming", () => {
 
       // Verify the final state through finalize
       const endEvents = tracker.finalize();
-      const endEvent = endEvents.find((e) => e.name === "tambo.component.end");
+      const endEvent = endEvents.find((e) => e.name === "genui.component.end");
       expect(endEvent).toBeDefined();
       expect(endEvent!.value.finalProps).toEqual({ data: { x: 1, y: 2 } });
     });
@@ -293,7 +293,7 @@ describe("component-streaming", () => {
       const events = tracker.processJsonDelta(", 3]}");
 
       const propsDeltaEvent = events.find(
-        (e) => e.name === "tambo.component.props_delta",
+        (e) => e.name === "genui.component.props_delta",
       );
 
       expect(propsDeltaEvent).toBeDefined();

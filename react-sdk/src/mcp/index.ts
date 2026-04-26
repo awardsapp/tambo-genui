@@ -1,28 +1,28 @@
 /**
  * Entry point for MCP (Model Context Protocol) support in the React SDK.
  *
- * Note: The `@modelcontextprotocol/sdk` is included automatically with `@tambo-ai/react`.
+ * Note: The `@modelcontextprotocol/sdk` is included automatically with `@workspace/react`.
  * If you use features that require schema validation (like component props schemas),
  * you'll need to install `zod` and `zod-to-json-schema` as optional peer dependencies.
  * See the React SDK README for the recommended version ranges.
  */
-export { MCPTransport } from "@tambo-ai/client";
+export { MCPTransport } from "@workspace/client";
 export type {
   MCPElicitationHandler,
   MCPHandlers,
   MCPSamplingHandler,
-} from "@tambo-ai/client";
+} from "@workspace/client";
 export type {
   ElicitationRequestedSchema,
   PrimitiveSchemaDefinition,
-  TamboElicitationRequest,
-  TamboElicitationResponse,
-} from "@tambo-ai/client";
+  GenuiElicitationRequest,
+  GenuiElicitationResponse,
+} from "@workspace/client";
 export {
-  useTamboMcpPrompt,
-  useTamboMcpPromptList,
-  useTamboMcpResource,
-  useTamboMcpResourceList,
+  useGenuiMcpPrompt,
+  useGenuiMcpPromptList,
+  useGenuiMcpResource,
+  useGenuiMcpResourceList,
   isMcpResourceEntry,
 } from "./mcp-hooks";
 export type {
@@ -32,15 +32,15 @@ export type {
   ListResourceItem,
 } from "./mcp-hooks";
 export {
-  TamboMcpProvider,
-  useTamboMcpElicitation,
-  useTamboMcpServers,
-  useTamboElicitationContext,
+  GenuiMcpProvider,
+  useGenuiMcpElicitation,
+  useGenuiMcpServers,
+  useGenuiElicitationContext,
   type ConnectedMcpServer,
   type FailedMcpServer,
   type McpServer,
   type ProviderMCPHandlers,
-} from "./tambo-mcp-provider";
+} from "./genui-mcp-provider";
 
 // Public MCP server metadata types
-export type { McpServerInfo, NormalizedMcpServerInfo } from "@tambo-ai/client";
+export type { McpServerInfo, NormalizedMcpServerInfo } from "@workspace/client";

@@ -23,7 +23,7 @@ export const DiscordInvite = React.forwardRef<
   DiscordInviteProps
 >(({ className, ...props }, ref) => {
   const handleJoinDiscord = () => {
-    window.open("https://tambo.co/discord", "_blank", "noopener,noreferrer");
+    window.open("https://genui.co/discord", "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -57,7 +57,7 @@ export const DiscordInvite = React.forwardRef<
         <div className="space-y-3">
           <p className="text-sm text-muted-foreground leading-relaxed">
             Join our Discord server to chat with other developers, get support,
-            share your projects, and stay up to date with the latest tambo news.
+            share your projects, and stay up to date with the latest genui news.
           </p>
         </div>
 

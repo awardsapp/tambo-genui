@@ -1,7 +1,7 @@
 "use client";
 
-import { cn } from "@tambo-ai/ui-registry/utils";
-import { useTambo, useTamboComponentState } from "@tambo-ai/react";
+import { cn } from "@workspace/ui-registry/utils";
+import { useTambo, useTamboComponentState } from "@workspace/react";
 import { cva } from "class-variance-authority";
 import { Loader2Icon } from "lucide-react";
 import * as React from "react";

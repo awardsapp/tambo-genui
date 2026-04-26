@@ -1,23 +1,23 @@
 ---
-title: Give Tambo Access to Your Functions
-description: This guide helps you register custom JavaScript functions as tools that Tambo can call to retrieve data or take actions.
+title: Give Genui Access to Your Functions
+description: This guide helps you register custom JavaScript functions as tools that Genui can call to retrieve data or take actions.
 ---
 
 import LearnMore from "@/components/learn-more";
 import { Wrench } from "lucide-react";
 
-This guide shows you how to register custom JavaScript functions as tools so Tambo can call them to retrieve data or take actions in response to user messages.
+This guide shows you how to register custom JavaScript functions as tools so Genui can call them to retrieve data or take actions in response to user messages.
 
 <LearnMore
   title="Learn more about tools"
-  description="Understand what tools are and how they enable Tambo to take actions"
+  description="Understand what tools are and how they enable Genui to take actions"
   href="/concepts/tools"
   icon={Wrench}
 />
 
 ## Prerequisites
 
-- TamboProvider set up in your application
+- GenuiProvider set up in your application
 - Zod installed for schema definitions
 
 ## Step 1: Define your tool function
@@ -34,13 +34,13 @@ const getWeather = async (city: string) => {
 
 ## Step 2: Create the tool definition
 
-Wrap your function in a TamboTool object with a schema. The `description` field helps Tambo decide when to use your tool, and `.describe()` on schema fields helps Tambo understand how to call it with the right parameters.
+Wrap your function in a GenuiTool object with a schema. The `description` field helps Genui decide when to use your tool, and `.describe()` on schema fields helps Genui understand how to call it with the right parameters.
 
 ```tsx
-import { TamboTool } from "@tambo-ai/react";
+import { GenuiTool } from "@workspace/react";
 import { z } from "zod";
 
-export const weatherTool: TamboTool = {
+export const weatherTool: GenuiTool = {
   name: "get_weather",
   // Clear description of what the tool does and when to use it
   description: "Fetch current weather information for a specified city",
@@ -55,19 +55,19 @@ export const weatherTool: TamboTool = {
 };
 ```
 
-Write clear, specific descriptions so Tambo knows when to call your tool and what values to pass.
+Write clear, specific descriptions so Genui knows when to call your tool and what values to pass.
 
-## Step 3: Register with TamboProvider
+## Step 3: Register with GenuiProvider
 
 Pass your tools array to the provider:
 
 ```tsx
-<TamboProvider tools={[weatherTool]}>
+<GenuiProvider tools={[weatherTool]}>
   <App />
-</TamboProvider>
+</GenuiProvider>
 ```
 
-Tambo can now call your tool when relevant to user messages.
+Genui can now call your tool when relevant to user messages.
 
 ## Return Rich Content (Optional)
 
@@ -84,7 +84,7 @@ const getProductImage = async (productId: string) => {
   };
 };
 
-export const productTool: TamboTool = {
+export const productTool: GenuiTool = {
   name: "get_product",
   description: "Fetch product information with image",
   tool: getProductImage,
@@ -112,11 +112,11 @@ Content types: `text`, `image_url`, `input_audio`
 
 ## Enable Streaming Execution (Optional)
 
-By default, Tambo waits for complete tool arguments before executing. For tools that can handle partial arguments gracefully, you can enable streaming execution to call the tool incrementally as arguments are generated. To understand how streamable execution works under the hood, see [Tools > How Tools Execute](/concepts/tools#how-tools-execute).
+By default, Genui waits for complete tool arguments before executing. For tools that can handle partial arguments gracefully, you can enable streaming execution to call the tool incrementally as arguments are generated. To understand how streamable execution works under the hood, see [Tools > How Tools Execute](/concepts/tools#how-tools-execute).
 
 ### When to Use Streamable Tools
 
-Use `annotations.tamboStreamableHint: true` when your tool:
+Use `annotations.genuiStreamableHint: true` when your tool:
 
 - ✅ Can handle incomplete or partial data gracefully
 - ✅ Has no side effects (safe to call multiple times)
@@ -125,7 +125,7 @@ Use `annotations.tamboStreamableHint: true` when your tool:
 
 ### When NOT to Use Streamable Tools
 
-Avoid `annotations.tamboStreamableHint: true` when your tool:
+Avoid `annotations.genuiStreamableHint: true` when your tool:
 
 - ❌ Makes API calls or database writes (would cause duplicate requests)
 - ❌ Has side effects that shouldn't be repeated
@@ -135,7 +135,7 @@ Avoid `annotations.tamboStreamableHint: true` when your tool:
 ### Example: Enable Streaming Execution
 
 ```tsx
-import { TamboTool } from "@tambo-ai/react";
+import { GenuiTool } from "@workspace/react";
 import { z } from "zod";
 
 const updateChart = (data: { title?: string; values?: number[] }) => {
@@ -148,7 +148,7 @@ const updateChart = (data: { title?: string; values?: number[] }) => {
   }));
 };
 
-export const chartTool: TamboTool = {
+export const chartTool: GenuiTool = {
   name: "update_chart",
   description: "Update the chart visualization with new data",
   tool: updateChart,
@@ -158,7 +158,7 @@ export const chartTool: TamboTool = {
   }),
   outputSchema: z.void(),
   annotations: {
-    tamboStreamableHint: true, // Enable streaming execution
+    genuiStreamableHint: true, // Enable streaming execution
   },
 };
 ```
@@ -185,7 +185,7 @@ const updateDashboard = (data: {
   }
 };
 
-export const dashboardTool: TamboTool = {
+export const dashboardTool: GenuiTool = {
   name: "update_dashboard",
   description: "Update dashboard with metrics and time range",
   tool: updateDashboard,
@@ -198,7 +198,7 @@ export const dashboardTool: TamboTool = {
   }),
   outputSchema: z.void(),
   annotations: {
-    tamboStreamableHint: true,
+    genuiStreamableHint: true,
   },
 };
 ```
@@ -209,7 +209,7 @@ This pattern ensures your tool processes data incrementally as the AI generates 
 
 ```tsx
 // ❌ Bad: API call tool - would make duplicate requests
-export const createUserTool: TamboTool = {
+export const createUserTool: GenuiTool = {
   name: "create_user",
   description: "Create a new user account",
   tool: async (data) => await api.createUser(data),
@@ -218,11 +218,11 @@ export const createUserTool: TamboTool = {
     email: z.string(),
   }),
   outputSchema: z.object({ userId: z.string() }),
-  annotations: { tamboStreamableHint: true }, // Don't do this!
+  annotations: { genuiStreamableHint: true }, // Don't do this!
 };
 
 // ✅ Good: State update tool - safe to call multiple times
-export const updateFormTool: TamboTool = {
+export const updateFormTool: GenuiTool = {
   name: "update_form",
   description: "Update form fields in real-time",
   tool: (fields) => setFormState(fields),
@@ -231,6 +231,6 @@ export const updateFormTool: TamboTool = {
     email: z.string().optional(),
   }),
   outputSchema: z.void(),
-  annotations: { tamboStreamableHint: true }, // Safe for repeated calls
+  annotations: { genuiStreamableHint: true }, // Safe for repeated calls
 };
 ```

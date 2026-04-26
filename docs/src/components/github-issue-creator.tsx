@@ -15,14 +15,14 @@ type Repository = {
 const repositories: Repository[] = [
   {
     name: "Main Monorepo",
-    url: "https://github.com/tambo-ai/tambo",
-    description: "Core tambo functionality, React SDK, CLI, and documentation",
+    url: "https://github.com/genui-ai/genui",
+    description: "Core genui functionality, React SDK, CLI, and documentation",
   },
   {
     name: "Cloud Services",
-    url: "https://github.com/tambo-ai/tambo",
+    url: "https://github.com/genui-ai/genui",
     description:
-      "Hosted backend services and cloud infrastructure (tambo-cloud directory)",
+      "Hosted backend services and cloud infrastructure (genui-cloud directory)",
   },
 ];
 

@@ -4,7 +4,7 @@ Detailed guidance for Claude Code agents working with the ui-registry package.
 
 ## Project Overview
 
-The `@tambo-ai/ui-registry` package is the single source of truth for all Tambo UI components. This internal package contains React components that are:
+The `@workspace/ui-registry` package is the single source of truth for all Genui UI components. This internal package contains React components that are:
 
 1. Copied to the CLI at build time for distribution to users
 2. Used directly by showcase and docs during development
@@ -50,7 +50,7 @@ packages/ui-registry/
 │   ├── setup.ts                    # Jest setup file
 │   ├── html-snapshot-serializer.ts # Snapshot formatting
 │   └── __mocks__/                  # Jest mocks
-│       ├── @tambo-ai-react.ts      # Mock for @tambo-ai/react
+│       ├── @workspace-react.ts      # Mock for @workspace/react
 │       ├── styleMock.js            # Mock for CSS imports
 │       └── react-media-recorder.ts # Mock for react-media-recorder
 ├── jest.config.ts
@@ -73,11 +73,11 @@ Each component directory contains:
 
 1. Components are authored here in `src/components/`
 2. At CLI build time, `cli/scripts/copy-registry.ts` copies them to `cli/dist/registry/`
-3. Users run `tambo add <component>` which reads from `cli/dist/registry/`
+3. Users run `genui add <component>` which reads from `cli/dist/registry/`
 
 **Build Dependencies:**
 
-- `turbo.json` configures `tambo#build` to watch this package's source files
+- `turbo.json` configures `genui#build` to watch this package's source files
 - Changes here invalidate CLI's build cache automatically
 - Showcase and docs import directly (no copy step)
 
@@ -100,9 +100,9 @@ npm test -w packages/ui-registry -- thread-dropdown # Run specific component tes
 
 ### Writing Component Tests
 
-Components use `@testing-library/react` with jsdom and a shared Jest mock for `@tambo-ai/react`:
+Components use `@testing-library/react` with jsdom and a shared Jest mock for `@workspace/react`:
 
-- The default mock implementation lives in `__tests__/__mocks__/@tambo-ai-react.ts`
+- The default mock implementation lives in `__tests__/__mocks__/@workspace-react.ts`
 - The mock is auto-applied via `moduleNameMapper` in `jest.config.ts`
 - Use `jest.mocked()` for type-safe mock access when you need to override behavior
 
@@ -114,15 +114,15 @@ import { jest, describe, it, expect, beforeEach } from "@jest/globals";
 import React from "react";
 import { render } from "@testing-library/react";
 import { ComponentName } from "./component-name";
-import { useTambo } from "@tambo-ai/react";
+import { useGenui } from "@workspace/react";
 
-// @tambo-ai/react is mocked via moduleNameMapper in jest.config.ts
+// @workspace/react is mocked via moduleNameMapper in jest.config.ts
 
 describe("ComponentName", () => {
-  const mockUseTambo = jest.mocked(useTambo);
+  const mockUseGenui = jest.mocked(useGenui);
 
   beforeEach(() => {
-    mockUseTambo.mockReturnValue({
+    mockUseGenui.mockReturnValue({
       thread: {
         messages: [],
         generationStage: "IDLE",

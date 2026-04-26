@@ -1,4 +1,4 @@
-import { MEMORY_CATEGORIES } from "@tambo-ai-cloud/core";
+import { MEMORY_CATEGORIES } from "@workspace-cloud/core";
 import { z } from "zod/v3";
 
 /**

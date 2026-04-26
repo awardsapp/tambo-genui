@@ -1,26 +1,26 @@
 {
-  "name": "@tambo-ai/react",
+  "name": "@workspace/react",
   "version": "1.2.6",
   "description": "React client package for Tambo AI",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tambo-ai/tambo.git",
+    "url": "https://github.com/awardsapp/tambo-genui.git",
     "directory": "react-sdk"
   },
-  "homepage": "https://tambo.co",
+  "homepage": "https://genui.co",
   "main": "./dist/index.js",
   "module": "./esm/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "@tambo-ai/source": "./src/index.ts",
+      "@workspace/source": "./src/index.ts",
       "import": "./esm/index.js",
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
     "./mcp": {
-      "@tambo-ai/source": "./src/mcp/index.ts",
+      "@workspace/source": "./src/mcp/index.ts",
       "import": "./esm/mcp/index.js",
       "require": "./dist/mcp/index.js",
       "types": "./dist/mcp/index.d.ts"
@@ -77,9 +77,9 @@
   },
   "dependencies": {
     "@ag-ui/core": "^0.0.44",
-    "@tambo-ai/client": "0.1.0",
+    "@workspace/client": "0.1.0",
     "@modelcontextprotocol/sdk": "^1.27.1",
-    "@tambo-ai/typescript-sdk": "^0.95.0",
+    "@workspace/typescript-sdk": "^0.95.0",
     "@tanstack/react-query": "^5.90.16",
     "fast-equals": "^6.0.0",
     "partial-json": "^0.1.7",
@@ -91,8 +91,8 @@
   "devDependencies": {
     "@eslint/js": "^9.39.4",
     "@modelcontextprotocol/sdk": "^1.27.1",
-    "@tambo-ai/eslint-config": "*",
-    "@tambo-ai/typescript-config": "*",
+    "@workspace/eslint-config": "*",
+    "@workspace/typescript-config": "*",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@types/jest": "^30.0.0",

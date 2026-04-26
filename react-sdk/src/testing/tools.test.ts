@@ -1,9 +1,9 @@
-import type { TamboComponent } from "../model/component-metadata";
+import type { GenuiComponent } from "../model/component-metadata";
 import { serializeRegistry } from "./tools";
 
 describe("serializeRegistry", () => {
   it("serializes a component with a JSON Schema propsSchema", () => {
-    const registry: TamboComponent[] = [
+    const registry: GenuiComponent[] = [
       {
         name: "TestComp",
         description: "A test component",
@@ -25,7 +25,7 @@ describe("serializeRegistry", () => {
   });
 
   it("maps associatedTools to contextTools", () => {
-    const registry: TamboComponent[] = [
+    const registry: GenuiComponent[] = [
       {
         name: "WithTools",
         description: "Has tools",
@@ -49,7 +49,7 @@ describe("serializeRegistry", () => {
   });
 
   it("handles undefined associatedTools", () => {
-    const registry: TamboComponent[] = [
+    const registry: GenuiComponent[] = [
       {
         name: "NoTools",
         description: "No tools",

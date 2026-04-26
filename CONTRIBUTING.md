@@ -1,10 +1,10 @@
-# Contributing to Tambo
+# Contributing to Genui
 
 > **Using an AI coding assistant?** Read [@AGENTS.md](./AGENTS.md) for agent-specific instructions.
 
 Thanks for helping! This guide covers development setup and workflow expectations.
 
-> **Looking to self-host Tambo?** See [OPERATORS.md](./OPERATORS.md) for deployment instructions.
+> **Looking to self-host Genui?** See [OPERATORS.md](./OPERATORS.md) for deployment instructions.
 
 ## Development Setup
 
@@ -17,8 +17,8 @@ Thanks for helping! This guide covers development setup and workflow expectation
 ### 1. Clone and Install
 
 ```bash
-git clone https://github.com/tambo-ai/tambo.git
-cd tambo
+git clone https://github.com/genui-ai/genui.git
+cd genui
 npm install
 ```
 
@@ -55,7 +55,7 @@ If you prefer plain PostgreSQL without Supabase:
 
 ```bash
 # One-time setup (creates docker.env)
-./scripts/cloud/tambo-setup.sh
+./scripts/cloud/genui-setup.sh
 
 # Start PostgreSQL container
 docker compose --env-file docker.env up postgres -d
@@ -64,12 +64,12 @@ docker compose --env-file docker.env up postgres -d
 Then update `DATABASE_URL` in all three env files:
 
 ```bash
-DATABASE_URL=postgresql://postgres:postgres@localhost:5433/tambo
+DATABASE_URL=postgresql://postgres:postgres@localhost:5433/genui
 ```
 
 Use the password from your `docker.env` file.
 
-> **Note**: Don't use `tambo-start.sh` for local development - it starts all services in Docker, which conflicts with running apps locally via `npm run dev:cloud`.
+> **Note**: Don't use `genui-start.sh` for local development - it starts all services in Docker, which conflicts with running apps locally via `npm run dev:cloud`.
 
 ### 4. Initialize Database
 
@@ -79,7 +79,7 @@ npm run db:migrate -w packages/db
 
 ### 5. Start Development Servers
 
-For Tambo Cloud (web dashboard + API):
+For Genui Cloud (web dashboard + API):
 
 ```bash
 npm run dev:cloud
@@ -104,7 +104,7 @@ This runs the React SDK in watch mode (automatically rebuilds on changes) alongs
 
 ### Hot Reload Development
 
-Tambo uses modern hot reload patterns across different parts of the monorepo:
+Genui uses modern hot reload patterns across different parts of the monorepo:
 
 #### Cloud Development
 
@@ -129,14 +129,14 @@ Tambo uses modern hot reload patterns across different parts of the monorepo:
 1. Start the dev servers: `npm run dev:cloud`
 2. Visit http://localhost:8260 and sign in
 3. Create a project and generate an API key
-4. Add to `apps/web/.env.local`: `NEXT_PUBLIC_TAMBO_API_KEY=your_key`
+4. Add to `apps/web/.env.local`: `NEXT_PUBLIC_GENUI_API_KEY=your_key`
 5. Verify with http://localhost:8260/internal/smoketest
 
 ## Common Commands
 
 ```bash
 # Development
-npm run dev:cloud        # Start web + API for Tambo Cloud
+npm run dev:cloud        # Start web + API for Genui Cloud
 npm run dev              # Start showcase + docs for React SDK
 npm run dev:sdk          # Start React SDK watch mode + showcase
 
@@ -171,7 +171,7 @@ npm run dev:sdk          # SDK watch mode + showcase (for SDK development)
 
 | Variable                  | Location              | Description                                                                   |
 | ------------------------- | --------------------- | ----------------------------------------------------------------------------- |
-| `OPENAI_API_KEY`          | `apps/api/.env`       | To allow Tambo Cloud to use AI features                                       |
+| `OPENAI_API_KEY`          | `apps/api/.env`       | To allow Genui Cloud to use AI features                                       |
 | `FALLBACK_OPENAI_API_KEY` | `apps/api/.env`       | Used as a fallback API key for OpenAI if others are not set                   |
 | `GOOGLE_CLIENT_ID`        | `apps/web/.env.local` | Google App Client ID for OAuth login (https://console.cloud.google.com/)      |
 | `GOOGLE_CLIENT_SECRET`    | `apps/web/.env.local` | As above                                                                      |
@@ -187,7 +187,7 @@ npm run dev:sdk          # SDK watch mode + showcase (for SDK development)
 | `packages/db`      | Drizzle schema + migrations     |
 | `packages/core`    | Shared utilities (no DB access) |
 | `packages/backend` | LLM/agent helpers               |
-| `react-sdk/`       | React SDK (`@tambo-ai/react`)   |
+| `react-sdk/`       | React SDK (`@workspace/react`)   |
 | `cli/`             | CLI tools                       |
 | `showcase/`        | Demo application                |
 | `docs/`            | Documentation site              |
@@ -260,6 +260,6 @@ Scopes: `api`, `web`, `core`, `cli`, `docs`, `react-sdk`
 ## Links
 
 - Discord: https://discord.gg/dJNvPEHth6
-- Docs: https://docs.tambo.co
+- Docs: https://docs.genui.co
 
 Thanks for contributing!

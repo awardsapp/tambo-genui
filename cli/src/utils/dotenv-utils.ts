@@ -3,15 +3,15 @@ import { parse } from "dotenv";
 /**
  * The possible Tambo API key names (with framework-specific prefixes)
  */
-export const TAMBO_API_KEY_NAMES = [
-  "NEXT_PUBLIC_TAMBO_API_KEY",
-  "EXPO_PUBLIC_TAMBO_API_KEY",
-  "VITE_TAMBO_API_KEY",
-  "REACT_APP_TAMBO_API_KEY",
-  "TAMBO_API_KEY",
+export const GENUI_API_KEY_NAMES = [
+  "NEXT_PUBLIC_GENUI_API_KEY",
+  "EXPO_PUBLIC_GENUI_API_KEY",
+  "VITE_GENUI_API_KEY",
+  "REACT_APP_GENUI_API_KEY",
+  "GENUI_API_KEY",
 ] as const;
 
-export type TamboApiKeyName = (typeof TAMBO_API_KEY_NAMES)[number];
+export type TamboApiKeyName = (typeof GENUI_API_KEY_NAMES)[number];
 
 interface TamboApiKeyInfo {
   keyName: TamboApiKeyName;
@@ -36,7 +36,7 @@ export function parseDotenvContent(
 export function findTamboApiKey(content: string): TamboApiKeyInfo | null {
   const parsed = parseDotenvContent(content);
 
-  for (const keyName of TAMBO_API_KEY_NAMES) {
+  for (const keyName of GENUI_API_KEY_NAMES) {
     const value = parsed[keyName];
     if (value !== undefined) {
       return { keyName, value };
@@ -52,7 +52,7 @@ export function findTamboApiKey(content: string): TamboApiKeyInfo | null {
  */
 export function findAllTamboApiKeys(content: string): TamboApiKeyName[] {
   const parsed = parseDotenvContent(content);
-  return TAMBO_API_KEY_NAMES.filter((keyName) => parsed[keyName] !== undefined);
+  return GENUI_API_KEY_NAMES.filter((keyName) => parsed[keyName] !== undefined);
 }
 
 /**
@@ -64,7 +64,7 @@ export function findAllTamboApiKeys(content: string): TamboApiKeyName[] {
  * 2. Append the new key=value at the end
  *
  * @param content The existing dotenv file content
- * @param keyName The key name to use (e.g., NEXT_PUBLIC_TAMBO_API_KEY)
+ * @param keyName The key name to use (e.g., NEXT_PUBLIC_GENUI_API_KEY)
  * @param value The API key value
  * @returns The updated content string
  */
@@ -78,7 +78,7 @@ export function setTamboApiKey(
   const filteredLines = lines.filter((line) => {
     const trimmed = line.trim();
     // Keep empty lines, comments, and non-Tambo-key lines
-    return !TAMBO_API_KEY_NAMES.some((name) => trimmed.startsWith(`${name}=`));
+    return !GENUI_API_KEY_NAMES.some((name) => trimmed.startsWith(`${name}=`));
   });
 
   // Join back and ensure we have a newline before appending
@@ -105,7 +105,7 @@ export function removeTamboApiKeys(content: string): string {
   const lines = content.split("\n");
   const filteredLines = lines.filter((line) => {
     const trimmed = line.trim();
-    return !TAMBO_API_KEY_NAMES.some((name) => trimmed.startsWith(`${name}=`));
+    return !GENUI_API_KEY_NAMES.some((name) => trimmed.startsWith(`${name}=`));
   });
 
   return filteredLines.join("\n");

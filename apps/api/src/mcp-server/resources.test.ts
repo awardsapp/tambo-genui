@@ -1,6 +1,6 @@
 import { jest } from "@jest/globals";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { MCPClient } from "@tambo-ai-cloud/core";
+import { MCPClient } from "@workspace-cloud/core";
 import { registerResourceHandlers } from "./resources";
 
 // Type helpers for mocking

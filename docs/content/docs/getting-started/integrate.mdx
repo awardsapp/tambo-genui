@@ -32,7 +32,7 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 ```tsx title="src/app/layout.tsx"
 "use client";
 
-import { TamboProvider } from "@tambo-ai/react";
+import { TamboProvider } from "@workspace/react";
 
 export default function RootLayout({
   children,
@@ -41,7 +41,7 @@ export default function RootLayout({
 }) {
   return (
     <TamboProvider
-      apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY!}
+      apiKey={process.env.NEXT_PUBLIC_GENUI_API_KEY!}
       userKey="user-1"
     >
       {children}
@@ -54,7 +54,7 @@ export default function RootLayout({
   Create a `.env.local` file in your project root:
 
 ```bash
-NEXT_PUBLIC_TAMBO_API_KEY=your_api_key_here
+NEXT_PUBLIC_GENUI_API_KEY=your_api_key_here
 ```
 
 Don't commit this file to version control.
@@ -68,12 +68,12 @@ The `userKey` identifies the current user — threads are scoped per user. Repla
 </Tab>
 <Tab value="Vite">
 ```tsx title="src/App.tsx"
-import { TamboProvider } from "@tambo-ai/react";
+import { TamboProvider } from "@workspace/react";
 
 export default function App() {
   return (
     <TamboProvider
-      apiKey={import.meta.env.VITE_TAMBO_API_KEY!}
+      apiKey={import.meta.env.VITE_GENUI_API_KEY!}
       userKey="user-1"
     >
       {/* your app content */}
@@ -86,7 +86,7 @@ export default function App() {
   Create a `.env.local` file in your project root:
 
 ```bash
-VITE_TAMBO_API_KEY=your_api_key_here
+VITE_GENUI_API_KEY=your_api_key_here
 ```
 
 Don't commit this file to version control.
@@ -95,12 +95,12 @@ Don't commit this file to version control.
 </Tab>
 <Tab value="Expo">
 ```tsx title="App.tsx"
-import { TamboProvider } from "@tambo-ai/react";
+import { TamboProvider } from "@workspace/react";
 
 export default function App() {
   return (
     <TamboProvider
-      apiKey={process.env.EXPO_PUBLIC_TAMBO_API_KEY!}
+      apiKey={process.env.EXPO_PUBLIC_GENUI_API_KEY!}
       userKey="user-1"
     >
       {/* your app content */}
@@ -113,14 +113,14 @@ export default function App() {
   Create a `.env` file in your project root:
 
 ```bash
-EXPO_PUBLIC_TAMBO_API_KEY=your_api_key_here
+EXPO_PUBLIC_GENUI_API_KEY=your_api_key_here
 ```
 
 Don't commit this file to version control.
 
 </Callout>
 
-For Expo, the registry components (DOM + Tailwind) won't work in React Native. Use `@tambo-ai/react` hooks directly to build your native UI. See the Expo demos for complete examples: [Activity Logger](https://github.com/tambo-ai/demo-mobile-log), [Music Companion](https://github.com/tambo-ai/music-expo-demo).
+For Expo, the registry components (DOM + Tailwind) won't work in React Native. Use `@workspace/react` hooks directly to build your native UI. See the Expo demos for complete examples: [Activity Logger](https://github.com/tambo-ai/demo-mobile-log), [Music Companion](https://github.com/tambo-ai/music-expo-demo).
 
 </Tab>
 </Tabs>

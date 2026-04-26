@@ -10,7 +10,7 @@ export enum ToolProviderType {
 }
 
 const mcpAuthSupportMessage =
-  "Server requires authentication. Tambo support for MCP Auth is coming soon!";
+  "Server requires authentication. Genui support for MCP Auth is coming soon!";
 
 function normalizeStatusCode(code: number | undefined): number {
   return typeof code === "number" && code >= 100 && code <= 599 ? code : 500;

@@ -3,7 +3,7 @@ import { BadRequestException, UnauthorizedException } from "@nestjs/common";
 import {
   OAuthValidationMode,
   encryptOAuthSecretKey,
-} from "@tambo-ai-cloud/core";
+} from "@workspace-cloud/core";
 import { createHash } from "node:crypto";
 import { SignJWT, exportJWK, exportSPKI, generateKeyPair } from "jose";
 import { CorrelationLoggerService } from "../services/logger.service";

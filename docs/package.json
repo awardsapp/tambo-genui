@@ -1,7 +1,7 @@
 {
-  "name": "@tambo-ai/docs",
+  "name": "@workspace/docs",
   "version": "1.33.0",
-  "description": "Tambo AI documentation site",
+  "description": "Genui AI documentation site",
   "license": "MIT",
   "scripts": {
     "build": "next build",
@@ -14,10 +14,10 @@
     "clean": "rimraf .next"
   },
   "dependencies": {
-    "@tambo-ai/react": "*",
-    "@tambo-ai/react-ui-base": "*",
-    "@tambo-ai/typescript-sdk": "^0.95.0",
-    "@tambo-ai/ui-registry": "*",
+    "@workspace/react": "*",
+    "@workspace/react-ui-base": "*",
+    "@workspace/typescript-sdk": "^0.95.0",
+    "@workspace/ui-registry": "*",
     "class-variance-authority": "^0.7.1",
     "dompurify": "^3.3.2",
     "framer-motion": "^12.29.0",

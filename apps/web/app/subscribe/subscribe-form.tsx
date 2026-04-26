@@ -3,11 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useTamboComponentState } from "@tambo-ai/react";
+import { useGenuiComponentState } from "@workspace/react";
 import { useEffect } from "react";
 import { z } from "zod/v3";
 
-// Schema with descriptions to help Tambo understand the component
+// Schema with descriptions to help Genui understand the component
 export const SubscribeFormProps = z.object({
   firstName: z
     .string()
@@ -31,7 +31,7 @@ export const SubscribeFormProps = z.object({
     .describe("Email address of the subscriber"),
 });
 
-export type FormDataTambo = z.infer<typeof SubscribeFormProps>;
+export type FormDataGenui = z.infer<typeof SubscribeFormProps>;
 
 interface SubscribeFormState {
   firstName: string;
@@ -49,9 +49,9 @@ export function SubscribeForm({
   lastName = "",
   title = "",
   email = "",
-}: FormDataTambo) {
-  // Use Tambo's state management hook with a unique key
-  const [formState, setFormState] = useTamboComponentState<SubscribeFormState>(
+}: FormDataGenui) {
+  // Use Genui's state management hook with a unique key
+  const [formState, setFormState] = useGenuiComponentState<SubscribeFormState>(
     "subscribe-form-state",
     {
       firstName: "",

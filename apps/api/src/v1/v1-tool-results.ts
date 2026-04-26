@@ -2,7 +2,7 @@ import {
   ContentPartType,
   MessageRole,
   type UnsavedThreadToolMessage,
-} from "@tambo-ai-cloud/core";
+} from "@workspace-cloud/core";
 import type { V1InputContent, V1InputMessageDto } from "./dto/message.dto";
 import type { V1ToolResultContentDto } from "./dto/content.dto";
 

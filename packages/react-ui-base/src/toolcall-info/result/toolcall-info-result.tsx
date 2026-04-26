@@ -1,13 +1,13 @@
 "use client";
 
 import { useRender } from "@base-ui/react/use-render";
-import type { TamboThreadMessage, ToolResultContent } from "@tambo-ai/react";
+import type { GenuiThreadMessage, ToolResultContent } from "@workspace/react";
 import * as React from "react";
 import { useToolcallInfoContext } from "../root/toolcall-info-context";
 
 export interface ToolcallInfoResultRenderProps extends Record<string, unknown> {
   slot: string;
-  content: TamboThreadMessage["content"] | null;
+  content: GenuiThreadMessage["content"] | null;
   hasResult: boolean;
 }
 

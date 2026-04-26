@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Unauthorized – Tambo Cloud",
+  title: "Unauthorized – Genui Cloud",
 };
 
 export default function UnauthorizedPage() {

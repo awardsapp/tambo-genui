@@ -1,7 +1,7 @@
 /** @type {import("@typescript-eslint/utils").TSESLint.FlatConfig.ConfigArray} */
 
 import eslint from "@eslint/js";
-import reactConfig from "@tambo-ai/eslint-config/react-internal";
+import reactConfig from "@workspace/eslint-config/react-internal";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(

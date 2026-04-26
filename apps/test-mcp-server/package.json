@@ -1,5 +1,5 @@
 {
-  "name": "@tambo-ai-cloud/test-mcp-server",
+  "name": "@workspace-cloud/test-mcp-server",
   "version": "0.0.1",
   "description": "A test MCP server with elicitation and sampling tools for testing purposes",
   "type": "module",
@@ -27,8 +27,8 @@
     "express": "^5.1.0"
   },
   "devDependencies": {
-    "@tambo-ai/eslint-config": "*",
-    "@tambo-ai/typescript-config": "*",
+    "@workspace/eslint-config": "*",
+    "@workspace/typescript-config": "*",
     "@types/express": "^5.0.0",
     "@types/node": "^22.19.15",
     "tsx": "^4.21.0",

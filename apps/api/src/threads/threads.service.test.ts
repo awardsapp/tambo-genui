@@ -1,6 +1,6 @@
 import { ConfigService } from "@nestjs/config";
 import { Test, TestingModule } from "@nestjs/testing";
-import { createTamboBackend } from "@tambo-ai-cloud/backend";
+import { createGenuiBackend } from "@workspace-cloud/backend";
 import {
   AgentProviderType,
   AiProviderType,
@@ -12,13 +12,13 @@ import {
   MessageRole,
   NotFoundError,
   OAuthValidationMode,
-} from "@tambo-ai-cloud/core";
-import { schema, type operations as dbOperations } from "@tambo-ai-cloud/db";
+} from "@workspace-cloud/core";
+import { schema, type operations as dbOperations } from "@workspace-cloud/db";
 import {
   createMockDBMessage,
   createMockDBProject,
   createMockDBThread,
-} from "@tambo-ai-cloud/testing";
+} from "@workspace-cloud/testing";
 import { DATABASE } from "../common/database-provider";
 import { AnalyticsService } from "../common/services/analytics.service";
 import { AuthService } from "../common/services/auth.service";
@@ -38,9 +38,9 @@ import {
   SuggestionNotFoundException,
 } from "./types/errors";
 
-// Mock backend pieces (TamboBackend and helpers)
-jest.mock("@tambo-ai-cloud/backend", () => {
-  const actual = jest.requireActual("@tambo-ai-cloud/backend");
+// Mock backend pieces (GenuiBackend and helpers)
+jest.mock("@workspace-cloud/backend", () => {
+  const actual = jest.requireActual("@workspace-cloud/backend");
   const makeStream = () => ({
     async *[Symbol.asyncIterator]() {
       yield {
@@ -52,7 +52,7 @@ jest.mock("@tambo-ai-cloud/backend", () => {
     },
   });
   const __testRunDecisionLoop__ = jest.fn().mockReturnValue(makeStream());
-  const createTamboBackend = jest.fn().mockResolvedValue({
+  const createGenuiBackend = jest.fn().mockResolvedValue({
     runDecisionLoop: __testRunDecisionLoop__,
     generateSuggestions: jest.fn(),
     generateThreadName: jest.fn(),
@@ -65,20 +65,20 @@ jest.mock("@tambo-ai-cloud/backend", () => {
   });
   return {
     ...actual,
-    createTamboBackend,
+    createGenuiBackend,
     generateChainId: jest.fn().mockResolvedValue("chain-1"),
     __testRunDecisionLoop__,
   };
 });
 
 const {
-  createTamboBackend: mockedCreateTamboBackend,
+  createGenuiBackend: mockedCreateGenuiBackend,
 }: {
-  createTamboBackend: jest.MockedFunction<typeof createTamboBackend>;
-} = jest.requireMock("@tambo-ai-cloud/backend");
+  createGenuiBackend: jest.MockedFunction<typeof createGenuiBackend>;
+} = jest.requireMock("@workspace-cloud/backend");
 
 const { __testRunDecisionLoop__ }: { __testRunDecisionLoop__: jest.Mock } =
-  jest.requireMock("@tambo-ai-cloud/backend");
+  jest.requireMock("@workspace-cloud/backend");
 
 // Helper function to create a properly-typed DBMessageWithSuggestions
 function createDBMessageWithSuggestions(
@@ -141,8 +141,8 @@ function createDBMessageWithThread(
 }
 
 // Mock DB operations used by the service
-jest.mock("@tambo-ai-cloud/db", () => {
-  const actual = jest.requireActual("@tambo-ai-cloud/db");
+jest.mock("@workspace-cloud/db", () => {
+  const actual = jest.requireActual("@workspace-cloud/db");
   const mockedOperations = {
     // threads
     createThread: jest.fn(),
@@ -198,7 +198,7 @@ jest.mock("@tambo-ai-cloud/db", () => {
 
 // Access the mocked operations for configuring behavior in tests
 const { operations }: { operations: jest.Mocked<typeof dbOperations> } =
-  jest.requireMock("@tambo-ai-cloud/db");
+  jest.requireMock("@workspace-cloud/db");
 
 // Intentionally do NOT mock systemTools or thread/message utils.
 
@@ -484,7 +484,7 @@ describe("ThreadsService.advanceThread initialization", () => {
       service.advanceThread({ projectId, contextKey }, dto),
     ).rejects.toThrow("STOP_AFTER_INIT");
 
-    const initArgs2 = mockedCreateTamboBackend.mock.calls[0];
+    const initArgs2 = mockedCreateGenuiBackend.mock.calls[0];
     expect(initArgs2[2]).toBe(`${projectId}-${contextKey}`);
     expect(authService.generateMcpAccessToken).toHaveBeenCalledWith(projectId, {
       threadId,
@@ -499,7 +499,7 @@ describe("ThreadsService.advanceThread initialization", () => {
     });
     // Ensure backend instance is properly returned for this test
     jest
-      .spyOn<any, any>(service, "createTamboBackendForThread")
+      .spyOn<any, any>(service, "createGenuiBackendForThread")
       .mockResolvedValue({
         runDecisionLoop: __testRunDecisionLoop__,
         generateSuggestions: jest.fn(),
@@ -533,7 +533,7 @@ describe("ThreadsService.advanceThread initialization", () => {
   test("passes abortSignal through to decision loop and links to external signal", async () => {
     const dto = makeDto({ withComponents: true, withClientTools: true });
     jest
-      .spyOn<any, any>(service, "createTamboBackendForThread")
+      .spyOn<any, any>(service, "createGenuiBackendForThread")
       .mockResolvedValue({
         runDecisionLoop: __testRunDecisionLoop__,
         generateSuggestions: jest.fn(),
@@ -999,7 +999,7 @@ describe("ThreadsService.advanceThread initialization", () => {
       } as const;
 
       const backendSpy = jest
-        .spyOn<any, any>(service, "createTamboBackendForThread")
+        .spyOn<any, any>(service, "createGenuiBackendForThread")
         .mockResolvedValue(backendMock);
 
       try {
@@ -1061,7 +1061,7 @@ describe("ThreadsService.advanceThread initialization", () => {
       } as const;
 
       const backendSpy = jest
-        .spyOn<any, any>(service, "createTamboBackendForThread")
+        .spyOn<any, any>(service, "createGenuiBackendForThread")
         .mockResolvedValue(backendMock);
 
       try {
@@ -1874,7 +1874,7 @@ describe("ThreadsService.advanceThread initialization", () => {
           llmClient: {} as any,
         };
 
-        mockedCreateTamboBackend.mockResolvedValue(mockBackend as any);
+        mockedCreateGenuiBackend.mockResolvedValue(mockBackend as any);
 
         const threadWithContext = createMockDBThread(
           threadId,
@@ -1957,7 +1957,7 @@ describe("ThreadsService.advanceThread initialization", () => {
           llmClient: {} as any,
         };
 
-        mockedCreateTamboBackend.mockResolvedValue(mockBackend as any);
+        mockedCreateGenuiBackend.mockResolvedValue(mockBackend as any);
 
         const mockMessageWithThread = createDBMessageWithThread(
           messageId,
@@ -2006,7 +2006,7 @@ describe("ThreadsService.advanceThread initialization", () => {
         llmClient: {} as any,
       };
 
-      mockedCreateTamboBackend.mockResolvedValue(mockBackend as any);
+      mockedCreateGenuiBackend.mockResolvedValue(mockBackend as any);
 
       const threadWithMessages = createDBThreadWithMessages(
         threadId,

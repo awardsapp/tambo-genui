@@ -8,14 +8,14 @@ import {
   MCPTransport,
   OAuthClientInformation,
   ToolProviderType,
-} from "@tambo-ai-cloud/core";
-import { getDb, operations, schema } from "@tambo-ai-cloud/db";
+} from "@workspace-cloud/core";
+import { getDb, operations, schema } from "@workspace-cloud/db";
 import { type JSONSchema7 } from "json-schema";
 import { getSystemTools, getThreadMCPClients } from "./systemTools";
 
 // Mock the db module
-jest.mock("@tambo-ai-cloud/db", () => {
-  const actualDb = jest.requireActual("@tambo-ai-cloud/db");
+jest.mock("@workspace-cloud/db", () => {
+  const actualDb = jest.requireActual("@workspace-cloud/db");
 
   // Create a mock class for OAuthLocalProvider
   class MockOAuthLocalProvider {
@@ -44,8 +44,8 @@ jest.mock("@tambo-ai-cloud/db", () => {
 });
 
 // Mock MCPClient
-jest.mock("@tambo-ai-cloud/core", () => {
-  const coreModule = jest.requireActual("@tambo-ai-cloud/core");
+jest.mock("@workspace-cloud/core", () => {
+  const coreModule = jest.requireActual("@workspace-cloud/core");
   return {
     ...(coreModule as any),
     MCPClient: {

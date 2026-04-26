@@ -1,7 +1,7 @@
 "use client";
 
-import type { Suggestion } from "@tambo-ai/react";
-import type { messageVariants } from "@tambo-ai/ui-registry/components/message";
+import type { Suggestion } from "@workspace/react";
+import type { messageVariants } from "@workspace/ui-registry/components/message";
 import {
   MessageInput,
   MessageInputError,
@@ -12,25 +12,25 @@ import {
   MessageInputSubmitButton,
   MessageInputTextarea,
   MessageInputToolbar,
-} from "@tambo-ai/ui-registry/components/message-input";
+} from "@workspace/ui-registry/components/message-input";
 import {
   MessageSuggestions,
   MessageSuggestionsList,
   MessageSuggestionsStatus,
-} from "@tambo-ai/ui-registry/components/message-suggestions";
-import { ScrollableMessageContainer } from "@tambo-ai/ui-registry/components/scrollable-message-container";
+} from "@workspace/ui-registry/components/message-suggestions";
+import { ScrollableMessageContainer } from "@workspace/ui-registry/components/scrollable-message-container";
 import {
   ThreadContent,
   ThreadContentMessages,
-} from "@tambo-ai/ui-registry/components/thread-content";
+} from "@workspace/ui-registry/components/thread-content";
 import {
   ThreadHistory,
   ThreadHistoryHeader,
   ThreadHistoryList,
   ThreadHistoryNewButton,
   ThreadHistorySearch,
-} from "@tambo-ai/ui-registry/components/thread-history";
-import { useMergeRefs } from "@tambo-ai/ui-registry/lib/thread-hooks";
+} from "@workspace/ui-registry/components/thread-history";
+import { useMergeRefs } from "@workspace/ui-registry/lib/thread-hooks";
 import type { VariantProps } from "class-variance-authority";
 import * as React from "react";
 import { ThreadContainer, useThreadContainerContext } from "./thread-container";
@@ -42,7 +42,7 @@ export interface MessageThreadFullProps extends React.HTMLAttributes<HTMLDivElem
   /**
    * Controls the visual styling of messages in the thread.
    * Possible values include: "default", "compact", etc.
-   * These values are defined in messageVariants from "@tambo-ai/ui-registry/components/message".
+   * These values are defined in messageVariants from "@workspace/ui-registry/components/message".
    * @example variant="compact"
    */
   variant?: VariantProps<typeof messageVariants>["variant"];

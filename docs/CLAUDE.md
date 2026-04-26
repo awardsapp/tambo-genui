@@ -6,4 +6,4 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Quick Reference
 
-The Docs package (`@tambo-ai/docs`) - Next.js documentation site built with Fumadocs.
+The Docs package (`@workspace/docs`) - Next.js documentation site built with Fumadocs.

@@ -1,13 +1,13 @@
 ---
 title: Generative UI toolkit for React
-description: Register components the Tambo agent renders based on user messages.
+description: Register components the Genui agent renders based on user messages.
 icon: GraduationCap
 ---
 
 import LearnMore from "@/components/learn-more";
 import { Box, Github, MessageCircleMore } from "lucide-react";
 
-Tambo is an open-source toolkit for building AI-powered React apps. Register your components, and the agent decides which one to render based on user messages.
+Genui is an open-source toolkit for building AI-powered React apps. Register your components, and the agent decides which one to render based on user messages.
 
 "Show me sales by region" renders your `<Chart>`. "Add a task" updates your `<TaskBoard>`. The agent picks the component and streams the props.
 
@@ -27,9 +27,9 @@ Tambo is an open-source toolkit for building AI-powered React apps. Register you
 - **Streaming and state** — Progressive prop updates, message history, error handling
 - **MCP support** — Connect to databases, APIs, and external systems via Model Context Protocol
 
-Self-host the backend or use Tambo Cloud for fast deployment.
+Self-host the backend or use Genui Cloud for fast deployment.
 
-## How Tambo works
+## How Genui works
 
 Two component patterns, one toolkit.
 
@@ -47,7 +47,7 @@ Rendered once in response to a message. Use these for charts, data visualization
 />
 
 ```tsx
-const components: TamboComponent[] = [
+const components: GenuiComponent[] = [
   {
     name: "Graph",
     description: "Displays data as charts using Recharts library",
@@ -80,7 +80,7 @@ Persist on the page and update by ID across conversations. Use these for shoppin
 />
 
 ```tsx
-const InteractableNote = withTamboInteractable(Note, {
+const InteractableNote = withGenuiInteractable(Note, {
   componentName: "Note",
   description: "A note supporting title, content, and color modifications",
   propsSchema: z.object({
@@ -104,17 +104,17 @@ const InteractableNote = withTamboInteractable(Note, {
 Tell the agent which components it can use:
 
 ```tsx
-import { TamboProvider } from "@tambo-ai/react";
+import { GenuiProvider } from "@workspace/react";
 
 export function Home() {
   return (
-    <TamboProvider
-      components={myTamboComponents}
-      tools={myTamboTools}
-      apiKey={tamboApiKey}
+    <GenuiProvider
+      components={myGenuiComponents}
+      tools={myGenuiTools}
+      apiKey={genuiApiKey}
     >
       <MyAiApp />
-    </TamboProvider>
+    </GenuiProvider>
   );
 }
 ```
@@ -127,13 +127,13 @@ For apps with signed-in users, pass a `userToken` to enable per-user auth. See [
   href="/concepts/generative-interfaces"
 />
 
-### 2. Use Tambo hooks
+### 2. Use Genui hooks
 
 Send messages and render responses:
 
 ```tsx
-const { messages } = useTambo();
-const { value, setValue, submit, isPending } = useTamboThreadInput();
+const { messages } = useGenui();
+const { value, setValue, submit, isPending } = useGenuiThreadInput();
 
 // Render messages with components
 {
@@ -164,7 +164,7 @@ const { value, setValue, submit, isPending } = useTamboThreadInput();
 Connect pre-built integrations or your own MCP servers:
 
 ```tsx
-import { MCPTransport } from "@tambo-ai/react/mcp";
+import { MCPTransport } from "@workspace/react/mcp";
 
 const mcpServers = [
   {
@@ -174,9 +174,9 @@ const mcpServers = [
   },
 ];
 
-<TamboProvider components={components} mcpServers={mcpServers}>
+<GenuiProvider components={components} mcpServers={mcpServers}>
   <App />
-</TamboProvider>;
+</GenuiProvider>;
 ```
 
 <video
@@ -201,7 +201,7 @@ Production-ready components you can install via CLI:
 <LearnMore
   title="Component library"
   description="Explore components for forms, charts, messaging, and more"
-  href="https://ui.tambo.co"
+  href="https://ui.genui.co"
   icon={Box}
 />
 
@@ -216,6 +216,6 @@ Production-ready components you can install via CLI:
 <LearnMore
   title="GitHub"
   description="Star the repo, open issues, contribute"
-  href="https://github.com/tambo-ai/tambo"
+  href="https://github.com/genui-ai/genui"
   icon={Github}
 />

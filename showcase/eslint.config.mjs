@@ -1,4 +1,4 @@
-import nextJsConfig from "@tambo-ai/eslint-config/next-js";
+import nextJsConfig from "@workspace/eslint-config/next-js";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 

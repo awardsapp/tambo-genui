@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { api } from "@/trpc/react";
-import { MCPToolSpec } from "@tambo-ai-cloud/core";
+import { MCPToolSpec } from "@workspace-cloud/core";
 import { JSONSchema7 } from "json-schema";
 import { Loader2 } from "lucide-react";
 

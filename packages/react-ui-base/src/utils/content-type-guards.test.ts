@@ -1,5 +1,5 @@
 import { describe, expect, it } from "@jest/globals";
-import type { Content } from "@tambo-ai/react";
+import type { Content } from "@workspace/react";
 import {
   isTextContent,
   isComponentContent,

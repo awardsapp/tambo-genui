@@ -1,4 +1,4 @@
-import type { MemoryCategory, MemoryImportance } from "@tambo-ai-cloud/core";
+import type { MemoryCategory, MemoryImportance } from "@workspace-cloud/core";
 import { and, desc, eq, isNull, sql } from "drizzle-orm";
 import * as schema from "../schema";
 import type { DBMemory } from "../schema";

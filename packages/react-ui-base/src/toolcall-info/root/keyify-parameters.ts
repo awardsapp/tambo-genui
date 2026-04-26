@@ -1,4 +1,4 @@
-import type TamboAI from "@tambo-ai/typescript-sdk";
+import type GenuiAI from "@workspace/typescript-sdk";
 
 /**
  * Converts tool call parameters from an array format to an object format.
@@ -7,7 +7,7 @@ import type TamboAI from "@tambo-ai/typescript-sdk";
  * @returns Object with parameter names as keys and values as values
  */
 export function keyifyParameters(
-  parameters: TamboAI.ToolCallParameter[] | undefined,
+  parameters: GenuiAI.ToolCallParameter[] | undefined,
 ): Record<string, unknown> | undefined {
   if (!parameters) return;
   return Object.fromEntries(

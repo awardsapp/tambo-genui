@@ -8,14 +8,14 @@ import {
 } from "@modelcontextprotocol/sdk/types.js";
 import { UseQueryResult } from "@tanstack/react-query";
 import * as React from "react";
-import { useTamboQueries, useTamboQuery } from "../hooks/react-query-hooks";
-import { useTamboRegistry } from "../providers/tambo-registry-provider";
-import { REGISTRY_SERVER_KEY } from "@tambo-ai/client";
+import { useGenuiQueries, useGenuiQuery } from "../hooks/react-query-hooks";
+import { useGenuiRegistry } from "../providers/genui-registry-provider";
+import { REGISTRY_SERVER_KEY } from "@workspace/client";
 import {
   type ConnectedMcpServer,
   type McpServer,
-  useTamboMcpServers,
-} from "./tambo-mcp-provider";
+  useGenuiMcpServers,
+} from "./genui-mcp-provider";
 
 /**
  * Check if an error is an MCP MethodNotFound error (-32601).
@@ -80,7 +80,7 @@ export interface McpResourceEntry {
 }
 
 /**
- * Union type for all resource entries returned by `useTamboMcpResourceList`.
+ * Union type for all resource entries returned by `useGenuiMcpResourceList`.
  */
 export type ListResourceEntry = RegistryResourceEntry | McpResourceEntry;
 
@@ -118,10 +118,10 @@ export function isMcpResourceEntry(
  * @param search - Optional search string to filter prompts by name (case-insensitive).
  * @returns The prompts for the MCP servers, including the server that the prompt was found on.
  */
-export function useTamboMcpPromptList(search?: string) {
-  const mcpServers = useTamboMcpServers();
+export function useGenuiMcpPromptList(search?: string) {
+  const mcpServers = useGenuiMcpServers();
 
-  const queries = useTamboQueries({
+  const queries = useGenuiQueries({
     queries: mcpServers.map((mcpServer) => ({
       // search is NOT in queryKey - we filter locally after fetching
       queryKey: ["mcp-prompts", mcpServer.key],
@@ -252,12 +252,12 @@ export function isConnectedMcpServer(
  * @param args - The arguments to pass to the prompt.
  * @returns The prompt for the specified name.
  */
-export function useTamboMcpPrompt(
+export function useGenuiMcpPrompt(
   promptName: string | undefined,
   args: Record<string, string> = {},
 ) {
   // figure out which server has the prompt
-  const { data: promptEntries } = useTamboMcpPromptList();
+  const { data: promptEntries } = useGenuiMcpPromptList();
   const promptEntry = promptEntries?.find(
     (prompt) => prompt.prompt.name === promptName,
   );
@@ -274,7 +274,7 @@ export function useTamboMcpPrompt(
   const sortedArgsEntries = Object.keys(args)
     .sort()
     .map((k) => [k, args[k]] as const);
-  return useTamboQuery({
+  return useGenuiQuery({
     // Include server identity and sorted args to prevent stale cache hits
     queryKey: ["mcp-prompt", promptName, mcpServer?.key, sortedArgsEntries],
     // Only run when we have a prompt name and a connected server
@@ -304,9 +304,9 @@ export function useTamboMcpPrompt(
  *                 For registry dynamic sources, the search is passed to listResources(search) for dynamic generation.
  * @returns The resources from MCP servers and the local registry, including the server that the resource was found on (null for registry resources).
  */
-export function useTamboMcpResourceList(search?: string) {
-  const mcpServers = useTamboMcpServers();
-  const { resources: staticResources, resourceSource } = useTamboRegistry();
+export function useGenuiMcpResourceList(search?: string) {
+  const mcpServers = useGenuiMcpServers();
+  const { resources: staticResources, resourceSource } = useGenuiRegistry();
 
   // Build list of queries: MCP servers + optional dynamic resource source
   const queriesToRun = [
@@ -360,7 +360,7 @@ export function useTamboMcpResourceList(search?: string) {
       : []),
   ];
 
-  const queries = useTamboQueries({
+  const queries = useGenuiQueries({
     queries: queriesToRun,
     combine: (results) => {
       // Type assertion needed because queries can return different entry types
@@ -446,9 +446,9 @@ export function useTamboMcpResourceList(search?: string) {
  *   - Registry resources: prefixed with "registry:" (e.g., "registry:file://bar")
  * @returns The resource for the specified URI.
  */
-export function useTamboMcpResource(resourceUri: string | undefined) {
-  const { resourceSource } = useTamboRegistry();
-  const { data: resourceEntries } = useTamboMcpResourceList();
+export function useGenuiMcpResource(resourceUri: string | undefined) {
+  const { resourceSource } = useGenuiRegistry();
+  const { data: resourceEntries } = useGenuiMcpResourceList();
 
   // Find which server/source has the resource
   const resourceEntry = resourceEntries?.find(
@@ -489,7 +489,7 @@ export function useTamboMcpResource(resourceUri: string | undefined) {
       ? REGISTRY_SERVER_KEY
       : mcpServer?.key;
 
-  return useTamboQuery({
+  return useGenuiQuery({
     queryKey: ["resource", resourceUri, locationKey],
     enabled: canFetchResource,
     queryFn: async (): Promise<ReadResourceResult | null> => {

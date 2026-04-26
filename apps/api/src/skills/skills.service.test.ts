@@ -2,8 +2,8 @@ import type { TestingModule } from "@nestjs/testing";
 import type {
   ExternalSkillMetadata,
   ProviderSkillReference,
-} from "@tambo-ai-cloud/core";
-import type { HydraDatabase } from "@tambo-ai-cloud/db";
+} from "@workspace-cloud/core";
+import type { HydraDatabase } from "@workspace-cloud/db";
 import { DATABASE } from "../common/database-provider";
 import { createTestingModule } from "../test/utils/create-testing-module";
 import { SkillsService } from "./skills.service";
@@ -12,7 +12,7 @@ import { SkillsService } from "./skills.service";
 let mockUploadSkillToProvider: jest.Mock;
 let mockDeleteSkillFromProvider: jest.Mock;
 
-jest.mock("@tambo-ai-cloud/backend", () => ({
+jest.mock("@workspace-cloud/backend", () => ({
   uploadSkillToProvider: (...args: unknown[]) =>
     mockUploadSkillToProvider(...args),
   deleteSkillFromProvider: (...args: unknown[]) =>
@@ -20,8 +20,8 @@ jest.mock("@tambo-ai-cloud/backend", () => ({
 }));
 
 // Mock DB operations
-jest.mock("@tambo-ai-cloud/db", () => {
-  const actual = jest.requireActual("@tambo-ai-cloud/db");
+jest.mock("@workspace-cloud/db", () => {
+  const actual = jest.requireActual("@workspace-cloud/db");
   return {
     ...actual,
     operations: {
@@ -34,10 +34,10 @@ jest.mock("@tambo-ai-cloud/db", () => {
 const mockedOperations: {
   updateSkill: jest.Mock;
   mergeSkillMetadata: jest.Mock;
-} = jest.requireMock("@tambo-ai-cloud/db").operations;
+} = jest.requireMock("@workspace-cloud/db").operations;
 
 function makeSkill(
-  overrides: Partial<import("@tambo-ai-cloud/db").schema.DBSkill> = {},
+  overrides: Partial<import("@workspace-cloud/db").schema.DBSkill> = {},
 ) {
   return {
     id: "sk-test-1",

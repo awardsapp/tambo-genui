@@ -1,12 +1,12 @@
-import TamboAI from "@tambo-ai/typescript-sdk";
+import GenuiAI from "@workspace/typescript-sdk";
 import {
   ComponentContextToolMetadata,
   ComponentRegistry,
   DefineToolFn,
   RegisteredComponent,
-  TamboTool,
-  TamboToolAssociations,
-  TamboToolRegistry,
+  GenuiTool,
+  GenuiToolAssociations,
+  GenuiToolRegistry,
 } from "../model/component-metadata";
 import {
   getParametersFromToolSchema,
@@ -23,10 +23,10 @@ import {
  */
 export const getAvailableComponents = (
   componentRegistry: ComponentRegistry,
-  toolRegistry: TamboToolRegistry,
-  toolAssociations: TamboToolAssociations,
-): TamboAI.AvailableComponent[] => {
-  const availableComponents: TamboAI.AvailableComponent[] = [];
+  toolRegistry: GenuiToolRegistry,
+  toolAssociations: GenuiToolAssociations,
+): GenuiAI.AvailableComponent[] => {
+  const availableComponents: GenuiAI.AvailableComponent[] = [];
 
   for (const [name, componentEntry] of Object.entries(componentRegistry)) {
     const associatedToolNames = toolAssociations[name] ?? [];
@@ -35,7 +35,7 @@ export const getAvailableComponents = (
       .map((toolName) => {
         const tool = toolRegistry[toolName];
         if (!tool) return null;
-        return mapTamboToolToContextTool(tool);
+        return mapGenuiToolToContextTool(tool);
       })
       .filter((tool): tool is ComponentContextToolMetadata => tool !== null);
 
@@ -57,9 +57,9 @@ export const getAvailableComponents = (
  * @returns The tools that are not associated with any component
  */
 export const getUnassociatedTools = (
-  toolRegistry: TamboToolRegistry,
-  toolAssociations: TamboToolAssociations,
-): TamboTool[] => {
+  toolRegistry: GenuiToolRegistry,
+  toolAssociations: GenuiToolAssociations,
+): GenuiTool[] => {
   return Object.values(toolRegistry).filter((tool) => {
     // Check if the tool's name appears in any of the tool association arrays
     return !Object.values(toolAssociations).flat().includes(tool.name);
@@ -101,7 +101,7 @@ export const getComponentFromRegistry = (
 
   if (!componentEntry) {
     throw new Error(
-      `Tambo tried to use Component ${componentName}, but it was not found.`,
+      `Genui tried to use Component ${componentName}, but it was not found.`,
     );
   }
 
@@ -109,12 +109,12 @@ export const getComponentFromRegistry = (
 };
 
 /**
- * Map a Tambo tool to a context tool
+ * Map a Genui tool to a context tool
  * @param tool - The tool to map
  * @returns The context tool
  */
-export const mapTamboToolToContextTool = (
-  tool: TamboTool,
+export const mapGenuiToolToContextTool = (
+  tool: GenuiTool,
 ): ComponentContextToolMetadata => {
   const parameters = getParametersFromToolSchema(tool);
 
@@ -132,16 +132,16 @@ export const mapTamboToolToContextTool = (
 };
 
 /**
- * Provides type safety for defining a Tambo Tool.
+ * Provides type safety for defining a Genui Tool.
  *
- * Tambo uses the [standard-schema.dev](https://standard-schema.dev) spec which means you can use any Standard Schema
+ * Genui uses the [standard-schema.dev](https://standard-schema.dev) spec which means you can use any Standard Schema
  * compliant validator (Zod, Valibot, ArkType, etc.). This ensures the tool function args and output types are correctly
  * inferred from the provided schemas.
  * @example
  * ```typescript
  * import { z } from "zod/v4";
  *
- * const myTool = defineTamboTool({
+ * const myTool = defineGenuiTool({
  *   // ...
  * });
  * ```

@@ -1,4 +1,4 @@
-import { type ReactTamboThreadMessage } from "@tambo-ai/react";
+import { type ReactTamboThreadMessage } from "@workspace/react";
 import React from "react";
 
 /**

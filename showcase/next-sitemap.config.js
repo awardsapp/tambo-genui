@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://ui.tambo.co",
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://ui.genui.co",
   generateRobotsTxt: false,
   // Only include / and /components/**
   include: ["/", "/components", "/components/**"],

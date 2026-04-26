@@ -49,7 +49,7 @@ export const graphSchema = z.object({
 // Define the base type from the Zod schema
 export type DashboardGraphDataType = z.infer<typeof graphDataSchema>;
 
-// Extend the GraphProps with additional tambo properties
+// Extend the GraphProps with additional genui properties
 export interface DashboardGraphProps
   extends
     Omit<React.HTMLAttributes<HTMLDivElement>, "data" | "title" | "size">,

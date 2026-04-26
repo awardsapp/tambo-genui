@@ -19,7 +19,7 @@ date_updated: 2026-03-02
 
 ## Overview
 
-Phase 6 of the Tambo documentation established a reusable pattern for creating interactive component demos in Fumadocs documentation. This pattern is used throughout the `react-ui-base` component reference to showcase component behavior with controllable state.
+Phase 6 of the Genui documentation established a reusable pattern for creating interactive component demos in Fumadocs documentation. This pattern is used throughout the `react-ui-base` component reference to showcase component behavior with controllable state.
 
 ## The Pattern Architecture
 
@@ -133,7 +133,7 @@ Located at: `/docs/content/docs/reference/react-ui-base/_demos/message-demo.tsx`
 
 import { useDemoControls } from "@/components/demos/demo-controls";
 import { DemoPreview } from "@/components/demos/demo-preview";
-import { Message } from "@tambo-ai/react-ui-base/message";
+import { Message } from "@workspace/react-ui-base/message";
 import { useMemo } from "react";
 
 export function MessageDemoPreview() {
@@ -181,7 +181,7 @@ function MessageDemo() {
 
 // Step 4: Define code shown in panel
 const messageDemoCode = `
-import { Message } from "@tambo-ai/react-ui-base/message";
+import { Message } from "@workspace/react-ui-base/message";
 
 function MessageDemo() {
   return (
@@ -378,7 +378,7 @@ The `DynamicCodeBlock` component from Fumadocs handles all highlighting. Just pr
 
 ```tsx
 const code = `
-import { Message } from "@tambo-ai/react-ui-base/message";
+import { Message } from "@workspace/react-ui-base/message";
 
 export function Demo() {
   // ...

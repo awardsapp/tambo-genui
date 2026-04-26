@@ -21,25 +21,25 @@ export interface UpgradeOptions {
 export async function handleUpgrade(
   options: UpgradeOptions = {},
 ): Promise<void> {
-  console.log(chalk.cyan("\n🔄 Tambo Upgrade Tool\n"));
+  console.log(chalk.cyan("\n🔄 Genui Upgrade Tool\n"));
 
   // Check for interactivity early - upgrade requires running external commands
   if (!isInteractive() && !options.yes) {
     throw new Error(
-      `${chalk.red("Error: Cannot run 'tambo upgrade' in non-interactive mode without flags.")}\n\n` +
+      `${chalk.red("Error: Cannot run 'genui upgrade' in non-interactive mode without flags.")}\n\n` +
         `${chalk.yellow("What happened:")} This command needs to prompt you for choices, but your environment\n` +
         `doesn't support prompts (likely CI/CD, Docker, or piped output).\n\n` +
         `${chalk.blue("Required flag:")}\n` +
         `  ${chalk.cyan("--yes")} ${chalk.dim("Auto-accepts all upgrades and skips prompts")}\n\n` +
         `${chalk.blue("Other available flags:")}\n` +
-        `  ${chalk.cyan("--prefix <path>")} ${chalk.dim("Component directory (default: src/components/tambo)")}\n` +
+        `  ${chalk.cyan("--prefix <path>")} ${chalk.dim("Component directory (default: src/components/genui)")}\n` +
         `  ${chalk.cyan("--skip-agent-docs")} ${chalk.dim("Skip updating AGENTS.md/CLAUDE.md files")}\n` +
         `  ${chalk.cyan("--legacy-peer-deps")} ${chalk.dim("Pass --legacy-peer-deps to npm (fixes some conflicts)")}\n\n` +
         `${chalk.blue("Examples:")}\n` +
-        `  ${chalk.cyan("tambo upgrade --yes")}                                  ${chalk.dim("# Standard components path")}\n` +
-        `  ${chalk.cyan("tambo upgrade --yes --prefix src/components/ui")}       ${chalk.dim("# Custom components path")}\n` +
-        `  ${chalk.cyan("tambo upgrade --yes --skip-agent-docs")}                ${chalk.dim("# Skip docs updates")}\n` +
-        `  ${chalk.cyan("tambo upgrade --yes --legacy-peer-deps")}               ${chalk.dim("# Fix peer dep conflicts")}\n\n` +
+        `  ${chalk.cyan("genui upgrade --yes")}                                  ${chalk.dim("# Standard components path")}\n` +
+        `  ${chalk.cyan("genui upgrade --yes --prefix src/components/ui")}       ${chalk.dim("# Custom components path")}\n` +
+        `  ${chalk.cyan("genui upgrade --yes --skip-agent-docs")}                ${chalk.dim("# Skip docs updates")}\n` +
+        `  ${chalk.cyan("genui upgrade --yes --legacy-peer-deps")}               ${chalk.dim("# Fix peer dep conflicts")}\n\n` +
         chalk.dim(
           "Or run this command in an interactive terminal (not in CI/CD).",
         ),
@@ -47,24 +47,24 @@ export async function handleUpgrade(
   }
 
   try {
-    // Check if we're in a tambo project
+    // Check if we're in a genui project
     const packageJsonPath = path.join(process.cwd(), "package.json");
     if (!fs.existsSync(packageJsonPath)) {
       throw new Error(
-        "No package.json found. Make sure you're in a tambo project.",
+        "No package.json found. Make sure you're in a genui project.",
       );
     }
 
     const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
-    const hasTamboDep =
+    const hasGenuiDep =
       packageJson.dependencies &&
-      (packageJson.dependencies["@tambo-ai/react"] ??
-        packageJson.dependencies.tambo);
+      (packageJson.dependencies["@workspace/react"] ??
+        packageJson.dependencies.genui);
 
-    if (!hasTamboDep) {
+    if (!hasGenuiDep) {
       console.log(
         chalk.yellow(
-          "Warning: This doesn't appear to be a tambo project. Proceeding anyway.",
+          "Warning: This doesn't appear to be a genui project. Proceeding anyway.",
         ),
       );
     }
@@ -94,7 +94,7 @@ export async function handleUpgrade(
     }
 
     // Upgrade components
-    console.log(chalk.bold("\n3. Upgrading tambo components\n"));
+    console.log(chalk.bold("\n3. Upgrading genui components\n"));
     const componentsSuccess = await upgradeComponents(options);
     if (!componentsSuccess) {
       console.error(chalk.red("\n❌ Component upgrade failed"));
@@ -105,7 +105,7 @@ export async function handleUpgrade(
     console.log(chalk.bold("\n4. AI Upgrade Prompts\n"));
     console.log(
       chalk.gray(
-        "Use these prompts with AI to further upgrade your tambo app:",
+        "Use these prompts with AI to further upgrade your genui app:",
       ),
     );
 
@@ -114,7 +114,7 @@ export async function handleUpgrade(
       console.log(chalk.cyan(`  ${index + 1}. ${prompt}`));
     });
 
-    console.log(chalk.green("\n✅ Tambo upgrade complete!\n"));
+    console.log(chalk.green("\n✅ Genui upgrade complete!\n"));
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     console.error(chalk.red(`\n❌ Upgrade failed: ${errorMessage}`));

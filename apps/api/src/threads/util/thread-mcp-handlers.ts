@@ -1,4 +1,4 @@
-import type { ITamboBackend } from "@tambo-ai-cloud/backend";
+import type { IGenuiBackend } from "@workspace-cloud/backend";
 import {
   AsyncQueue,
   ChatCompletionContentPart,
@@ -7,9 +7,9 @@ import {
   MCPHandlers,
   MessageRole,
   ThreadMessage,
-} from "@tambo-ai-cloud/core";
-import type { HydraDb } from "@tambo-ai-cloud/db";
-import { dbMessageToThreadMessage, operations } from "@tambo-ai-cloud/db";
+} from "@workspace-cloud/core";
+import type { HydraDb } from "@workspace-cloud/db";
+import { dbMessageToThreadMessage, operations } from "@workspace-cloud/db";
 import type {
   EmbeddedResource,
   ResourceLink,
@@ -22,7 +22,7 @@ import { MCP_PARENT_MESSAGE_ID_META_KEY } from "./tool";
 
 export function createMcpHandlers(
   db: HydraDb,
-  tamboBackend: ITamboBackend,
+  genuiBackend: IGenuiBackend,
   threadId: string,
   queue: AsyncQueue<StreamQueueItem>,
 ): MCPHandlers {
@@ -95,7 +95,7 @@ export function createMcpHandlers(
           return true;
         }),
       }));
-      const response = await tamboBackend.llmClient.complete({
+      const response = await genuiBackend.llmClient.complete({
         stream: false,
         promptTemplateName: "sampling",
         promptTemplateParams: {},
@@ -134,7 +134,7 @@ export function createMcpHandlers(
       return {
         role: response.message.role,
         content: { type: "text", text: response.message.content ?? "" },
-        model: tamboBackend.modelOptions.model,
+        model: genuiBackend.modelOptions.model,
       };
     },
     elicitation(_e) {

@@ -1,16 +1,16 @@
 "use client";
 
 import type {
-  TamboElicitationRequest,
-  TamboElicitationResponse,
-} from "@tambo-ai/react/mcp";
+  GenuiElicitationRequest,
+  GenuiElicitationResponse,
+} from "@workspace/react/mcp";
 import * as React from "react";
 import { ElicitationProvider } from "./elicitation-context";
 import { isSingleEntryMode } from "./utils/is-single-entry-mode";
 
 export interface ElicitationRootProps extends React.HTMLAttributes<HTMLDivElement> {
-  request: TamboElicitationRequest;
-  onResponse: (response: TamboElicitationResponse) => void;
+  request: GenuiElicitationRequest;
+  onResponse: (response: GenuiElicitationResponse) => void;
   children?: React.ReactNode;
 }
 

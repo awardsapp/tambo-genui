@@ -95,7 +95,7 @@ Use command-line flags to skip prompts. Common options:
   ${chalk.cyan("--prefix <path>")}      Specify component directory
   ${chalk.cyan("--template <name>")}    Specify template to use
 
-Run ${chalk.cyan("tambo --help")} or ${chalk.cyan("tambo <command> --help")} for more options.
+Run ${chalk.cyan("genui --help")} or ${chalk.cyan("genui <command> --help")} for more options.
 `;
 
     const fullMessage = helpMessage

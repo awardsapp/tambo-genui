@@ -1,5 +1,5 @@
 {
-  "extends": "@tambo-ai/typescript-config/base.json",
+  "extends": "@workspace/typescript-config/base.json",
   "compilerOptions": {
     "target": "ES2022",
     "experimentalDecorators": true,
@@ -23,8 +23,8 @@
     "types": ["node", "jest"],
     "paths": {
       "@/*": ["src/*"],
-      "@tambo-ai/react": ["../react-sdk/src"],
-      "@tambo-ai/react/mcp": ["../react-sdk/src/mcp"]
+      "@workspace/react": ["../react-sdk/src"],
+      "@workspace/react/mcp": ["../react-sdk/src/mcp"]
     },
     "outDir": "./dist"
   },

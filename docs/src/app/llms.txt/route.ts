@@ -31,15 +31,15 @@ function getPageDescription(page: DocsPage) {
 }
 
 function getPageSection(page: DocsPage) {
-  // Pages without a top-level slug (e.g. "/") are grouped under "tambo-docs".
-  return page.slugs[0] ?? "tambo-docs";
+  // Pages without a top-level slug (e.g. "/") are grouped under "genui-docs".
+  return page.slugs[0] ?? "genui-docs";
 }
 
 export async function GET() {
   const scanned: string[] = [];
-  scanned.push("# Tambo");
+  scanned.push("# Genui");
   scanned.push(
-    "> Tambo is a Generative UI Agent for React that lets AI dynamically render registered components. Tambo's UI Agent handles component registration, message threads, streaming, and tool integration.",
+    "> Genui is a Generative UI Agent for React that lets AI dynamically render registered components. Genui's UI Agent handles component registration, message threads, streaming, and tool integration.",
   );
   scanned.push(
     "Use `/llms-full.txt` for a single file containing all docs. Append `.mdx` to any docs path to fetch that page as Markdown (e.g. `/getting-started/quickstart.mdx`).",

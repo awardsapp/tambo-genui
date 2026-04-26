@@ -1,6 +1,6 @@
 import type { ReadResourceResult } from "@modelcontextprotocol/sdk/types.js";
-import { REGISTRY_SERVER_KEY, ServerType } from "@tambo-ai/client";
-import type { ConnectedMcpServer, McpServer } from "../mcp/tambo-mcp-provider";
+import { REGISTRY_SERVER_KEY, ServerType } from "@workspace/client";
+import type { ConnectedMcpServer, McpServer } from "../mcp/genui-mcp-provider";
 import type { ResourceSource } from "../model/resource-info";
 
 /**
@@ -15,8 +15,8 @@ function isConnectedMcpServer(server: McpServer): server is ConnectedMcpServer {
 
 /**
  * Resolves content for client-side resources (MCP and registry).
- * Server-side (internal Tambo) resources are skipped - the backend can resolve them.
- * @param resourceUris - Prefixed URIs (e.g., "linear:file://foo", "registry:file://bar", "tambo-abc:test://resource")
+ * Server-side (internal Genui) resources are skipped - the backend can resolve them.
+ * @param resourceUris - Prefixed URIs (e.g., "linear:file://foo", "registry:file://bar", "genui-abc:test://resource")
  * @param mcpServers - Active MCP servers including virtual registry server
  * @param resourceSource - Registry resource source (listResources/getResource)
  * @returns Map of prefixedUri -> ReadResourceResult for resolved resources.
@@ -63,11 +63,11 @@ export async function resolveResourceContents(
       }
 
       switch (server.serverType) {
-        case ServerType.TAMBO_INTERNAL:
+        case ServerType.GENUI_INTERNAL:
           // Skip internal server resources - backend can resolve these
           return;
 
-        case ServerType.TAMBO_REGISTRY:
+        case ServerType.GENUI_REGISTRY:
           // Should not reach here since we handle registry above, but keep for safety
           return;
 

@@ -11,9 +11,9 @@ import {
   uploadSkillToProvider,
   updateSkillOnProvider,
   providerSupportsSkills,
-} from "@tambo-ai-cloud/backend";
-import { decryptProviderKey } from "@tambo-ai-cloud/core";
-import { operations, schema, SkillNameConflictError } from "@tambo-ai-cloud/db";
+} from "@workspace-cloud/backend";
+import { decryptProviderKey } from "@workspace-cloud/core";
+import { operations, schema, SkillNameConflictError } from "@workspace-cloud/db";
 import { eq } from "drizzle-orm";
 import { TRPCError } from "@trpc/server";
 

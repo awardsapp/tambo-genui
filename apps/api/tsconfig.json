@@ -1,5 +1,5 @@
 {
-  "extends": "@tambo-ai/typescript-config/base",
+  "extends": "@workspace/typescript-config/base",
   "compilerOptions": {
     "jsx": "react-jsx",
     "target": "es2023",
@@ -15,10 +15,10 @@
     "resolveJsonModule": true,
     "sourceMap": true,
     "paths": {
-      "@tambo-ai-cloud/backend": ["../../packages/backend/src"],
-      "@tambo-ai-cloud/core": ["../../packages/core/src"],
-      "@tambo-ai-cloud/db": ["../../packages/db/src"],
-      "@tambo-ai-cloud/testing": ["../../packages/testing/src"]
+      "@workspace-cloud/backend": ["../../packages/backend/src"],
+      "@workspace-cloud/core": ["../../packages/core/src"],
+      "@workspace-cloud/db": ["../../packages/db/src"],
+      "@workspace-cloud/testing": ["../../packages/testing/src"]
     }
   }
 }

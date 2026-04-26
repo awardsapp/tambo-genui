@@ -2,7 +2,7 @@ import {
   ChatCompletionContentPart,
   ThreadMessage,
   ToolCallRequest,
-} from "@tambo-ai-cloud/core";
+} from "@workspace-cloud/core";
 import OpenAI from "openai";
 
 /**

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRender } from "@base-ui/react/use-render";
-import { useTambo } from "@tambo-ai/react";
+import { useGenui } from "@workspace/react";
 import * as React from "react";
 import { ThreadContentContext } from "./thread-content-context";
 
@@ -22,13 +22,13 @@ export type ThreadContentRootProps = ThreadContentRootComponentProps;
 
 /**
  * Root component for thread content.
- * Derives timeline state from Tambo hooks and provides it to children via context.
+ * Derives timeline state from Genui hooks and provides it to children via context.
  */
 export const ThreadContentRoot = React.forwardRef<
   HTMLDivElement,
   ThreadContentRootProps
 >((props, ref) => {
-  const { messages, isStreaming } = useTambo();
+  const { messages, isStreaming } = useGenui();
   const isGenerating = isStreaming;
   const isEmpty = messages.length === 0 && !isGenerating;
   const isLoading = isGenerating && messages.length === 0;

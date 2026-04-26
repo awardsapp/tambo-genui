@@ -1,9 +1,9 @@
 ---
 title: Supabase
-description: Learn how to integrate Tambo with Supabase Auth for user authentication.
+description: Learn how to integrate Genui with Supabase Auth for user authentication.
 ---
 
-Supabase Auth is a complete authentication solution that integrates seamlessly with your Supabase database. This guide shows how to integrate it with Tambo in a Next.js application.
+Supabase Auth is a complete authentication solution that integrates seamlessly with your Supabase database. This guide shows how to integrate it with Genui in a Next.js application.
 
 <Callout type="info" title="Prerequisites">
   This guide assumes you've already set up Supabase Auth in your Next.js
@@ -14,7 +14,7 @@ Supabase Auth is a complete authentication solution that integrates seamlessly w
 
 <Callout type="warn" title="JWT Verification Requirement">
   Supabase Auth doesn't support asymmetric JWT verification. You **must**
-  disable JWT verification in your Tambo project settings (Settings > User
+  disable JWT verification in your Genui project settings (Settings > User
   Authentication > Verification Strategy > None) when using Supabase Auth.
 </Callout>
 
@@ -23,7 +23,7 @@ Supabase Auth is a complete authentication solution that integrates seamlessly w
 Install the required packages:
 
 ```bash
-npm install @supabase/supabase-js @tambo-ai/react
+npm install @supabase/supabase-js @workspace/react
 ```
 
 ## Integration Options
@@ -73,7 +73,7 @@ export default async function RootLayout({
 ```tsx title="app/client-layout.tsx"
 "use client";
 
-import { TamboProvider } from "@tambo-ai/react";
+import { GenuiProvider } from "@workspace/react";
 import { ReactNode } from "react";
 
 interface ClientLayoutProps {
@@ -85,7 +85,7 @@ export default function ClientLayout({
   children,
   userToken,
 }: ClientLayoutProps) {
-  return <TamboProvider userToken={userToken}>{children}</TamboProvider>;
+  return <GenuiProvider userToken={userToken}>{children}</GenuiProvider>;
 }
 ```
 
@@ -96,7 +96,7 @@ Use this approach when you need real-time authentication state management or cli
 ```tsx title="app/client-layout.tsx"
 "use client";
 
-import { TamboProvider } from "@tambo-ai/react";
+import { GenuiProvider } from "@workspace/react";
 import { createClient } from "@/lib/supabase";
 import { ReactNode, useEffect, useState } from "react";
 
@@ -129,16 +129,16 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
     return () => subscription.unsubscribe();
   }, [supabase]);
 
-  return <TamboProvider userToken={accessToken}>{children}</TamboProvider>;
+  return <GenuiProvider userToken={accessToken}>{children}</GenuiProvider>;
 }
 ```
 
 ## Usage
 
-Once configured, you can use Tambo components throughout your application:
+Once configured, you can use Genui components throughout your application:
 
 ```tsx title="app/dashboard/page.tsx"
-import { MessageThreadFull } from "@components/tambo/message-thread-full";
+import { MessageThreadFull } from "@components/genui/message-thread-full";
 
 export default function Dashboard() {
   return (
@@ -154,7 +154,7 @@ export default function Dashboard() {
 
 ### Automatic Token Refresh
 
-Supabase automatically handles token refresh in the background. When tokens expire, Supabase will automatically refresh them, and the TamboProvider will receive the updated token through the auth state change listener.
+Supabase automatically handles token refresh in the background. When tokens expire, Supabase will automatically refresh them, and the GenuiProvider will receive the updated token through the auth state change listener.
 
 ### Session Management
 
@@ -162,7 +162,7 @@ Supabase provides robust session management across tabs and devices. The auth st
 
 <Callout type="info" title="Why Disable JWT Verification">
   Supabase uses symmetric JWT signing (HMAC-SHA256) rather than asymmetric
-  signing (RS256). Tambo's JWT verification is designed for asymmetric tokens
+  signing (RS256). Genui's JWT verification is designed for asymmetric tokens
   from OAuth providers. Since Supabase handles authentication security,
-  disabling JWT verification in Tambo is safe and recommended.
+  disabling JWT verification in Genui is safe and recommended.
 </Callout>

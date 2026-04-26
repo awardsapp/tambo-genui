@@ -24,7 +24,7 @@ export function handleInlineTheme(root: Root) {
     root.prepend(inlineThemeRule);
   }
 
-  // Define the standard color mappings for tambo components
+  // Define the standard color mappings for genui components
   const colorMappings = [
     "background",
     "foreground",

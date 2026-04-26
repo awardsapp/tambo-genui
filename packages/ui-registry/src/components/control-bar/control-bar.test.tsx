@@ -1,10 +1,10 @@
 import { describe, expect, it, jest } from "@jest/globals";
 
-await jest.unstable_mockModule("@tambo-ai/react/mcp", () => ({
-  useTamboMcpPrompt: jest.fn(() => ({ data: null })),
-  useTamboMcpPromptList: jest.fn(() => ({ data: [], isLoading: false })),
-  useTamboMcpResourceList: jest.fn(() => ({ data: [], isLoading: false })),
-  useTamboElicitationContext: jest.fn(() => ({
+await jest.unstable_mockModule("@workspace/react/mcp", () => ({
+  useGenuiMcpPrompt: jest.fn(() => ({ data: null })),
+  useGenuiMcpPromptList: jest.fn(() => ({ data: [], isLoading: false })),
+  useGenuiMcpResourceList: jest.fn(() => ({ data: [], isLoading: false })),
+  useGenuiElicitationContext: jest.fn(() => ({
     elicitation: null,
     resolveElicitation: null,
   })),

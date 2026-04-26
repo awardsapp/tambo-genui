@@ -42,7 +42,7 @@ updates:
       include:
         - "*"
       exclude:
-        - "@tambo-ai/*"
+        - "@workspace/*"
         - "ai"
         - "@ai-sdk/*"
     ignore:
@@ -104,7 +104,7 @@ updates:
           - "@t3-oss/*"
       tambo-ai:
         patterns:
-          - "@tambo-ai/*"
+          - "@workspace/*"
       small-safe-packages:
         # These aren't related, but these are all generally safe to update
         # unconditionally, so we lump them together to get one PR

@@ -6,18 +6,18 @@ import { DATABASE } from "../common/database-provider";
 import {
   createMockDBThread,
   createMockDBMessage,
-} from "@tambo-ai-cloud/testing";
-import { MessageRole, ContentPartType } from "@tambo-ai-cloud/core";
+} from "@workspace-cloud/testing";
+import { MessageRole, ContentPartType } from "@workspace-cloud/core";
 
 // Mock the operations module at the top level while preserving schema
 const mockGetThreadForProjectId = jest.fn();
 const mockGetThreadForRunStart = jest.fn();
 const mockDeleteThread = jest.fn();
 
-jest.mock("@tambo-ai-cloud/db", () => {
+jest.mock("@workspace-cloud/db", () => {
   const actual =
-    jest.requireActual<typeof import("@tambo-ai-cloud/db")>(
-      "@tambo-ai-cloud/db",
+    jest.requireActual<typeof import("@workspace-cloud/db")>(
+      "@workspace-cloud/db",
     );
   return {
     ...actual,

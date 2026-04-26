@@ -1,5 +1,5 @@
-import config from "@tambo-ai/eslint-config/base";
-import nextJsConfig from "@tambo-ai/eslint-config/next-js";
+import config from "@workspace/eslint-config/base";
+import nextJsConfig from "@workspace/eslint-config/next-js";
 import { defineConfig } from "eslint/config";
 import globals from "globals";
 

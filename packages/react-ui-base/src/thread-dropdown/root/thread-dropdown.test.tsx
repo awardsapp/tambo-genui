@@ -1,5 +1,5 @@
 import { describe, expect, it, jest } from "@jest/globals";
-import { useTambo, useTamboThreadList } from "@tambo-ai/react";
+import { useGenui, useGenuiThreadList } from "@workspace/react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ThreadDropdown } from "../index";
@@ -14,11 +14,11 @@ function makeThread(id: string) {
 }
 
 describe("ThreadDropdown", () => {
-  const mockUseTambo = jest.mocked(useTambo);
-  const mockUseTamboThreadList = jest.mocked(useTamboThreadList);
+  const mockUseGenui = jest.mocked(useGenui);
+  const mockUseGenuiThreadList = jest.mocked(useGenuiThreadList);
 
   beforeEach(() => {
-    mockUseTambo.mockReturnValue({
+    mockUseGenui.mockReturnValue({
       switchThread: jest.fn(),
       startNewThread: jest.fn().mockReturnValue("new-thread-id"),
       currentThreadId: "thread-1",
@@ -27,7 +27,7 @@ describe("ThreadDropdown", () => {
       isIdle: true,
     } as never);
 
-    mockUseTamboThreadList.mockReturnValue({
+    mockUseGenuiThreadList.mockReturnValue({
       data: {
         threads: [makeThread("thread-1"), makeThread("thread-2")],
       },
@@ -82,7 +82,7 @@ describe("ThreadDropdown", () => {
 
   it("calls switchThread when thread item is clicked", async () => {
     const mockSwitchThread = jest.fn();
-    mockUseTambo.mockReturnValue({
+    mockUseGenui.mockReturnValue({
       switchThread: mockSwitchThread,
       startNewThread: jest.fn().mockReturnValue("new-id"),
       currentThreadId: "thread-1",
@@ -109,7 +109,7 @@ describe("ThreadDropdown", () => {
     const mockStartNewThread = jest.fn().mockReturnValue("new-id");
     const mockRefetch = jest.fn(async () => undefined);
 
-    mockUseTambo.mockReturnValue({
+    mockUseGenui.mockReturnValue({
       switchThread: jest.fn(),
       startNewThread: mockStartNewThread,
       currentThreadId: "thread-1",
@@ -118,7 +118,7 @@ describe("ThreadDropdown", () => {
       isIdle: true,
     } as never);
 
-    mockUseTamboThreadList.mockReturnValue({
+    mockUseGenuiThreadList.mockReturnValue({
       data: { threads: [] },
       isLoading: false,
       error: null,

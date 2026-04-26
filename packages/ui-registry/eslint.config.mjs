@@ -1,4 +1,4 @@
-import reactInternal from "@tambo-ai/eslint-config/react-internal";
+import reactInternal from "@workspace/eslint-config/react-internal";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig([

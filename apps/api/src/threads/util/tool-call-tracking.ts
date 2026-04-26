@@ -5,8 +5,8 @@ import {
   MessageRole,
   ThreadMessage,
   ToolCallRequest,
-} from "@tambo-ai-cloud/core";
-import { HydraDb, operations } from "@tambo-ai-cloud/db";
+} from "@workspace-cloud/core";
+import { HydraDb, operations } from "@workspace-cloud/db";
 import { StreamQueueItem } from "../dto/stream-queue-item";
 import { MessageRequest, ThreadMessageDto } from "../dto/message.dto";
 import { updateMessage } from "./messages";

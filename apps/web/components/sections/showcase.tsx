@@ -15,17 +15,17 @@ const ease: Easing = [0.16, 1, 0.3, 1];
 const showcaseContent = {
   title: "Build with our UI components",
   description:
-    "Use our UI components with tambo integrated to get AI apps started in minutes.",
+    "Use our UI components with genui integrated to get AI apps started in minutes.",
   cta: {
     primary: {
       text: "Explore Components",
-      href: "https://ui.tambo.co",
+      href: "https://ui.genui.co",
       icon: EyeIcon,
     },
   },
   preview: {
     image: "/assets/landing/drawings/OCTO-TRANSPARENT-8.svg",
-    alt: "Tambo Component Showcase",
+    alt: "Genui Component Showcase",
   },
 };
 

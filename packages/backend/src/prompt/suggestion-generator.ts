@@ -1,4 +1,4 @@
-import { MessageRole, ThreadMessage } from "@tambo-ai-cloud/core";
+import { MessageRole, ThreadMessage } from "@workspace-cloud/core";
 import {
   AvailableComponent,
   AvailableComponents,

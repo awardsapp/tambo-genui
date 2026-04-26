@@ -1,5 +1,5 @@
 import { useRender } from "@base-ui/react/use-render";
-import { TamboThreadMessage } from "@tambo-ai/react";
+import { GenuiThreadMessage } from "@workspace/react";
 import * as React from "react";
 import { useOptionalMessageRootContext } from "../../message/root/message-root-context";
 import { checkHasContent } from "../../utils/check-has-content";
@@ -60,10 +60,10 @@ export interface ReasoningInfoRootProps extends Omit<
   /** Whether to auto-collapse when content arrives. Defaults to true. */
   autoCollapse?: boolean;
   /**
-   * The full Tambo thread message object.
+   * The full Genui thread message object.
    * If not provided, will be read from the parent Message.Root context.
    */
-  message?: TamboThreadMessage;
+  message?: GenuiThreadMessage;
   /** Optional flag to indicate if the reasoning info is in a loading state. */
   isLoading?: boolean;
 }

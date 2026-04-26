@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-echo "🚀 Setting up Tambo workspace..."
+echo "🚀 Setting up Genui workspace..."
 
 # Check if npm is available
 if ! command -v npm &> /dev/null; then
@@ -45,8 +45,8 @@ setup_env_file() {
   fi
 }
 
-setup_env_file "showcase" "You need to add your NEXT_PUBLIC_TAMBO_API_KEY to showcase/.env"
-setup_env_file "docs" "You need to add your NEXT_PUBLIC_TAMBO_API_KEY to docs/.env"
+setup_env_file "showcase" "You need to add your NEXT_PUBLIC_GENUI_API_KEY to showcase/.env"
+setup_env_file "docs" "You need to add your NEXT_PUBLIC_GENUI_API_KEY to docs/.env"
 setup_env_file "apps/web" "apps/web/.env created with defaults - update DATABASE_URL and API keys as needed"
 setup_env_file "apps/api" "apps/api/.env created with defaults - update OPENAI_API_KEY and other secrets"
 setup_env_file "packages/db" "packages/db/.env created with default DATABASE_URL"

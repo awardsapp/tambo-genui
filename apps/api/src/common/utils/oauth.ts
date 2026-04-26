@@ -5,8 +5,8 @@ import {
   OAuthValidationMode,
   OidcProviderConfig,
   SessionlessMcpAccessTokenPayload,
-  TAMBO_MCP_ACCESS_KEY_CLAIM,
-} from "@tambo-ai-cloud/core";
+  GENUI_MCP_ACCESS_KEY_CLAIM,
+} from "@workspace-cloud/core";
 import { createHash } from "node:crypto";
 import {
   createRemoteJWKSet,
@@ -126,7 +126,7 @@ async function secureFetch(
     const response = await fetch(url, {
       signal: controller.signal,
       headers: {
-        "User-Agent": "Tambo-OAuth-Validator/1.0",
+        "User-Agent": "Genui-OAuth-Validator/1.0",
         Accept: "application/json",
         ...extraHeaders,
       },
@@ -446,9 +446,9 @@ export async function extractAndVerifyMcpAccessToken(
   if (!verifiedPayload.iss || !verifiedPayload.sub) {
     throw new Error("MCP access token missing required claims (iss or sub)");
   }
-  const claim = verifiedPayload[TAMBO_MCP_ACCESS_KEY_CLAIM] as
-    | McpAccessTokenPayload[typeof TAMBO_MCP_ACCESS_KEY_CLAIM]
-    | SessionlessMcpAccessTokenPayload[typeof TAMBO_MCP_ACCESS_KEY_CLAIM]
+  const claim = verifiedPayload[GENUI_MCP_ACCESS_KEY_CLAIM] as
+    | McpAccessTokenPayload[typeof GENUI_MCP_ACCESS_KEY_CLAIM]
+    | SessionlessMcpAccessTokenPayload[typeof GENUI_MCP_ACCESS_KEY_CLAIM]
     | undefined;
   if (!claim) {
     throw new Error("MCP access token missing required claim");

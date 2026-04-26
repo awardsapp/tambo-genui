@@ -10,7 +10,7 @@
  * 1) Use "Copy as cURL" in chrome dev tools
  * 2) Paste into your terminal and run `| npm run debug-stream`, e.g.
  *    ```
- *    curl https://api.tambo.co/threads/advancestream .... | npm run debug-stream
+ *    curl https://api.genui.co/threads/advancestream .... | npm run debug-stream
  *    ```
  *
  */

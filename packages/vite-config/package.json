@@ -1,5 +1,5 @@
 {
-  "name": "@tambo-ai/vite-config",
+  "name": "@workspace/vite-config",
   "version": "0.0.1",
   "license": "MIT",
   "preferGlobal": false,
@@ -27,7 +27,7 @@
     "vite-tsconfig-paths": "^6.0.5"
   },
   "devDependencies": {
-    "@tambo-ai/eslint-config": "*",
+    "@workspace/eslint-config": "*",
     "tsdown": "^0.20.3",
     "typescript": "^5.9.3",
     "vite": "^7.3.2"

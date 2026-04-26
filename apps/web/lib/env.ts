@@ -41,17 +41,17 @@ export const env = createEnv({
     GOOGLE_CLIENT_SECRET: z.string().transform(allowEmptyString).optional(),
     /** Generate with `openssl rand -hex 32` */
     NEXTAUTH_SECRET: z.string().min(8),
-    /** URL of the client app so we can redirect back to it after auth, e.g. https://tambo.co or http://localhost:8260 */
+    /** URL of the client app so we can redirect back to it after auth, e.g. https://genui.co or http://localhost:8260 */
     NEXTAUTH_URL: z.string().url(),
     /** Email address to send emails from. Required if using email authentication. */
     EMAIL_FROM_DEFAULT: z.string().transform(allowEmptyString).optional(),
 
     // Whitelabeling (server-side copies; optional so can be omitted)
-    TAMBO_WHITELABEL_ORG_NAME: z
+    GENUI_WHITELABEL_ORG_NAME: z
       .string()
       .transform(allowEmptyString)
       .optional(),
-    TAMBO_WHITELABEL_ORG_LOGO: z.string().url().optional().or(z.literal("")),
+    GENUI_WHITELABEL_ORG_LOGO: z.string().url().optional().or(z.literal("")),
     // Restrict logins to a specific verified email domain when self-hosting.
     // When unset, any verified email is allowed.
     ALLOWED_LOGIN_DOMAIN: z.string().transform(allowEmptyString).optional(),
@@ -69,21 +69,21 @@ export const env = createEnv({
     NEXT_PUBLIC_POSTHOG_KEY: z.string().transform(allowEmptyString).optional(),
     NEXT_PUBLIC_POSTHOG_HOST: z.string().transform(allowEmptyString).optional(),
     // for dogfooding our own API
-    NEXT_PUBLIC_TAMBO_API_KEY: z
+    NEXT_PUBLIC_GENUI_API_KEY: z
       .string()
       .transform(allowEmptyString)
       .optional(),
-    NEXT_PUBLIC_TAMBO_DASH_KEY: z.string().min(1).optional(),
-    NEXT_PUBLIC_TAMBO_API_URL: z.string().min(1).optional(),
-    NEXT_PUBLIC_SMOKETEST_TAMBO_API_KEY: z.string().min(1).optional(),
+    NEXT_PUBLIC_GENUI_DASH_KEY: z.string().min(1).optional(),
+    NEXT_PUBLIC_GENUI_API_URL: z.string().min(1).optional(),
+    NEXT_PUBLIC_SMOKETEST_GENUI_API_KEY: z.string().min(1).optional(),
     NEXT_PUBLIC_SMOKETEST_PROJECT_ID: z.string().min(1).optional(),
 
     // Whitelabeling vars
-    NEXT_PUBLIC_TAMBO_WHITELABEL_ORG_NAME: z
+    NEXT_PUBLIC_GENUI_WHITELABEL_ORG_NAME: z
       .string()
       .transform(allowEmptyString)
       .optional(),
-    NEXT_PUBLIC_TAMBO_WHITELABEL_ORG_LOGO: z
+    NEXT_PUBLIC_GENUI_WHITELABEL_ORG_LOGO: z
       .string()
       .url()
       .optional()
@@ -122,21 +122,21 @@ export const env = createEnv({
     RESEND_API_KEY: process.env.RESEND_API_KEY,
     RESEND_AUDIENCE_ID: process.env.RESEND_AUDIENCE_ID,
     WEATHER_API_KEY: process.env.WEATHER_API_KEY,
-    NEXT_PUBLIC_TAMBO_API_KEY: process.env.NEXT_PUBLIC_TAMBO_API_KEY,
-    NEXT_PUBLIC_TAMBO_DASH_KEY: process.env.NEXT_PUBLIC_TAMBO_DASH_KEY,
-    NEXT_PUBLIC_TAMBO_API_URL: process.env.NEXT_PUBLIC_TAMBO_API_URL,
-    NEXT_PUBLIC_SMOKETEST_TAMBO_API_KEY:
-      process.env.NEXT_PUBLIC_SMOKETEST_TAMBO_API_KEY,
+    NEXT_PUBLIC_GENUI_API_KEY: process.env.NEXT_PUBLIC_GENUI_API_KEY,
+    NEXT_PUBLIC_GENUI_DASH_KEY: process.env.NEXT_PUBLIC_GENUI_DASH_KEY,
+    NEXT_PUBLIC_GENUI_API_URL: process.env.NEXT_PUBLIC_GENUI_API_URL,
+    NEXT_PUBLIC_SMOKETEST_GENUI_API_KEY:
+      process.env.NEXT_PUBLIC_SMOKETEST_GENUI_API_KEY,
     NEXT_PUBLIC_SMOKETEST_PROJECT_ID:
       process.env.NEXT_PUBLIC_SMOKETEST_PROJECT_ID,
 
     // Whitelabeling (falls back to non-public vars for convenience)
-    NEXT_PUBLIC_TAMBO_WHITELABEL_ORG_NAME:
-      process.env.NEXT_PUBLIC_TAMBO_WHITELABEL_ORG_NAME ??
-      process.env.TAMBO_WHITELABEL_ORG_NAME,
-    NEXT_PUBLIC_TAMBO_WHITELABEL_ORG_LOGO:
-      process.env.NEXT_PUBLIC_TAMBO_WHITELABEL_ORG_LOGO ??
-      process.env.TAMBO_WHITELABEL_ORG_LOGO,
+    NEXT_PUBLIC_GENUI_WHITELABEL_ORG_NAME:
+      process.env.NEXT_PUBLIC_GENUI_WHITELABEL_ORG_NAME ??
+      process.env.GENUI_WHITELABEL_ORG_NAME,
+    NEXT_PUBLIC_GENUI_WHITELABEL_ORG_LOGO:
+      process.env.NEXT_PUBLIC_GENUI_WHITELABEL_ORG_LOGO ??
+      process.env.GENUI_WHITELABEL_ORG_LOGO,
     FALLBACK_OPENAI_API_KEY: process.env.FALLBACK_OPENAI_API_KEY,
     ALLOW_LOCAL_MCP_SERVERS: process.env.ALLOW_LOCAL_MCP_SERVERS,
     GITHUB_TOKEN: process.env.GITHUB_TOKEN,
@@ -150,8 +150,8 @@ export const env = createEnv({
     EMAIL_FROM_DEFAULT: process.env.EMAIL_FROM_DEFAULT,
 
     // Whitelabeling server values (mirrors client fallbacks)
-    TAMBO_WHITELABEL_ORG_NAME: process.env.TAMBO_WHITELABEL_ORG_NAME,
-    TAMBO_WHITELABEL_ORG_LOGO: process.env.TAMBO_WHITELABEL_ORG_LOGO,
+    GENUI_WHITELABEL_ORG_NAME: process.env.GENUI_WHITELABEL_ORG_NAME,
+    GENUI_WHITELABEL_ORG_LOGO: process.env.GENUI_WHITELABEL_ORG_LOGO,
     ALLOWED_LOGIN_DOMAIN: process.env.ALLOWED_LOGIN_DOMAIN,
     AUTH_REDIRECT_FROM_HOST: process.env.AUTH_REDIRECT_FROM_HOST,
 

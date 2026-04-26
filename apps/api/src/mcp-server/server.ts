@@ -1,8 +1,8 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
-import type { MCPHandlers } from "@tambo-ai-cloud/core";
-import { TAMBO_MCP_ACCESS_KEY_CLAIM } from "@tambo-ai-cloud/core";
-import { getDb, HydraDb } from "@tambo-ai-cloud/db";
+import type { MCPHandlers } from "@workspace-cloud/core";
+import { GENUI_MCP_ACCESS_KEY_CLAIM } from "@workspace-cloud/core";
+import { getDb, HydraDb } from "@workspace-cloud/db";
 import cors from "cors";
 import { Express, NextFunction, Request, Response } from "express";
 import { getThreadMCPClients } from "src/common/systemTools";
@@ -47,7 +47,7 @@ export async function createMcpServer(
 
   const server = new McpServer(
     {
-      name: "tambo-service",
+      name: "genui-service",
       version: "1.0.0",
     },
     {
@@ -107,7 +107,7 @@ export async function createSessionlessMcpServer(
 
   const server = new McpServer(
     {
-      name: "tambo-service",
+      name: "genui-service",
       version: "1.0.0",
     },
     {
@@ -176,7 +176,7 @@ async function authenticateMcpRequest(
       bearerToken,
       process.env.API_KEY_SECRET!,
     );
-    const claim = payload[TAMBO_MCP_ACCESS_KEY_CLAIM] as
+    const claim = payload[GENUI_MCP_ACCESS_KEY_CLAIM] as
       | { projectId?: string; threadId?: string; contextKey?: string }
       | undefined;
 

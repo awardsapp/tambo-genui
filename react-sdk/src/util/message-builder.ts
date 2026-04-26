@@ -1,12 +1,12 @@
 import type { ReadResourceResult } from "@modelcontextprotocol/sdk/types.js";
-import type TamboAI from "@tambo-ai/typescript-sdk";
+import type GenuiAI from "@workspace/typescript-sdk";
 import { StagedImage } from "../hooks/use-message-images";
 
 /**
  * Regular expression to match MCP resource references in the format: \@serverKey:uri
  *
  * Examples:
- * - \@tambo-1hfs429:tambo:test://static/resource/1
+ * - \@genui-1hfs429:genui:test://static/resource/1
  * - \@linear:file://path/to/file
  *
  * Pattern breakdown:
@@ -22,8 +22,8 @@ const RESOURCE_REFERENCE_PATTERN = /@([a-zA-Z0-9-]+):(\S+)/g;
  * Resource references have the format: \@serverKey:uri
  *
  * The serverKey prefix is stripped before sending to the backend because:
- * - It's a client-side routing key (e.g., "tambo-1hfs429") used by React SDK to route to the correct MCP connection
- * - The backend only needs the actual resource URI (e.g., "tambo:test://static/resource/1")
+ * - It's a client-side routing key (e.g., "genui-1hfs429") used by React SDK to route to the correct MCP connection
+ * - The backend only needs the actual resource URI (e.g., "genui:test://static/resource/1")
  * - The backend routes resources based on the thread's MCP server configuration, not client-side keys
  * @param text - Text potentially containing resource references
  * @param resourceNames - Map of full resource IDs (serverKey:uri) to their display names
@@ -34,8 +34,8 @@ function parseResourceReferences(
   text: string,
   resourceNames: Record<string, string>,
   resourceContent?: Map<string, ReadResourceResult>,
-): TamboAI.Beta.Threads.ChatCompletionContentPart[] {
-  const parts: TamboAI.Beta.Threads.ChatCompletionContentPart[] = [];
+): GenuiAI.Beta.Threads.ChatCompletionContentPart[] {
+  const parts: GenuiAI.Beta.Threads.ChatCompletionContentPart[] = [];
 
   // Use matchAll to avoid global regex state issues
   const matches = Array.from(text.matchAll(RESOURCE_REFERENCE_PATTERN));
@@ -57,7 +57,7 @@ function parseResourceReferences(
       }
     }
 
-    const resource: TamboAI.Resource = { uri };
+    const resource: GenuiAI.Resource = { uri };
     const name = resourceNames[fullId];
     if (name) {
       resource.name = name;
@@ -117,8 +117,8 @@ export function buildMessageContent(
   images: StagedImage[],
   resourceNames: Record<string, string> = {},
   resourceContent?: Map<string, ReadResourceResult>,
-): TamboAI.Beta.Threads.ChatCompletionContentPart[] {
-  const content: TamboAI.Beta.Threads.ChatCompletionContentPart[] = [];
+): GenuiAI.Beta.Threads.ChatCompletionContentPart[] {
+  const content: GenuiAI.Beta.Threads.ChatCompletionContentPart[] = [];
 
   const hasNonWhitespaceText = text.trim().length > 0;
 

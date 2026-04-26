@@ -1,6 +1,6 @@
 # Blog AGENTS.md
 
-This file provides detailed guidance for AI agents working with the Tambo blog system.
+This file provides detailed guidance for AI agents working with the Genui blog system.
 
 ## Technology Stack
 
@@ -33,8 +33,8 @@ apps/web/app/blog/
 ├── layout.tsx                    # Blog layout with header/footer
 ├── page.tsx                      # Blog list page (server component)
 ├── posts/
-│   ├── tambo-hack/page.mdx
-│   ├── tambo-with-tambo/page.mdx
+│   ├── genui-hack/page.mdx
+│   ├── genui-with-genui/page.mdx
 │   ├── mcp-sampling-support/page.mdx
 │   └── ai-powered-spreadsheet/page.mdx  # UPDATED: Uses new frontmatter pattern
 ├── CLAUDE.md                     # Pointer file
@@ -144,7 +144,7 @@ Despite `rehype-pretty-code` being configured, code blocks may lack highlighting
 
 ### 3. Performance Issues
 
-- `/public/tambo-bg.png` is 563KB (used on every card)
+- `/public/genui-bg.png` is 563KB (used on every card)
 - Background images use CSS instead of Next.js Image component
 - Entire BlogPage is "use client" just for filters
 
@@ -197,8 +197,8 @@ export function Example() {
 **Migration Status:**
 
 - ✅ `ai-powered-spreadsheet/page.mdx` - Uses new pattern
-- ⏳ `tambo-hack/page.mdx` - Can be migrated
-- ⏳ `tambo-with-tambo/page.mdx` - Can be migrated
+- ⏳ `genui-hack/page.mdx` - Can be migrated
+- ⏳ `genui-with-genui/page.mdx` - Can be migrated
 - ⏳ `mcp-sampling-support/page.mdx` - Can be migrated
 
 ## Known Dependencies

@@ -1,12 +1,12 @@
 import { ExecutionContext, UnauthorizedException } from "@nestjs/common";
-import { getDb, operations } from "@tambo-ai-cloud/db";
+import { getDb, operations } from "@workspace-cloud/db";
 import { SignJWT } from "jose";
 import { CorrelationLoggerService } from "../../common/services/logger.service";
 import { ProjectId } from "./apikey.guard";
 import { BearerTokenGuard, ContextKey } from "./bearer-token.guard";
 
-jest.mock("@tambo-ai-cloud/db", () => {
-  const actual = jest.requireActual("@tambo-ai-cloud/db");
+jest.mock("@workspace-cloud/db", () => {
+  const actual = jest.requireActual("@workspace-cloud/db");
   return {
     ...actual,
     operations: {
@@ -73,7 +73,7 @@ describe("BearerTokenGuard Context Key Generation", () => {
       const payload = {
         sub: "google-user-123",
         iss: projectId,
-        aud: "tambo",
+        aud: "genui",
         iat: Math.floor(Date.now() / 1000),
         exp: Math.floor(Date.now() / 1000) + 3600,
         original_iss: "https://accounts.google.com",
@@ -97,7 +97,7 @@ describe("BearerTokenGuard Context Key Generation", () => {
       const payload = {
         sub: "workspace-user-456",
         iss: projectId,
-        aud: "tambo",
+        aud: "genui",
         iat: Math.floor(Date.now() / 1000),
         exp: Math.floor(Date.now() / 1000) + 3600,
         original_iss: "https://accounts.google.com",
@@ -121,7 +121,7 @@ describe("BearerTokenGuard Context Key Generation", () => {
       const payload = {
         sub: "github-user-789",
         iss: projectId,
-        aud: "tambo",
+        aud: "genui",
         iat: Math.floor(Date.now() / 1000),
         exp: Math.floor(Date.now() / 1000) + 3600,
         original_iss: "https://github.com",
@@ -144,7 +144,7 @@ describe("BearerTokenGuard Context Key Generation", () => {
       const payload = {
         sub: "microsoft-user-101",
         iss: projectId,
-        aud: "tambo",
+        aud: "genui",
         iat: Math.floor(Date.now() / 1000),
         exp: Math.floor(Date.now() / 1000) + 3600,
         original_iss: "https://login.microsoftonline.com",
@@ -167,7 +167,7 @@ describe("BearerTokenGuard Context Key Generation", () => {
       const payload = {
         sub: "legacy-user-123",
         iss: projectId,
-        aud: "tambo",
+        aud: "genui",
         iat: Math.floor(Date.now() / 1000),
         exp: Math.floor(Date.now() / 1000) + 3600,
         // No original_iss claim
@@ -188,7 +188,7 @@ describe("BearerTokenGuard Context Key Generation", () => {
       const payload = {
         sub: "workspace-user-456",
         iss: projectId,
-        aud: "tambo",
+        aud: "genui",
         iat: Math.floor(Date.now() / 1000),
         exp: Math.floor(Date.now() / 1000) + 3600,
         original_iss: "https://accounts.google.com",
@@ -212,7 +212,7 @@ describe("BearerTokenGuard Context Key Generation", () => {
       const payload = {
         sub: "user-123",
         iss: projectId,
-        aud: "tambo",
+        aud: "genui",
         iat: Math.floor(Date.now() / 1000),
         exp: Math.floor(Date.now() / 1000) + 3600,
         original_iss: "not-a-valid-url",
@@ -275,7 +275,7 @@ describe("BearerTokenGuard Context Key Generation", () => {
     const payload = {
       sub: "user-1",
       iss: projectId,
-      aud: "tambo",
+      aud: "genui",
       iat: Math.floor(Date.now() / 1000),
       exp: Math.floor(Date.now() / 1000) + 3600,
     };
@@ -297,7 +297,7 @@ describe("BearerTokenGuard Context Key Generation", () => {
     const payload = {
       sub: "user-2",
       iss: projectA, // claims to be A
-      aud: "tambo",
+      aud: "genui",
       iat: Math.floor(Date.now() / 1000),
       exp: Math.floor(Date.now() / 1000) + 3600,
     };
@@ -315,7 +315,7 @@ describe("BearerTokenGuard Context Key Generation", () => {
     const payload = {
       sub: "user-3",
       iss: projectId,
-      aud: "tambo",
+      aud: "genui",
       iat: Math.floor(Date.now() / 1000),
       exp: Math.floor(Date.now() / 1000) + 3600,
     };

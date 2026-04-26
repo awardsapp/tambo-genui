@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { EditWithTamboButton } from "@/components/ui/tambo/edit-with-tambo-button";
+import { EditWithGenuiButton } from "@/components/ui/genui/edit-with-genui-button";
 import { api } from "@/trpc/react";
-import { AiProviderType } from "@tambo-ai-cloud/core";
-import type { Suggestion } from "@tambo-ai/react";
-import { withTamboInteractable } from "@tambo-ai/react";
+import { AiProviderType } from "@workspace-cloud/core";
+import type { Suggestion } from "@workspace/react";
+import { withGenuiInteractable } from "@workspace/react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { z } from "zod/v3";
@@ -97,7 +97,7 @@ export function AvailableMcpServers({
 
   const isAgentMode = providerType === AiProviderType.AGENT;
 
-  // When Tambo sends isAddingNew prop, enter add mode
+  // When Genui sends isAddingNew prop, enter add mode
   useEffect(() => {
     if (isAddingNewProp !== undefined) {
       setIsAddingNew(isAddingNewProp);
@@ -110,7 +110,7 @@ export function AvailableMcpServers({
     }
   }, [isAddingNewProp, urlProp, customHeadersProp]);
 
-  // When Tambo sends serverIdToDelete prop, set it for deletion
+  // When Genui sends serverIdToDelete prop, set it for deletion
   useEffect(() => {
     if (serverIdToDeleteProp) {
       setServerIdToDelete(serverIdToDeleteProp);
@@ -195,7 +195,7 @@ export function AvailableMcpServers({
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg font-semibold">
             MCP Servers
-            <EditWithTamboButton description="Manage MCP servers for this project. Add, edit, and delete MCP servers." />
+            <EditWithGenuiButton description="Manage MCP servers for this project. Add, edit, and delete MCP servers." />
           </CardTitle>
           {!isAddingNew && (
             <Button
@@ -247,7 +247,7 @@ export function AvailableMcpServers({
   );
 }
 
-export const InteractableAvailableMcpServers = withTamboInteractable(
+export const InteractableAvailableMcpServers = withGenuiInteractable(
   AvailableMcpServers,
   {
     componentName: COMPONENT_NAME,

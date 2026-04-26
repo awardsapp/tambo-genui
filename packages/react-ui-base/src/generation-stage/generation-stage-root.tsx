@@ -1,7 +1,7 @@
 "use client";
 
 import { useRender } from "@base-ui/react/use-render";
-import { useTambo } from "@tambo-ai/react";
+import { useTambo } from "@workspace/react";
 import * as React from "react";
 import { GenerationStageContext } from "./generation-stage-context";
 

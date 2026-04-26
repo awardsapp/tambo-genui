@@ -1,4 +1,4 @@
-import type TamboAI from "@tambo-ai/typescript-sdk";
+import type GenuiAI from "@workspace/typescript-sdk";
 import { StagedImage } from "../hooks/use-message-images";
 import { buildMessageContent } from "./message-builder";
 
@@ -165,7 +165,7 @@ describe("buildMessageContent", () => {
     const result = buildMessageContent("Test", [image], {});
 
     // Verify the structure matches ChatCompletionContentPart interface
-    result.forEach((part: TamboAI.Beta.Threads.ChatCompletionContentPart) => {
+    result.forEach((part: GenuiAI.Beta.Threads.ChatCompletionContentPart) => {
       expect(part).toHaveProperty("type");
       expect(["text", "image_url", "input_audio"]).toContain(part.type);
 
@@ -221,7 +221,7 @@ describe("buildMessageContent", () => {
   describe("resource parsing", () => {
     it("should parse a single resource reference", () => {
       const result = buildMessageContent(
-        "Check @tambo-1hfs429:tambo:test://static/resource/1",
+        "Check @genui-1hfs429:genui:test://static/resource/1",
         [],
         {},
       );
@@ -234,7 +234,7 @@ describe("buildMessageContent", () => {
         {
           type: "resource",
           resource: {
-            uri: "tambo:test://static/resource/1",
+            uri: "genui:test://static/resource/1",
           },
         },
       ]);
@@ -242,7 +242,7 @@ describe("buildMessageContent", () => {
 
     it("should parse resource reference at the start of text", () => {
       const result = buildMessageContent(
-        "@tambo-1hfs429:tambo:test://static/resource/1 check this",
+        "@genui-1hfs429:genui:test://static/resource/1 check this",
         [],
         {},
       );
@@ -251,7 +251,7 @@ describe("buildMessageContent", () => {
         {
           type: "resource",
           resource: {
-            uri: "tambo:test://static/resource/1",
+            uri: "genui:test://static/resource/1",
           },
         },
         {
@@ -263,7 +263,7 @@ describe("buildMessageContent", () => {
 
     it("should parse resource reference at the end of text", () => {
       const result = buildMessageContent(
-        "Check this @tambo-1hfs429:tambo:test://static/resource/1",
+        "Check this @genui-1hfs429:genui:test://static/resource/1",
         [],
         {},
       );
@@ -276,7 +276,7 @@ describe("buildMessageContent", () => {
         {
           type: "resource",
           resource: {
-            uri: "tambo:test://static/resource/1",
+            uri: "genui:test://static/resource/1",
           },
         },
       ]);
@@ -284,11 +284,11 @@ describe("buildMessageContent", () => {
 
     it("should parse resource reference with name from resourceNames map", () => {
       const resourceNames = {
-        "tambo-1hfs429:tambo:test://static/resource/1": "Documentation.pdf",
+        "genui-1hfs429:genui:test://static/resource/1": "Documentation.pdf",
       };
 
       const result = buildMessageContent(
-        "Check @tambo-1hfs429:tambo:test://static/resource/1",
+        "Check @genui-1hfs429:genui:test://static/resource/1",
         [],
         resourceNames,
       );
@@ -301,7 +301,7 @@ describe("buildMessageContent", () => {
         {
           type: "resource",
           resource: {
-            uri: "tambo:test://static/resource/1",
+            uri: "genui:test://static/resource/1",
             name: "Documentation.pdf",
           },
         },
@@ -314,7 +314,7 @@ describe("buildMessageContent", () => {
       };
 
       const result = buildMessageContent(
-        "Check @tambo-1hfs429:tambo:test://static/resource/1",
+        "Check @genui-1hfs429:genui:test://static/resource/1",
         [],
         resourceNames,
       );
@@ -327,7 +327,7 @@ describe("buildMessageContent", () => {
         {
           type: "resource",
           resource: {
-            uri: "tambo:test://static/resource/1",
+            uri: "genui:test://static/resource/1",
           },
         },
       ]);
@@ -335,7 +335,7 @@ describe("buildMessageContent", () => {
 
     it("should parse multiple resource references", () => {
       const result = buildMessageContent(
-        "Check @tambo-1hfs429:tambo:test://static/resource/1 and @tambo-1hfs429:tambo:test://static/resource/2",
+        "Check @genui-1hfs429:genui:test://static/resource/1 and @genui-1hfs429:genui:test://static/resource/2",
         [],
         {},
       );
@@ -348,7 +348,7 @@ describe("buildMessageContent", () => {
         {
           type: "resource",
           resource: {
-            uri: "tambo:test://static/resource/1",
+            uri: "genui:test://static/resource/1",
           },
         },
         {
@@ -358,7 +358,7 @@ describe("buildMessageContent", () => {
         {
           type: "resource",
           resource: {
-            uri: "tambo:test://static/resource/2",
+            uri: "genui:test://static/resource/2",
           },
         },
       ]);
@@ -366,7 +366,7 @@ describe("buildMessageContent", () => {
 
     it("should preserve whitespace between consecutive resource references", () => {
       const result = buildMessageContent(
-        "@tambo-1hfs429:tambo:test://static/resource/1 @tambo-1hfs429:tambo:test://static/resource/2",
+        "@genui-1hfs429:genui:test://static/resource/1 @genui-1hfs429:genui:test://static/resource/2",
         [],
         {},
       );
@@ -375,7 +375,7 @@ describe("buildMessageContent", () => {
         {
           type: "resource",
           resource: {
-            uri: "tambo:test://static/resource/1",
+            uri: "genui:test://static/resource/1",
           },
         },
         {
@@ -385,7 +385,7 @@ describe("buildMessageContent", () => {
         {
           type: "resource",
           resource: {
-            uri: "tambo:test://static/resource/2",
+            uri: "genui:test://static/resource/2",
           },
         },
       ]);
@@ -393,7 +393,7 @@ describe("buildMessageContent", () => {
 
     it("should parse resources with text before, between, and after", () => {
       const result = buildMessageContent(
-        "Before @tambo-1hfs429:tambo:test://static/resource/1 middle @linear:file://path/to/file.txt after",
+        "Before @genui-1hfs429:genui:test://static/resource/1 middle @linear:file://path/to/file.txt after",
         [],
         {},
       );
@@ -406,7 +406,7 @@ describe("buildMessageContent", () => {
         {
           type: "resource",
           resource: {
-            uri: "tambo:test://static/resource/1",
+            uri: "genui:test://static/resource/1",
           },
         },
         {
@@ -428,7 +428,7 @@ describe("buildMessageContent", () => {
 
     it("should parse resources from different server keys", () => {
       const result = buildMessageContent(
-        "@tambo-1hfs429:tambo:test://static/resource/1 and @linear:linear://issue/123",
+        "@genui-1hfs429:genui:test://static/resource/1 and @linear:linear://issue/123",
         [],
         {},
       );
@@ -437,7 +437,7 @@ describe("buildMessageContent", () => {
         {
           type: "resource",
           resource: {
-            uri: "tambo:test://static/resource/1",
+            uri: "genui:test://static/resource/1",
           },
         },
         {
@@ -509,7 +509,7 @@ describe("buildMessageContent", () => {
 
     it("should parse resources with numbers in server key", () => {
       const result = buildMessageContent(
-        "@server123:tambo:test://static/resource/1",
+        "@server123:genui:test://static/resource/1",
         [],
         {},
       );
@@ -518,7 +518,7 @@ describe("buildMessageContent", () => {
         {
           type: "resource",
           resource: {
-            uri: "tambo:test://static/resource/1",
+            uri: "genui:test://static/resource/1",
           },
         },
       ]);
@@ -526,7 +526,7 @@ describe("buildMessageContent", () => {
 
     it("should preserve whitespace in text segments around resource references", () => {
       const result = buildMessageContent(
-        "  Before  @tambo-1hfs429:tambo:test://static/resource/1  After  ",
+        "  Before  @genui-1hfs429:genui:test://static/resource/1  After  ",
         [],
         {},
       );
@@ -538,7 +538,7 @@ describe("buildMessageContent", () => {
         {
           type: "resource",
           resource: {
-            uri: "tambo:test://static/resource/1",
+            uri: "genui:test://static/resource/1",
           },
         },
         {
@@ -550,7 +550,7 @@ describe("buildMessageContent", () => {
 
     it("should handle resource with only whitespace text segments", () => {
       const result = buildMessageContent(
-        "   @tambo-1hfs429:tambo:test://static/resource/1   ",
+        "   @genui-1hfs429:genui:test://static/resource/1   ",
         [],
         {},
       );
@@ -563,7 +563,7 @@ describe("buildMessageContent", () => {
         {
           type: "resource",
           resource: {
-            uri: "tambo:test://static/resource/1",
+            uri: "genui:test://static/resource/1",
           },
         },
         {
@@ -575,7 +575,7 @@ describe("buildMessageContent", () => {
 
     it("should preserve newlines and spaces around resource references", () => {
       const result = buildMessageContent(
-        "\n  @tambo-1hfs429:tambo:test://static/resource/1  text",
+        "\n  @genui-1hfs429:genui:test://static/resource/1  text",
         [],
         {},
       );
@@ -588,7 +588,7 @@ describe("buildMessageContent", () => {
         {
           type: "resource",
           resource: {
-            uri: "tambo:test://static/resource/1",
+            uri: "genui:test://static/resource/1",
           },
         },
         {
@@ -600,7 +600,7 @@ describe("buildMessageContent", () => {
 
     it("should parse resource-only message without text", () => {
       const result = buildMessageContent(
-        "@tambo-1hfs429:tambo:test://static/resource/1",
+        "@genui-1hfs429:genui:test://static/resource/1",
         [],
         {},
       );
@@ -609,7 +609,7 @@ describe("buildMessageContent", () => {
         {
           type: "resource",
           resource: {
-            uri: "tambo:test://static/resource/1",
+            uri: "genui:test://static/resource/1",
           },
         },
       ]);
@@ -617,12 +617,12 @@ describe("buildMessageContent", () => {
 
     it("should parse multiple resources with names", () => {
       const resourceNames = {
-        "tambo-1hfs429:tambo:test://static/resource/1": "First Resource",
-        "tambo-1hfs429:tambo:test://static/resource/2": "Second Resource",
+        "genui-1hfs429:genui:test://static/resource/1": "First Resource",
+        "genui-1hfs429:genui:test://static/resource/2": "Second Resource",
       };
 
       const result = buildMessageContent(
-        "Check @tambo-1hfs429:tambo:test://static/resource/1 and @tambo-1hfs429:tambo:test://static/resource/2",
+        "Check @genui-1hfs429:genui:test://static/resource/1 and @genui-1hfs429:genui:test://static/resource/2",
         [],
         resourceNames,
       );
@@ -635,7 +635,7 @@ describe("buildMessageContent", () => {
         {
           type: "resource",
           resource: {
-            uri: "tambo:test://static/resource/1",
+            uri: "genui:test://static/resource/1",
             name: "First Resource",
           },
         },
@@ -646,7 +646,7 @@ describe("buildMessageContent", () => {
         {
           type: "resource",
           resource: {
-            uri: "tambo:test://static/resource/2",
+            uri: "genui:test://static/resource/2",
             name: "Second Resource",
           },
         },
@@ -662,7 +662,7 @@ describe("buildMessageContent", () => {
       ];
 
       const result = buildMessageContent(
-        "Check @tambo-1hfs429:tambo:test://static/resource/1",
+        "Check @genui-1hfs429:genui:test://static/resource/1",
         images,
         {},
       );
@@ -675,7 +675,7 @@ describe("buildMessageContent", () => {
         {
           type: "resource",
           resource: {
-            uri: "tambo:test://static/resource/1",
+            uri: "genui:test://static/resource/1",
           },
         },
         {
@@ -700,7 +700,7 @@ describe("buildMessageContent", () => {
       ];
 
       const result = buildMessageContent(
-        "Text @tambo-1hfs429:tambo:test://static/resource/1 more text",
+        "Text @genui-1hfs429:genui:test://static/resource/1 more text",
         images,
         {},
       );
@@ -713,7 +713,7 @@ describe("buildMessageContent", () => {
         {
           type: "resource",
           resource: {
-            uri: "tambo:test://static/resource/1",
+            uri: "genui:test://static/resource/1",
           },
         },
         {
@@ -812,7 +812,7 @@ describe("buildMessageContent", () => {
 
     it("should preserve multiple whitespace characters between consecutive resources", () => {
       const result = buildMessageContent(
-        "@tambo-1hfs429:tambo:test://static/resource/1   @tambo-1hfs429:tambo:test://static/resource/2",
+        "@genui-1hfs429:genui:test://static/resource/1   @genui-1hfs429:genui:test://static/resource/2",
         [],
         {},
       );
@@ -821,7 +821,7 @@ describe("buildMessageContent", () => {
         {
           type: "resource",
           resource: {
-            uri: "tambo:test://static/resource/1",
+            uri: "genui:test://static/resource/1",
           },
         },
         {
@@ -831,7 +831,7 @@ describe("buildMessageContent", () => {
         {
           type: "resource",
           resource: {
-            uri: "tambo:test://static/resource/2",
+            uri: "genui:test://static/resource/2",
           },
         },
       ]);
@@ -839,7 +839,7 @@ describe("buildMessageContent", () => {
 
     it("should parse resource with only URI and no surrounding text", () => {
       const result = buildMessageContent(
-        "@tambo-1hfs429:tambo:test://static/resource/1",
+        "@genui-1hfs429:genui:test://static/resource/1",
         [],
         {},
       );
@@ -848,7 +848,7 @@ describe("buildMessageContent", () => {
         {
           type: "resource",
           resource: {
-            uri: "tambo:test://static/resource/1",
+            uri: "genui:test://static/resource/1",
           },
         },
       ]);
@@ -857,7 +857,7 @@ describe("buildMessageContent", () => {
     it("should throw error when only resources with empty text segments", () => {
       // This should work - resources alone should be valid
       const result = buildMessageContent(
-        "@tambo-1hfs429:tambo:test://static/resource/1",
+        "@genui-1hfs429:genui:test://static/resource/1",
         [],
         {},
       );
@@ -1002,7 +1002,7 @@ describe("buildMessageContent", () => {
       ]);
 
       const result = buildMessageContent(
-        "@registry:file:///doc1.txt and @tambo-abc:tambo://doc2",
+        "@registry:file:///doc1.txt and @genui-abc:genui://doc2",
         [],
         {},
         resourceContent,
@@ -1023,7 +1023,7 @@ describe("buildMessageContent", () => {
         {
           type: "resource",
           resource: {
-            uri: "tambo://doc2",
+            uri: "genui://doc2",
             // No text/blob - internal server resource
           },
         },

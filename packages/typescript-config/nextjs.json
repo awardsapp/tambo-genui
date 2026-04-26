@@ -6,7 +6,7 @@
     "types": [],
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "customConditions": ["@tambo-ai/source"],
+    "customConditions": ["@workspace/source"],
     "allowJs": true,
     "jsx": "preserve",
     "noEmit": true

@@ -2,7 +2,7 @@
  * Schema utilities for working with Standard Schema and JSON Schema.
  *
  * This module provides a unified interface for handling different schema types
- * used in Tambo components and tools. It uses Standard Schema (https://standardschema.dev/)
+ * used in Genui components and tools. It uses Standard Schema (https://standardschema.dev/)
  * as the primary interface, which is implemented by Zod 3.24+ and other validation libraries.
  *
  * JSON Schema conversion is handled by `@standard-community/standard-json`.
@@ -16,7 +16,7 @@ import { toJSONSchema as zod4ToJSONSchema } from "zod/v4/core";
 import {
   ParameterSpec,
   SupportedSchema,
-  TamboTool,
+  GenuiTool,
 } from "../model/component-metadata";
 import { looksLikeJSONSchema } from "./json-schema";
 import { isStandardSchema } from "./standard-schema";
@@ -132,7 +132,7 @@ function createParametersFromSchema(schema: JSONSchema7): ParameterSpec[] {
  * @param tool - The tool containing the schema
  * @returns An array of parameter specifications
  */
-export function getParametersFromToolSchema(tool: TamboTool): ParameterSpec[] {
+export function getParametersFromToolSchema(tool: GenuiTool): ParameterSpec[] {
   const schema = tool.inputSchema;
 
   // Convert to JSON Schema if needed

@@ -1,11 +1,11 @@
 "use client";
 
 import { DemoPreview } from "@/components/demos/demo-preview";
-import { McpPrompts } from "@tambo-ai/react-ui-base/mcp-prompts";
+import { McpPrompts } from "@workspace/react-ui-base/mcp-prompts";
 import { Sparkles } from "lucide-react";
 
 export const mcpPromptsDemoCode = `
-import { McpPrompts } from "@tambo-ai/react-ui-base/mcp-prompts";
+import { McpPrompts } from "@workspace/react-ui-base/mcp-prompts";
 import { Sparkles } from "lucide-react";
 
 export function DemoMcpPrompts() {

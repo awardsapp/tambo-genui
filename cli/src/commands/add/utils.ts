@@ -17,18 +17,18 @@ const __dirname = path.dirname(__filename);
  * This is the directory that contains the `components/` folder (and related
  * registry directories like `lib/` and `styles/`).
  *
- * For local development, `TAMBO_REGISTRY_PATH` can be set to override registry
+ * For local development, `GENUI_REGISTRY_PATH` can be set to override registry
  * resolution.
  * @returns The path to the registry root
  */
 export function getRegistryBasePath(): string {
-  const envPath = process.env.TAMBO_REGISTRY_PATH;
+  const envPath = process.env.GENUI_REGISTRY_PATH;
   if (envPath) {
     const resolvedEnvPath = path.resolve(envPath);
     const componentsDir = path.join(resolvedEnvPath, "components");
     if (!fs.existsSync(componentsDir)) {
       throw new Error(
-        `Invalid TAMBO_REGISTRY_PATH: expected a registry root containing a 'components' directory at "${componentsDir}"`,
+        `Invalid GENUI_REGISTRY_PATH: expected a registry root containing a 'components' directory at "${componentsDir}"`,
       );
     }
 
@@ -61,7 +61,7 @@ export function getRegistryBasePath(): string {
   }
 
   throw new Error(
-    "Registry not found. The CLI looked for the registry in dist/registry and packages/ui-registry/src. Set TAMBO_REGISTRY_PATH to the registry root, or rebuild the CLI to generate dist/registry.",
+    "Registry not found. The CLI looked for the registry in dist/registry and packages/ui-registry/src. Set GENUI_REGISTRY_PATH to the registry root, or rebuild the CLI to generate dist/registry.",
   );
 }
 
@@ -144,10 +144,10 @@ export function getComponentList(): ComponentInfo[] {
 }
 
 /**
- * Gets detailed information about all known Tambo components
+ * Gets detailed information about all known Genui components
  * @returns An object with main components and support components
  */
-export function getTamboComponentInfo(): {
+export function getGenuiComponentInfo(): {
   mainComponents: Set<string>;
   supportComponents: Set<string>;
   allComponents: Set<string>;
@@ -217,11 +217,11 @@ export function getTamboComponentInfo(): {
 }
 
 /**
- * Gets a set of all known tambo registry component names
+ * Gets a set of all known genui registry component names
  * @returns A Set of component names that exist in the registry
  */
 export function getKnownComponentNames(): Set<string> {
-  const { allComponents } = getTamboComponentInfo();
+  const { allComponents } = getGenuiComponentInfo();
   return allComponents;
 }
 
@@ -294,7 +294,7 @@ export function getComponentNpmDependencies(componentNames: string[]): {
  * Gets a list of all installed component names in the project
  * @param installPath The installation path for components
  * @param isExplicitPrefix Whether the installPath was explicitly provided via --prefix
- * @returns An array of installed component names (only tambo registry components)
+ * @returns An array of installed component names (only genui registry components)
  */
 export async function getInstalledComponents(
   installPath: string,

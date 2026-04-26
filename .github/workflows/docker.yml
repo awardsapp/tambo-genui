@@ -278,7 +278,7 @@ jobs:
             org.opencontainers.image.description=${{ matrix.images.description }}
             org.opencontainers.image.vendor=Tambo AI
             org.opencontainers.image.licenses=MIT
-            org.opencontainers.image.source=https://github.com/tambo-ai/tambo/blob/${{ github.sha }}/${{ matrix.images.path }}
+            org.opencontainers.image.source=https://github.com/awardsapp/tambo-genui/blob/${{ github.sha }}/${{ matrix.images.path }}
             org.opencontainers.image.documentation=https://docs.tambo.co
 
       - name: Build and push to GHCR

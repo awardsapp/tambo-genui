@@ -2,7 +2,7 @@ import {
   ContentPartType,
   MessageRole,
   type ThreadMessage,
-} from "@tambo-ai-cloud/core";
+} from "@workspace-cloud/core";
 import type { LLMClient } from "../services/llm/llm-client";
 
 function buildMemoryExtractionPrompt(now: Date): string {

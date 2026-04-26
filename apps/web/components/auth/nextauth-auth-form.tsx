@@ -47,7 +47,7 @@ export function NextAuthAuthForm({
         {/* Header section with Sentient font */}
         <div className="text-center space-y-4">
           <h1 className="font-sentient text-4xl md:text-5xl font-light tracking-tight text-foreground">
-            {isReturningUser ? "Welcome back" : "Welcome to Tambo"}
+            {isReturningUser ? "Welcome back" : "Welcome to Genui"}
           </h1>
           <p className="text-muted-foreground text-base md:text-lg font-normal">
             {isReturningUser

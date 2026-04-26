@@ -1,7 +1,7 @@
 "use client";
 
 import * as Popover from "@radix-ui/react-popover";
-import { cn } from "@tambo-ai/ui-registry/utils";
+import { cn } from "@workspace/ui-registry/utils";
 import Document from "@tiptap/extension-document";
 import HardBreak from "@tiptap/extension-hard-break";
 import Mention from "@tiptap/extension-mention";
@@ -62,7 +62,7 @@ export function getImageItems(
  * Minimal editor interface exposed to parent components.
  * Hides TipTap implementation details and exposes only necessary operations.
  */
-export interface TamboEditor {
+export interface GenuiEditor {
   /** Focus the editor at a specific position */
   focus(position?: "start" | "end"): void;
   /** Whether the editor currently has focus */
@@ -610,7 +610,7 @@ function useLatestValue<T>(value: T): () => T {
 /**
  * Text editor component with resource ("@") and prompt ("/") support.
  */
-export const TextEditor = React.forwardRef<TamboEditor, TextEditorProps>(
+export const TextEditor = React.forwardRef<GenuiEditor, TextEditorProps>(
   (
     {
       value,

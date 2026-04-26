@@ -1,7 +1,7 @@
 /// <reference types="@testing-library/jest-dom" />
 import { beforeEach, describe, expect, it, jest } from "@jest/globals";
-import type { Suggestion } from "@tambo-ai/react";
-import { useTambo, useTamboSuggestions } from "@tambo-ai/react";
+import type { Suggestion } from "@workspace/react";
+import { useGenui, useGenuiSuggestions } from "@workspace/react";
 import { render, screen } from "@testing-library/react";
 import React from "react";
 import {
@@ -28,17 +28,17 @@ const generatedSuggestions: Suggestion[] = [
 ];
 
 describe("MessageSuggestions", () => {
-  const mockUseTambo = jest.mocked(useTambo);
-  const mockUseTamboSuggestions = jest.mocked(useTamboSuggestions);
+  const mockUseGenui = jest.mocked(useGenui);
+  const mockUseGenuiSuggestions = jest.mocked(useGenuiSuggestions);
 
   beforeEach(() => {
-    mockUseTambo.mockReturnValue({
+    mockUseGenui.mockReturnValue({
       messages: [],
       isStreaming: false,
       isIdle: true,
     } as never);
 
-    mockUseTamboSuggestions.mockReturnValue({
+    mockUseGenuiSuggestions.mockReturnValue({
       suggestions: generatedSuggestions,
       selectedSuggestionId: null,
       accept: jest.fn(async () => undefined),
@@ -69,7 +69,7 @@ describe("MessageSuggestions", () => {
   });
 
   it("uses generated suggestions once thread has messages", () => {
-    mockUseTambo.mockReturnValue({
+    mockUseGenui.mockReturnValue({
       messages: [
         {
           id: "msg-1",

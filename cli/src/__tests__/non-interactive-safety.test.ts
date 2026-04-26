@@ -125,7 +125,7 @@ describe("non-interactive mode safety", () => {
     });
 
     it("returns false when only stdout is piped (stdin TTY)", () => {
-      // Scenario: user has TTY but output is piped (e.g., tambo init | cat)
+      // Scenario: user has TTY but output is piped (e.g., genui init | cat)
       setTTY(true, false);
       delete process.env.CI;
       delete process.env.GITHUB_ACTIONS;
@@ -134,7 +134,7 @@ describe("non-interactive mode safety", () => {
     });
 
     it("returns false when only stdin is piped (stdout TTY)", () => {
-      // Scenario: input is piped but output goes to terminal (e.g., echo | tambo init)
+      // Scenario: input is piped but output goes to terminal (e.g., echo | genui init)
       setTTY(false, true);
       delete process.env.CI;
       delete process.env.GITHUB_ACTIONS;
@@ -146,8 +146,8 @@ describe("non-interactive mode safety", () => {
   describe("GuidanceError", () => {
     it("stores message and guidance array", () => {
       const error = new GuidanceError("Project name required", [
-        "tambo init --project-name=myapp    # Create new project",
-        "tambo init --project-id=abc123     # Use existing project",
+        "genui init --project-name=myapp    # Create new project",
+        "genui init --project-id=abc123     # Use existing project",
       ]);
 
       expect(error.message).toBe("Project name required");

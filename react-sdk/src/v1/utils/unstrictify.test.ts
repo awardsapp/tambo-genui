@@ -2,7 +2,7 @@ import type { JSONSchema7, JSONSchema7Definition } from "json-schema";
 import {
   canBeNull,
   unstrictifyToolCallParamsFromSchema,
-} from "@tambo-ai/client";
+} from "@workspace/client";
 
 describe("canBeNull", () => {
   it("should return true for schema with type null", () => {
@@ -77,14 +77,14 @@ describe("unstrictifyToolCallParamsFromSchema", () => {
 
     const result = unstrictifyToolCallParamsFromSchema(schema, {
       name: "John",
-      _tambo_statusMessage: "Processing...",
-      _tambo_displayMessage: "Hello",
+      _genui_statusMessage: "Processing...",
+      _genui_displayMessage: "Hello",
     });
 
     expect(result).toEqual({
       name: "John",
-      _tambo_statusMessage: "Processing...",
-      _tambo_displayMessage: "Hello",
+      _genui_statusMessage: "Processing...",
+      _genui_displayMessage: "Hello",
     });
   });
 
@@ -106,18 +106,18 @@ describe("unstrictifyToolCallParamsFromSchema", () => {
 
     const result = unstrictifyToolCallParamsFromSchema(schema, {
       user: { name: "John", email: null },
-      _tambo_statusMessage: "Updating user",
+      _genui_statusMessage: "Updating user",
     });
 
     expect(result).toEqual({
       user: { name: "John" },
-      _tambo_statusMessage: "Updating user",
+      _genui_statusMessage: "Updating user",
     });
   });
 
   it("should return params as-is for non-object schemas", () => {
     const schema: JSONSchema7 = { type: "string" };
-    const params = { name: "John", _tambo_foo: "bar" };
+    const params = { name: "John", _genui_foo: "bar" };
 
     const result = unstrictifyToolCallParamsFromSchema(schema, params);
 
@@ -145,16 +145,16 @@ describe("unstrictifyToolCallParamsFromSchema", () => {
 
     const result = unstrictifyToolCallParamsFromSchema(schema, {
       anything: "value",
-      _tambo_status: "ok",
+      _genui_status: "ok",
     });
 
-    // Only _tambo_* keys pass through; unknown keys are dropped
+    // Only _genui_* keys pass through; unknown keys are dropped
     expect(result).toEqual({
-      _tambo_status: "ok",
+      _genui_status: "ok",
     });
   });
 
-  it("should drop hallucinated keys not in schema or _tambo_* prefix", () => {
+  it("should drop hallucinated keys not in schema or _genui_* prefix", () => {
     const schema: JSONSchema7 = {
       type: "object",
       properties: {
@@ -166,12 +166,12 @@ describe("unstrictifyToolCallParamsFromSchema", () => {
     const result = unstrictifyToolCallParamsFromSchema(schema, {
       city: "NYC",
       temperatur: "celsius",
-      _tambo_statusMessage: "Fetching",
+      _genui_statusMessage: "Fetching",
     });
 
     expect(result).toEqual({
       city: "NYC",
-      _tambo_statusMessage: "Fetching",
+      _genui_statusMessage: "Fetching",
     });
   });
 

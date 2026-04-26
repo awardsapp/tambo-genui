@@ -10,7 +10,7 @@ import { fs as memfsFs, vol } from "memfs";
 import { toTreeSync } from "memfs/lib/print";
 import {
   createBasicProject,
-  createProjectWithTamboSDK,
+  createProjectWithGenuiSDK,
   createRegistryFiles,
 } from "../../__fixtures__/mock-fs-setup.js";
 
@@ -108,7 +108,7 @@ jest.unstable_mockModule("./utils.js", () => ({
       return false;
     }
   },
-  getTamboComponentInfo: () => ({
+  getGenuiComponentInfo: () => ({
     mainComponents: new Set(["message", "form", "graph"]),
     supportComponents: new Set(["markdown-components"]),
     allComponents: new Set(["message", "form", "graph", "markdown-components"]),
@@ -119,7 +119,7 @@ jest.unstable_mockModule("./utils.js", () => ({
   getInstalledComponents: async () => [],
   getComponentList: () => [],
   getComponentNpmDependencies: (componentNames: string[]) => ({
-    dependencies: componentNames.length > 0 ? ["@tambo-ai/react"] : [],
+    dependencies: componentNames.length > 0 ? ["@workspace/react"] : [],
     devDependencies: [],
   }),
 }));
@@ -155,8 +155,8 @@ jest.unstable_mockModule("../../utils/framework-detection.js", () => ({
     framework?.name === "expo",
   getTamboApiKeyEnvVar: () =>
     mockDetectedFramework?.envPrefix
-      ? `${mockDetectedFramework.envPrefix}TAMBO_API_KEY`
-      : "TAMBO_API_KEY",
+      ? `${mockDetectedFramework.envPrefix}GENUI_API_KEY`
+      : "GENUI_API_KEY",
   getEnvVarName: (baseName: string) =>
     mockDetectedFramework?.envPrefix
       ? `${mockDetectedFramework.envPrefix}${baseName}`
@@ -257,7 +257,7 @@ describe("handleAddComponents", () => {
         .toMatchInlineSnapshot(`
         "src/
         ├─ components/
-        │  └─ tambo/
+        │  └─ genui/
         │     ├─ AGENTS.md
         │     └─ message.tsx
         └─ lib/
@@ -270,7 +270,7 @@ describe("handleAddComponents", () => {
         cmd.includes("npm install"),
       );
       expect(npmInstalls.length).toBeGreaterThan(0);
-      expect(npmInstalls.some((cmd) => cmd.includes("@tambo-ai/react"))).toBe(
+      expect(npmInstalls.some((cmd) => cmd.includes("@workspace/react"))).toBe(
         true,
       );
 
@@ -294,7 +294,7 @@ describe("handleAddComponents", () => {
         .toMatchInlineSnapshot(`
         "src/
         ├─ components/
-        │  └─ tambo/
+        │  └─ genui/
         │     ├─ AGENTS.md
         │     ├─ form.tsx
         │     └─ message.tsx
@@ -310,10 +310,10 @@ describe("handleAddComponents", () => {
     it("should skip already installed components", async () => {
       // Setup: Project with already installed component
       vol.fromJSON({
-        ...createProjectWithTamboSDK(),
+        ...createProjectWithGenuiSDK(),
         ...createRegistryFiles(["message"]),
         // Component already exists
-        "/mock-project/src/components/tambo/message.tsx":
+        "/mock-project/src/components/genui/message.tsx":
           "export const Message = () => <div>Existing</div>;",
       });
 
@@ -326,7 +326,7 @@ describe("handleAddComponents", () => {
 
       // Verify file wasn't modified (still has "Existing")
       const content = vol.readFileSync(
-        "/mock-project/src/components/tambo/message.tsx",
+        "/mock-project/src/components/genui/message.tsx",
         "utf-8",
       ) as string;
       expect(content).toContain("Existing");
@@ -335,10 +335,10 @@ describe("handleAddComponents", () => {
     it("should install only new components when some are already installed", async () => {
       // Setup: Project with one component already installed
       vol.fromJSON({
-        ...createProjectWithTamboSDK(),
+        ...createProjectWithGenuiSDK(),
         ...createRegistryFiles(["message", "form"]),
         // Message already exists
-        "/mock-project/src/components/tambo/message.tsx":
+        "/mock-project/src/components/genui/message.tsx":
           "export const Message = () => <div>Existing</div>;",
       });
 
@@ -350,7 +350,7 @@ describe("handleAddComponents", () => {
         .toMatchInlineSnapshot(`
         "src/
         ├─ components/
-        │  └─ tambo/
+        │  └─ genui/
         │     ├─ AGENTS.md
         │     ├─ form.tsx
         │     └─ message.tsx
@@ -381,7 +381,7 @@ describe("handleAddComponents", () => {
         .toMatchInlineSnapshot(`
         "src/
         ├─ components/
-        │  └─ tambo/
+        │  └─ genui/
         │     ├─ AGENTS.md
         │     └─ message.tsx
         └─ lib/
@@ -427,7 +427,7 @@ describe("handleAddComponents", () => {
         .toMatchInlineSnapshot(`
         "src/
         ├─ components/
-        │  └─ tambo/
+        │  └─ genui/
         │     ├─ AGENTS.md
         │     └─ component-a.tsx
         └─ lib/
@@ -440,7 +440,7 @@ describe("handleAddComponents", () => {
     it("should install to legacy location when components exist there", async () => {
       // Setup: Project with components in legacy ui/ directory
       vol.fromJSON({
-        ...createProjectWithTamboSDK(),
+        ...createProjectWithGenuiSDK(),
         ...createRegistryFiles(["message", "form"]),
         // Existing component in legacy location
         "/mock-project/src/components/ui/message.tsx":
@@ -456,7 +456,7 @@ describe("handleAddComponents", () => {
         "src/
         ├─ components/
         │  └─ ui/
-        │     ├─ tambo/
+        │     ├─ genui/
         │     │  └─ AGENTS.md
         │     ├─ form.tsx
         │     └─ message.tsx
@@ -474,14 +474,14 @@ describe("handleAddComponents", () => {
       vol.fromJSON({
         "/mock-project/package.json": JSON.stringify({
           name: "test-project",
-          dependencies: { "@tambo-ai/react": "^1.0.0" },
+          dependencies: { "@workspace/react": "^1.0.0" },
         }),
         ...createRegistryFiles(["message", "form"]),
         // Components in both locations
         "/mock-project/src/components/ui/message.tsx":
           "export const Message = () => <div>UI</div>;",
-        "/mock-project/src/components/tambo/form.tsx":
-          "export const Form = () => <div>Tambo</div>;",
+        "/mock-project/src/components/genui/form.tsx":
+          "export const Form = () => <div>Genui</div>;",
       });
 
       // Set inquirer to cancel installation
@@ -501,14 +501,14 @@ describe("handleAddComponents", () => {
       vol.fromJSON({
         "/mock-project/package.json": JSON.stringify({
           name: "test-project",
-          dependencies: { "@tambo-ai/react": "^1.0.0" },
+          dependencies: { "@workspace/react": "^1.0.0" },
         }),
         ...createRegistryFiles(["message", "form", "graph"]),
         // Components in both locations
         "/mock-project/src/components/ui/message.tsx":
           "export const Message = () => <div>UI</div>;",
-        "/mock-project/src/components/tambo/form.tsx":
-          "export const Form = () => <div>Tambo</div>;",
+        "/mock-project/src/components/genui/form.tsx":
+          "export const Form = () => <div>Genui</div>;",
       });
 
       // Set inquirer to continue installation
@@ -522,7 +522,7 @@ describe("handleAddComponents", () => {
         .toMatchInlineSnapshot(`
         "src/
         ├─ components/
-        │  ├─ tambo/
+        │  ├─ genui/
         │  │  ├─ AGENTS.md
         │  │  ├─ form.tsx
         │  │  └─ graph.tsx
@@ -553,7 +553,7 @@ describe("handleAddComponents", () => {
         .toMatchInlineSnapshot(`
         "src/
         ├─ components/
-        │  └─ tambo/
+        │  └─ genui/
         │     ├─ AGENTS.md
         │     └─ message.tsx
         └─ lib/
@@ -582,7 +582,7 @@ describe("handleAddComponents", () => {
         .toMatchInlineSnapshot(`
         "src/
         ├─ components/
-        │  └─ tambo/
+        │  └─ genui/
         │     └─ message.tsx
         └─ lib/
            └─ utils.ts"
@@ -613,7 +613,7 @@ describe("handleAddComponents", () => {
         .toMatchInlineSnapshot(`
         "custom/
         └─ path/
-           ├─ tambo/
+           ├─ genui/
            │  └─ AGENTS.md
            └─ message.tsx"
       `);
@@ -624,7 +624,7 @@ describe("handleAddComponents", () => {
       `);
     });
 
-    it("should install to exact prefix path without adding tambo subdirectory", async () => {
+    it("should install to exact prefix path without adding genui subdirectory", async () => {
       // Setup
       vol.fromJSON({
         "/mock-project/package.json": JSON.stringify({
@@ -634,11 +634,11 @@ describe("handleAddComponents", () => {
         ...createRegistryFiles(["message"]),
       });
 
-      // Execute with prefix that ends with "tambo" - this was causing a bug
-      // where it would create components/ui/tambo/tambo instead of components/ui/tambo
+      // Execute with prefix that ends with "genui" - this was causing a bug
+      // where it would create components/ui/genui/genui instead of components/ui/genui
       await handleAddComponents(["message"], {
         yes: true,
-        installPath: "components/ui/tambo",
+        installPath: "components/ui/genui",
         isExplicitPrefix: true,
       });
 
@@ -647,7 +647,7 @@ describe("handleAddComponents", () => {
         .toMatchInlineSnapshot(`
         "components/
         └─ ui/
-           └─ tambo/
+           └─ genui/
               ├─ AGENTS.md
               └─ message.tsx"
       `);
@@ -663,14 +663,14 @@ describe("handleAddComponents", () => {
       vol.fromJSON({
         "/mock-project/package.json": JSON.stringify({
           name: "test-project",
-          dependencies: { "@tambo-ai/react": "^1.0.0" },
+          dependencies: { "@workspace/react": "^1.0.0" },
         }),
         ...createRegistryFiles(["message"]),
         // Override message content to have "Updated"
         "/mock-project/cli/dist/registry/components/message/message.tsx":
           "export const Message = () => <div>Updated</div>;",
         // Existing component with different content
-        "/mock-project/src/components/tambo/message.tsx":
+        "/mock-project/src/components/genui/message.tsx":
           "export const Message = () => <div>Old</div>;",
       });
 
@@ -679,7 +679,7 @@ describe("handleAddComponents", () => {
 
       // Verify file was updated
       const content = vol.readFileSync(
-        "/mock-project/src/components/tambo/message.tsx",
+        "/mock-project/src/components/genui/message.tsx",
         "utf-8",
       ) as string;
       expect(content).toContain("Updated");
@@ -709,7 +709,7 @@ describe("handleAddComponents", () => {
         .toMatchInlineSnapshot(`
         "src/
         ├─ components/
-        │  └─ tambo/
+        │  └─ genui/
         │     ├─ AGENTS.md
         │     └─ message.tsx
         └─ lib/
@@ -787,7 +787,7 @@ describe("handleAddComponents", () => {
         .toMatchInlineSnapshot(`
         "src/
         ├─ components/
-        │  └─ tambo/
+        │  └─ genui/
         │     ├─ AGENTS.md
         │     └─ complex-component.tsx
         └─ lib/
@@ -817,7 +817,7 @@ describe("handleAddComponents", () => {
 
       // Verify no files were actually created
       expect(
-        vol.existsSync("/mock-project/src/components/tambo/message.tsx"),
+        vol.existsSync("/mock-project/src/components/genui/message.tsx"),
       ).toBe(false);
     });
 
@@ -856,7 +856,7 @@ describe("handleAddComponents", () => {
       await handleAddComponents(["message"], { yes: true, dryRun: true });
 
       // Verify directories were not created
-      expect(vol.existsSync("/mock-project/src/components/tambo")).toBe(false);
+      expect(vol.existsSync("/mock-project/src/components/genui")).toBe(false);
       expect(vol.existsSync("/mock-project/src/lib")).toBe(false);
     });
 
@@ -881,10 +881,10 @@ describe("handleAddComponents", () => {
 
       // Verify no files were created
       expect(
-        vol.existsSync("/mock-project/src/components/tambo/message.tsx"),
+        vol.existsSync("/mock-project/src/components/genui/message.tsx"),
       ).toBe(false);
       expect(
-        vol.existsSync("/mock-project/src/components/tambo/form.tsx"),
+        vol.existsSync("/mock-project/src/components/genui/form.tsx"),
       ).toBe(false);
     });
   });
@@ -900,7 +900,7 @@ describe("handleAddComponents", () => {
           JSON.stringify({
             name: "message",
             description: "Message component",
-            dependencies: ["@tambo-ai/react", "react-markdown"],
+            dependencies: ["@workspace/react", "react-markdown"],
             devDependencies: [],
             requires: [],
             files: [
@@ -923,7 +923,7 @@ describe("handleAddComponents", () => {
       expect(installCalls.length).toBeGreaterThan(0);
 
       const prodInstall = installCalls.find(
-        (cmd) => !cmd.includes("-D") && cmd.includes("@tambo-ai/react"),
+        (cmd) => !cmd.includes("-D") && cmd.includes("@workspace/react"),
       );
       expect(prodInstall).toBeDefined();
       expect(prodInstall).toContain("react-markdown");
@@ -971,7 +971,7 @@ describe("handleAddComponents", () => {
         "/mock-project/package.json": JSON.stringify({
           name: "test-project",
           dependencies: {
-            "@tambo-ai/react": "^1.0.0",
+            "@workspace/react": "^1.0.0",
             "react-markdown": "^8.0.0",
           },
         }),
@@ -981,7 +981,7 @@ describe("handleAddComponents", () => {
           JSON.stringify({
             name: "message",
             description: "Message component",
-            dependencies: ["@tambo-ai/react", "react-markdown"],
+            dependencies: ["@workspace/react", "react-markdown"],
             devDependencies: [],
             requires: [],
             files: [
@@ -999,7 +999,7 @@ describe("handleAddComponents", () => {
 
       // Verify npm install was NOT called for already installed deps
       const installCalls = execSyncCalls.filter((cmd) =>
-        cmd.includes("@tambo-ai/react"),
+        cmd.includes("@workspace/react"),
       );
       expect(installCalls.length).toBe(0);
     });
@@ -1062,7 +1062,7 @@ describe("handleAddComponents", () => {
 
       // Verify the shared file was installed with correct content
       const sharedUtilContent = vol.readFileSync(
-        "/mock-project/src/components/tambo/shared-util.tsx",
+        "/mock-project/src/components/genui/shared-util.tsx",
         "utf-8",
       );
       expect(sharedUtilContent).toContain("SharedUtil");

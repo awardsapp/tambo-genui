@@ -4,7 +4,7 @@ import {
   ContentPartType,
   InputValidationError,
   MessageRole,
-} from "@tambo-ai-cloud/core";
+} from "@workspace-cloud/core";
 import { DATABASE } from "../common/database-provider";
 import { AnalyticsService } from "../common/services/analytics.service";
 import { AuthService } from "../common/services/auth.service";
@@ -276,7 +276,7 @@ describe("ThreadsService - Initial Messages", () => {
   describe("createThread with initial messages", () => {
     beforeEach(() => {
       // Mock the operations.createThread function
-      jest.doMock("@tambo-ai-cloud/db", () => ({
+      jest.doMock("@workspace-cloud/db", () => ({
         operations: {
           createThread: jest.fn().mockResolvedValue(mockThread),
         },

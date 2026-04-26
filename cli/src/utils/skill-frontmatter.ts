@@ -2,7 +2,7 @@
  * SKILL.md frontmatter parser for the CLI.
  *
  * This is a local copy of the parser in packages/core/src/skills-frontmatter.ts.
- * The CLI cannot import from @tambo-ai-cloud/core at runtime because that
+ * The CLI cannot import from @workspace-cloud/core at runtime because that
  * package exposes raw TypeScript source (no build step), which breaks when
  * Node.js tries to resolve extensionless ESM imports.
  *

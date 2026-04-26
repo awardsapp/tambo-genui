@@ -4,11 +4,11 @@
 
 ### Motivation
 
-The Tambo CLI is built for humans: interactive prompts, spinners, colored output. This blocks CI/CD environments and AI coding assistants that can't respond to prompts.
+The Genui CLI is built for humans: interactive prompts, spinners, colored output. This blocks CI/CD environments and AI coding assistants that can't respond to prompts.
 
 ### Goal
 
-Make the Tambo CLI gracefully handle non-interactive environments (CI, piped output, AI agents) - commands return helpful guidance instead of hanging when they can't prompt for input. Interactive mode remains the default for humans in terminals.
+Make the Genui CLI gracefully handle non-interactive environments (CI, piped output, AI agents) - commands return helpful guidance instead of hanging when they can't prompt for input. Interactive mode remains the default for humans in terminals.
 
 ### Key Design Decisions
 
@@ -49,11 +49,11 @@ Commands should never hang waiting for input that won't come. In CI/non-TTY envi
 
 ```bash
 # In CI - this hangs forever waiting for user input that will never come
-tambo init
+genui init
 
 # What we want instead - return guidance, don't prompt
-CI=true tambo init
-# Output: "Error: Project name required. Run: tambo init --project-name=myapp"
+CI=true genui init
+# Output: "Error: Project name required. Run: genui init --project-name=myapp"
 # Exit code: 2
 ```
 
@@ -132,8 +132,8 @@ async function handleInit(options: InitOptions) {
   if (!options.projectName && !isTTY()) {
     // Can't prompt - throw guidance error (CLI entry point handles exit code)
     throw new GuidanceError("Project name required", [
-      "tambo init --project-name=myapp    # Create new project",
-      "tambo init --project-id=abc123     # Use existing project",
+      "genui init --project-name=myapp    # Create new project",
+      "genui init --project-id=abc123     # Use existing project",
     ]);
   }
 
@@ -200,12 +200,12 @@ try {
 | `add`        | `--yes`                 | Skip confirmation             |
 | `add`        | `--dry-run`             | Show what would be installed  |
 
-### 2.3 Example: `tambo init` Non-Interactive
+### 2.3 Example: `genui init` Non-Interactive
 
 **Interactive (default - unchanged):**
 
 ```
-$ tambo init
+$ genui init
 ? Project name: my-app
 ? Create new project or use existing? Create new
 ✔ Project created
@@ -216,13 +216,13 @@ $ tambo init
 **Non-interactive (CI/piped):**
 
 ```
-$ CI=true tambo init
+$ CI=true genui init
 Error: Project name required.
 
 Run one of:
-  tambo init --project-name=myapp    # Create new project
-  tambo init --project-id=abc123     # Use existing project
-  tambo init --yes --project-name=myapp  # Skip all prompts
+  genui init --project-name=myapp    # Create new project
+  genui init --project-id=abc123     # Use existing project
+  genui init --yes --project-name=myapp  # Skip all prompts
 
 $ echo $?
 2
@@ -231,7 +231,7 @@ $ echo $?
 **Non-interactive with flags:**
 
 ```
-$ CI=true tambo init --yes --project-name=myapp
+$ CI=true genui init --yes --project-name=myapp
 ✔ Project created: myapp
 ✔ SDK installed
 ✔ Configuration written to .env.local
@@ -249,7 +249,7 @@ $ echo $?
 The plugin lives inside the monorepo at `claude-plugin/`:
 
 ```
-tambo/                                # Monorepo
+genui/                                # Monorepo
 ├── cli/
 ├── react-sdk/
 ├── ...
@@ -257,7 +257,7 @@ tambo/                                # Monorepo
     ├── .claude-plugin/
     │   └── marketplace.json          # Lists available plugins
     └── plugins/
-        └── tambo/                    # The Tambo plugin
+        └── genui/                    # The Genui plugin
             ├── .claude-plugin/
             │   └── plugin.json       # Required: Plugin manifest
             ├── skills/               # Auto-discovered skills
@@ -288,16 +288,16 @@ tambo/                                # Monorepo
 
 ```json
 {
-  "name": "tambo",
+  "name": "genui",
   "version": "1.0.0",
-  "description": "Build AI-powered React UIs with Tambo generative components",
+  "description": "Build AI-powered React UIs with Genui generative components",
   "author": {
-    "name": "Tambo AI",
-    "email": "hello@tambo.co",
-    "url": "https://tambo.co"
+    "name": "Genui AI",
+    "email": "hello@genui.co",
+    "url": "https://genui.co"
   },
-  "homepage": "https://docs.tambo.co",
-  "repository": "https://github.com/tambo-ai/tambo",
+  "homepage": "https://docs.genui.co",
+  "repository": "https://github.com/genui-ai/genui",
   "license": "MIT",
   "keywords": ["ai", "react", "generative-ui", "components", "streaming", "mcp"]
 }
@@ -312,24 +312,24 @@ Each skill is a subdirectory under `skills/` with a `SKILL.md` file.
 ```markdown
 ---
 name: Generative Components
-description: Use this skill when creating Tambo generative components - React components that are dynamically selected and rendered by AI with generated props. Triggers on "create component", "register component", "TamboProvider", "propsSchema", "component registration".
+description: Use this skill when creating Genui generative components - React components that are dynamically selected and rendered by AI with generated props. Triggers on "create component", "register component", "GenuiProvider", "propsSchema", "component registration".
 version: 1.0.0
 ---
 
 # Generative Components
 
-Generative components are React components dynamically created by Tambo in response to user messages.
+Generative components are React components dynamically created by Genui in response to user messages.
 
 ## Key Concepts
 
-- **Registration**: Components are registered with `TamboProvider` via the `components` array
+- **Registration**: Components are registered with `GenuiProvider` via the `components` array
 - **Props Schema**: Use Zod schemas with `.describe()` to guide AI generation
 - **Selection**: AI selects components based on `name` and `description`
 
 ## Registration Pattern
 
 \`\`\`tsx
-import { TamboProvider } from "@tambo-ai/react";
+import { GenuiProvider } from "@workspace/react";
 import { z } from "zod";
 
 const components = [
@@ -344,12 +344,12 @@ unit: z.enum(["celsius", "fahrenheit"]).optional().describe("Temperature unit")
 }
 ];
 
-<TamboProvider
-apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY}
+<GenuiProvider
+apiKey={process.env.NEXT_PUBLIC_GENUI_API_KEY}
 components={components}
 
 > {children}
-> </TamboProvider>
+> </GenuiProvider>
 > \`\`\`
 
 ## Streaming Best Practices
@@ -371,13 +371,13 @@ components={components}
 ```markdown
 ---
 name: MCP Integration
-description: Use this skill when setting up Model Context Protocol (MCP) servers with Tambo. Triggers on "MCP", "model context protocol", "mcp server", "external tools", "server-side tools".
+description: Use this skill when setting up Model Context Protocol (MCP) servers with Genui. Triggers on "MCP", "model context protocol", "mcp server", "external tools", "server-side tools".
 version: 1.0.0
 ---
 
 # MCP Integration
 
-Tambo supports MCP servers for external tools, resources, and prompts.
+Genui supports MCP servers for external tools, resources, and prompts.
 
 ## Connection Architectures
 
@@ -385,7 +385,7 @@ Tambo supports MCP servers for external tools, resources, and prompts.
 
 - More secure - credentials stay on server
 - Required for OAuth-based MCP servers
-- Configured in Tambo Cloud project settings
+- Configured in Genui Cloud project settings
 
 ### Client-Side (Development)
 
@@ -409,10 +409,10 @@ Tambo supports MCP servers for external tools, resources, and prompts.
 ## Using MCP in Components
 
 \`\`\`tsx
-import { useTamboThread } from "@tambo-ai/react";
+import { useGenuiThread } from "@workspace/react";
 
 function MyComponent() {
-const { sendMessage } = useTamboThread();
+const { sendMessage } = useGenuiThread();
 
 // MCP tools are automatically available to the AI
 // Reference resources with @ mentions
@@ -433,13 +433,13 @@ await sendMessage("Read @file.txt and summarize");
 ```markdown
 ---
 name: Streaming Patterns
-description: Use this skill when implementing streaming UIs with Tambo. Triggers on "streaming", "partial props", "generation stage", "loading states", "useTamboThread".
+description: Use this skill when implementing streaming UIs with Genui. Triggers on "streaming", "partial props", "generation stage", "loading states", "useGenuiThread".
 version: 1.0.0
 ---
 
 # Streaming Patterns
 
-Tambo streams component props as they're generated, requiring careful UI handling.
+Genui streams component props as they're generated, requiring careful UI handling.
 
 ## Generation Stages
 
@@ -457,10 +457,10 @@ type GenerationStage =
 ## Tracking State
 
 \`\`\`tsx
-import { useTamboThread } from "@tambo-ai/react";
+import { useGenuiThread } from "@workspace/react";
 
 function ChatUI() {
-const { generationStage, isLoading } = useTamboThread();
+const { generationStage, isLoading } = useGenuiThread();
 
 return (
 
@@ -508,21 +508,21 @@ return (
 ```markdown
 ---
 name: Component State
-description: Use this skill when managing Tambo component state that persists across sessions. Triggers on "useTamboComponentState", "component state", "state persistence", "rehydration", "editable component".
+description: Use this skill when managing Genui component state that persists across sessions. Triggers on "useGenuiComponentState", "component state", "state persistence", "rehydration", "editable component".
 version: 1.0.0
 ---
 
 # Component State
 
-`useTamboComponentState` gives Tambo visibility into component state, enabling persistence and AI-driven updates.
+`useGenuiComponentState` gives Genui visibility into component state, enabling persistence and AI-driven updates.
 
 ## Basic Usage
 
 \`\`\`tsx
-import { useTamboComponentState } from "@tambo-ai/react";
+import { useGenuiComponentState } from "@workspace/react";
 
 function EditableNote({ initialContent }: Props) {
-const [content, setContent, setFromProp] = useTamboComponentState(
+const [content, setContent, setFromProp] = useGenuiComponentState(
 "content",
 initialContent ?? ""
 );
@@ -563,13 +563,13 @@ onChange={(e) => setContent(e.target.value)}
 ```markdown
 ---
 name: Interactables
-description: Use this skill when creating Tambo interactable components - pre-placed UI that connects to Tambo. Triggers on "withInteractable", "interactable", "bidirectional", "pre-placed component", "existing UI".
+description: Use this skill when creating Genui interactable components - pre-placed UI that connects to Genui. Triggers on "withInteractable", "interactable", "bidirectional", "pre-placed component", "existing UI".
 version: 1.0.0
 ---
 
 # Interactable Components
 
-Interactables are pre-placed components that maintain a bidirectional connection with Tambo.
+Interactables are pre-placed components that maintain a bidirectional connection with Genui.
 
 ## Key Difference from Generative
 
@@ -582,7 +582,7 @@ Interactables are pre-placed components that maintain a bidirectional connection
 ## Creating an Interactable
 
 \`\`\`tsx
-import { withInteractable } from "@tambo-ai/react";
+import { withInteractable } from "@workspace/react";
 import { z } from "zod";
 
 const propsSchema = z.object({
@@ -623,22 +623,22 @@ propsSchema
 ```markdown
 ---
 name: Tool Registration
-description: Use this skill when registering tools (functions) that Tambo can call. Triggers on "register tool", "useTamboRegistry", "tool schema", "function calling", "tambo tools".
+description: Use this skill when registering tools (functions) that Genui can call. Triggers on "register tool", "useGenuiRegistry", "tool schema", "function calling", "genui tools".
 version: 1.0.0
 ---
 
 # Tool Registration
 
-Tools are JavaScript functions that Tambo can call during conversations.
+Tools are JavaScript functions that Genui can call during conversations.
 
 ## Basic Registration
 
 \`\`\`tsx
-import { useTamboRegistry } from "@tambo-ai/react";
+import { useGenuiRegistry } from "@workspace/react";
 import { z } from "zod";
 
 function MyComponent() {
-const { registerTool } = useTamboRegistry();
+const { registerTool } = useGenuiRegistry();
 
 useEffect(() => {
 registerTool({
@@ -686,14 +686,14 @@ execute: async ({ userId }) => { /_ ... _/ }
 
 ```markdown
 ---
-name: Tambo CLI
-description: Use this skill when working with the Tambo CLI for project setup, component management, and authentication. Triggers on "tambo init", "tambo add", "tambo list", "tambo auth", "tambo create-app".
+name: Genui CLI
+description: Use this skill when working with the Genui CLI for project setup, component management, and authentication. Triggers on "genui init", "genui add", "genui list", "genui auth", "genui create-app".
 version: 1.0.0
 ---
 
-# Tambo CLI
+# Genui CLI
 
-The Tambo CLI helps with project setup, component management, and authentication.
+The Genui CLI helps with project setup, component management, and authentication.
 
 ## Quick Start
 
@@ -701,70 +701,70 @@ The Tambo CLI helps with project setup, component management, and authentication
 
 # Initialize in existing project
 
-tambo init --yes --project-name=myapp
+genui init --yes --project-name=myapp
 
 # Add components
 
-tambo add message thread --yes
+genui add message thread --yes
 
 # Check what's installed
 
-tambo list
+genui list
 \`\`\`
 
 ## Commands
 
-### tambo init
+### genui init
 
-Initialize Tambo in an existing project:
+Initialize Genui in an existing project:
 
 \`\`\`bash
-tambo init # Interactive mode
-tambo init --yes # Accept defaults
-tambo init --project-name=myapp # Create new project
-tambo init --project-id=abc123 # Use existing project
-tambo init --api-key=sk\_... # Provide API key directly
+genui init # Interactive mode
+genui init --yes # Accept defaults
+genui init --project-name=myapp # Create new project
+genui init --project-id=abc123 # Use existing project
+genui init --api-key=sk\_... # Provide API key directly
 \`\`\`
 
-### tambo add
+### genui add
 
 Install components from the registry:
 
 \`\`\`bash
-tambo add message # Add single component
-tambo add message thread input # Add multiple
-tambo add message --yes # Skip confirmation
-tambo add message --dry-run # Preview changes
+genui add message # Add single component
+genui add message thread input # Add multiple
+genui add message --yes # Skip confirmation
+genui add message --dry-run # Preview changes
 \`\`\`
 
-### tambo list
+### genui list
 
 List installed and available components:
 
 \`\`\`bash
-tambo list # Human-readable table
+genui list # Human-readable table
 \`\`\`
 
-### tambo auth
+### genui auth
 
 Authentication commands:
 
 \`\`\`bash
-tambo auth login # Browser-based auth
-tambo auth login --no-browser # Print URL instead
-tambo auth status # Check auth status
-tambo auth logout # Clear credentials
+genui auth login # Browser-based auth
+genui auth login --no-browser # Print URL instead
+genui auth status # Check auth status
+genui auth logout # Clear credentials
 \`\`\`
 
-### tambo create-app
+### genui create-app
 
-Create a new Tambo application:
+Create a new Genui application:
 
 \`\`\`bash
-tambo create-app my-app # Interactive
-tambo create-app my-app --template=standard # Standard template
-tambo create-app my-app --template=analytics # Analytics template
-tambo create-app my-app --no-install-deps # Skip npm install
+genui create-app my-app # Interactive
+genui create-app my-app --template=standard # Standard template
+genui create-app my-app --template=analytics # Analytics template
+genui create-app my-app --no-install-deps # Skip npm install
 \`\`\`
 
 ## Non-Interactive Mode
@@ -772,41 +772,41 @@ tambo create-app my-app --no-install-deps # Skip npm install
 In CI/non-TTY environments, commands return guidance instead of prompting:
 
 \`\`\`bash
-CI=true tambo init
+CI=true genui init
 
 # Error: Project name required.
 
-# Run: tambo init --project-name=myapp
+# Run: genui init --project-name=myapp
 
 \`\`\`
 ```
 
 ### 3.4 Marketplace Distribution
 
-The marketplace lives **inside the tambo monorepo** at `claude-plugin/`:
+The marketplace lives **inside the genui monorepo** at `claude-plugin/`:
 
 **marketplace.json:**
 
 ```json
 {
-  "name": "tambo-marketplace",
+  "name": "genui-marketplace",
   "owner": {
-    "name": "Tambo AI",
-    "email": "hello@tambo.co"
+    "name": "Genui AI",
+    "email": "hello@genui.co"
   },
   "metadata": {
-    "description": "Official Tambo plugins for Claude Code",
-    "homepage": "https://tambo.co"
+    "description": "Official Genui plugins for Claude Code",
+    "homepage": "https://genui.co"
   },
   "plugins": [
     {
-      "name": "tambo",
-      "source": "./plugins/tambo",
-      "description": "Build AI-powered React UIs with Tambo generative components",
+      "name": "genui",
+      "source": "./plugins/genui",
+      "description": "Build AI-powered React UIs with Genui generative components",
       "version": "1.0.0",
       "author": {
-        "name": "Tambo AI",
-        "email": "hello@tambo.co"
+        "name": "Genui AI",
+        "email": "hello@genui.co"
       },
       "category": "frameworks",
       "keywords": ["ai", "react", "generative-ui", "components", "streaming"]
@@ -819,24 +819,24 @@ The marketplace lives **inside the tambo monorepo** at `claude-plugin/`:
 
 ```bash
 # Step 1: Add the marketplace (one time)
-/plugin marketplace add tambo-ai/tambo/claude-plugin
+/plugin marketplace add genui-ai/genui/claude-plugin
 
 # Step 2: Install the plugin
-/plugin install tambo
+/plugin install genui
 
 # Step 3: Use skills
-/tambo:generative-components    # Help with component creation
-/tambo:mcp-integration          # Help with MCP setup
-/tambo:streaming-patterns       # Help with streaming UIs
-/tambo:component-state          # Help with state management
-/tambo:interactables            # Help with interactable components
-/tambo:tools                    # Help with tool registration
-/tambo:cli                      # Help with CLI commands
+/genui:generative-components    # Help with component creation
+/genui:mcp-integration          # Help with MCP setup
+/genui:streaming-patterns       # Help with streaming UIs
+/genui:component-state          # Help with state management
+/genui:interactables            # Help with interactable components
+/genui:tools                    # Help with tool registration
+/genui:cli                      # Help with CLI commands
 
 # Managing plugins
-/plugin enable tambo            # Enable if disabled
-/plugin disable tambo           # Temporarily disable
-/plugin uninstall tambo         # Remove completely
+/plugin enable genui            # Enable if disabled
+/plugin disable genui           # Temporarily disable
+/plugin uninstall genui         # Remove completely
 ```
 
 ---
@@ -933,16 +933,16 @@ jobs:
 
 | Task                      | Description                               |
 | ------------------------- | ----------------------------------------- |
-| Update `tambo init`       | Return guidance when args missing         |
-| Update `tambo add`        | Ensure `--yes` skips confirmation         |
-| Update `tambo create-app` | Return guidance if template not specified |
+| Update `genui init`       | Return guidance when args missing         |
+| Update `genui add`        | Ensure `--yes` skips confirmation         |
+| Update `genui create-app` | Return guidance if template not specified |
 
 ### Phase 3: Plugin & Testing
 
 | Task                     | Description                            |
 | ------------------------ | -------------------------------------- |
 | Create plugin directory  | `claude-plugin/` with proper structure |
-| Write all SKILL.md files | 7 skills covering Tambo concepts       |
+| Write all SKILL.md files | 7 skills covering Genui concepts       |
 | Set up marketplace       | Either own or submit to community      |
 | Non-interactive tests    | Add test suite for all commands        |
 | CI workflow              | Add GitHub Actions verification        |
@@ -953,11 +953,11 @@ jobs:
 
 1. Commands don't hang in CI/non-TTY environments
 2. Non-interactive mode returns guidance text (exit code 2) instead of hanging
-3. `tambo init --yes --project-name=myapp` works without prompts
+3. `genui init --yes --project-name=myapp` works without prompts
 4. TTY detection follows documented precedence
 5. CI workflow verifies commands don't hang (timeout-based)
-6. Plugin installable via `/plugin marketplace add` + `/plugin install tambo`
-7. All 7 skills cover key Tambo concepts
+6. Plugin installable via `/plugin marketplace add` + `/plugin install genui`
+7. All 7 skills cover key Genui concepts
 8. Test coverage for non-interactive scenarios
 
 ---

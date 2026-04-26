@@ -1,15 +1,15 @@
 import { render, waitFor } from "@testing-library/react";
 import { QueryClient } from "@tanstack/react-query";
 import React, { useEffect } from "react";
-import { TamboClientContext } from "../providers/tambo-client-provider";
-import { TamboMcpTokenProvider } from "../providers/tambo-mcp-token-provider";
-import { TamboRegistryProvider } from "../providers/tambo-registry-provider";
-import { MCPTransport } from "@tambo-ai/client";
-import { TamboMcpProvider, useTamboMcpServers } from "./tambo-mcp-provider";
+import { GenuiClientContext } from "../providers/genui-client-provider";
+import { GenuiMcpTokenProvider } from "../providers/genui-mcp-token-provider";
+import { GenuiRegistryProvider } from "../providers/genui-registry-provider";
+import { MCPTransport } from "@workspace/client";
+import { GenuiMcpProvider, useGenuiMcpServers } from "./genui-mcp-provider";
 import {
-  useTamboMcpPromptList,
-  useTamboMcpResourceList,
-  useTamboMcpResource,
+  useGenuiMcpPromptList,
+  useGenuiMcpResourceList,
+  useGenuiMcpResource,
   isMcpResourceEntry,
   type ListPromptEntry,
   type ListResourceEntry,
@@ -17,13 +17,13 @@ import {
 
 // Mock the MCP client to avoid ES module issues
 let createImpl: jest.Mock = jest.fn();
-jest.mock("@tambo-ai/client", () => ({
-  ...jest.requireActual("@tambo-ai/client"),
+jest.mock("@workspace/client", () => ({
+  ...jest.requireActual("@workspace/client"),
   MCPClient: { create: (...args: any[]) => createImpl(...args) },
   MCPTransport: { SSE: "sse", HTTP: "http" },
 }));
 
-describe("useTamboMcpPromptList - individual server caching", () => {
+describe("useGenuiMcpPromptList - individual server caching", () => {
   let queryClient: QueryClient;
 
   beforeEach(() => {
@@ -87,7 +87,7 @@ describe("useTamboMcpPromptList - individual server caching", () => {
 
     let capturedPrompts: ListPromptEntry[] = [];
     const Capture: React.FC = () => {
-      const { data: prompts } = useTamboMcpPromptList();
+      const { data: prompts } = useGenuiMcpPromptList();
       useEffect(() => {
         if (prompts) {
           capturedPrompts = prompts;
@@ -97,9 +97,9 @@ describe("useTamboMcpPromptList - individual server caching", () => {
     };
 
     render(
-      <TamboClientContext.Provider
+      <GenuiClientContext.Provider
         value={{
-          client: { baseURL: "https://api.tambo.co" } as any,
+          client: { baseURL: "https://api.genui.co" } as any,
           queryClient,
           isUpdatingToken: false,
           tokenExchangeError: null,
@@ -107,7 +107,7 @@ describe("useTamboMcpPromptList - individual server caching", () => {
           hasValidToken: false,
         }}
       >
-        <TamboRegistryProvider
+        <GenuiRegistryProvider
           mcpServers={[
             {
               url: "https://server-a.example",
@@ -119,13 +119,13 @@ describe("useTamboMcpPromptList - individual server caching", () => {
             },
           ]}
         >
-          <TamboMcpTokenProvider>
-            <TamboMcpProvider>
+          <GenuiMcpTokenProvider>
+            <GenuiMcpProvider>
               <Capture />
-            </TamboMcpProvider>
-          </TamboMcpTokenProvider>
-        </TamboRegistryProvider>
-      </TamboClientContext.Provider>,
+            </GenuiMcpProvider>
+          </GenuiMcpTokenProvider>
+        </GenuiRegistryProvider>
+      </GenuiClientContext.Provider>,
     );
 
     // Wait for all prompts to be loaded
@@ -197,7 +197,7 @@ describe("useTamboMcpPromptList - individual server caching", () => {
 
     let capturedPrompts: ListPromptEntry[] = [];
     const Capture: React.FC = () => {
-      const { data: prompts } = useTamboMcpPromptList();
+      const { data: prompts } = useGenuiMcpPromptList();
       useEffect(() => {
         if (prompts) {
           capturedPrompts = prompts;
@@ -207,9 +207,9 @@ describe("useTamboMcpPromptList - individual server caching", () => {
     };
 
     const { rerender } = render(
-      <TamboClientContext.Provider
+      <GenuiClientContext.Provider
         value={{
-          client: { baseURL: "https://api.tambo.co" } as any,
+          client: { baseURL: "https://api.genui.co" } as any,
           queryClient,
           isUpdatingToken: false,
           tokenExchangeError: null,
@@ -217,7 +217,7 @@ describe("useTamboMcpPromptList - individual server caching", () => {
           hasValidToken: false,
         }}
       >
-        <TamboRegistryProvider
+        <GenuiRegistryProvider
           mcpServers={[
             {
               url: "https://server-a.example",
@@ -229,13 +229,13 @@ describe("useTamboMcpPromptList - individual server caching", () => {
             },
           ]}
         >
-          <TamboMcpTokenProvider>
-            <TamboMcpProvider>
+          <GenuiMcpTokenProvider>
+            <GenuiMcpProvider>
               <Capture />
-            </TamboMcpProvider>
-          </TamboMcpTokenProvider>
-        </TamboRegistryProvider>
-      </TamboClientContext.Provider>,
+            </GenuiMcpProvider>
+          </GenuiMcpTokenProvider>
+        </GenuiRegistryProvider>
+      </GenuiClientContext.Provider>,
     );
 
     // Wait for initial prompts to be loaded
@@ -251,9 +251,9 @@ describe("useTamboMcpPromptList - individual server caching", () => {
 
     // Remove server B
     rerender(
-      <TamboClientContext.Provider
+      <GenuiClientContext.Provider
         value={{
-          client: { baseURL: "https://api.tambo.co" } as any,
+          client: { baseURL: "https://api.genui.co" } as any,
           queryClient,
           isUpdatingToken: false,
           tokenExchangeError: null,
@@ -261,7 +261,7 @@ describe("useTamboMcpPromptList - individual server caching", () => {
           hasValidToken: false,
         }}
       >
-        <TamboRegistryProvider
+        <GenuiRegistryProvider
           mcpServers={[
             {
               url: "https://server-a.example",
@@ -269,13 +269,13 @@ describe("useTamboMcpPromptList - individual server caching", () => {
             },
           ]}
         >
-          <TamboMcpTokenProvider>
-            <TamboMcpProvider>
+          <GenuiMcpTokenProvider>
+            <GenuiMcpProvider>
               <Capture />
-            </TamboMcpProvider>
-          </TamboMcpTokenProvider>
-        </TamboRegistryProvider>
-      </TamboClientContext.Provider>,
+            </GenuiMcpProvider>
+          </GenuiMcpTokenProvider>
+        </GenuiRegistryProvider>
+      </GenuiClientContext.Provider>,
     );
 
     // Wait for prompts to be updated (server B prompts should disappear)
@@ -334,8 +334,8 @@ describe("useTamboMcpPromptList - individual server caching", () => {
     let capturedPrompts: ListPromptEntry[] = [];
     let capturedServerKeys: string[] = [];
     const Capture: React.FC = () => {
-      const { data: prompts } = useTamboMcpPromptList();
-      const servers = useTamboMcpServers();
+      const { data: prompts } = useGenuiMcpPromptList();
+      const servers = useGenuiMcpServers();
       useEffect(() => {
         if (prompts) {
           capturedPrompts = prompts;
@@ -346,9 +346,9 @@ describe("useTamboMcpPromptList - individual server caching", () => {
     };
 
     render(
-      <TamboClientContext.Provider
+      <GenuiClientContext.Provider
         value={{
-          client: { baseURL: "https://api.tambo.co" } as any,
+          client: { baseURL: "https://api.genui.co" } as any,
           queryClient,
           isUpdatingToken: false,
           tokenExchangeError: null,
@@ -356,7 +356,7 @@ describe("useTamboMcpPromptList - individual server caching", () => {
           hasValidToken: false,
         }}
       >
-        <TamboRegistryProvider
+        <GenuiRegistryProvider
           mcpServers={[
             {
               url: "https://server-a.example",
@@ -368,13 +368,13 @@ describe("useTamboMcpPromptList - individual server caching", () => {
             },
           ]}
         >
-          <TamboMcpTokenProvider>
-            <TamboMcpProvider>
+          <GenuiMcpTokenProvider>
+            <GenuiMcpProvider>
               <Capture />
-            </TamboMcpProvider>
-          </TamboMcpTokenProvider>
-        </TamboRegistryProvider>
-      </TamboClientContext.Provider>,
+            </GenuiMcpProvider>
+          </GenuiMcpTokenProvider>
+        </GenuiRegistryProvider>
+      </GenuiClientContext.Provider>,
     );
 
     // Wait for prompts to be loaded
@@ -439,8 +439,8 @@ describe("useTamboMcpPromptList - individual server caching", () => {
     let capturedPrompts: ListPromptEntry[] = [];
     let mcpServersCount = 0;
     const Capture: React.FC = () => {
-      const { data: prompts } = useTamboMcpPromptList();
-      const servers = useTamboMcpServers();
+      const { data: prompts } = useGenuiMcpPromptList();
+      const servers = useGenuiMcpServers();
       useEffect(() => {
         if (prompts) {
           capturedPrompts = prompts;
@@ -451,9 +451,9 @@ describe("useTamboMcpPromptList - individual server caching", () => {
     };
 
     render(
-      <TamboClientContext.Provider
+      <GenuiClientContext.Provider
         value={{
-          client: { baseURL: "https://api.tambo.co" } as any,
+          client: { baseURL: "https://api.genui.co" } as any,
           queryClient,
           isUpdatingToken: false,
           tokenExchangeError: null,
@@ -461,7 +461,7 @@ describe("useTamboMcpPromptList - individual server caching", () => {
           hasValidToken: false,
         }}
       >
-        <TamboRegistryProvider
+        <GenuiRegistryProvider
           mcpServers={[
             {
               url: "https://server-a.example",
@@ -473,13 +473,13 @@ describe("useTamboMcpPromptList - individual server caching", () => {
             },
           ]}
         >
-          <TamboMcpTokenProvider>
-            <TamboMcpProvider>
+          <GenuiMcpTokenProvider>
+            <GenuiMcpProvider>
               <Capture />
-            </TamboMcpProvider>
-          </TamboMcpTokenProvider>
-        </TamboRegistryProvider>
-      </TamboClientContext.Provider>,
+            </GenuiMcpProvider>
+          </GenuiMcpTokenProvider>
+        </GenuiRegistryProvider>
+      </GenuiClientContext.Provider>,
     );
 
     // Wait for server A prompts to be loaded
@@ -533,7 +533,7 @@ describe("useTamboMcpPromptList - individual server caching", () => {
 
     let capturedPrompts: ListPromptEntry[] = [];
     const Capture: React.FC = () => {
-      const { data: prompts } = useTamboMcpPromptList();
+      const { data: prompts } = useGenuiMcpPromptList();
       useEffect(() => {
         if (prompts) {
           capturedPrompts = prompts;
@@ -543,9 +543,9 @@ describe("useTamboMcpPromptList - individual server caching", () => {
     };
 
     const { rerender } = render(
-      <TamboClientContext.Provider
+      <GenuiClientContext.Provider
         value={{
-          client: { baseURL: "https://api.tambo.co" } as any,
+          client: { baseURL: "https://api.genui.co" } as any,
           queryClient,
           isUpdatingToken: false,
           tokenExchangeError: null,
@@ -553,7 +553,7 @@ describe("useTamboMcpPromptList - individual server caching", () => {
           hasValidToken: false,
         }}
       >
-        <TamboRegistryProvider
+        <GenuiRegistryProvider
           mcpServers={[
             {
               url: "https://server-a.example",
@@ -561,13 +561,13 @@ describe("useTamboMcpPromptList - individual server caching", () => {
             },
           ]}
         >
-          <TamboMcpTokenProvider>
-            <TamboMcpProvider>
+          <GenuiMcpTokenProvider>
+            <GenuiMcpProvider>
               <Capture />
-            </TamboMcpProvider>
-          </TamboMcpTokenProvider>
-        </TamboRegistryProvider>
-      </TamboClientContext.Provider>,
+            </GenuiMcpProvider>
+          </GenuiMcpTokenProvider>
+        </GenuiRegistryProvider>
+      </GenuiClientContext.Provider>,
     );
 
     // Wait for initial prompts from server A (always prefixed)
@@ -581,9 +581,9 @@ describe("useTamboMcpPromptList - individual server caching", () => {
 
     // Add server B
     rerender(
-      <TamboClientContext.Provider
+      <GenuiClientContext.Provider
         value={{
-          client: { baseURL: "https://api.tambo.co" } as any,
+          client: { baseURL: "https://api.genui.co" } as any,
           queryClient,
           isUpdatingToken: false,
           tokenExchangeError: null,
@@ -591,7 +591,7 @@ describe("useTamboMcpPromptList - individual server caching", () => {
           hasValidToken: false,
         }}
       >
-        <TamboRegistryProvider
+        <GenuiRegistryProvider
           mcpServers={[
             {
               url: "https://server-a.example",
@@ -603,13 +603,13 @@ describe("useTamboMcpPromptList - individual server caching", () => {
             },
           ]}
         >
-          <TamboMcpTokenProvider>
-            <TamboMcpProvider>
+          <GenuiMcpTokenProvider>
+            <GenuiMcpProvider>
               <Capture />
-            </TamboMcpProvider>
-          </TamboMcpTokenProvider>
-        </TamboRegistryProvider>
-      </TamboClientContext.Provider>,
+            </GenuiMcpProvider>
+          </GenuiMcpTokenProvider>
+        </GenuiRegistryProvider>
+      </GenuiClientContext.Provider>,
     );
 
     // Wait for server B prompts to be added
@@ -624,7 +624,7 @@ describe("useTamboMcpPromptList - individual server caching", () => {
   });
 });
 
-describe("useTamboMcpPromptList - search filtering", () => {
+describe("useGenuiMcpPromptList - search filtering", () => {
   let queryClient: QueryClient;
 
   beforeEach(() => {
@@ -668,7 +668,7 @@ describe("useTamboMcpPromptList - search filtering", () => {
 
     let capturedPrompts: ListPromptEntry[] = [];
     const Capture: React.FC<{ search?: string }> = ({ search }) => {
-      const { data: prompts } = useTamboMcpPromptList(search);
+      const { data: prompts } = useGenuiMcpPromptList(search);
       useEffect(() => {
         if (prompts) {
           capturedPrompts = prompts;
@@ -678,9 +678,9 @@ describe("useTamboMcpPromptList - search filtering", () => {
     };
 
     const { rerender } = render(
-      <TamboClientContext.Provider
+      <GenuiClientContext.Provider
         value={{
-          client: { baseURL: "https://api.tambo.co" } as any,
+          client: { baseURL: "https://api.genui.co" } as any,
           queryClient,
           isUpdatingToken: false,
           tokenExchangeError: null,
@@ -688,7 +688,7 @@ describe("useTamboMcpPromptList - search filtering", () => {
           hasValidToken: false,
         }}
       >
-        <TamboRegistryProvider
+        <GenuiRegistryProvider
           mcpServers={[
             {
               url: "https://server-a.example",
@@ -696,13 +696,13 @@ describe("useTamboMcpPromptList - search filtering", () => {
             },
           ]}
         >
-          <TamboMcpTokenProvider>
-            <TamboMcpProvider>
+          <GenuiMcpTokenProvider>
+            <GenuiMcpProvider>
               <Capture />
-            </TamboMcpProvider>
-          </TamboMcpTokenProvider>
-        </TamboRegistryProvider>
-      </TamboClientContext.Provider>,
+            </GenuiMcpProvider>
+          </GenuiMcpTokenProvider>
+        </GenuiRegistryProvider>
+      </GenuiClientContext.Provider>,
     );
 
     // Wait for all prompts to be loaded (no search)
@@ -712,9 +712,9 @@ describe("useTamboMcpPromptList - search filtering", () => {
 
     // Now search for "issue"
     rerender(
-      <TamboClientContext.Provider
+      <GenuiClientContext.Provider
         value={{
-          client: { baseURL: "https://api.tambo.co" } as any,
+          client: { baseURL: "https://api.genui.co" } as any,
           queryClient,
           isUpdatingToken: false,
           tokenExchangeError: null,
@@ -722,7 +722,7 @@ describe("useTamboMcpPromptList - search filtering", () => {
           hasValidToken: false,
         }}
       >
-        <TamboRegistryProvider
+        <GenuiRegistryProvider
           mcpServers={[
             {
               url: "https://server-a.example",
@@ -730,13 +730,13 @@ describe("useTamboMcpPromptList - search filtering", () => {
             },
           ]}
         >
-          <TamboMcpTokenProvider>
-            <TamboMcpProvider>
+          <GenuiMcpTokenProvider>
+            <GenuiMcpProvider>
               <Capture search="issue" />
-            </TamboMcpProvider>
-          </TamboMcpTokenProvider>
-        </TamboRegistryProvider>
-      </TamboClientContext.Provider>,
+            </GenuiMcpProvider>
+          </GenuiMcpTokenProvider>
+        </GenuiRegistryProvider>
+      </GenuiClientContext.Provider>,
     );
 
     // Should only have the create-issue prompt
@@ -775,7 +775,7 @@ describe("useTamboMcpPromptList - search filtering", () => {
 
     let capturedPrompts: ListPromptEntry[] = [];
     const Capture: React.FC<{ search?: string }> = ({ search }) => {
-      const { data: prompts } = useTamboMcpPromptList(search);
+      const { data: prompts } = useGenuiMcpPromptList(search);
       useEffect(() => {
         if (prompts) {
           capturedPrompts = prompts;
@@ -785,9 +785,9 @@ describe("useTamboMcpPromptList - search filtering", () => {
     };
 
     render(
-      <TamboClientContext.Provider
+      <GenuiClientContext.Provider
         value={{
-          client: { baseURL: "https://api.tambo.co" } as any,
+          client: { baseURL: "https://api.genui.co" } as any,
           queryClient,
           isUpdatingToken: false,
           tokenExchangeError: null,
@@ -795,7 +795,7 @@ describe("useTamboMcpPromptList - search filtering", () => {
           hasValidToken: false,
         }}
       >
-        <TamboRegistryProvider
+        <GenuiRegistryProvider
           mcpServers={[
             {
               url: "https://server-a.example",
@@ -803,13 +803,13 @@ describe("useTamboMcpPromptList - search filtering", () => {
             },
           ]}
         >
-          <TamboMcpTokenProvider>
-            <TamboMcpProvider>
+          <GenuiMcpTokenProvider>
+            <GenuiMcpProvider>
               <Capture search="CREATE" />
-            </TamboMcpProvider>
-          </TamboMcpTokenProvider>
-        </TamboRegistryProvider>
-      </TamboClientContext.Provider>,
+            </GenuiMcpProvider>
+          </GenuiMcpTokenProvider>
+        </GenuiRegistryProvider>
+      </GenuiClientContext.Provider>,
     );
 
     // Should find "Create-Issue" even though search is uppercase
@@ -821,7 +821,7 @@ describe("useTamboMcpPromptList - search filtering", () => {
   });
 });
 
-describe("useTamboMcpResourceList - resource management", () => {
+describe("useGenuiMcpResourceList - resource management", () => {
   let queryClient: QueryClient;
 
   beforeEach(() => {
@@ -927,7 +927,7 @@ describe("useTamboMcpResourceList - resource management", () => {
 
     let capturedResources: ListResourceEntry[] = [];
     const Capture: React.FC = () => {
-      const { data: resources } = useTamboMcpResourceList();
+      const { data: resources } = useGenuiMcpResourceList();
       useEffect(() => {
         if (resources) {
           capturedResources = resources;
@@ -937,9 +937,9 @@ describe("useTamboMcpResourceList - resource management", () => {
     };
 
     render(
-      <TamboClientContext.Provider
+      <GenuiClientContext.Provider
         value={{
-          client: { baseURL: "https://api.tambo.co" } as any,
+          client: { baseURL: "https://api.genui.co" } as any,
           queryClient,
           isUpdatingToken: false,
           tokenExchangeError: null,
@@ -947,7 +947,7 @@ describe("useTamboMcpResourceList - resource management", () => {
           hasValidToken: false,
         }}
       >
-        <TamboRegistryProvider
+        <GenuiRegistryProvider
           mcpServers={[
             {
               url: "https://server-a.example",
@@ -959,13 +959,13 @@ describe("useTamboMcpResourceList - resource management", () => {
             },
           ]}
         >
-          <TamboMcpTokenProvider>
-            <TamboMcpProvider>
+          <GenuiMcpTokenProvider>
+            <GenuiMcpProvider>
               <Capture />
-            </TamboMcpProvider>
-          </TamboMcpTokenProvider>
-        </TamboRegistryProvider>
-      </TamboClientContext.Provider>,
+            </GenuiMcpProvider>
+          </GenuiMcpTokenProvider>
+        </GenuiRegistryProvider>
+      </GenuiClientContext.Provider>,
     );
 
     // Wait for all resources to be loaded
@@ -1024,7 +1024,7 @@ describe("useTamboMcpResourceList - resource management", () => {
 
     let capturedResources: ListResourceEntry[] = [];
     const Capture: React.FC = () => {
-      const { data: resources } = useTamboMcpResourceList();
+      const { data: resources } = useGenuiMcpResourceList();
       useEffect(() => {
         if (resources) {
           capturedResources = resources;
@@ -1034,9 +1034,9 @@ describe("useTamboMcpResourceList - resource management", () => {
     };
 
     render(
-      <TamboClientContext.Provider
+      <GenuiClientContext.Provider
         value={{
-          client: { baseURL: "https://api.tambo.co" } as any,
+          client: { baseURL: "https://api.genui.co" } as any,
           queryClient,
           isUpdatingToken: false,
           tokenExchangeError: null,
@@ -1044,7 +1044,7 @@ describe("useTamboMcpResourceList - resource management", () => {
           hasValidToken: false,
         }}
       >
-        <TamboRegistryProvider
+        <GenuiRegistryProvider
           mcpServers={[
             {
               url: "https://server-a.example",
@@ -1052,13 +1052,13 @@ describe("useTamboMcpResourceList - resource management", () => {
             },
           ]}
         >
-          <TamboMcpTokenProvider>
-            <TamboMcpProvider>
+          <GenuiMcpTokenProvider>
+            <GenuiMcpProvider>
               <Capture />
-            </TamboMcpProvider>
-          </TamboMcpTokenProvider>
-        </TamboRegistryProvider>
-      </TamboClientContext.Provider>,
+            </GenuiMcpProvider>
+          </GenuiMcpTokenProvider>
+        </GenuiRegistryProvider>
+      </GenuiClientContext.Provider>,
     );
 
     await waitFor(() => {
@@ -1128,7 +1128,7 @@ describe("useTamboMcpResourceList - resource management", () => {
 
     let capturedResources: ListResourceEntry[] = [];
     const Capture: React.FC = () => {
-      const { data: resources } = useTamboMcpResourceList();
+      const { data: resources } = useGenuiMcpResourceList();
       useEffect(() => {
         if (resources) {
           capturedResources = resources;
@@ -1138,9 +1138,9 @@ describe("useTamboMcpResourceList - resource management", () => {
     };
 
     const { rerender } = render(
-      <TamboClientContext.Provider
+      <GenuiClientContext.Provider
         value={{
-          client: { baseURL: "https://api.tambo.co" } as any,
+          client: { baseURL: "https://api.genui.co" } as any,
           queryClient,
           isUpdatingToken: false,
           tokenExchangeError: null,
@@ -1148,7 +1148,7 @@ describe("useTamboMcpResourceList - resource management", () => {
           hasValidToken: false,
         }}
       >
-        <TamboRegistryProvider
+        <GenuiRegistryProvider
           mcpServers={[
             {
               url: "https://server-a.example",
@@ -1160,13 +1160,13 @@ describe("useTamboMcpResourceList - resource management", () => {
             },
           ]}
         >
-          <TamboMcpTokenProvider>
-            <TamboMcpProvider>
+          <GenuiMcpTokenProvider>
+            <GenuiMcpProvider>
               <Capture />
-            </TamboMcpProvider>
-          </TamboMcpTokenProvider>
-        </TamboRegistryProvider>
-      </TamboClientContext.Provider>,
+            </GenuiMcpProvider>
+          </GenuiMcpTokenProvider>
+        </GenuiRegistryProvider>
+      </GenuiClientContext.Provider>,
     );
 
     // Wait for all resources to be loaded (prefixed)
@@ -1180,9 +1180,9 @@ describe("useTamboMcpResourceList - resource management", () => {
 
     // Now remove server B
     rerender(
-      <TamboClientContext.Provider
+      <GenuiClientContext.Provider
         value={{
-          client: { baseURL: "https://api.tambo.co" } as any,
+          client: { baseURL: "https://api.genui.co" } as any,
           queryClient,
           isUpdatingToken: false,
           tokenExchangeError: null,
@@ -1190,7 +1190,7 @@ describe("useTamboMcpResourceList - resource management", () => {
           hasValidToken: false,
         }}
       >
-        <TamboRegistryProvider
+        <GenuiRegistryProvider
           mcpServers={[
             {
               url: "https://server-a.example",
@@ -1198,13 +1198,13 @@ describe("useTamboMcpResourceList - resource management", () => {
             },
           ]}
         >
-          <TamboMcpTokenProvider>
-            <TamboMcpProvider>
+          <GenuiMcpTokenProvider>
+            <GenuiMcpProvider>
               <Capture />
-            </TamboMcpProvider>
-          </TamboMcpTokenProvider>
-        </TamboRegistryProvider>
-      </TamboClientContext.Provider>,
+            </GenuiMcpProvider>
+          </GenuiMcpTokenProvider>
+        </GenuiRegistryProvider>
+      </GenuiClientContext.Provider>,
     );
 
     // Wait for server B resources to be removed (prefixes maintained)
@@ -1221,7 +1221,7 @@ describe("useTamboMcpResourceList - resource management", () => {
   });
 });
 
-describe("useTamboMcpResourceList - search filtering", () => {
+describe("useGenuiMcpResourceList - search filtering", () => {
   let queryClient: QueryClient;
 
   beforeEach(() => {
@@ -1277,7 +1277,7 @@ describe("useTamboMcpResourceList - search filtering", () => {
 
     let capturedResources: ListResourceEntry[] = [];
     const Capture: React.FC<{ search?: string }> = ({ search }) => {
-      const { data: resources } = useTamboMcpResourceList(search);
+      const { data: resources } = useGenuiMcpResourceList(search);
       useEffect(() => {
         if (resources) {
           capturedResources = resources;
@@ -1287,9 +1287,9 @@ describe("useTamboMcpResourceList - search filtering", () => {
     };
 
     const { rerender } = render(
-      <TamboClientContext.Provider
+      <GenuiClientContext.Provider
         value={{
-          client: { baseURL: "https://api.tambo.co" } as any,
+          client: { baseURL: "https://api.genui.co" } as any,
           queryClient,
           isUpdatingToken: false,
           tokenExchangeError: null,
@@ -1297,7 +1297,7 @@ describe("useTamboMcpResourceList - search filtering", () => {
           hasValidToken: false,
         }}
       >
-        <TamboRegistryProvider
+        <GenuiRegistryProvider
           mcpServers={[
             {
               url: "https://server-a.example",
@@ -1305,13 +1305,13 @@ describe("useTamboMcpResourceList - search filtering", () => {
             },
           ]}
         >
-          <TamboMcpTokenProvider>
-            <TamboMcpProvider>
+          <GenuiMcpTokenProvider>
+            <GenuiMcpProvider>
               <Capture />
-            </TamboMcpProvider>
-          </TamboMcpTokenProvider>
-        </TamboRegistryProvider>
-      </TamboClientContext.Provider>,
+            </GenuiMcpProvider>
+          </GenuiMcpTokenProvider>
+        </GenuiRegistryProvider>
+      </GenuiClientContext.Provider>,
     );
 
     // Wait for all resources to be loaded (no search)
@@ -1321,9 +1321,9 @@ describe("useTamboMcpResourceList - search filtering", () => {
 
     // Now search for "document"
     rerender(
-      <TamboClientContext.Provider
+      <GenuiClientContext.Provider
         value={{
-          client: { baseURL: "https://api.tambo.co" } as any,
+          client: { baseURL: "https://api.genui.co" } as any,
           queryClient,
           isUpdatingToken: false,
           tokenExchangeError: null,
@@ -1331,7 +1331,7 @@ describe("useTamboMcpResourceList - search filtering", () => {
           hasValidToken: false,
         }}
       >
-        <TamboRegistryProvider
+        <GenuiRegistryProvider
           mcpServers={[
             {
               url: "https://server-a.example",
@@ -1339,13 +1339,13 @@ describe("useTamboMcpResourceList - search filtering", () => {
             },
           ]}
         >
-          <TamboMcpTokenProvider>
-            <TamboMcpProvider>
+          <GenuiMcpTokenProvider>
+            <GenuiMcpProvider>
               <Capture search="document" />
-            </TamboMcpProvider>
-          </TamboMcpTokenProvider>
-        </TamboRegistryProvider>
-      </TamboClientContext.Provider>,
+            </GenuiMcpProvider>
+          </GenuiMcpTokenProvider>
+        </GenuiRegistryProvider>
+      </GenuiClientContext.Provider>,
     );
 
     // Should only have the document resource
@@ -1379,7 +1379,7 @@ describe("useTamboMcpResourceList - search filtering", () => {
 
     let capturedResources: ListResourceEntry[] = [];
     const Capture: React.FC<{ search?: string }> = ({ search }) => {
-      const { data: resources } = useTamboMcpResourceList(search);
+      const { data: resources } = useGenuiMcpResourceList(search);
       useEffect(() => {
         if (resources) {
           capturedResources = resources;
@@ -1389,9 +1389,9 @@ describe("useTamboMcpResourceList - search filtering", () => {
     };
 
     const { rerender } = render(
-      <TamboClientContext.Provider
+      <GenuiClientContext.Provider
         value={{
-          client: { baseURL: "https://api.tambo.co" } as any,
+          client: { baseURL: "https://api.genui.co" } as any,
           queryClient,
           isUpdatingToken: false,
           tokenExchangeError: null,
@@ -1399,17 +1399,17 @@ describe("useTamboMcpResourceList - search filtering", () => {
           hasValidToken: false,
         }}
       >
-        <TamboRegistryProvider
+        <GenuiRegistryProvider
           listResources={listResources}
           getResource={getResource}
         >
-          <TamboMcpTokenProvider>
-            <TamboMcpProvider>
+          <GenuiMcpTokenProvider>
+            <GenuiMcpProvider>
               <Capture search="foo" />
-            </TamboMcpProvider>
-          </TamboMcpTokenProvider>
-        </TamboRegistryProvider>
-      </TamboClientContext.Provider>,
+            </GenuiMcpProvider>
+          </GenuiMcpTokenProvider>
+        </GenuiRegistryProvider>
+      </GenuiClientContext.Provider>,
     );
 
     // Wait for dynamic resource to be generated
@@ -1425,9 +1425,9 @@ describe("useTamboMcpResourceList - search filtering", () => {
 
     // Now search for "bar"
     rerender(
-      <TamboClientContext.Provider
+      <GenuiClientContext.Provider
         value={{
-          client: { baseURL: "https://api.tambo.co" } as any,
+          client: { baseURL: "https://api.genui.co" } as any,
           queryClient,
           isUpdatingToken: false,
           tokenExchangeError: null,
@@ -1435,17 +1435,17 @@ describe("useTamboMcpResourceList - search filtering", () => {
           hasValidToken: false,
         }}
       >
-        <TamboRegistryProvider
+        <GenuiRegistryProvider
           listResources={listResources}
           getResource={getResource}
         >
-          <TamboMcpTokenProvider>
-            <TamboMcpProvider>
+          <GenuiMcpTokenProvider>
+            <GenuiMcpProvider>
               <Capture search="bar" />
-            </TamboMcpProvider>
-          </TamboMcpTokenProvider>
-        </TamboRegistryProvider>
-      </TamboClientContext.Provider>,
+            </GenuiMcpProvider>
+          </GenuiMcpTokenProvider>
+        </GenuiRegistryProvider>
+      </GenuiClientContext.Provider>,
     );
 
     // Wait for new dynamic resource
@@ -1478,7 +1478,7 @@ describe("useTamboMcpResourceList - search filtering", () => {
 
     let capturedResources: ListResourceEntry[] = [];
     const Capture: React.FC<{ search?: string }> = ({ search }) => {
-      const { data: resources } = useTamboMcpResourceList(search);
+      const { data: resources } = useGenuiMcpResourceList(search);
       useEffect(() => {
         if (resources) {
           capturedResources = resources;
@@ -1488,9 +1488,9 @@ describe("useTamboMcpResourceList - search filtering", () => {
     };
 
     render(
-      <TamboClientContext.Provider
+      <GenuiClientContext.Provider
         value={{
-          client: { baseURL: "https://api.tambo.co" } as any,
+          client: { baseURL: "https://api.genui.co" } as any,
           queryClient,
           isUpdatingToken: false,
           tokenExchangeError: null,
@@ -1498,17 +1498,17 @@ describe("useTamboMcpResourceList - search filtering", () => {
           hasValidToken: false,
         }}
       >
-        <TamboRegistryProvider
+        <GenuiRegistryProvider
           listResources={listResources}
           getResource={getResource}
         >
-          <TamboMcpTokenProvider>
-            <TamboMcpProvider>
+          <GenuiMcpTokenProvider>
+            <GenuiMcpProvider>
               <Capture search="foo" />
-            </TamboMcpProvider>
-          </TamboMcpTokenProvider>
-        </TamboRegistryProvider>
-      </TamboClientContext.Provider>,
+            </GenuiMcpProvider>
+          </GenuiMcpTokenProvider>
+        </GenuiRegistryProvider>
+      </GenuiClientContext.Provider>,
     );
 
     await waitFor(() => {
@@ -1572,7 +1572,7 @@ describe("useTamboMcpResourceList - search filtering", () => {
 
     let capturedResources: ListResourceEntry[] = [];
     const Capture: React.FC<{ search?: string }> = ({ search }) => {
-      const { data: resources } = useTamboMcpResourceList(search);
+      const { data: resources } = useGenuiMcpResourceList(search);
       useEffect(() => {
         if (resources) {
           capturedResources = resources;
@@ -1582,9 +1582,9 @@ describe("useTamboMcpResourceList - search filtering", () => {
     };
 
     render(
-      <TamboClientContext.Provider
+      <GenuiClientContext.Provider
         value={{
-          client: { baseURL: "https://api.tambo.co" } as any,
+          client: { baseURL: "https://api.genui.co" } as any,
           queryClient,
           isUpdatingToken: false,
           tokenExchangeError: null,
@@ -1592,7 +1592,7 @@ describe("useTamboMcpResourceList - search filtering", () => {
           hasValidToken: false,
         }}
       >
-        <TamboRegistryProvider
+        <GenuiRegistryProvider
           mcpServers={[
             {
               url: "https://server-a.example",
@@ -1602,13 +1602,13 @@ describe("useTamboMcpResourceList - search filtering", () => {
           listResources={listResources}
           getResource={getResource}
         >
-          <TamboMcpTokenProvider>
-            <TamboMcpProvider>
+          <GenuiMcpTokenProvider>
+            <GenuiMcpProvider>
               <Capture search="apple" />
-            </TamboMcpProvider>
-          </TamboMcpTokenProvider>
-        </TamboRegistryProvider>
-      </TamboClientContext.Provider>,
+            </GenuiMcpProvider>
+          </GenuiMcpTokenProvider>
+        </GenuiRegistryProvider>
+      </GenuiClientContext.Provider>,
     );
 
     // Wait for resources
@@ -1627,7 +1627,7 @@ describe("useTamboMcpResourceList - search filtering", () => {
   });
 });
 
-describe("useTamboMcpResource - read individual resource", () => {
+describe("useGenuiMcpResource - read individual resource", () => {
   let queryClient: QueryClient;
 
   beforeEach(() => {
@@ -1685,7 +1685,7 @@ describe("useTamboMcpResource - read individual resource", () => {
     let capturedResourceData: any = null;
     const Capture: React.FC = () => {
       // MCP resources are always prefixed, even with single server
-      const { data: resourceData } = useTamboMcpResource(
+      const { data: resourceData } = useGenuiMcpResource(
         "server-a:file:///home/user/doc.txt",
       );
       useEffect(() => {
@@ -1697,9 +1697,9 @@ describe("useTamboMcpResource - read individual resource", () => {
     };
 
     render(
-      <TamboClientContext.Provider
+      <GenuiClientContext.Provider
         value={{
-          client: { baseURL: "https://api.tambo.co" } as any,
+          client: { baseURL: "https://api.genui.co" } as any,
           queryClient,
           isUpdatingToken: false,
           tokenExchangeError: null,
@@ -1707,7 +1707,7 @@ describe("useTamboMcpResource - read individual resource", () => {
           hasValidToken: false,
         }}
       >
-        <TamboRegistryProvider
+        <GenuiRegistryProvider
           mcpServers={[
             {
               url: "https://server-a.example",
@@ -1715,13 +1715,13 @@ describe("useTamboMcpResource - read individual resource", () => {
             },
           ]}
         >
-          <TamboMcpTokenProvider>
-            <TamboMcpProvider>
+          <GenuiMcpTokenProvider>
+            <GenuiMcpProvider>
               <Capture />
-            </TamboMcpProvider>
-          </TamboMcpTokenProvider>
-        </TamboRegistryProvider>
-      </TamboClientContext.Provider>,
+            </GenuiMcpProvider>
+          </GenuiMcpTokenProvider>
+        </GenuiRegistryProvider>
+      </GenuiClientContext.Provider>,
     );
 
     await waitFor(() => {
@@ -1799,7 +1799,7 @@ describe("useTamboMcpResource - read individual resource", () => {
     let capturedResourceData: any = null;
     const Capture: React.FC = () => {
       // Request with prefix
-      const { data: resourceData } = useTamboMcpResource(
+      const { data: resourceData } = useGenuiMcpResource(
         "server-a:file:///home/user/doc.txt",
       );
       useEffect(() => {
@@ -1811,9 +1811,9 @@ describe("useTamboMcpResource - read individual resource", () => {
     };
 
     render(
-      <TamboClientContext.Provider
+      <GenuiClientContext.Provider
         value={{
-          client: { baseURL: "https://api.tambo.co" } as any,
+          client: { baseURL: "https://api.genui.co" } as any,
           queryClient,
           isUpdatingToken: false,
           tokenExchangeError: null,
@@ -1821,7 +1821,7 @@ describe("useTamboMcpResource - read individual resource", () => {
           hasValidToken: false,
         }}
       >
-        <TamboRegistryProvider
+        <GenuiRegistryProvider
           mcpServers={[
             {
               url: "https://server-a.example",
@@ -1833,13 +1833,13 @@ describe("useTamboMcpResource - read individual resource", () => {
             },
           ]}
         >
-          <TamboMcpTokenProvider>
-            <TamboMcpProvider>
+          <GenuiMcpTokenProvider>
+            <GenuiMcpProvider>
               <Capture />
-            </TamboMcpProvider>
-          </TamboMcpTokenProvider>
-        </TamboRegistryProvider>
-      </TamboClientContext.Provider>,
+            </GenuiMcpProvider>
+          </GenuiMcpTokenProvider>
+        </GenuiRegistryProvider>
+      </GenuiClientContext.Provider>,
     );
 
     await waitFor(() => {
@@ -1871,7 +1871,7 @@ describe("useTamboMcpResource - read individual resource", () => {
     let capturedResourceData: any = null;
     const Capture: React.FC = () => {
       // Request with registry: prefix
-      const { data: resourceData } = useTamboMcpResource(prefixedUri);
+      const { data: resourceData } = useGenuiMcpResource(prefixedUri);
       useEffect(() => {
         if (resourceData) {
           capturedResourceData = resourceData;
@@ -1881,9 +1881,9 @@ describe("useTamboMcpResource - read individual resource", () => {
     };
 
     render(
-      <TamboClientContext.Provider
+      <GenuiClientContext.Provider
         value={{
-          client: { baseURL: "https://api.tambo.co" } as any,
+          client: { baseURL: "https://api.genui.co" } as any,
           queryClient,
           isUpdatingToken: false,
           tokenExchangeError: null,
@@ -1891,17 +1891,17 @@ describe("useTamboMcpResource - read individual resource", () => {
           hasValidToken: false,
         }}
       >
-        <TamboRegistryProvider
+        <GenuiRegistryProvider
           listResources={listResources}
           getResource={getResource}
         >
-          <TamboMcpTokenProvider>
-            <TamboMcpProvider>
+          <GenuiMcpTokenProvider>
+            <GenuiMcpProvider>
               <Capture />
-            </TamboMcpProvider>
-          </TamboMcpTokenProvider>
-        </TamboRegistryProvider>
-      </TamboClientContext.Provider>,
+            </GenuiMcpProvider>
+          </GenuiMcpTokenProvider>
+        </GenuiRegistryProvider>
+      </GenuiClientContext.Provider>,
     );
 
     await waitFor(() => {

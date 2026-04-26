@@ -7,7 +7,7 @@ import {
   MessageContent,
   MessageRenderedComponentArea,
   ReasoningInfo,
-} from "@tambo-ai/ui-registry/components/message";
+} from "@workspace/ui-registry/components/message";
 
 export default function MessagePage() {
   // Sample message data for examples
@@ -121,7 +121,7 @@ export default function MessagePage() {
                 </div>
               </Message>
             }
-            code={`import { Message, MessageContent } from "@/components/tambo/message";
+            code={`import { Message, MessageContent } from "@/components/genui/message";
 
 export function UserMessage() {
   return (
@@ -154,7 +154,7 @@ export function UserMessage() {
                 </div>
               </Message>
             }
-            code={`import { Message, MessageContent } from "@/components/tambo/message";
+            code={`import { Message, MessageContent } from "@/components/genui/message";
 
 export function AssistantMessage() {
   return (
@@ -192,7 +192,7 @@ export function AssistantMessage() {
   Message,
   MessageContent,
   ReasoningInfo,
-} from "@/components/tambo/message";
+} from "@/components/genui/message";
 
 export function MessageWithReasoning() {
   return (
@@ -226,7 +226,7 @@ export function MessageWithReasoning() {
   Message,
   MessageContent,
   MessageRenderedComponentArea,
-} from "@/components/tambo/message";
+} from "@/components/genui/message";
 
 export function MessageWithComponent() {
   return (
@@ -255,7 +255,7 @@ export function MessageWithComponent() {
                 </div>
               </Message>
             }
-            code={`import { Message, MessageContent } from "@/components/tambo/message";
+            code={`import { Message, MessageContent } from "@/components/genui/message";
 
 export function SolidMessage() {
   return (
@@ -284,7 +284,7 @@ export function SolidMessage() {
                 </div>
               </Message>
             }
-            code={`import { Message, MessageContent } from "@/components/tambo/message";
+            code={`import { Message, MessageContent } from "@/components/genui/message";
 
 export function LoadingMessage() {
   return (
@@ -323,7 +323,7 @@ export function LoadingMessage() {
   Message,
   MessageContent,
   ReasoningInfo,
-} from "@/components/tambo/message";
+} from "@/components/genui/message";
 
 export function ThinkingMessage() {
   return (
@@ -341,7 +341,7 @@ export function ThinkingMessage() {
       </section>
 
       <section>
-        <InstallationSection cliCommand="npx tambo add message" />
+        <InstallationSection cliCommand="npx genui add message" />
       </section>
 
       <section className="space-y-6">
@@ -368,10 +368,10 @@ export function ThinkingMessage() {
                 </tr>
                 <tr>
                   <td>message</td>
-                  <td>TamboThreadMessage</td>
+                  <td>GenuiThreadMessage</td>
                   <td>-</td>
                   <td>
-                    The full Tambo thread message object. Can include optional{" "}
+                    The full Genui thread message object. Can include optional{" "}
                     <code>reasoning</code> field (string[]) for displaying AI
                     reasoning steps.
                   </td>

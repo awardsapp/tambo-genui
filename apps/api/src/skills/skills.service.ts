@@ -4,17 +4,17 @@ import {
   type ProviderSkillReference,
   modelSupportsSkills,
   SKILLS_SUPPORTED_PROVIDERS,
-} from "@tambo-ai-cloud/core";
-import { type HydraDatabase, operations, schema } from "@tambo-ai-cloud/db";
+} from "@workspace-cloud/core";
+import { type HydraDatabase, operations, schema } from "@workspace-cloud/db";
 import {
   deleteSkillFromProvider,
   uploadSkillToProvider,
-} from "@tambo-ai-cloud/backend";
+} from "@workspace-cloud/backend";
 import { DATABASE } from "../common/database-provider";
 
 /**
  * Service for managing skills on provider APIs (OpenAI, Anthropic).
- * Delegates to shared helpers in @tambo-ai-cloud/backend for the actual
+ * Delegates to shared helpers in @workspace-cloud/backend for the actual
  * provider API calls.
  */
 @Injectable()

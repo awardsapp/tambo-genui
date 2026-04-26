@@ -6,11 +6,11 @@
   },
   "metadata": {
     "description": "Official Tambo plugins for Claude Code",
-    "homepage": "https://tambo.co"
+    "homepage": "https://genui.co"
   },
   "plugins": [
     {
-      "name": "tambo",
+      "name": "genui",
       "source": "./plugins/tambo",
       "description": "Build agents that speak your UI",
       "version": "1.0.0",

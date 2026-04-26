@@ -5,12 +5,12 @@ import { useLayoutEffect, useState } from "react";
 /**
  * Custom hook to generate a user-specific context key
  * @param baseKey - The base context key to append the user ID to
- * @param storageKey - Optional localStorage key to store the user ID (defaults to "tambo-user-id")
+ * @param storageKey - Optional localStorage key to store the user ID (defaults to "genui-user-id")
  * @returns A user-specific context key
  */
 export function useUserContextKey(
   baseKey: string,
-  storageKey = "tambo-user-id",
+  storageKey = "genui-user-id",
 ): string {
   const [userId] = useState(() => {
     if (typeof window === "undefined") {

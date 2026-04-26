@@ -1,7 +1,7 @@
 "use client";
 
 import { useRender } from "@base-ui/react/use-render";
-import { useTambo, useTamboThreadList } from "@tambo-ai/react";
+import { useGenui, useGenuiThreadList } from "@workspace/react";
 import * as React from "react";
 import { ThreadDropdownContext } from "./thread-dropdown-context";
 
@@ -32,8 +32,8 @@ export const ThreadDropdownRoot = React.forwardRef<
   const onThreadChangeRef = React.useRef(onThreadChange);
   onThreadChangeRef.current = onThreadChange;
 
-  const { data, isLoading, error, refetch } = useTamboThreadList();
-  const { switchThread, startNewThread, currentThreadId } = useTambo();
+  const { data, isLoading, error, refetch } = useGenuiThreadList();
+  const { switchThread, startNewThread, currentThreadId } = useGenui();
 
   const threads = React.useMemo(() => data?.threads ?? [], [data?.threads]);
 

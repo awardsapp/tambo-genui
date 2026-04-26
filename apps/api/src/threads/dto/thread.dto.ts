@@ -1,5 +1,5 @@
 import { ApiProperty, ApiSchema } from "@nestjs/swagger";
-import { GenerationStage } from "@tambo-ai-cloud/core";
+import { GenerationStage } from "@workspace-cloud/core";
 import { IsEnum, IsOptional, IsString } from "class-validator";
 import { ThreadMessageDto } from "./message.dto";
 

@@ -1,4 +1,4 @@
-import { OAuthValidationMode } from "@tambo-ai-cloud/core";
+import { OAuthValidationMode } from "@workspace-cloud/core";
 import { z } from "zod/v3";
 
 /**

@@ -3,8 +3,8 @@ import type {
   ChatCompletionContentPartUnion,
   Resource,
   ResourceAnnotations,
-} from "@tambo-ai-cloud/core";
-import { ActionType, ContentPartType, MessageRole } from "@tambo-ai-cloud/core";
+} from "@workspace-cloud/core";
+import { ActionType, ContentPartType, MessageRole } from "@workspace-cloud/core";
 import { IsEnum, IsNotEmpty, IsOptional, ValidateIf } from "class-validator";
 import { type OpenAI } from "openai";
 import {

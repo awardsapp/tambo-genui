@@ -1,6 +1,6 @@
 # Manual QA Testing Checklist
 
-Comprehensive manual QA checklist covering all standard user flows across Tambo Cloud, CLI, SDK, API, and Documentation.
+Comprehensive manual QA checklist covering all standard user flows across Genui Cloud, CLI, SDK, API, and Documentation.
 
 ---
 
@@ -120,7 +120,7 @@ The smoketest page is the primary integration surface. It exercises ThreadConten
 
 ### apps/web Dashboard
 
-**16. Open Tambo Cloud chat panel (Cmd+K)**
+**16. Open Genui Cloud chat panel (Cmd+K)**
 
 - [ ] Send a message, see panel stream a response with tools
 - [ ] Drag the resize handle
@@ -403,4 +403,4 @@ The smoketest page is the primary integration surface. It exercises ThreadConten
 - [ ] **Deep linking** — direct URLs to project/settings/observability work
 - [ ] **Browser back/forward** — navigation history works correctly
 - [ ] **Multiple tabs** — app works in multiple tabs simultaneously
-- [ ] **Telemetry opt-out** — `TAMBO_TELEMETRY_DISABLED=1` prevents CLI tracking
+- [ ] **Telemetry opt-out** — `GENUI_TELEMETRY_DISABLED=1` prevents CLI tracking

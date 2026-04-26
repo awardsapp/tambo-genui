@@ -9,7 +9,7 @@ import {
   OAuthValidationMode,
   ToolProviderType,
   type CustomLlmParameters,
-} from "@tambo-ai-cloud/core";
+} from "@workspace-cloud/core";
 import { randomBytes } from "crypto";
 import { and, eq, isNotNull, isNull, sql } from "drizzle-orm";
 import * as schema from "../schema";

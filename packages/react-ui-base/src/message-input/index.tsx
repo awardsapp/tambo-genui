@@ -21,7 +21,7 @@ import { MessageInputValueAccess } from "./message-input-value-access";
  *
  * @example
  * ```tsx
- * import { MessageInput } from "@tambo-ai/react-ui-base/message-input";
+ * import { MessageInput } from "@workspace/react-ui-base/message-input";
  *
  * function MyMessageInput() {
  *   return (
@@ -94,7 +94,7 @@ export type {
   ResourceItem,
   ResourceProvider,
   StagedImage,
-  TamboEditor,
+  GenuiEditor,
 } from "./message-input-context";
 export type {
   MessageInputElicitationProps,

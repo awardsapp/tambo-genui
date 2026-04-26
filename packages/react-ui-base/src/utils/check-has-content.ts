@@ -1,4 +1,4 @@
-import type { Content, TamboThreadMessage } from "@tambo-ai/react";
+import type { Content, GenuiThreadMessage } from "@workspace/react";
 import * as React from "react";
 
 /**
@@ -74,7 +74,7 @@ function hasContentInArrayItem(item: unknown): boolean {
  * @returns True if there is content, false otherwise.
  */
 export function checkHasContent(
-  content: TamboThreadMessage["content"] | React.ReactNode | undefined | null,
+  content: GenuiThreadMessage["content"] | React.ReactNode | undefined | null,
 ): boolean {
   if (content == null) return false;
   if (typeof content === "string") return content.trim().length > 0;

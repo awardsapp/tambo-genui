@@ -39,8 +39,8 @@ export const navigation: NavigationItem[] = [
             href: "/components/control-bar",
           },
           {
-            title: "Edit with Tambo Button",
-            href: "/components/edit-with-tambo-button",
+            title: "Edit with Genui Button",
+            href: "/components/edit-with-genui-button",
           },
         ],
       },
@@ -100,7 +100,7 @@ export const navigation: NavigationItem[] = [
 export const externalLinks = [
   {
     title: "Source Code",
-    href: "https://github.com/tambo-ai/tambo",
+    href: "https://github.com/genui-ai/genui",
     icon: "github",
     external: true,
   },

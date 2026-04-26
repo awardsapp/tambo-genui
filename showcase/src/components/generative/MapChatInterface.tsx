@@ -1,8 +1,8 @@
 "use client";
 
-import type { Suggestion } from "@tambo-ai/react";
-import { MessageThreadFull } from "@tambo-ai/ui-registry/components/message-thread-full";
-import { useTambo } from "@tambo-ai/react";
+import type { Suggestion } from "@workspace/react";
+import { MessageThreadFull } from "@workspace/ui-registry/components/message-thread-full";
+import { useGenui } from "@workspace/react";
 import { useEffect } from "react";
 
 const mapThreadSuggestions = [
@@ -32,12 +32,12 @@ const mapThreadSuggestions = [
 ] satisfies Suggestion[];
 
 export const MapChatInterface = () => {
-  const { registerComponent } = useTambo();
+  const { registerComponent } = useGenui();
 
   useEffect(() => {
     const register = async () => {
       /* Dynamically import the Map component and its schema */
-      const mod = await import("@tambo-ai/ui-registry/components/map");
+      const mod = await import("@workspace/ui-registry/components/map");
       const mapSchema = mod.mapSchema;
       const Map = mod.Map;
 

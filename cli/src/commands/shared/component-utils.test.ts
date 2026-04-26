@@ -48,9 +48,9 @@ describe("Component Location Utilities", () => {
   });
 
   describe("findComponentLocation", () => {
-    it("finds component in tambo/ location", () => {
+    it("finds component in genui/ location", () => {
       vol.fromJSON({
-        "/mock-project/src/components/tambo/message.tsx":
+        "/mock-project/src/components/genui/message.tsx":
           "export const Message = () => <div />;",
       });
 
@@ -63,7 +63,7 @@ describe("Component Location Utilities", () => {
 
       expect(result).not.toBeNull();
       expect(result?.componentPath).toBe(
-        "/mock-project/src/components/tambo/message.tsx",
+        "/mock-project/src/components/genui/message.tsx",
       );
       expect(result?.needsCreation).toBeUndefined();
     });
@@ -84,14 +84,14 @@ describe("Component Location Utilities", () => {
       expect(result).not.toBeNull();
       // Returns new path as destination, but marks needsCreation
       expect(result?.componentPath).toBe(
-        "/mock-project/src/components/tambo/message.tsx",
+        "/mock-project/src/components/genui/message.tsx",
       );
       expect(result?.needsCreation).toBe(true);
     });
 
     it("returns null when component not found", () => {
       vol.fromJSON({
-        "/mock-project/src/components/tambo/.gitkeep": "",
+        "/mock-project/src/components/genui/.gitkeep": "",
       });
 
       const result = findComponentLocation(
@@ -139,9 +139,9 @@ describe("Component Location Utilities", () => {
       expect(result).toBeNull();
     });
 
-    it("prefers tambo/ over ui/ when both exist", () => {
+    it("prefers genui/ over ui/ when both exist", () => {
       vol.fromJSON({
-        "/mock-project/src/components/tambo/message.tsx":
+        "/mock-project/src/components/genui/message.tsx":
           "export const Message = () => <div>New</div>;",
         "/mock-project/src/components/ui/message.tsx":
           "export const Message = () => <div>Legacy</div>;",
@@ -165,8 +165,8 @@ describe("Component Location Utilities", () => {
         // Message in ui/ depends on markdown-components
         "/mock-project/src/components/ui/message.tsx":
           "export const Message = () => <div />;",
-        // markdown-components in tambo/
-        "/mock-project/src/components/tambo/markdown-components.tsx":
+        // markdown-components in genui/
+        "/mock-project/src/components/genui/markdown-components.tsx":
           "export const Markdown = () => <div />;",
         // Config showing message requires markdown-components
         "/custom/registry/components/message/config.json": JSON.stringify({
@@ -192,16 +192,16 @@ describe("Component Location Utilities", () => {
         main: "message",
         mainLocation: "ui",
         dependency: "markdown-components",
-        depLocation: "tambo",
+        depLocation: "genui",
       });
     });
 
     it("returns empty array when no inconsistencies", async () => {
       vol.fromJSON({
-        // Both in tambo/
-        "/mock-project/src/components/tambo/message.tsx":
+        // Both in genui/
+        "/mock-project/src/components/genui/message.tsx":
           "export const Message = () => <div />;",
-        "/mock-project/src/components/tambo/markdown-components.tsx":
+        "/mock-project/src/components/genui/markdown-components.tsx":
           "export const Markdown = () => <div />;",
         "/custom/registry/components/message/config.json": JSON.stringify({
           name: "message",
@@ -231,7 +231,7 @@ describe("Component Location Utilities", () => {
           "export const Message = () => <div />;",
         "/mock-project/src/components/ui/form.tsx":
           "export const Form = () => <div />;",
-        "/mock-project/src/components/tambo/markdown-components.tsx":
+        "/mock-project/src/components/genui/markdown-components.tsx":
           "export const Markdown = () => <div />;",
         "/custom/registry/components/message/config.json": JSON.stringify({
           name: "message",
@@ -266,7 +266,7 @@ describe("Component Location Utilities", () => {
 
     it("skips components without config", async () => {
       vol.fromJSON({
-        "/mock-project/src/components/tambo/message.tsx":
+        "/mock-project/src/components/genui/message.tsx":
           "export const Message = () => <div />;",
         // No config file for message
       });
@@ -282,8 +282,8 @@ describe("Component Location Utilities", () => {
 
     it("detects inconsistencies in support files", async () => {
       vol.fromJSON({
-        // Main component in tambo/
-        "/mock-project/src/components/tambo/message.tsx":
+        // Main component in genui/
+        "/mock-project/src/components/genui/message.tsx":
           "export const Message = () => <div />;",
         // Support component in ui/
         "/mock-project/src/components/ui/message-bubble.tsx":
@@ -310,7 +310,7 @@ describe("Component Location Utilities", () => {
 
     it("handles JSON parse errors gracefully", async () => {
       vol.fromJSON({
-        "/mock-project/src/components/tambo/message.tsx":
+        "/mock-project/src/components/genui/message.tsx":
           "export const Message = () => <div />;",
         "/custom/registry/components/message/config.json": "invalid json{",
       });
@@ -353,7 +353,7 @@ describe("Component Location Utilities", () => {
           main: "message",
           mainLocation: "ui" as const,
           dependency: "markdown-components",
-          depLocation: "tambo" as const,
+          depLocation: "genui" as const,
         },
       ];
 

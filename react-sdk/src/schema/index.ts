@@ -1,4 +1,4 @@
-// Re-exported from @tambo-ai/client
+// Re-exported from @workspace/client
 export {
   looksLikeJSONSchema,
   makeJsonSchemaPartial,
@@ -7,5 +7,5 @@ export {
   schemaToJsonSchema,
   isStandardSchema,
   assertNoRecordSchema,
-} from "@tambo-ai/client";
-export type { SupportedSchema } from "@tambo-ai/client";
+} from "@workspace/client";
+export type { SupportedSchema } from "@workspace/client";

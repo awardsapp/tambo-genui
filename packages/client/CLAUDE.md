@@ -4,4 +4,4 @@
 
 ## Quick Reference
 
-The **@tambo-ai/client** package - framework-agnostic client for Tambo AI streaming, tool execution, and thread management.
+The **@workspace/client** package - framework-agnostic client for Genui AI streaming, tool execution, and thread management.

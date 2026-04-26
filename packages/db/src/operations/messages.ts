@@ -1,4 +1,4 @@
-import { MessageRole } from "@tambo-ai-cloud/core";
+import { MessageRole } from "@workspace-cloud/core";
 import { and, asc, desc, eq, gt, isNotNull, isNull, lt, or } from "drizzle-orm";
 import { schema } from "..";
 import { messages, projectMembers } from "../schema";
@@ -83,7 +83,7 @@ export async function listMessagesPaginated(
 /**
  * Retrieves a message with its associated thread and project information.
  *
- * @param db - The Tambo database instance
+ * @param db - The Genui database instance
  * @param messageId - The message ID to retrieve (format: msg_[8 random chars].[6 char signature])
  * @returns The message with its thread and project, or null if not found
  *
@@ -118,7 +118,7 @@ export async function getMessageWithAccess(
  * This is an optimized query that combines message retrieval and project access check
  * into a single database operation.
  *
- * @param db - The Tambo database instance
+ * @param db - The Genui database instance
  * @param messageId - The message ID to check (format: msg_[8 random chars].[6 char signature])
  * @param userId - The user ID to check access for (UUID format)
  * @returns Object containing access status and project ID if access is granted

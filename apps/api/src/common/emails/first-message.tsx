@@ -33,15 +33,15 @@ function FirstMessageEmailComponent({
           </Text>
           <Text style={listItem}>
             {"\u2022"}{" "}
-            <Link href="https://ui.tambo.co/" style={link}>
-              Try tambo Components
+            <Link href="https://ui.genui.co/" style={link}>
+              Try genui Components
             </Link>{" "}
-            - Try <code>npx tambo add &quot;component-name&quot;</code> to get
-            tambo integrated components
+            - Try <code>npx genui add &quot;component-name&quot;</code> to get
+            genui integrated components
           </Text>
           <Text style={listItem}>
             {"\u2022"}{" "}
-            <Link href="https://docs.tambo.co/concepts/tools" style={link}>
+            <Link href="https://docs.genui.co/concepts/tools" style={link}>
               Register Tools
             </Link>{" "}
             - Register tools in your project
@@ -49,7 +49,7 @@ function FirstMessageEmailComponent({
           <Text style={listItem}>
             {"\u2022"}{" "}
             <Link
-              href="https://docs.tambo.co/concepts/model-context-protocol"
+              href="https://docs.genui.co/concepts/model-context-protocol"
               style={link}
             >
               Use MCP Servers
@@ -58,7 +58,7 @@ function FirstMessageEmailComponent({
           </Text>
           <Text style={paragraph}>
             Questions? Just reply to this email or hop into our{" "}
-            <Link href="https://tambo.co/discord" style={link}>
+            <Link href="https://genui.co/discord" style={link}>
               Discord
             </Link>{" "}
             - we&apos;re always around to help.
@@ -67,7 +67,7 @@ function FirstMessageEmailComponent({
           <Text style={signature}>
             Michael
             <br />
-            Co-Founder, tambo
+            Co-Founder, genui
           </Text>
         </Container>
       </Body>

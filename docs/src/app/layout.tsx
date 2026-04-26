@@ -5,35 +5,35 @@ import {
   PostHogPageview,
   PostHogRootProvider,
 } from "@/providers/posthog-provider";
-import { TamboRootProvider } from "@/providers/tambo-provider";
+import { GenuiRootProvider } from "@/providers/genui-provider";
 import { RootProvider } from "fumadocs-ui/provider";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Inter } from "next/font/google";
 import { Suspense } from "react";
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://docs.tambo.co";
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://docs.genui.co";
 const docsDescription =
-  "Tambo is an open-source generative UI toolkit for React. Register your components—the agent renders them based on user messages.";
+  "Genui is an open-source generative UI toolkit for React. Register your components—the agent renders them based on user messages.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: "Tambo Docs",
-    template: "%s | Tambo Docs",
+    default: "Genui Docs",
+    template: "%s | Genui Docs",
   },
   description: docsDescription,
   openGraph: {
-    title: "Tambo Docs",
+    title: "Genui Docs",
     description: docsDescription,
     url: baseUrl,
-    siteName: "Tambo Docs",
+    siteName: "Genui Docs",
     type: "website",
     images: ["/logo/opengraph-image.jpg"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tambo Docs",
+    title: "Genui Docs",
     description: docsDescription,
     images: ["/logo/opengraph-image.jpg"],
   },
@@ -58,11 +58,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
-      className={cn(inter.className, "tambo-theme")}
+      className={cn(inter.className, "genui-theme")}
       suppressHydrationWarning
     >
       <body className="flex flex-col min-h-screen">
-        <TamboRootProvider>
+        <GenuiRootProvider>
           <Suspense>
             <PostHogPageview />
           </Suspense>
@@ -78,7 +78,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <RootProvider>{children}</RootProvider>
             </ThemeProvider>
           </PostHogRootProvider>
-        </TamboRootProvider>
+        </GenuiRootProvider>
       </body>
     </html>
   );

@@ -1,4 +1,4 @@
-import type { ListPromptEntry } from "@tambo-ai/react/mcp";
+import type { ListPromptEntry } from "@workspace/react/mcp";
 import * as React from "react";
 
 export type McpPromptsStatus = "idle" | "fetching" | "error" | "done";

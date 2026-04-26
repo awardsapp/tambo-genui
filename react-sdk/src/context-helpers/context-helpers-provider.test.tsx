@@ -15,9 +15,9 @@
 import { act, renderHook } from "@testing-library/react";
 import React, { PropsWithChildren } from "react";
 import {
-  TamboContextHelpersProvider,
-  useTamboContextHelpers,
-} from "../providers/tambo-context-helpers-provider";
+  GenuiContextHelpersProvider,
+  useGenuiContextHelpers,
+} from "../providers/genui-context-helpers-provider";
 import {
   type AdditionalContext,
   type ContextHelperFn,
@@ -26,15 +26,15 @@ import {
 } from "./index";
 
 /**
- * Test wrapper to provide the TamboContextHelpersProvider for hooks.
+ * Test wrapper to provide the GenuiContextHelpersProvider for hooks.
  * @param helpers - A dictionary of context helper functions.
- * @returns A wrapper component that provides the TamboContextHelpersProvider.
+ * @returns A wrapper component that provides the GenuiContextHelpersProvider.
  */
 function wrapper(helpers?: Record<string, ContextHelperFn>) {
   // eslint-disable-next-line react/display-name
   return ({ children }: PropsWithChildren) =>
     React.createElement(
-      TamboContextHelpersProvider,
+      GenuiContextHelpersProvider,
       {
         contextHelpers: helpers,
       },
@@ -49,7 +49,7 @@ describe("Context Helpers API", () => {
   });
 
   test("returns empty array when no helpers provided", async () => {
-    const { result } = renderHook(() => useTamboContextHelpers(), {
+    const { result } = renderHook(() => useGenuiContextHelpers(), {
       wrapper: wrapper(),
     });
 
@@ -62,7 +62,7 @@ describe("Context Helpers API", () => {
     const syncHelper: ContextHelperFn = () => ({ a: 1 });
     const asyncHelper: ContextHelperFn = async () => ({ b: 2 });
 
-    const { result } = renderHook(() => useTamboContextHelpers(), {
+    const { result } = renderHook(() => useGenuiContextHelpers(), {
       wrapper: wrapper({
         sync: syncHelper,
         async: asyncHelper,
@@ -82,7 +82,7 @@ describe("Context Helpers API", () => {
     const undefinedHelper: ContextHelperFn = () => undefined;
     const validHelper: ContextHelperFn = () => ({ ok: true });
 
-    const { result } = renderHook(() => useTamboContextHelpers(), {
+    const { result } = renderHook(() => useGenuiContextHelpers(), {
       wrapper: wrapper({
         nullHelper,
         undefinedHelper,
@@ -108,7 +108,7 @@ describe("Context Helpers API", () => {
     };
     const goodHelper: ContextHelperFn = () => ({ ok: 1 });
 
-    const { result } = renderHook(() => useTamboContextHelpers(), {
+    const { result } = renderHook(() => useGenuiContextHelpers(), {
       wrapper: wrapper({ badHelper, goodHelper }),
     });
 
@@ -123,7 +123,7 @@ describe("Context Helpers API", () => {
   });
 
   test("dynamic add/remove helpers works", async () => {
-    const { result } = renderHook(() => useTamboContextHelpers(), {
+    const { result } = renderHook(() => useGenuiContextHelpers(), {
       wrapper: wrapper(),
     });
 
@@ -162,7 +162,7 @@ describe("Context Helpers API", () => {
   });
 
   test("prebuilt helpers can be passed directly", async () => {
-    const { result } = renderHook(() => useTamboContextHelpers(), {
+    const { result } = renderHook(() => useGenuiContextHelpers(), {
       wrapper: wrapper({
         userTime: currentTimeContextHelper,
         userPage: currentPageContextHelper,

@@ -1,5 +1,5 @@
 import { useRender } from "@base-ui/react/use-render";
-import { TamboThreadMessage } from "@tambo-ai/react";
+import { GenuiThreadMessage } from "@workspace/react";
 import * as React from "react";
 import { checkHasContent } from "../../utils/check-has-content";
 import { convertContentToMarkdown } from "../../utils/message-content";
@@ -19,7 +19,7 @@ export interface MessageContentState extends Record<string, unknown> {
   /** Whether to render the content as Markdown. */
   markdown: boolean;
   /** The resolved content to render. */
-  content: string | TamboThreadMessage["content"];
+  content: string | GenuiThreadMessage["content"];
   /** Content rendered as single Markdown string. Undefined if renderAsMarkdown is false. */
   contentAsMarkdownString?: string;
 }
@@ -28,7 +28,7 @@ export interface MessageContentRenderProps {
   /**
    * Optional override for the message content.
    */
-  messageContent?: string | TamboThreadMessage["content"];
+  messageContent?: string | GenuiThreadMessage["content"];
   /**
    * Whether to render as Markdown.
    * @default true

@@ -9,7 +9,7 @@ import {
   ThreadSystemMessage,
   ThreadUserMessage,
   tryParseJsonObject,
-} from "@tambo-ai-cloud/core";
+} from "@workspace-cloud/core";
 import OpenAI from "openai";
 import zodToJsonSchema from "zod-to-json-schema";
 import { AvailableComponent } from "../../model";

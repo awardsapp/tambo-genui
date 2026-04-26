@@ -27,18 +27,18 @@ import {
   GenerationStage,
   V1RunStatus,
   type UnsavedThreadToolMessage,
-} from "@tambo-ai-cloud/core";
+} from "@workspace-cloud/core";
 import { classifyStreamingError } from "./v1-error-classifier";
 import {
   sanitizeEvent,
   createMessageParentEvent,
-} from "@tambo-ai-cloud/backend";
-import type { HydraDatabase, HydraDb } from "@tambo-ai-cloud/db";
+} from "@workspace-cloud/backend";
+import type { HydraDatabase, HydraDb } from "@workspace-cloud/db";
 import {
   dbMessageToThreadMessage,
   operations,
   schema,
-} from "@tambo-ai-cloud/db";
+} from "@workspace-cloud/db";
 import { and, eq, sql } from "drizzle-orm";
 import type { Response } from "express";
 import {

@@ -1,9 +1,9 @@
 ---
 title: Neon
-description: Learn how to integrate Tambo with Auth.js using Neon as the database backend for session storage.
+description: Learn how to integrate Genui with Auth.js using Neon as the database backend for session storage.
 ---
 
-Auth.js (formerly NextAuth.js) is a complete authentication solution that can use various database adapters. This guide shows how to integrate Tambo with Auth.js when using Neon as the database backend for session and user data storage.
+Auth.js (formerly NextAuth.js) is a complete authentication solution that can use various database adapters. This guide shows how to integrate Genui with Auth.js when using Neon as the database backend for session and user data storage.
 
 <Callout type="info" title="Prerequisites">
   This guide assumes you've already set up Auth.js with the Neon database
@@ -16,7 +16,7 @@ Auth.js (formerly NextAuth.js) is a complete authentication solution that can us
 Install the required packages:
 
 ```bash
-npm install next-auth @auth/neon-adapter @neondatabase/serverless @tambo-ai/react
+npm install next-auth @auth/neon-adapter @neondatabase/serverless @workspace/react
 ```
 
 ## Auth.js Configuration
@@ -88,7 +88,7 @@ export default async function RootLayout({
 ```tsx title="app/client-layout.tsx"
 "use client";
 
-import { TamboProvider } from "@tambo-ai/react";
+import { GenuiProvider } from "@workspace/react";
 import { ReactNode } from "react";
 
 interface ClientLayoutProps {
@@ -100,7 +100,7 @@ export default function ClientLayout({
   children,
   userToken,
 }: ClientLayoutProps) {
-  return <TamboProvider userToken={userToken}>{children}</TamboProvider>;
+  return <GenuiProvider userToken={userToken}>{children}</GenuiProvider>;
 }
 ```
 
@@ -135,7 +135,7 @@ export default function RootLayout({
 "use client";
 
 import { useSession } from "next-auth/react";
-import { TamboProvider } from "@tambo-ai/react";
+import { GenuiProvider } from "@workspace/react";
 import { ReactNode } from "react";
 
 interface ClientLayoutProps {
@@ -146,17 +146,17 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
   const { data: session } = useSession();
 
   return (
-    <TamboProvider userToken={session?.accessToken}>{children}</TamboProvider>
+    <GenuiProvider userToken={session?.accessToken}>{children}</GenuiProvider>
   );
 }
 ```
 
 ## Usage
 
-Once configured, you can use Tambo components throughout your application:
+Once configured, you can use Genui components throughout your application:
 
 ```tsx title="app/dashboard/page.tsx"
-import { MessageThreadFull } from "@components/tambo/message-thread-full";
+import { MessageThreadFull } from "@components/genui/message-thread-full";
 
 export default function Dashboard() {
   return (

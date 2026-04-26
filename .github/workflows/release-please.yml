@@ -22,7 +22,7 @@ jobs:
     outputs:
       react-sdk--release_created: ${{ steps.release.outputs.react-sdk--release_created }}
       cli--release_created: ${{ steps.release.outputs.cli--release_created }}
-      create-tambo-app--release_created: ${{ steps.release.outputs.create-tambo-app--release_created }}
+      create-genui-app--release_created: ${{ steps.release.outputs.create-genui-app--release_created }}
       docs--release_created: ${{ steps.release.outputs.docs--release_created }}
       showcase--release_created: ${{ steps.release.outputs.showcase--release_created }}
       apps/web--release_created: ${{ steps.release.outputs['apps/web--release_created'] }}
@@ -62,9 +62,9 @@ jobs:
           registry-url: "https://registry.npmjs.org"
 
       - name: Build
-        run: npx turbo build --filter=@tambo-ai/client
+        run: npx turbo build --filter=@workspace/client
 
-      - name: Publish @tambo-ai/client to npm
+      - name: Publish @workspace/client to npm
         working-directory: ./packages/client
         run: npm publish --access public
 
@@ -90,9 +90,9 @@ jobs:
           registry-url: "https://registry.npmjs.org"
 
       - name: Build
-        run: npx turbo build --filter=@tambo-ai/react
+        run: npx turbo build --filter=@workspace/react
 
-      - name: Publish @tambo-ai/react to npm
+      - name: Publish @workspace/react to npm
         working-directory: ./react-sdk
         run: npm publish --access public
 
@@ -125,10 +125,10 @@ jobs:
         run: npm publish --access public
 
   # NPM Package Publishing - Create Tambo App
-  publish-create-tambo-app:
+  publish-create-genui-app:
     needs: release-please
     runs-on: ubuntu-latest
-    if: ${{ needs.release-please.outputs.create-tambo-app--release_created == 'true' }}
+    if: ${{ needs.release-please.outputs.create-genui-app--release_created == 'true' }}
     permissions:
       contents: read
       id-token: write # Required for OIDC publishing to NPM
@@ -146,10 +146,10 @@ jobs:
           registry-url: "https://registry.npmjs.org"
 
       - name: Build
-        run: npx turbo build --filter=create-tambo-app
+        run: npx turbo build --filter=create-genui-app
 
-      - name: Publish create-tambo-app to npm
-        working-directory: ./create-tambo-app
+      - name: Publish create-genui-app to npm
+        working-directory: ./create-genui-app
         run: npm publish --access public
 
   # NPM Package Publishing - React UI Base
@@ -174,9 +174,9 @@ jobs:
           registry-url: "https://registry.npmjs.org"
 
       - name: Build
-        run: npx turbo build --filter=@tambo-ai/react-ui-base
+        run: npx turbo build --filter=@workspace/react-ui-base
 
-      - name: Publish @tambo-ai/react-ui-base to npm
+      - name: Publish @workspace/react-ui-base to npm
         working-directory: ./packages/react-ui-base
         run: npm publish --access public
 

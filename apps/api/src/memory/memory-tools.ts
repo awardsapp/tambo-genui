@@ -1,6 +1,6 @@
-import { MEMORY_CATEGORIES } from "@tambo-ai-cloud/core";
-import { operations } from "@tambo-ai-cloud/db";
-import type { HydraDatabase } from "@tambo-ai-cloud/db";
+import { MEMORY_CATEGORIES } from "@workspace-cloud/core";
+import { operations } from "@workspace-cloud/db";
+import type { HydraDatabase } from "@workspace-cloud/db";
 import type OpenAI from "openai";
 import { z } from "zod/v3";
 import {

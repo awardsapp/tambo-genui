@@ -26,7 +26,7 @@ import {
   PARAMETER_METADATA,
   ThreadMessage,
   type LlmProviderConfigInfo,
-} from "@tambo-ai-cloud/core";
+} from "@workspace-cloud/core";
 import {
   generateText,
   jsonSchema,
@@ -49,7 +49,7 @@ import {
 } from "../../util/component-streaming";
 import { formatTemplate, ObjectTemplate } from "../../util/template";
 import { threadMessagesToModelMessages } from "../../util/thread-to-model-message-conversion";
-import type { ProviderSkillConfig } from "@tambo-ai-cloud/core";
+import type { ProviderSkillConfig } from "@workspace-cloud/core";
 import {
   CompleteParams,
   LLMClient,

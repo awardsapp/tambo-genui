@@ -1,4 +1,4 @@
-import { FunctionParameters, ThreadMessage } from "@tambo-ai-cloud/core";
+import { FunctionParameters, ThreadMessage } from "@workspace-cloud/core";
 import OpenAI from "openai";
 import { zodToJsonSchema } from "zod-to-json-schema";
 import { z } from "zod/v3";

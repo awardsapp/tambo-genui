@@ -36,13 +36,13 @@ jest.mock("@/lib/nextauth-supabase-adapter", () => ({
   SupabaseAdapter: () => ({}),
 }));
 
-jest.mock("@tambo-ai-cloud/db", () => ({
+jest.mock("@workspace-cloud/db", () => ({
   getDb: () => ({ insert: () => ({ values: jest.fn() }) }),
   schema: { sessions: {} },
 }));
 
 const mockRefreshOidcToken = jest.fn();
-jest.mock("@tambo-ai-cloud/core", () => ({
+jest.mock("@workspace-cloud/core", () => ({
   isEmailAllowed: () => true,
   refreshOidcToken: (...args: unknown[]) => mockRefreshOidcToken(...args),
   SessionSource: { Browser: "browser" },

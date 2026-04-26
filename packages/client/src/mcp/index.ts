@@ -10,8 +10,8 @@ export { MCPTransport } from "./mcp-client";
 export { ServerType, REGISTRY_SERVER_KEY } from "./mcp-constants";
 export type {
   ElicitationRequestedSchema,
-  TamboElicitationRequest,
-  TamboElicitationResponse,
+  GenuiElicitationRequest,
+  GenuiElicitationResponse,
   ElicitationContextState,
   PrimitiveSchemaDefinition,
 } from "./elicitation";

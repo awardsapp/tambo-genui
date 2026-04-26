@@ -2,8 +2,8 @@
 
 import { ComponentCodePreview } from "@/components/component-code-preview";
 import { InstallationSection } from "@/components/installation-section";
-import type { Suggestion } from "@tambo-ai/react";
-import { MessageThreadCollapsible } from "@tambo-ai/ui-registry/components/message-thread-collapsible";
+import type { Suggestion } from "@workspace/react";
+import { MessageThreadCollapsible } from "@workspace/ui-registry/components/message-thread-collapsible";
 
 const messageThreadCollapsibleSuggestions = [
   {
@@ -74,7 +74,7 @@ export default function MessageThreadCollapsiblePage() {
                 />
               </div>
             }
-            code={`import { MessageThreadCollapsible } from "@/components/tambo/message-thread-collapsible";
+            code={`import { MessageThreadCollapsible } from "@/components/genui/message-thread-collapsible";
 
 export function PageWithChat() {
   const exampleSuggestions = [
@@ -113,7 +113,7 @@ export function PageWithChat() {
 
       {/* Installation */}
       <section>
-        <InstallationSection cliCommand="npx tambo add message-thread-collapsible" />
+        <InstallationSection cliCommand="npx genui add message-thread-collapsible" />
       </section>
 
       {/* Component API */}

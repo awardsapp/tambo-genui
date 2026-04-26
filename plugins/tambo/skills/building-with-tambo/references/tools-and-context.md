@@ -32,7 +32,7 @@ const fetchUserTool = defineTool({
 Register JavaScript functions Tambo can call:
 
 ```tsx
-import { defineTool, TamboProvider } from "@tambo-ai/react";
+import { defineTool, TamboProvider } from "@workspace/react";
 import { z } from "zod";
 
 const fetchUserTool = defineTool({
@@ -74,7 +74,7 @@ const fetchUserTool = defineTool({
 When integrating with an existing app that has its own API client (tRPC, GraphQL, REST), use `registerTool()` inside a React component instead of `defineTool()` at module level. This lets you access the app's client via hooks.
 
 ```tsx
-import { useTambo } from "@tambo-ai/react";
+import { useTambo } from "@workspace/react";
 import { trpc } from "./trpc";
 
 function MyChat() {
@@ -168,8 +168,8 @@ npm install @modelcontextprotocol/sdk@^1.24.0 zod@^4.0.0 zod-to-json-schema@^3.2
 ```
 
 ```tsx
-import { TamboProvider } from "@tambo-ai/react";
-import { MCPTransport } from "@tambo-ai/react/mcp";
+import { TamboProvider } from "@workspace/react";
+import { MCPTransport } from "@workspace/react/mcp";
 
 <TamboProvider
   mcpServers={[
@@ -237,7 +237,7 @@ Register @ mentionable resources users can reference in messages:
 ### Static Resources
 
 ```tsx
-import { TamboProvider, ListResourceItem } from "@tambo-ai/react";
+import { TamboProvider, ListResourceItem } from "@workspace/react";
 
 const resources: ListResourceItem[] = [
   { uri: "docs://api", name: "API Reference", mimeType: "text/plain" },

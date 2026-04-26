@@ -1,4 +1,4 @@
-import { MCPClient, MCPHandlers } from "@tambo-ai-cloud/core";
+import { MCPClient, MCPHandlers } from "@workspace-cloud/core";
 import OpenAI from "openai";
 
 /**

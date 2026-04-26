@@ -2,9 +2,9 @@
 
 import type {
   PrimitiveSchemaDefinition as FieldSchema,
-  TamboElicitationRequest,
-  TamboElicitationResponse,
-} from "@tambo-ai/react/mcp";
+  GenuiElicitationRequest,
+  GenuiElicitationResponse,
+} from "@workspace/react/mcp";
 import * as React from "react";
 import { isSingleEntryMode } from "./utils/is-single-entry-mode";
 
@@ -19,7 +19,7 @@ export interface ElicitationField {
 }
 
 export interface ElicitationContextValue {
-  request: TamboElicitationRequest;
+  request: GenuiElicitationRequest;
   fields: ElicitationField[];
   isSingleEntry: boolean;
   isValid: boolean;
@@ -129,8 +129,8 @@ const validateField = (
 };
 
 export interface ElicitationProviderProps {
-  request: TamboElicitationRequest;
-  onResponse: (response: TamboElicitationResponse) => void;
+  request: GenuiElicitationRequest;
+  onResponse: (response: GenuiElicitationResponse) => void;
   children: React.ReactNode;
 }
 

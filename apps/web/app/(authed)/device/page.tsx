@@ -3,7 +3,7 @@ import { use } from "react";
 
 export const metadata = {
   title: "Authorize CLI",
-  description: "Authorize Tambo CLI access to your account",
+  description: "Authorize Genui CLI access to your account",
 };
 
 export default function DevicePage({
@@ -21,7 +21,7 @@ export default function DevicePage({
             Authorize CLI Access
           </h1>
           <p className="text-muted-foreground mt-2">
-            Grant your terminal access to your tambo account
+            Grant your terminal access to your genui account
           </p>
         </div>
         <DeviceCodeForm initialCode={initialCode} />

@@ -1,6 +1,6 @@
 export function getBaseUrl(): string {
   const envBase = process.env.NEXT_PUBLIC_SITE_URL;
-  return envBase && envBase.trim().length > 0 ? envBase : "https://ui.tambo.co";
+  return envBase && envBase.trim().length > 0 ? envBase : "https://ui.genui.co";
 }
 
 export function isProduction(): boolean {

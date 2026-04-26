@@ -1,4 +1,4 @@
-# `@tambo-ai-cloud/db`
+# `@workspace-cloud/db`
 
 ## Migrations
 

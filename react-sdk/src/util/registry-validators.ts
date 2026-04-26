@@ -1,5 +1,5 @@
 import type { JSONSchema7 } from "json-schema";
-import type { TamboComponent, TamboTool } from "../model/component-metadata";
+import type { GenuiComponent, GenuiTool } from "../model/component-metadata";
 import {
   assertNoRecordSchema,
   isStandardSchema,
@@ -54,7 +54,7 @@ function assertObjectSchema(schema: unknown, context: string): void {
  * Throws an error if the tool is invalid.
  * @param tool - The tool to validate
  */
-export function validateTool(tool: unknown): asserts tool is TamboTool {
+export function validateTool(tool: unknown): asserts tool is GenuiTool {
   // Basic runtime type checks before narrowing
   if (!tool || typeof tool !== "object") {
     throw new Error("Tool must be an object");
@@ -69,7 +69,7 @@ export function validateTool(tool: unknown): asserts tool is TamboTool {
     throw new Error(
       `Tool "${toolName}" uses deprecated "toolSchema" property. ` +
         `Migrate to "inputSchema" and "outputSchema" properties. ` +
-        `See migration guide: https://docs.tambo.co/reference/react-sdk/migration`,
+        `See migration guide: https://docs.genui.co/reference/react-sdk/migration`,
     );
   }
 
@@ -175,7 +175,7 @@ function getSerializedProps(
  * @param component - The component to validate and prepare
  * @returns Object containing the serialized props
  */
-export function validateAndPrepareComponent(component: TamboComponent): {
+export function validateAndPrepareComponent(component: GenuiComponent): {
   props: Record<string, unknown>;
 } {
   const { name, propsSchema, propsDefinition } = component;

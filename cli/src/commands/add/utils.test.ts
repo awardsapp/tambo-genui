@@ -26,7 +26,7 @@ const {
   getConfigPath,
   componentExists,
   getComponentList,
-  getTamboComponentInfo,
+  getGenuiComponentInfo,
   getKnownComponentNames,
   checkLegacyComponents,
   getInstalledComponents,
@@ -39,9 +39,9 @@ describe("Registry Utilities", () => {
   beforeEach(() => {
     vol.reset();
     originalCwd = process.cwd;
-    originalRegistryPath = process.env.TAMBO_REGISTRY_PATH;
+    originalRegistryPath = process.env.GENUI_REGISTRY_PATH;
     process.cwd = () => "/mock-project";
-    delete process.env.TAMBO_REGISTRY_PATH;
+    delete process.env.GENUI_REGISTRY_PATH;
   });
 
   afterEach(() => {
@@ -49,33 +49,33 @@ describe("Registry Utilities", () => {
     process.cwd = originalCwd;
 
     if (originalRegistryPath === undefined) {
-      delete process.env.TAMBO_REGISTRY_PATH;
+      delete process.env.GENUI_REGISTRY_PATH;
     } else {
-      process.env.TAMBO_REGISTRY_PATH = originalRegistryPath;
+      process.env.GENUI_REGISTRY_PATH = originalRegistryPath;
     }
   });
 
   describe("getRegistryBasePath", () => {
-    it("uses TAMBO_REGISTRY_PATH env var when set and valid", () => {
+    it("uses GENUI_REGISTRY_PATH env var when set and valid", () => {
       vol.fromJSON({
         "/custom/registry/components/message/config.json": JSON.stringify({
           name: "message",
         }),
       });
-      process.env.TAMBO_REGISTRY_PATH = "/custom/registry";
+      process.env.GENUI_REGISTRY_PATH = "/custom/registry";
 
       const result = getRegistryBasePath();
       expect(result).toBe("/custom/registry");
     });
 
-    it("throws when TAMBO_REGISTRY_PATH points to invalid directory", () => {
+    it("throws when GENUI_REGISTRY_PATH points to invalid directory", () => {
       vol.fromJSON({
         "/custom/registry/invalid.txt": "not a registry",
       });
-      process.env.TAMBO_REGISTRY_PATH = "/custom/registry";
+      process.env.GENUI_REGISTRY_PATH = "/custom/registry";
 
       expect(() => getRegistryBasePath()).toThrow(
-        "Invalid TAMBO_REGISTRY_PATH",
+        "Invalid GENUI_REGISTRY_PATH",
       );
     });
 
@@ -95,7 +95,7 @@ describe("Registry Utilities", () => {
           name: "message",
         }),
       });
-      process.env.TAMBO_REGISTRY_PATH = "/custom/registry";
+      process.env.GENUI_REGISTRY_PATH = "/custom/registry";
 
       const result = getRegistryPath("message");
       expect(result).toBe("/custom/registry/components/message");
@@ -109,7 +109,7 @@ describe("Registry Utilities", () => {
           name: "message",
         }),
       });
-      process.env.TAMBO_REGISTRY_PATH = "/custom/registry";
+      process.env.GENUI_REGISTRY_PATH = "/custom/registry";
 
       const result = getConfigPath("message");
       expect(result).toBe("/custom/registry/components/message/config.json");
@@ -125,7 +125,7 @@ describe("Registry Utilities", () => {
         }),
         "/custom/registry/components/invalid/config.json": "not valid json{",
       });
-      process.env.TAMBO_REGISTRY_PATH = "/custom/registry";
+      process.env.GENUI_REGISTRY_PATH = "/custom/registry";
     });
 
     it("returns true when component exists with valid config", () => {
@@ -154,7 +154,7 @@ describe("Registry Utilities", () => {
           description: "A form component",
         }),
       });
-      process.env.TAMBO_REGISTRY_PATH = "/custom/registry";
+      process.env.GENUI_REGISTRY_PATH = "/custom/registry";
 
       const result = getComponentList();
       expect(result).toHaveLength(2);
@@ -200,7 +200,7 @@ describe("Registry Utilities", () => {
         }),
         "/custom/registry/components/broken/readme.md": "No config here",
       });
-      process.env.TAMBO_REGISTRY_PATH = "/custom/registry";
+      process.env.GENUI_REGISTRY_PATH = "/custom/registry";
 
       const result = getComponentList();
       expect(result).toHaveLength(1);
@@ -208,7 +208,7 @@ describe("Registry Utilities", () => {
     });
   });
 
-  describe("getTamboComponentInfo", () => {
+  describe("getGenuiComponentInfo", () => {
     it("returns main and support components", () => {
       vol.fromJSON({
         "/custom/registry/components/message/config.json": JSON.stringify({
@@ -225,9 +225,9 @@ describe("Registry Utilities", () => {
           files: [{ name: "form.tsx" }],
         }),
       });
-      process.env.TAMBO_REGISTRY_PATH = "/custom/registry";
+      process.env.GENUI_REGISTRY_PATH = "/custom/registry";
 
-      const result = getTamboComponentInfo();
+      const result = getGenuiComponentInfo();
 
       expect(result.mainComponents.has("message")).toBe(true);
       expect(result.mainComponents.has("form")).toBe(true);
@@ -241,9 +241,9 @@ describe("Registry Utilities", () => {
       vol.fromJSON({
         "/custom/registry/components/.gitkeep": "",
       });
-      process.env.TAMBO_REGISTRY_PATH = "/custom/registry";
+      process.env.GENUI_REGISTRY_PATH = "/custom/registry";
 
-      const result = getTamboComponentInfo();
+      const result = getGenuiComponentInfo();
 
       expect(result.mainComponents.size).toBe(0);
       expect(result.supportComponents.size).toBe(0);
@@ -263,7 +263,7 @@ describe("Registry Utilities", () => {
           files: [{ name: "form.tsx" }],
         }),
       });
-      process.env.TAMBO_REGISTRY_PATH = "/custom/registry";
+      process.env.GENUI_REGISTRY_PATH = "/custom/registry";
 
       const result = getKnownComponentNames();
 
@@ -285,7 +285,7 @@ describe("Registry Utilities", () => {
 
     it("returns null when no legacy components", () => {
       vol.fromJSON({
-        "/mock-project/src/components/tambo/message.tsx":
+        "/mock-project/src/components/genui/message.tsx":
           "export const Message = () => <div />;",
       });
 
@@ -324,25 +324,25 @@ describe("Registry Utilities", () => {
     beforeEach(() => {
       vol.reset();
 
-      previousRegistryPath = process.env.TAMBO_REGISTRY_PATH;
-      process.env.TAMBO_REGISTRY_PATH = "/custom/registry";
+      previousRegistryPath = process.env.GENUI_REGISTRY_PATH;
+      process.env.GENUI_REGISTRY_PATH = "/custom/registry";
 
       vol.fromJSON(registryFiles);
     });
 
     afterEach(() => {
       if (previousRegistryPath === undefined) {
-        delete process.env.TAMBO_REGISTRY_PATH;
+        delete process.env.GENUI_REGISTRY_PATH;
       } else {
-        process.env.TAMBO_REGISTRY_PATH = previousRegistryPath;
+        process.env.GENUI_REGISTRY_PATH = previousRegistryPath;
       }
     });
 
-    it("finds components in tambo/ location", async () => {
+    it("finds components in genui/ location", async () => {
       vol.fromJSON({
-        "/mock-project/src/components/tambo/message.tsx":
+        "/mock-project/src/components/genui/message.tsx":
           "export const Message = () => <div />;",
-        "/mock-project/src/components/tambo/form.tsx":
+        "/mock-project/src/components/genui/form.tsx":
           "export const Form = () => <div />;",
       });
 
@@ -363,7 +363,7 @@ describe("Registry Utilities", () => {
 
     it("deduplicates components across locations", async () => {
       vol.fromJSON({
-        "/mock-project/src/components/tambo/message.tsx":
+        "/mock-project/src/components/genui/message.tsx":
           "export const Message = () => <div />;",
         "/mock-project/src/components/ui/message.tsx":
           "export const Message = () => <div />;",
@@ -390,9 +390,9 @@ describe("Registry Utilities", () => {
 
     it("only returns known registry components", async () => {
       vol.fromJSON({
-        "/mock-project/src/components/tambo/message.tsx":
+        "/mock-project/src/components/genui/message.tsx":
           "export const Message = () => <div />;",
-        "/mock-project/src/components/tambo/custom-component.tsx":
+        "/mock-project/src/components/genui/custom-component.tsx":
           "export const Custom = () => <div />;",
       });
 
@@ -403,7 +403,7 @@ describe("Registry Utilities", () => {
 
     it("returns empty array when no components installed", async () => {
       vol.fromJSON({
-        "/mock-project/src/components/tambo/.gitkeep": "",
+        "/mock-project/src/components/genui/.gitkeep": "",
       });
 
       const result = await getInstalledComponents("src/components");

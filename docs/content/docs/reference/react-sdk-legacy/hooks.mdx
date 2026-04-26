@@ -1,18 +1,18 @@
 ---
 title: React SDK Hooks
-description: Complete reference for @tambo-ai/react hooks - thread management, component state, streaming, voice, and more.
+description: Complete reference for @workspace/react hooks - thread management, component state, streaming, voice, and more.
 ---
 
-The `@tambo-ai/react` package provides hooks that expose state values and functions to make building AI apps with Tambo simple.
+The `@workspace/react` package provides hooks that expose state values and functions to make building AI apps with Genui simple.
 
 Here you'll find a description of each state value and function, organized by hook.
 
-## useTambo
+## useGenui
 
-The primary entrypoint for the Tambo React SDK. This hook provides access to all Tambo functionality including the client, component registry, thread context, and interactable component management.
+The primary entrypoint for the Genui React SDK. This hook provides access to all Genui functionality including the client, component registry, thread context, and interactable component management.
 
 ```tsx
-const tambo = useTambo();
+const genui = useGenui();
 ```
 
 This hook returns a composite of all context values from the nested providers, including:
@@ -24,80 +24,80 @@ This hook returns a composite of all context values from the nested providers, i
 - **Context helpers**: `getContextHelpers`, `addContextHelper`, `removeContextHelper`
 - **Context attachments**: `attachments`, `addContextAttachment`, `removeContextAttachment`
 
-For most use cases, prefer using the more specific hooks (like `useTamboThread` or `useTamboRegistry`) to access only what you need.
+For most use cases, prefer using the more specific hooks (like `useGenuiThread` or `useGenuiRegistry`) to access only what you need.
 
-## useTamboRegistry
+## useGenuiRegistry
 
 This hook provides helpers for component and tool registration.
 
 ### registerComponent
 
-`const { registerComponent } = useTamboRegistry()`
+`const { registerComponent } = useGenuiRegistry()`
 
-This function is used to register components with Tambo, allowing them to be potentially used in Tambo's responses.
+This function is used to register components with Genui, allowing them to be potentially used in Genui's responses.
 
 ### registerTool
 
-`const { registerTool } = useTamboRegistry()`
+`const { registerTool } = useGenuiRegistry()`
 
-This function is used to register tools with Tambo.
+This function is used to register tools with Genui.
 
 ### registerTools
 
-`const { registerTools } = useTamboRegistry()`
+`const { registerTools } = useGenuiRegistry()`
 
 This function allows registering multiple tools at once.
 
 ### addToolAssociation
 
-`const { addToolAssociation } = useTamboRegistry()`
+`const { addToolAssociation } = useGenuiRegistry()`
 
 This function creates an association between components and tools.
 
 ### componentList
 
-`const { componentList } = useTamboRegistry()`
+`const { componentList } = useGenuiRegistry()`
 
 This value provides access to the list of registered components.
 
 ### toolRegistry
 
-`const { toolRegistry } = useTamboRegistry()`
+`const { toolRegistry } = useGenuiRegistry()`
 
 This value provides access to the registry of all registered tools.
 
 ### componentToolAssociations
 
-`const { componentToolAssociations } = useTamboRegistry()`
+`const { componentToolAssociations } = useGenuiRegistry()`
 
 This value provides access to the associations between components and tools.
 
-## useTamboThread
+## useGenuiThread
 
 This hook provides access to the current thread and functions for managing thread interactions.
 
 ### thread
 
-`const { thread } = useTamboThread()`
+`const { thread } = useGenuiThread()`
 
-The current thread object containing messages and metadata. Messages can be accessed via `thread.messages`. This value is kept up-to-date automatically by Tambo when messages are sent or received.
+The current thread object containing messages and metadata. Messages can be accessed via `thread.messages`. This value is kept up-to-date automatically by Genui when messages are sent or received.
 
 ### sendThreadMessage
 
-`const { sendThreadMessage } = useTamboThread()`
+`const { sendThreadMessage } = useGenuiThread()`
 
-Function to send a user message to Tambo and receive a response. A call to this function will update the provided `thread` state value.
+Function to send a user message to Genui and receive a response. A call to this function will update the provided `thread` state value.
 
 To have the response streamed, use `sendThreadMessage(message, {streamResponse: true})`.
 
 ### generationStage
 
-`const { generationStage } = useTamboThread()`
+`const { generationStage } = useGenuiThread()`
 
 Current stage of message generation. Possible values are:
 
 - `IDLE`: The thread is not currently generating any response (Initial stage)
-- `CHOOSING_COMPONENT`: Tambo is determining which component to use for the response
+- `CHOOSING_COMPONENT`: Genui is determining which component to use for the response
 - `FETCHING_CONTEXT`: Gathering necessary context for the response by calling a registered tool
 - `HYDRATING_COMPONENT`: Generating the props for a chosen component
 - `STREAMING_RESPONSE`: Actively streaming the response
@@ -106,258 +106,258 @@ Current stage of message generation. Possible values are:
 
 ### inputValue
 
-`const { inputValue } = useTamboThread()`
+`const { inputValue } = useGenuiThread()`
 
 Current value of the thread input field.
 
 ### generationStatusMessage
 
-`const { generationStatusMessage } = useTamboThread()`
+`const { generationStatusMessage } = useGenuiThread()`
 
-Status message describing the current generation state, as generated by Tambo.
+Status message describing the current generation state, as generated by Genui.
 
 ### isIdle
 
-`const { isIdle } = useTamboThread()`
+`const { isIdle } = useGenuiThread()`
 
 Boolean indicating whether the thread is in an idle state (`generationStage` is `IDLE`, `COMPLETE`, or `ERROR`).
 
 ### switchCurrentThread
 
-`const { switchCurrentThread } = useTamboThread()`
+`const { switchCurrentThread } = useGenuiThread()`
 
 Function to change the active thread by id. This will update the `thread` state value to the fetched thread.
 
 ### addThreadMessage
 
-`const { addThreadMessage } = useTamboThread()`
+`const { addThreadMessage } = useGenuiThread()`
 
 Function to append a new message to the thread.
 
 ### updateThreadMessage
 
-`const { updateThreadMessage } = useTamboThread()`
+`const { updateThreadMessage } = useGenuiThread()`
 
 Function to modify an existing thread message.
 
 ### setLastThreadStatus
 
-`const { setLastThreadStatus } = useTamboThread()`
+`const { setLastThreadStatus } = useGenuiThread()`
 
 Function to update the status of the most recent thread message.
 
 ### setInputValue
 
-`const { setInputValue } = useTamboThread()`
+`const { setInputValue } = useGenuiThread()`
 
 Function to update the input field value.
 
-## useTamboThreadList
+## useGenuiThreadList
 
 This hook provides access to the list of all threads for a project and their loading states.
 
 ### data
 
-`const { data } = useTamboThreadList()`
+`const { data } = useGenuiThreadList()`
 
 Array of threads or null if not yet loaded.
 
 ### isPending
 
-`const { isPending } = useTamboThreadList()`
+`const { isPending } = useGenuiThreadList()`
 
 Boolean indicating if threads are currently being fetched.
 
 ### isSuccess
 
-`const { isSuccess } = useTamboThreadList()`
+`const { isSuccess } = useGenuiThreadList()`
 
 Boolean indicating if threads were successfully fetched.
 
 ### isError
 
-`const { isError } = useTamboThreadList()`
+`const { isError } = useGenuiThreadList()`
 
 Boolean indicating if an error occurred while fetching threads.
 
 ### error
 
-`const { error } = useTamboThreadList()`
+`const { error } = useGenuiThreadList()`
 
 Error object containing details if the fetch failed.
 
-## useTamboThreadInput
+## useGenuiThreadInput
 
-This hook provides utilities for building an input interface that sends messages to Tambo.
+This hook provides utilities for building an input interface that sends messages to Genui.
 
 ### value
 
-`const { value } = useTamboThreadInput()`
+`const { value } = useGenuiThreadInput()`
 
 Current value of the input field.
 
 ### setValue
 
-`const { setValue } = useTamboThreadInput()`
+`const { setValue } = useGenuiThreadInput()`
 
 Function to update the input field value.
 
 ### submit
 
-`const { submit } = useTamboThreadInput()`
+`const { submit } = useGenuiThreadInput()`
 
 Function to submit the current input value, with optional context and streaming configuration.
 
 ### isPending
 
-`const { isPending } = useTamboThreadInput()`
+`const { isPending } = useGenuiThreadInput()`
 
 Boolean indicating if a submission is in progress.
 
 ### isSuccess
 
-`const { isSuccess } = useTamboThreadInput()`
+`const { isSuccess } = useGenuiThreadInput()`
 
 Boolean indicating if the last submission was successful.
 
 ### isError
 
-`const { isError } = useTamboThreadInput()`
+`const { isError } = useGenuiThreadInput()`
 
 Boolean indicating if the last submission failed.
 
 ### error
 
-`const { error } = useTamboThreadInput()`
+`const { error } = useGenuiThreadInput()`
 
 Error object containing details if the submission failed.
 
-## useTamboSuggestions
+## useGenuiSuggestions
 
 This hook provides utilities for managing AI-generated message suggestions.
 
 ### suggestions
 
-`const { suggestions } = useTamboSuggestions()`
+`const { suggestions } = useGenuiSuggestions()`
 
 List of available AI-generated suggestions for the next message.
 
 ### selectedSuggestionId
 
-`const { selectedSuggestionId } = useTamboSuggestions()`
+`const { selectedSuggestionId } = useGenuiSuggestions()`
 
 ID of the currently selected suggestion.
 
 ### accept
 
-`const { accept } = useTamboSuggestions()`
+`const { accept } = useGenuiSuggestions()`
 
 Function to accept and apply a suggestion, with an option for automatic submission.
 
 ### acceptResult
 
-`const { acceptResult } = useTamboSuggestions()`
+`const { acceptResult } = useGenuiSuggestions()`
 
 Detailed mutation result for accepting a suggestion.
 
 ### generateResult
 
-`const { generateResult } = useTamboSuggestions()`
+`const { generateResult } = useGenuiSuggestions()`
 
 Detailed mutation result for generating new suggestions.
 
 ### isPending
 
-`const { isPending } = useTamboSuggestions()`
+`const { isPending } = useGenuiSuggestions()`
 
 Boolean indicating if a suggestion operation is in progress.
 
 ### isSuccess
 
-`const { isSuccess } = useTamboSuggestions()`
+`const { isSuccess } = useGenuiSuggestions()`
 
 Boolean indicating if the last operation was successful.
 
 ### isError
 
-`const { isError } = useTamboSuggestions()`
+`const { isError } = useGenuiSuggestions()`
 
 Boolean indicating if the last operation resulted in an error.
 
 ### error
 
-`const { error } = useTamboSuggestions()`
+`const { error } = useGenuiSuggestions()`
 
 Error object containing details if the operation failed.
 
-## useTamboClient
+## useGenuiClient
 
-This hook provides direct access to the Tambo client instance.
+This hook provides direct access to the Genui client instance.
 
 ### client
 
-`const { client } = useTamboClient()`
+`const { client } = useGenuiClient()`
 
-The Tambo client instance for direct API access.
+The Genui client instance for direct API access.
 
-## useTamboComponentState
+## useGenuiComponentState
 
-This hook is similar to React's `useState`, but allows Tambo to see the state values to help respond to later messages.
+This hook is similar to React's `useState`, but allows Genui to see the state values to help respond to later messages.
 
-`const [myValue, setMyValue] = useTamboComponentState(keyName, initialValue, setFromProp)`
+`const [myValue, setMyValue] = useGenuiComponentState(keyName, initialValue, setFromProp)`
 
 For streaming components, use the third parameter (`setFromProp`) to seed
-editable state from AI-generated props. Combined with `useTamboStreamStatus`,
+editable state from AI-generated props. Combined with `useGenuiStreamStatus`,
 this lets you disable inputs while streaming and hand control to the user once
 complete.
 
 ### value and setValue
 
-`const { value } = useTamboComponentState()`
+`const { value } = useGenuiComponentState()`
 
 Current state value stored in the thread message for the given key.
 
 ### setValue
 
-`const { setValue } = useTamboComponentState()`
+`const { setValue } = useGenuiComponentState()`
 
 Function to update the state value, synchronizing both local state and server state.
 
-## useTamboContextHelpers
+## useGenuiContextHelpers
 
 This hook provides dynamic control over context helpers.
 
 ### getContextHelpers
 
-`const { getContextHelpers } = useTamboContextHelpers()`
+`const { getContextHelpers } = useGenuiContextHelpers()`
 
 Returns the current map of registered helper functions keyed by name.
 
 ### addContextHelper
 
-`const { addContextHelper } = useTamboContextHelpers()`
+`const { addContextHelper } = useGenuiContextHelpers()`
 
 Adds or replaces a helper at the given key.
 
 ### removeContextHelper
 
-`const { removeContextHelper } = useTamboContextHelpers()`
+`const { removeContextHelper } = useGenuiContextHelpers()`
 
 Removes a helper by key so it is no longer included in outgoing messages.
 
-## useTamboContextAttachment
+## useGenuiContextAttachment
 
 This hook provides utilities for managing context attachments that will be sent with the next user message.
 
 ### attachments
 
-`const { attachments } = useTamboContextAttachment()`
+`const { attachments } = useGenuiContextAttachment()`
 
 Array of active context attachments that will be included in `additionalContext` when the next message is sent.
 
 ### addContextAttachment
 
-`const { addContextAttachment } = useTamboContextAttachment()`
+`const { addContextAttachment } = useGenuiContextAttachment()`
 
 Function to add a new context attachment. Accepts an object with `context` (string), optional `displayName` (string), and optional `type` (string). Returns the `ContextAttachment` object with an auto-generated `id`. All attachments are automatically registered together as a single merged context helper (key: `contextAttachments`) that returns an array of all active attachments.
 
@@ -383,13 +383,13 @@ const attachment = addContextAttachment({
 
 ### removeContextAttachment
 
-`const { removeContextAttachment } = useTamboContextAttachment()`
+`const { removeContextAttachment } = useGenuiContextAttachment()`
 
 Function to remove a specific context attachment by its ID. The context helper automatically updates to reflect the change.
 
 ### clearContextAttachments
 
-`const { clearContextAttachments } = useTamboContextAttachment()`
+`const { clearContextAttachments } = useGenuiContextAttachment()`
 
 Function to remove all active context attachments at once. The context helper automatically updates to reflect the change. Context attachments are automatically cleared after message submission (one-time use), so you typically don't need to call this manually.
 
@@ -399,30 +399,30 @@ Function to remove all active context attachments at once. The context helper au
 
 Returns a cloned snapshot of the current interactable components.
 
-## useTamboCurrentMessage
+## useGenuiCurrentMessage
 
-`const message = useTamboCurrentMessage()`
+`const message = useGenuiCurrentMessage()`
 
-Returns the complete `TamboThreadMessage` object for the current message, including thread ID, component data, state, and timestamps. Must be used within a component rendered as part of a message thread.
+Returns the complete `GenuiThreadMessage` object for the current message, including thread ID, component data, state, and timestamps. Must be used within a component rendered as part of a message thread.
 
-Use when you need full message/thread context. For component metadata only, see [`useTamboCurrentComponent`](#usetambocurrentcomponent).
+Use when you need full message/thread context. For component metadata only, see [`useGenuiCurrentComponent`](#usegenuicurrentcomponent).
 
-## useTamboCurrentComponent
+## useGenuiCurrentComponent
 
-`const component = useTamboCurrentComponent()`
+`const component = useGenuiCurrentComponent()`
 
 Returns component metadata (`componentName`, `props`, `interactableId`, `description`, `threadId`) from the parent component context. Returns `null` if used outside a component. Works with both inline rendered and interactable components.
 
-Use when you need component information or thread ID without full message context. For complete message data, see [`useTamboCurrentMessage`](#usetambocurrentmessage).
+Use when you need component information or thread ID without full message context. For complete message data, see [`useGenuiCurrentMessage`](#usegenuicurrentmessage).
 
 See [Interactable Components](/concepts/generative-interfaces/interactable-components) for detailed patterns and examples.
 
-## useTamboStreamStatus
+## useGenuiStreamStatus
 
-Track streaming status for Tambo component props. Returns both global stream status and per-prop status flags.
+Track streaming status for Genui component props. Returns both global stream status and per-prop status flags.
 
 ```tsx
-const { streamStatus, propStatus } = useTamboStreamStatus<Props>();
+const { streamStatus, propStatus } = useGenuiStreamStatus<Props>();
 ```
 
 **Important**: Props update repeatedly during streaming and may be partial. Use `propStatus.<field>?.isSuccess` before treating a prop as complete.
@@ -457,7 +457,7 @@ interface PropStatus {
 ### Example: Wait for entire stream
 
 ```tsx
-const { streamStatus } = useTamboStreamStatus();
+const { streamStatus } = useGenuiStreamStatus();
 
 if (!streamStatus.isSuccess) {
   return <Spinner />;
@@ -469,7 +469,7 @@ return <Card {...props} />;
 ### Example: Highlight in-flight props
 
 ```tsx
-const { propStatus } = useTamboStreamStatus<Props>();
+const { propStatus } = useGenuiStreamStatus<Props>();
 
 return (
   <h2 className={propStatus.title?.isStreaming ? "animate-pulse" : ""}>
@@ -478,29 +478,29 @@ return (
 );
 ```
 
-## useTamboStreamingProps
+## useGenuiStreamingProps
 
-**Deprecated**: Use `useTamboComponentState` with `setFromProp` instead. This hook will be removed in 1.0.0.
+**Deprecated**: Use `useGenuiComponentState` with `setFromProp` instead. This hook will be removed in 1.0.0.
 
 Low-level helper that merges streamed props into state.
 
 ```tsx
-useTamboStreamingProps(currentState, setState, streamingProps);
+useGenuiStreamingProps(currentState, setState, streamingProps);
 ```
 
-## useTamboGenerationStage
+## useGenuiGenerationStage
 
 Access the current generation stage from the thread context.
 
 ```tsx
-const { generationStage } = useTamboGenerationStage();
+const { generationStage } = useGenuiGenerationStage();
 ```
 
 Returns the current `GenerationStage` enum value. See [GenerationStage](/reference/react-sdk/types#generationstage) for possible values.
 
-## useTamboVoice
+## useGenuiVoice
 
-Exposes functionality to record speech and transcribe it using the Tambo API.
+Exposes functionality to record speech and transcribe it using the Genui API.
 
 ```tsx
 const {
@@ -511,7 +511,7 @@ const {
   transcript,
   transcriptionError,
   mediaAccessError,
-} = useTamboVoice();
+} = useGenuiVoice();
 ```
 
 ### Return values
@@ -536,7 +536,7 @@ function VoiceInput() {
     isRecording,
     isTranscribing,
     transcript,
-  } = useTamboVoice();
+  } = useGenuiVoice();
 
   return (
     <div>
@@ -550,7 +550,7 @@ function VoiceInput() {
 }
 ```
 
-## useTamboInteractable
+## useGenuiInteractable
 
 Provides access to the interactable component management functions.
 
@@ -567,16 +567,16 @@ const {
   getInteractableComponentState,
   setInteractableSelected,
   clearInteractableSelections,
-} = useTamboInteractable();
+} = useGenuiInteractable();
 ```
 
 ### interactableComponents
 
-`TamboInteractableComponent[]` - Array of currently registered interactable components.
+`GenuiInteractableComponent[]` - Array of currently registered interactable components.
 
 ### addInteractableComponent
 
-`(component: Omit<TamboInteractableComponent, "id" | "createdAt">) => string`
+`(component: Omit<GenuiInteractableComponent, "id" | "createdAt">) => string`
 
 Registers a new interactable component. Returns the generated component ID.
 
@@ -594,13 +594,13 @@ Updates the props of an interactable component. Returns a status message.
 
 ### getInteractableComponent
 
-`<P, S>(id: string) => TamboInteractableComponent<P, S> | undefined`
+`<P, S>(id: string) => GenuiInteractableComponent<P, S> | undefined`
 
 Gets a specific interactable component by ID.
 
 ### getInteractableComponentsByName
 
-`(componentName: string) => TamboInteractableComponent[]`
+`(componentName: string) => GenuiInteractableComponent[]`
 
 Gets all interactable components with the given name.
 

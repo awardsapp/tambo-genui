@@ -1,10 +1,10 @@
 import {
   FormComponent,
   formSchema,
-} from "@tambo-ai/ui-registry/components/form";
-import { MessageThreadFull } from "@tambo-ai/ui-registry/components/message-thread-full";
-import type { Suggestion } from "@tambo-ai/react";
-import { useTambo } from "@tambo-ai/react";
+} from "@workspace/ui-registry/components/form";
+import { MessageThreadFull } from "@workspace/ui-registry/components/message-thread-full";
+import type { Suggestion } from "@workspace/react";
+import { useGenui } from "@workspace/react";
 import { useEffect } from "react";
 
 const formThreadSuggestions = [
@@ -35,7 +35,7 @@ const formThreadSuggestions = [
 ] satisfies Suggestion[];
 
 export const FormChatInterface = () => {
-  const { registerComponent, currentThreadId } = useTambo();
+  const { registerComponent, currentThreadId } = useGenui();
 
   useEffect(() => {
     registerComponent({

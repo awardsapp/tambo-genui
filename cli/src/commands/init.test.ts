@@ -37,8 +37,8 @@ jest.unstable_mockModule("../utils/framework-detection.js", () => ({
   detectFramework: () => mockDetectedFramework,
   getTamboApiKeyEnvVar: () =>
     mockDetectedFramework?.envPrefix
-      ? `${mockDetectedFramework.envPrefix}TAMBO_API_KEY`
-      : "TAMBO_API_KEY",
+      ? `${mockDetectedFramework.envPrefix}GENUI_API_KEY`
+      : "GENUI_API_KEY",
   getEnvVarName: (baseName: string) =>
     mockDetectedFramework?.envPrefix
       ? `${mockDetectedFramework.envPrefix}${baseName}`
@@ -507,7 +507,7 @@ describe("handleInit", () => {
 
   describe("basic init (without fullSend)", () => {
     beforeEach(() => {
-      // Use Next.js project since tests check for NEXT_PUBLIC_TAMBO_API_KEY
+      // Use Next.js project since tests check for NEXT_PUBLIC_GENUI_API_KEY
       vol.fromJSON(createNextProject());
     });
 
@@ -532,7 +532,7 @@ describe("handleInit", () => {
         "utf-8",
       ) as string;
       expect(envContent).toContain(
-        "NEXT_PUBLIC_TAMBO_API_KEY=test-api-key-123",
+        "NEXT_PUBLIC_GENUI_API_KEY=test-api-key-123",
       );
 
       // Verify success message
@@ -560,7 +560,7 @@ describe("handleInit", () => {
         "utf-8",
       ) as string;
       expect(envContent).toContain(
-        "NEXT_PUBLIC_TAMBO_API_KEY=self-hosted-key-456",
+        "NEXT_PUBLIC_GENUI_API_KEY=self-hosted-key-456",
       );
 
       // Verify self-host instructions were shown
@@ -587,7 +587,7 @@ describe("handleInit", () => {
         "utf-8",
       ) as string;
       expect(envContent).toContain(
-        "NEXT_PUBLIC_TAMBO_API_KEY=existing-key-789",
+        "NEXT_PUBLIC_GENUI_API_KEY=existing-key-789",
       );
 
       // Verify output mentions using existing key
@@ -618,7 +618,7 @@ describe("handleInit", () => {
         "/mock-project/.env.local",
         "utf-8",
       ) as string;
-      expect(envContent).toContain("NEXT_PUBLIC_TAMBO_API_KEY=new-key-456");
+      expect(envContent).toContain("NEXT_PUBLIC_GENUI_API_KEY=new-key-456");
       expect(envContent).not.toContain("old-key-123");
     });
 
@@ -779,7 +779,7 @@ describe("handleInit", () => {
       vol.fromJSON({
         "/mock-project/package.json": JSON.stringify({
           name: "test-project",
-          dependencies: { "@tambo-ai/react": "^1.0.0" },
+          dependencies: { "@workspace/react": "^1.0.0" },
         }),
         ...createRegistryFiles(["message-thread-full"]),
       });
@@ -913,7 +913,7 @@ describe("handleInit", () => {
 
   describe("tambo.ts file creation", () => {
     beforeEach(() => {
-      // Use Next.js project since tests check for NEXT_PUBLIC_TAMBO_API_KEY in env files
+      // Use Next.js project since tests check for NEXT_PUBLIC_GENUI_API_KEY in env files
       vol.fromJSON({
         ...createNextProject(),
         "/mock-project/src": null,
@@ -944,7 +944,7 @@ describe("handleInit", () => {
         "utf-8",
       ) as string;
       expect(content).toContain("components: TamboComponent[]");
-      expect(content).toContain("@tambo-ai/react");
+      expect(content).toContain("@workspace/react");
 
       // Verify success message
       const output = logs.join("\n");
@@ -988,7 +988,7 @@ describe("handleInit", () => {
     });
 
     it("should create tambo.ts in correct path based on installPath", async () => {
-      // Setup: Remove src directory, use Next.js project for NEXT_PUBLIC_TAMBO_API_KEY
+      // Setup: Remove src directory, use Next.js project for NEXT_PUBLIC_GENUI_API_KEY
       vol.reset();
       vol.fromJSON({
         ...createNextProject(),
@@ -1017,7 +1017,7 @@ describe("handleInit", () => {
 
   describe("API key management", () => {
     beforeEach(() => {
-      // Use Next.js project since tests check for NEXT_PUBLIC_TAMBO_API_KEY
+      // Use Next.js project since tests check for NEXT_PUBLIC_GENUI_API_KEY
       vol.fromJSON(createNextProject());
     });
 
@@ -1041,7 +1041,7 @@ describe("handleInit", () => {
         "/mock-project/.env.local",
         "utf-8",
       ) as string;
-      expect(content).toContain("NEXT_PUBLIC_TAMBO_API_KEY=new-key-123");
+      expect(content).toContain("NEXT_PUBLIC_GENUI_API_KEY=new-key-123");
       expect(content).toContain("Environment Variables");
 
       // Verify success message
@@ -1050,11 +1050,11 @@ describe("handleInit", () => {
     });
 
     it("should use .env.local over .env when both exist", async () => {
-      // Setup: Next.js project with both env files (uses NEXT_PUBLIC_TAMBO_API_KEY)
+      // Setup: Next.js project with both env files (uses NEXT_PUBLIC_GENUI_API_KEY)
       vol.fromJSON({
         ...createNextProject(),
         "/mock-project/.env": "SOME_OTHER_VAR=value\n",
-        "/mock-project/.env.local": "NEXT_PUBLIC_TAMBO_API_KEY=existing\n",
+        "/mock-project/.env.local": "NEXT_PUBLIC_GENUI_API_KEY=existing\n",
       });
 
       // Set up device auth mock
@@ -1076,7 +1076,7 @@ describe("handleInit", () => {
         "/mock-project/.env.local",
         "utf-8",
       ) as string;
-      expect(envLocalContent).toContain("NEXT_PUBLIC_TAMBO_API_KEY=new-key");
+      expect(envLocalContent).toContain("NEXT_PUBLIC_GENUI_API_KEY=new-key");
 
       // Verify .env was not touched
       const envContent = vol.readFileSync(
@@ -1087,7 +1087,7 @@ describe("handleInit", () => {
     });
 
     it("should append to existing .env file when key doesn't exist", async () => {
-      // Setup: Next.js project with .env but no API key (uses NEXT_PUBLIC_TAMBO_API_KEY)
+      // Setup: Next.js project with .env but no API key (uses NEXT_PUBLIC_GENUI_API_KEY)
       vol.fromJSON({
         ...createNextProject(),
         "/mock-project/.env": "SOME_VAR=value\n",
@@ -1109,15 +1109,15 @@ describe("handleInit", () => {
       // Verify key was appended to .env with server-generated key
       const content = vol.readFileSync("/mock-project/.env", "utf-8") as string;
       expect(content).toContain("SOME_VAR=value");
-      expect(content).toContain("NEXT_PUBLIC_TAMBO_API_KEY=new-key-456");
+      expect(content).toContain("NEXT_PUBLIC_GENUI_API_KEY=new-key-456");
     });
 
     it("should replace existing key when user confirms", async () => {
-      // Setup: Next.js project with existing API key (uses NEXT_PUBLIC_TAMBO_API_KEY)
+      // Setup: Next.js project with existing API key (uses NEXT_PUBLIC_GENUI_API_KEY)
       vol.fromJSON({
         ...createNextProject(),
         "/mock-project/.env.local":
-          "NEXT_PUBLIC_TAMBO_API_KEY=old-key\nOTHER_VAR=value\n",
+          "NEXT_PUBLIC_GENUI_API_KEY=old-key\nOTHER_VAR=value\n",
       });
 
       // Set up device auth mock
@@ -1139,7 +1139,7 @@ describe("handleInit", () => {
         "/mock-project/.env.local",
         "utf-8",
       ) as string;
-      expect(content).toContain("NEXT_PUBLIC_TAMBO_API_KEY=new-key-789");
+      expect(content).toContain("NEXT_PUBLIC_GENUI_API_KEY=new-key-789");
       expect(content).not.toContain("old-key");
       expect(content).toContain("OTHER_VAR=value");
     });
@@ -1162,7 +1162,7 @@ describe("handleInit", () => {
         "/mock-project/.env.local",
         "utf-8",
       ) as string;
-      expect(content).toContain("NEXT_PUBLIC_TAMBO_API_KEY=original-key");
+      expect(content).toContain("NEXT_PUBLIC_GENUI_API_KEY=original-key");
 
       // Verify keep message (the actual message is "Using existing API key")
       const output = logs.join("\n");
@@ -1172,7 +1172,7 @@ describe("handleInit", () => {
 
   describe("hosting choice flow", () => {
     beforeEach(() => {
-      // Use Next.js project since tests check for NEXT_PUBLIC_TAMBO_API_KEY
+      // Use Next.js project since tests check for NEXT_PUBLIC_GENUI_API_KEY
       vol.fromJSON(createNextProject());
     });
 
@@ -1195,7 +1195,7 @@ describe("handleInit", () => {
         "/mock-project/.env.local",
         "utf-8",
       ) as string;
-      expect(content).toContain("NEXT_PUBLIC_TAMBO_API_KEY=self-host-key");
+      expect(content).toContain("NEXT_PUBLIC_GENUI_API_KEY=self-host-key");
 
       // Verify self-host instructions were shown
       const output = logs.join("\n");
@@ -1224,7 +1224,7 @@ describe("handleInit", () => {
         "/mock-project/.env.local",
         "utf-8",
       ) as string;
-      expect(content).toContain("NEXT_PUBLIC_TAMBO_API_KEY=cloud-key");
+      expect(content).toContain("NEXT_PUBLIC_GENUI_API_KEY=cloud-key");
 
       // Verify switch message
       const output = logs.join("\n");
@@ -1246,7 +1246,7 @@ describe("handleInit", () => {
 
       // Verify browser was opened with repo URL
       expect(
-        openCalls.some((url) => url.includes("github.com/tambo-ai/tambo")),
+        openCalls.some((url) => url.includes("github.com/awardsapp/tambo-genui")),
       ).toBe(true);
     });
   });
@@ -1329,7 +1329,7 @@ describe("handleInit", () => {
 
   describe("options", () => {
     beforeEach(() => {
-      // Use Next.js project since tests check for NEXT_PUBLIC_TAMBO_API_KEY
+      // Use Next.js project since tests check for NEXT_PUBLIC_GENUI_API_KEY
       vol.fromJSON(createNextProject());
     });
 

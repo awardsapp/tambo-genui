@@ -1,52 +1,52 @@
-This document describes the process for releasing new versions of the Tambo packages (React SDK, TypeScript SDK) and the Tambo Cloud apps that now live in this monorepo.
+This document describes the process for releasing new versions of the Genui packages (React SDK, TypeScript SDK) and the Genui Cloud apps that now live in this monorepo.
 
 ## Release Instructions
 
-### Tambo API Client (`@tambo-ai/typescript-sdk`)
+### Genui API Client (`@workspace/typescript-sdk`)
 
-The Tambo API is built in `apps/api`. When the API changes, it exposes a new OpenAPI doc at `/api-json` (for example `https://api.tambo.co/api-json`). Deploying a new API (see "Tambo Cloud" below) is what unlocks a new SDK release. After the deploy:
+The Genui API is built in `apps/api`. When the API changes, it exposes a new OpenAPI doc at `/api-json` (for example `https://api.genui.co/api-json`). Deploying a new API (see "Genui Cloud" below) is what unlocks a new SDK release. After the deploy:
 
-1. When a new version of the Tambo API is deployed to Railway, Stainless will automatically detect the changes and create a release PR in the [`@tambo-ai/typescript-sdk` repository](https://github.com/tambo-ai/typescript-sdk/pulls).
+1. When a new version of the Genui API is deployed to Railway, Stainless will automatically detect the changes and create a release PR in the [`@workspace/typescript-sdk` repository](https://github.com/genui-ai/typescript-sdk/pulls).
 2. You can wait for Stainless to notice the new API (it polls once every hour) or you can force a refresh by clicking the "Release Flow" button in Stainless Studio.
 3. A developer must review and approve the release PR.
-4. Once approved and merged, Stainless will automatically publish the new version to https://www.npmjs.com/package/@tambo-ai/typescript-sdk. You can watch progress at https://github.com/tambo-ai/typescript-sdk/actions/workflows/publish-npm.yml
+4. Once approved and merged, Stainless will automatically publish the new version to https://www.npmjs.com/package/@workspace/typescript-sdk. You can watch progress at https://github.com/genui-ai/typescript-sdk/actions/workflows/publish-npm.yml
 
-### React SDK (`@tambo-ai/react`)
+### React SDK (`@workspace/react`)
 
-Once the Tambo API client is updated, the React SDK can be updated.
+Once the Genui API client is updated, the React SDK can be updated.
 
-1. After `@tambo-ai/typescript-sdk` is published to NPM, update the dependency in the [@tambo-ai/react repository](https://github.com/tambo-ai/tambo). There are two ways to do this:
-   - Kick off a full Dependabot update at https://github.com/tambo-ai/tambo/network/updates
+1. After `@workspace/typescript-sdk` is published to NPM, update the dependency in the [@workspace/react repository](https://github.com/genui-ai/genui). There are two ways to do this:
+   - Kick off a full Dependabot update at https://github.com/genui-ai/genui/network/updates
    - Manually update the dependency by running:
      ```bash
-     npx npm-check-updates -u @tambo-ai/typescript-sdk
+     npx npm-check-updates -u @workspace/typescript-sdk
      ```
-2. Create and merge a PR with the dependency update. You may have to fix types and tests to reflect changes in the Tambo API.
+2. Create and merge a PR with the dependency update. You may have to fix types and tests to reflect changes in the Genui API.
 3. The release-please action will create a release PR to bump the version.
-4. Once approved and merged, release-please will publish the new version to https://www.npmjs.com/package/@tambo-ai/react. You can watch progress at https://github.com/tambo-ai/tambo/actions/workflows/release-please.yml
+4. Once approved and merged, release-please will publish the new version to https://www.npmjs.com/package/@workspace/react. You can watch progress at https://github.com/genui-ai/genui/actions/workflows/release-please.yml
 
-### Tambo Cloud (apps + shared packages in this repo)
+### Genui Cloud (apps + shared packages in this repo)
 
 When you update either or both SDKs, also update the dependencies that live under `apps/api/` to ensure smoketests reference the latest versions.
 
-1. **OPTIONAL:** After both `@tambo-ai/typescript-sdk` and `@tambo-ai/react` are published, update `apps/api/` dependencies either:
-   - Through Dependabot at https://github.com/tambo-ai/tambo/network/updates
+1. **OPTIONAL:** After both `@workspace/typescript-sdk` and `@workspace/react` are published, update `apps/api/` dependencies either:
+   - Through Dependabot at https://github.com/genui-ai/genui/network/updates
    - Or manually by running:
      ```bash
-     npx npm-check-updates -u @tambo-ai/typescript-sdk @tambo-ai/react
+     npx npm-check-updates -u @workspace/typescript-sdk @workspace/react
      ```
 2. Create and merge a PR with the dependency updates.
 3. The release-please action will create a release PR to bump the version.
 4. Once approved and merged, release-please will trigger deployments. Watch progress:
-   - Merge to `deploy`: https://github.com/tambo-ai/tambo/actions/workflows/release-please-cloud.yml
-   - Release to Vercel: https://vercel.com/tambo-ai/tambo-landing/deployments
+   - Merge to `deploy`: https://github.com/genui-ai/genui/actions/workflows/release-please-cloud.yml
+   - Release to Vercel: https://vercel.com/genui-ai/genui-landing/deployments
    - Release to Railway: https://railway.com/project/f6706075-78e8-4b8f-93ff-a07ef6da36d9/service/720e5a60-8fb2-4bca-ad76-38b983649287?environmentId=cb7ad6ef-d499-4792-8656-780891015359
 
 ## Notes
 
 ### Release Please
 
-All of the Tambo repos are managed using [release-please](https://github.com/googleapis/release-please).
+All of the Genui repos are managed using [release-please](https://github.com/googleapis/release-please).
 
 #### Configuration
 
@@ -72,7 +72,7 @@ In general, the process is as follows for any repo:
    fix, `feat` if it's a new feature, or `chore` if it's a refactor or other
    change that doesn't add or remove any functionality.
 2. A PR will be automatically created or updated that updates the version of the
-   Tambo packages in the `package.json` files.
+   Genui packages in the `package.json` files.
 3. When the release PR is merged, release-please will create a new release on
    GitHub and either:
    - If it is a library, it will create a new release and push it to NPM.
@@ -80,7 +80,7 @@ In general, the process is as follows for any repo:
 
 ### Stainless Studio
 
-- If you want to jump the gun and try out a local version of the Tambo API before an official release:
+- If you want to jump the gun and try out a local version of the Genui API before an official release:
   1. Grab the OpenAPI spec from your local build:
 
      ```
@@ -101,8 +101,8 @@ Updating `openapi.stainless.yaml` directly in Stainless Studio `main` is fine so
 
 ### Miscellaneous
 
-- The Tambo API is built and deployed to Railway. You can monitor deployment and runtime logs at:
+- The Genui API is built and deployed to Railway. You can monitor deployment and runtime logs at:
   - `deploy` branch goes to [Production](https://railway.com/project/f6706075-78e8-4b8f-93ff-a07ef6da36d9/service/720e5a60-8fb2-4bca-ad76-38b983649287?environmentId=cb7ad6ef-d499-4792-8656-780891015359)
   - `main` branch goes to [Development](https://railway.com/project/f6706075-78e8-4b8f-93ff-a07ef6da36d9/service/720e5a60-8fb2-4bca-ad76-38b983649287?environmentId=6bee8983-1a4f-4b39-b778-72ec46e18db5)
 
-* We use [Stainless](https://stainlessapi.com/) to automatically generate the Tambo client SDKs from the OpenAPI spec.
+* We use [Stainless](https://stainlessapi.com/) to automatically generate the Genui client SDKs from the OpenAPI spec.

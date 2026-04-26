@@ -28,8 +28,8 @@ function MessageLimitEmailComponent({
       <Body style={body}>
         <Container style={container}>
           <Img
-            src="https://tambo.co/logo/lockup/Tambo-Lockup.png"
-            alt="tambo"
+            src="https://genui.co/logo/lockup/Genui-Lockup.png"
+            alt="genui"
             width="150"
             style={logo}
           />
@@ -53,25 +53,25 @@ function MessageLimitEmailComponent({
           </Text>
           <Text style={listItem}>
             2. Contact us at{" "}
-            <Link href="mailto:support@tambo.co" style={link}>
-              support@tambo.co
+            <Link href="mailto:support@genui.co" style={link}>
+              support@genui.co
             </Link>{" "}
             to discuss enterprise options
           </Text>
 
           <Section style={buttonSection}>
-            <Link href={`https://console.tambo.co/${projectId}`} style={button}>
+            <Link href={`https://console.genui.co/${projectId}`} style={button}>
               Go to Your Project
             </Link>
           </Section>
 
-          <Text style={paragraph}>Thank you for using tambo!</Text>
+          <Text style={paragraph}>Thank you for using genui!</Text>
 
           <Hr style={hr} />
           <Text style={footer}>
             Best regards,
             <br />
-            The tambo-ai team
+            The genui-ai team
           </Text>
         </Container>
         <Text style={copyright}>Fractal Dynamics Inc</Text>
@@ -81,7 +81,7 @@ function MessageLimitEmailComponent({
 }
 
 export const messageLimitEmail: Email<MessageLimitEmailVariables> = {
-  subject: "tambo ai - Free Message Limit Reached",
+  subject: "genui ai - Free Message Limit Reached",
   component: (variables) => <MessageLimitEmailComponent {...variables} />,
 };
 

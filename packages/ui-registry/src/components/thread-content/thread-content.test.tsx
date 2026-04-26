@@ -1,11 +1,11 @@
 import { describe, expect, it, jest } from "@jest/globals";
-import { useTambo } from "@tambo-ai/react";
+import { useGenui } from "@workspace/react";
 
-await jest.unstable_mockModule("@tambo-ai/react/mcp", () => ({
-  useTamboMcpPrompt: jest.fn(() => ({ data: null })),
-  useTamboMcpPromptList: jest.fn(() => ({ data: [], isLoading: false })),
-  useTamboMcpResourceList: jest.fn(() => ({ data: [], isLoading: false })),
-  useTamboElicitationContext: jest.fn(() => ({
+await jest.unstable_mockModule("@workspace/react/mcp", () => ({
+  useGenuiMcpPrompt: jest.fn(() => ({ data: null })),
+  useGenuiMcpPromptList: jest.fn(() => ({ data: [], isLoading: false })),
+  useGenuiMcpResourceList: jest.fn(() => ({ data: [], isLoading: false })),
+  useGenuiElicitationContext: jest.fn(() => ({
     elicitation: null,
     resolveElicitation: null,
   })),
@@ -16,10 +16,10 @@ const { ThreadContent, ThreadContentMessages } =
   await import("./thread-content");
 
 describe("ThreadContent (registry)", () => {
-  const mockUseTambo = jest.mocked(useTambo);
+  const mockUseGenui = jest.mocked(useGenui);
 
   beforeEach(() => {
-    mockUseTambo.mockReturnValue({
+    mockUseGenui.mockReturnValue({
       messages: [],
       isStreaming: false,
       isIdle: true,
@@ -48,7 +48,7 @@ describe("ThreadContent (registry)", () => {
   });
 
   it("renders messages with data-slot attributes", () => {
-    mockUseTambo.mockReturnValue({
+    mockUseGenui.mockReturnValue({
       messages: [
         {
           id: "msg-1",

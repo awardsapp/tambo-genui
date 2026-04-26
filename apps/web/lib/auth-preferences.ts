@@ -8,8 +8,8 @@
 
 import { LEGAL_CONFIG } from "./legal-config";
 
-const LAST_USED_PROVIDER_KEY = "tambo_last_used_provider";
-const LEGAL_ACCEPTED_VERSION_KEY = "tambo_legal_accepted_version";
+const LAST_USED_PROVIDER_KEY = "genui_last_used_provider";
+const LEGAL_ACCEPTED_VERSION_KEY = "genui_legal_accepted_version";
 
 /**
  * Gets the last used OAuth provider ID.

@@ -6,4 +6,4 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Quick Reference
 
-The Tambo CLI (`tambo`) - command-line tool for scaffolding and managing Tambo AI applications.
+The Genui CLI (`genui`) - command-line tool for scaffolding and managing Genui AI applications.

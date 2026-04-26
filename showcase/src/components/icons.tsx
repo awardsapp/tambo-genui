@@ -1,7 +1,7 @@
 "use client";
 
-import TamboLogo from "@/public/logo/lockup/Tambo-Lockup.svg";
-import TamboLogoDark from "@/public/logo/lockup/Tambo-Lockup-Dark.svg";
+import GenuiLogo from "@/public/logo/lockup/Genui-Lockup.svg";
+import GenuiLogoDark from "@/public/logo/lockup/Genui-Lockup-Dark.svg";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
@@ -10,7 +10,7 @@ type IconProps = React.HTMLAttributes<SVGElement> & {
   height?: number | string;
 };
 
-function TamboLogoIcon({ className, ...props }: IconProps) {
+function GenuiLogoIcon({ className, ...props }: IconProps) {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -21,7 +21,7 @@ function TamboLogoIcon({ className, ...props }: IconProps) {
   // During SSR/hydration, render light logo as default
   if (!mounted) {
     return (
-      <TamboLogo
+      <GenuiLogo
         viewBox="0 0 2072 450"
         preserveAspectRatio="xMinYMid meet"
         className={className}
@@ -32,7 +32,7 @@ function TamboLogoIcon({ className, ...props }: IconProps) {
 
   if (resolvedTheme === "dark") {
     return (
-      <TamboLogoDark
+      <GenuiLogoDark
         viewBox="0 0 2072 457"
         preserveAspectRatio="xMinYMid meet"
         className={className}
@@ -42,7 +42,7 @@ function TamboLogoIcon({ className, ...props }: IconProps) {
   }
 
   return (
-    <TamboLogo
+    <GenuiLogo
       viewBox="0 0 2072 450"
       preserveAspectRatio="xMinYMid meet"
       className={className}
@@ -52,7 +52,7 @@ function TamboLogoIcon({ className, ...props }: IconProps) {
 }
 
 export const Icons = {
-  logo: TamboLogoIcon,
+  logo: GenuiLogoIcon,
   github: (props: IconProps) => (
     <svg viewBox="0 0 438.549 438.549" {...props}>
       <path

@@ -3,7 +3,7 @@ import {
   GenerationStage,
   MessageRole,
   V1RunStatus,
-} from "@tambo-ai-cloud/core";
+} from "@workspace-cloud/core";
 
 type ThreadType = RouterOutputs["thread"]["getThread"];
 type MessageType = ThreadType["messages"][0];

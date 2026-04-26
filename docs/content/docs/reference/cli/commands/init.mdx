@@ -13,10 +13,10 @@ After obtaining your API key, you'll need to set it up in your project:
   Create a `.env.local` file in the root of your project to store your Tambo API
   key. The variable name depends on your framework:
 
-- **Next.js:** `NEXT_PUBLIC_TAMBO_API_KEY=your_api_key_here`
-- **Expo:** `EXPO_PUBLIC_TAMBO_API_KEY=your_api_key_here`
-- **Vite:** `VITE_TAMBO_API_KEY=your_api_key_here`
-- **Other:** `TAMBO_API_KEY=your_api_key_here`
+- **Next.js:** `NEXT_PUBLIC_GENUI_API_KEY=your_api_key_here`
+- **Expo:** `EXPO_PUBLIC_GENUI_API_KEY=your_api_key_here`
+- **Vite:** `VITE_GENUI_API_KEY=your_api_key_here`
+- **Other:** `GENUI_API_KEY=your_api_key_here`
 
 The CLI detects your framework and uses the correct environment variable prefix
 automatically. This file should not be committed to version control.
@@ -45,12 +45,12 @@ When running in CI/CD pipelines, AI coding assistants (Claude Code, Cursor), or 
 Directly set the API key without prompts. The simplest option for CI/CD:
 
 ```bash
-npx tambo init --api-key="$TAMBO_API_KEY"
+npx tambo init --api-key="$GENUI_API_KEY"
 ```
 
 ### `--project-name`
 
-Create a new Tambo Cloud project and generate an API key. Requires authentication:
+Create a new Genui Cloud project and generate an API key. Requires authentication:
 
 ```bash
 npx tambo init --project-name=myapp
@@ -81,14 +81,14 @@ npx tambo init --project-name=myapp
 
 ```yaml
 - name: Initialize Tambo
-  run: npx tambo init --api-key="${{ secrets.TAMBO_API_KEY }}"
+  run: npx tambo init --api-key="${{ secrets.GENUI_API_KEY }}"
 ```
 
 **Direct API key setup (any CI):**
 
 ```bash
-export TAMBO_API_KEY=sk_...
-npx tambo init --api-key="$TAMBO_API_KEY"
+export GENUI_API_KEY=sk_...
+npx tambo init --api-key="$GENUI_API_KEY"
 ```
 
 <Callout type="info" title="Exit Codes">
@@ -101,11 +101,11 @@ npx tambo init --api-key="$TAMBO_API_KEY"
 
 The init command offers two hosting options for your Tambo project:
 
-### Tambo Cloud (Recommended)
+### Genui Cloud (Recommended)
 
 **Setup time:** ~1 minute
 
-The fastest way to get started. Tambo Cloud handles all backend infrastructure for you.
+The fastest way to get started. Genui Cloud handles all backend infrastructure for you.
 
 **What you get:**
 
@@ -146,14 +146,14 @@ After selecting self-host, the CLI provides detailed instructions:
 
 ```bash
 ? How would you like to host your Tambo project?
-  ❯ Tambo Cloud (~1 minute) [Recommended]
+  ❯ Genui Cloud (~1 minute) [Recommended]
     Self-host (~5-10 minutes)
 
 # If self-host selected:
 To self-host Tambo:
 
 1. Clone the repository:
-   git clone https://github.com/tambo-ai/tambo-core.git
+   git clone https://github.com/awardsapp/tambo-genui-core.git
    cd tambo-core/tambo-cloud
 
 2. Run the start script:
@@ -162,7 +162,7 @@ To self-host Tambo:
 3. Your API will be running at http://localhost:3030
 
 4. Set this in your .env.local:
-   NEXT_PUBLIC_TAMBO_API_URL=http://localhost:3030
+   NEXT_PUBLIC_GENUI_API_URL=http://localhost:3030
 
 ? Continue with self-host setup? (Y/n)
 ```
@@ -243,5 +243,5 @@ The init command protects your existing API keys:
 If you're not sure which key is in your `.env.local`, check it first:
 
 ```bash
-cat .env.local | grep TAMBO_API_KEY
+cat .env.local | grep GENUI_API_KEY
 ```

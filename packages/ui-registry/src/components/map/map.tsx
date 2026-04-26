@@ -7,7 +7,7 @@ import {
   type LayerProps,
   type LeafletContextInterface,
 } from "@react-leaflet/core";
-import { cn } from "@tambo-ai/ui-registry/utils";
+import { cn } from "@workspace/ui-registry/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import L, {
   type HeatLatLngTuple,

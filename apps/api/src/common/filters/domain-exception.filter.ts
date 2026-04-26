@@ -5,7 +5,7 @@ import {
   HttpStatus,
   Logger,
 } from "@nestjs/common";
-import { DomainError, DomainErrorKind } from "@tambo-ai-cloud/core";
+import { DomainError, DomainErrorKind } from "@workspace-cloud/core";
 import { Request, Response } from "express";
 import { ProblemDetails } from "../../threads/types/errors";
 
@@ -24,10 +24,10 @@ const TITLE_MAP: Record<DomainErrorKind, string> = {
 };
 
 const PROBLEM_TYPE_MAP: Record<DomainErrorKind, string> = {
-  validation: "https://docs.tambo.co/reference/problems/validation",
-  "not-found": "https://docs.tambo.co/reference/problems/not-found",
-  conflict: "https://docs.tambo.co/reference/problems/conflict",
-  forbidden: "https://docs.tambo.co/reference/problems/forbidden",
+  validation: "https://docs.genui.co/reference/problems/validation",
+  "not-found": "https://docs.genui.co/reference/problems/not-found",
+  conflict: "https://docs.genui.co/reference/problems/conflict",
+  forbidden: "https://docs.genui.co/reference/problems/forbidden",
 };
 
 /**

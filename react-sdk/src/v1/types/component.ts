@@ -34,7 +34,7 @@ export interface AvailableComponent {
  * Component registration for React SDK
  * Extends AvailableComponent with the actual React component
  */
-export interface TamboComponent extends AvailableComponent {
+export interface GenuiComponent extends AvailableComponent {
   /** The React component to render */
   component: ComponentType<any>;
 
@@ -45,7 +45,7 @@ export interface TamboComponent extends AvailableComponent {
 /**
  * Props passed to components when rendered
  */
-export interface TamboComponentProps<
+export interface GenuiComponentProps<
   TProps extends Record<string, unknown> = Record<string, unknown>,
   TState extends Record<string, unknown> = Record<string, unknown>,
 > {

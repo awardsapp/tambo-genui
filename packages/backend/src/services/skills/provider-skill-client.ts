@@ -1,7 +1,7 @@
 import {
   type ProviderSkillReference,
   SKILLS_SUPPORTED_PROVIDERS,
-} from "@tambo-ai-cloud/core";
+} from "@workspace-cloud/core";
 import Anthropic from "@anthropic-ai/sdk";
 import OpenAI from "openai";
 

@@ -4,7 +4,7 @@ Detailed guidance for Claude Code agents working with the CLI package.
 
 ## Project Overview
 
-The Tambo CLI (`tambo`) is a command-line tool for scaffolding, managing, and extending Tambo AI applications. It provides component generation, project initialization, dependency management, and development utilities.
+The Genui CLI (`tambo`) is a command-line tool for scaffolding, managing, and extending Tambo AI applications. It provides component generation, project initialization, dependency management, and development utilities.
 
 ## Component Registry (Source of Truth)
 
@@ -24,7 +24,7 @@ npm run check-types     # TypeScript type checking
 tambo init                    # Initialize Tambo in existing project
 tambo add <component>        # Add components from registry
 tambo list                   # List available components
-tambo create-app <name>      # Create new Tambo application
+tambo create-app <name>      # Create new Genui application
 tambo update                 # Update existing components
 tambo upgrade               # Upgrade Tambo dependencies
 tambo skills <subcommand>   # Manage project skills (list, add, get, update, enable, disable, delete)
@@ -145,13 +145,13 @@ Override with `FORCE_INTERACTIVE=1` if needed (requires real TTY).
 
 Usage analytics. If logged in, the user's Tambo ID is attached to events.
 
-- **Opt-out**: `TAMBO_TELEMETRY_DISABLED=1`
+- **Opt-out**: `GENUI_TELEMETRY_DISABLED=1`
 - **How it works**: Uses the `posthog-node` SDK. Events are sent directly to PostHog (`us.i.posthog.com`) via `client.capture()`, and `await client.shutdown()` is called before the CLI exits to flush pending events. If the user is logged in, their Tambo user ID is used as the distinct ID.
 - **Adding a new event**:
   1. Add the event name to `EVENTS` in `src/lib/telemetry.ts`
   2. Call `trackEvent(EVENTS.NEW_EVENT, { ... })` in the command handler
   3. New properties are passed through automatically (no server-side allowlist)
-- **Dev override**: Set `TAMBO_TELEMETRY_HOST` to point at a different PostHog-compatible ingest endpoint.
+- **Dev override**: Set `GENUI_TELEMETRY_HOST` to point at a different PostHog-compatible ingest endpoint.
 - **Current events**: `cli.command.completed`, `cli.command.error`, `cli.component.added`, `cli.init.completed`, `cli.auth.login`, `cli.auth.logout`
 
 ## Development Patterns

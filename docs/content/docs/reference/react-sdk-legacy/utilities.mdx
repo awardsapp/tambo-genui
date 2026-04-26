@@ -3,14 +3,14 @@ title: Utility Functions
 description: Helper functions for defining tools, making components interactable, and providing context to the AI.
 ---
 
-The `@tambo-ai/react` package exports utility functions for common tasks like defining tools with full type inference and making components interactable.
+The `@workspace/react` package exports utility functions for common tasks like defining tools with full type inference and making components interactable.
 
 ## defineTool
 
-Type-safe helper for defining Tambo tools. Provides full type inference from your schema definitions.
+Type-safe helper for defining Genui tools. Provides full type inference from your schema definitions.
 
 ```tsx
-import { defineTool } from "@tambo-ai/react";
+import { defineTool } from "@workspace/react";
 import { z } from "zod";
 
 const weatherTool = defineTool({
@@ -43,12 +43,12 @@ The `defineTool` function accepts a tool definition object:
 | `outputSchema`       | `SupportedSchema` | Yes      | Schema for return value                        |
 | `title`              | `string`          | No       | Human-readable display name                    |
 | `maxCalls`           | `number`          | No       | Maximum calls per response                     |
-| `annotations`        | `ToolAnnotations` | No       | Behavior hints (e.g., `tamboStreamableHint`)   |
+| `annotations`        | `ToolAnnotations` | No       | Behavior hints (e.g., `genuiStreamableHint`)   |
 | `transformToContent` | `function`        | No       | Transform result to content parts              |
 
 ### Schema Support
 
-Tambo uses the [Standard Schema](https://standard-schema.dev) specification, so you can use any compliant validator:
+Genui uses the [Standard Schema](https://standard-schema.dev) specification, so you can use any compliant validator:
 
 ```tsx
 // Zod
@@ -66,14 +66,14 @@ inputSchema: type({ query: "string" });
 
 ### Streaming-Safe Tools
 
-For tools that are safe to call repeatedly during streaming (typically read-only tools), use the `tamboStreamableHint` annotation:
+For tools that are safe to call repeatedly during streaming (typically read-only tools), use the `genuiStreamableHint` annotation:
 
 ```tsx
 const searchTool = defineTool({
   name: "search",
   description: "Search for items",
   annotations: {
-    tamboStreamableHint: true, // Safe for streaming
+    genuiStreamableHint: true, // Safe for streaming
   },
   tool: async ({ query }) => searchDatabase(query),
   inputSchema: z.object({ query: z.string() }),
@@ -83,10 +83,10 @@ const searchTool = defineTool({
 
 ## withInteractable
 
-Higher-Order Component that makes any component interactable by Tambo. Interactable components can have their props and state modified by the AI during a conversation.
+Higher-Order Component that makes any component interactable by Genui. Interactable components can have their props and state modified by the AI during a conversation.
 
 ```tsx
-import { withInteractable } from "@tambo-ai/react";
+import { withInteractable } from "@workspace/react";
 import { z } from "zod";
 
 const Note = ({ title, content }: { title: string; content: string }) => (
@@ -142,7 +142,7 @@ The wrapped component receives additional props:
 ### Example with State
 
 ```tsx
-import { withInteractable, useTamboComponentState } from "@tambo-ai/react";
+import { withInteractable, useGenuiComponentState } from "@workspace/react";
 import { z } from "zod";
 
 const Task = ({
@@ -152,7 +152,7 @@ const Task = ({
   title: string;
   description: string;
 }) => {
-  const [isComplete, setIsComplete] = useTamboComponentState(
+  const [isComplete, setIsComplete] = useGenuiComponentState(
     "isComplete",
     false,
   );
@@ -183,14 +183,14 @@ const InteractableTask = withInteractable(Task, {
 
 ## Built-in Context Helpers
 
-Tambo provides pre-built context helpers that automatically provide useful information to the AI.
+Genui provides pre-built context helpers that automatically provide useful information to the AI.
 
 ### currentPageContextHelper
 
 Provides information about the user's current page.
 
 ```tsx
-import { currentPageContextHelper } from "@tambo-ai/react";
+import { currentPageContextHelper } from "@workspace/react";
 
 // Returns: { url: "https://...", title: "Page Title" }
 ```
@@ -200,24 +200,24 @@ import { currentPageContextHelper } from "@tambo-ai/react";
 Provides the current timestamp.
 
 ```tsx
-import { currentTimeContextHelper } from "@tambo-ai/react";
+import { currentTimeContextHelper } from "@workspace/react";
 
 // Returns: { timestamp: "Wed Jan 22 2025 10:30:00 GMT-0800" }
 ```
 
 ### Using Context Helpers
 
-Context helpers are configured on the `TamboProvider`:
+Context helpers are configured on the `GenuiProvider`:
 
 ```tsx
 import {
-  TamboProvider,
+  GenuiProvider,
   currentPageContextHelper,
   currentTimeContextHelper,
-} from "@tambo-ai/react";
+} from "@workspace/react";
 
-<TamboProvider
-  apiKey={process.env.TAMBO_API_KEY}
+<GenuiProvider
+  apiKey={process.env.GENUI_API_KEY}
   contextHelpers={{
     currentPage: currentPageContextHelper,
     currentTime: currentTimeContextHelper,
@@ -229,18 +229,18 @@ import {
   }}
 >
   <App />
-</TamboProvider>;
+</GenuiProvider>;
 ```
 
 ### Dynamic Context Helpers
 
-You can add/remove context helpers dynamically using `useTamboContextHelpers`:
+You can add/remove context helpers dynamically using `useGenuiContextHelpers`:
 
 ```tsx
-import { useTamboContextHelpers } from "@tambo-ai/react";
+import { useGenuiContextHelpers } from "@workspace/react";
 
 function MyComponent() {
-  const { addContextHelper, removeContextHelper } = useTamboContextHelpers();
+  const { addContextHelper, removeContextHelper } = useGenuiContextHelpers();
 
   useEffect(() => {
     addContextHelper("selection", () => ({

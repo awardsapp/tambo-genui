@@ -21,7 +21,7 @@ import {
   V1RunStatus,
   type CustomLlmParameters,
   type ExternalSkillMetadata,
-} from "@tambo-ai-cloud/core";
+} from "@workspace-cloud/core";
 import { relations, sql } from "drizzle-orm";
 import {
   boolean,

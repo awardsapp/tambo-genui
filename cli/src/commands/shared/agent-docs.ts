@@ -6,47 +6,47 @@ import path from "path";
 import { COMPONENT_SUBDIR } from "../../constants/paths.js";
 import { isInteractive } from "../../utils/interactive.js";
 
-const TAMBO_SECTION_VERSION = "v1.0";
-const VERSION_MARKER = `<!-- tambo-docs-${TAMBO_SECTION_VERSION} -->`;
+const GENUI_SECTION_VERSION = "v1.0";
+const VERSION_MARKER = `<!-- genui-docs-${GENUI_SECTION_VERSION} -->`;
 
-const TAMBO_DOCS_SECTION = `
+const GENUI_DOCS_SECTION = `
 ${VERSION_MARKER}
-## Tambo AI Framework
+## Genui AI Framework
 
-This project uses **Tambo AI** for building AI assistants with generative UI and MCP support.
+This project uses **Genui AI** for building AI assistants with generative UI and MCP support.
 
-**Documentation**: https://docs.tambo.co/llms.txt
+**Documentation**: https://docs.genui.co/llms.txt
 
 ### CLI Commands (Non-Interactive)
 
-The Tambo CLI auto-detects non-interactive environments. Use these commands:
+The Genui CLI auto-detects non-interactive environments. Use these commands:
 
 \`\`\`bash
-# Initialize (requires API key from https://console.tambo.co)
-npx tambo init --api-key=sk_...
+# Initialize (requires API key from https://console.genui.co)
+npx genui init --api-key=sk_...
 
 # Add components
-npx tambo add <component> --yes
+npx genui add <component> --yes
 
 # List available components
-npx tambo list --yes
+npx genui list --yes
 
 # Create new app
-npx tambo create-app <name> --template=standard
+npx genui create-app <name> --template=standard
 
 # Get help
-npx tambo --help
-npx tambo <command> --help
+npx genui --help
+npx genui <command> --help
 \`\`\`
 
 **Exit codes**: 0=success, 1=error, 2=requires flags (check stderr for exact command)
 `;
 
-const COMPONENT_AGENTS_TEMPLATE = `# Tambo Components Guidelines
+const COMPONENT_AGENTS_TEMPLATE = `# Genui Components Guidelines
 
-Components in this directory are registered with Tambo for AI-driven generative UI.
+Components in this directory are registered with Genui for AI-driven generative UI.
 
-Read the full documentation at https://docs.tambo.co/llms.txt for component creation patterns and best practices.
+Read the full documentation at https://docs.genui.co/llms.txt for component creation patterns and best practices.
 `;
 
 export interface AgentDocsOptions {
@@ -56,7 +56,7 @@ export interface AgentDocsOptions {
   skipAgentDocs?: boolean;
 }
 
-function hasTamboSection(content: string): boolean {
+function hasGenuiSection(content: string): boolean {
   return content.includes(VERSION_MARKER);
 }
 
@@ -132,16 +132,16 @@ export async function handleAgentDocsUpdate(
 
     if (hasAgents) {
       const content = fs.readFileSync(agentsMdPath, "utf-8");
-      if (!hasTamboSection(content)) {
-        fs.appendFileSync(agentsMdPath, `\n\n${TAMBO_DOCS_SECTION}`);
+      if (!hasGenuiSection(content)) {
+        fs.appendFileSync(agentsMdPath, `\n\n${GENUI_DOCS_SECTION}`);
         updates.push("Updated AGENTS.md");
       } else {
         updates.push("AGENTS.md already up-to-date");
       }
     } else if (hasClaude) {
       const content = fs.readFileSync(claudeMdPath, "utf-8");
-      if (!hasTamboSection(content)) {
-        fs.appendFileSync(claudeMdPath, `\n\n${TAMBO_DOCS_SECTION}`);
+      if (!hasGenuiSection(content)) {
+        fs.appendFileSync(claudeMdPath, `\n\n${GENUI_DOCS_SECTION}`);
         updates.push("Updated CLAUDE.md");
       } else {
         updates.push("CLAUDE.md already up-to-date");
@@ -149,7 +149,7 @@ export async function handleAgentDocsUpdate(
     } else {
       fs.writeFileSync(
         agentsMdPath,
-        `# AGENTS.md\n\nProject guidelines for AI assistants.\n\n${TAMBO_DOCS_SECTION}`,
+        `# AGENTS.md\n\nProject guidelines for AI assistants.\n\n${GENUI_DOCS_SECTION}`,
       );
       updates.push("Created AGENTS.md");
     }
@@ -169,7 +169,7 @@ export async function handleAgentDocsUpdate(
         // user customizations when overwriting component AGENTS.md files
         console.log(
           chalk.yellow(
-            `⚠  Updating components/tambo/AGENTS.md to version ${TAMBO_SECTION_VERSION}`,
+            `⚠  Updating components/genui/AGENTS.md to version ${GENUI_SECTION_VERSION}`,
           ),
         );
         fs.writeFileSync(componentAgentsPath, COMPONENT_AGENTS_TEMPLATE);

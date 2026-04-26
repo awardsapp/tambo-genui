@@ -411,7 +411,7 @@ describe("verify-exports", () => {
           files: [{ name: "component-a.tsx" }],
         }),
         [`${COMPONENTS_DIR}/component-a/component-a.tsx`]: `
-          import { ComponentB } from '@tambo-ai/ui-registry/components/component-b';
+          import { ComponentB } from '@workspace/ui-registry/components/component-b';
           export const A = () => <ComponentB />;
         `,
         [`${COMPONENTS_DIR}/component-b/config.json`]: JSON.stringify({
@@ -535,7 +535,7 @@ describe("verify-exports", () => {
       const content = `
         import React from 'react';
         import { Foo } from './foo';
-        import { something } from '@tambo-ai/react';
+        import { something } from '@workspace/react';
       `;
       const result = extractRelativeImports(content);
       expect(result).toEqual(["./foo"]);

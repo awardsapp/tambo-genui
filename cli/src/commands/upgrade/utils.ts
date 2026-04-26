@@ -30,8 +30,8 @@ export async function detectTemplate(): Promise<string | null> {
     const readmeContent = fs.readFileSync(readmePath, "utf-8");
 
     // Check for template-specific names in the README
-    if (readmeContent.includes("Tambo Template")) {
-      // The vite template README also contains "Tambo Template", but
+    if (readmeContent.includes("Genui Template")) {
+      // The vite template README also contains "Genui Template", but
       // additionally references Vite and TanStack Router.
       if (
         readmeContent.includes("Vite") &&
@@ -59,23 +59,23 @@ export async function detectTemplate(): Promise<string | null> {
  */
 export function generateAiUpgradePrompts(template: string | null): string[] {
   const commonPrompts = [
-    "How can I optimize my tambo components for better performance?",
+    "How can I optimize my genui components for better performance?",
     "What improvements can be made to the user interface based on best practices?",
-    "Suggest ways to enhance the accessibility of my tambo app",
+    "Suggest ways to enhance the accessibility of my genui app",
   ];
 
   const templateSpecificPrompts: Record<string, string[]> = {
     standard: [
-      "How can I optimize the state management in my tambo application?",
-      "What are the latest patterns for error handling in tambo components?",
+      "How can I optimize the state management in my genui application?",
+      "What are the latest patterns for error handling in genui components?",
     ],
     vite: [
       "How can I optimize my Vite build configuration for better performance?",
-      "What are the best practices for TanStack Router route management in my tambo app?",
+      "What are the best practices for TanStack Router route management in my genui app?",
     ],
     analytics: [
-      "How can I optimize my tambo canvas drag-and-drop interactions for better user experience?",
-      "What are the best practices for integrating MCP servers with tambo components?",
+      "How can I optimize my genui canvas drag-and-drop interactions for better user experience?",
+      "What are the best practices for integrating MCP servers with genui components?",
     ],
   };
 
@@ -155,7 +155,7 @@ export async function migrateComponentsDuringUpgrade(
       if (fs.existsSync(oldFile)) {
         // Read, update import paths, write to new location
         const content = fs.readFileSync(oldFile, "utf-8");
-        const updatedContent = updateImportPaths(content, "tambo");
+        const updatedContent = updateImportPaths(content, "genui");
         fs.writeFileSync(newFile, updatedContent);
         fs.unlinkSync(oldFile);
       }

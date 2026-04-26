@@ -1,7 +1,7 @@
 import {
   ChatCompletionContentPart,
   ContentPartType,
-} from "@tambo-ai-cloud/core";
+} from "@workspace-cloud/core";
 import {
   AudioFormat,
   ChatCompletionContentPartDto,

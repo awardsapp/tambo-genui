@@ -1,5 +1,5 @@
 import { describe, expect, it, jest } from "@jest/globals";
-import { useTambo } from "@tambo-ai/react";
+import { useTambo } from "@workspace/react";
 import { render, screen } from "@testing-library/react";
 import { GenerationStage } from "./index";
 

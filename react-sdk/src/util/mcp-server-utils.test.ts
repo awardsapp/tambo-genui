@@ -1,5 +1,5 @@
-import type { McpServerInfo, NormalizedMcpServerInfo } from "@tambo-ai/client";
-import { MCPTransport } from "@tambo-ai/client";
+import type { McpServerInfo, NormalizedMcpServerInfo } from "@workspace/client";
+import { MCPTransport } from "@workspace/client";
 import {
   deduplicateMcpServers,
   deriveServerKey,

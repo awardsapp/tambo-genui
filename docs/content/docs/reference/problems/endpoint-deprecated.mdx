@@ -9,7 +9,7 @@ The API returns a `410 Gone` status with this problem type when you call an endp
 
 ```json
 {
-  "type": "https://docs.tambo.co/reference/problems/endpoint-deprecated",
+  "type": "https://docs.genui.co/reference/problems/endpoint-deprecated",
   "status": 410,
   "title": "Endpoint Deprecated",
   "detail": "The non-streaming /advance endpoint has been deprecated. Please use /advancestream instead.",
@@ -43,11 +43,11 @@ When you receive this error:
 
 ```bash
 # Old endpoint (deprecated)
-curl -X POST https://api.tambo.co/threads/advance \
+curl -X POST https://api.genui.co/threads/advance \
   -H "Authorization: Bearer YOUR_API_KEY"
 
 # New endpoint (use this instead)
-curl -X POST https://api.tambo.co/threads/advancestream \
+curl -X POST https://api.genui.co/threads/advancestream \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json"
 ```

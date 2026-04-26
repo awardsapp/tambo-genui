@@ -1,8 +1,8 @@
-import type { TamboThreadMessage } from "@tambo-ai/react";
+import type { GenuiThreadMessage } from "@workspace/react";
 import * as React from "react";
 
 export interface ThreadContentContextValue {
-  messages: TamboThreadMessage[];
+  messages: GenuiThreadMessage[];
   isGenerating: boolean;
   isEmpty: boolean;
   isLoading: boolean;

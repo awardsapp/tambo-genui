@@ -59,7 +59,7 @@ workspaces=$(jq -r '
 
 if [ -z "$workspaces" ]; then
   echo "No workspaces found in package.json; falling back to a basic scan of common monorepo directories." >&2
-  workspaces=$(printf '%s\n' 'apps/*' 'packages/*' 'cli' 'create-tambo-app' 'docs' 'react-sdk' 'showcase')
+  workspaces=$(printf '%s\n' 'apps/*' 'packages/*' 'cli' 'create-genui-app' 'docs' 'react-sdk' 'showcase')
 fi
 
 build_workspace_report() {

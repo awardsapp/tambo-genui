@@ -4,7 +4,7 @@ Detailed guidance for Claude Code agents working with the Docs package.
 
 ## Project Overview
 
-The Docs package (`@tambo-ai/docs`) is a Next.js application serving as the official Tambo AI documentation site. Built with Fumadocs, it provides comprehensive guides, API reference, and interactive examples.
+The Docs package (`@workspace/docs`) is a Next.js application serving as the official Genui AI documentation site. Built with Fumadocs, it provides comprehensive guides, API reference, and interactive examples.
 
 ## Essential Commands
 
@@ -31,13 +31,13 @@ npm run postbuild    # Generate sitemap (automatic)
 - **Docs**: `content/docs/` - All MDX documentation files
 - **Navigation**: `meta.json` files define sidebar structure
 - **Assets**: `public/assets/docs/` - Images, videos, demos
-- **Components**: Interactive Tambo components in docs
+- **Components**: Interactive Genui components in docs
 
 ### Key Features
 
 - MDX-based content with React components
 - Auto-generated navigation from folder structure
-- Interactive Tambo component examples
+- Interactive Genui component examples
 - Mermaid diagram support
 - Search functionality
 - GitHub integration
@@ -46,8 +46,8 @@ npm run postbuild    # Generate sitemap (automatic)
 
 - `content/docs/` - Documentation content (MDX)
 - `src/components/mdx/` - Custom MDX components
-- `src/components/tambo/` - Tambo component implementations
-- `src/lib/tambo.ts` - Component registration for interactive docs
+- `src/components/genui/` - Genui component implementations
+- `src/lib/genui.ts` - Component registration for interactive docs
 - `source.config.ts` - Fumadocs configuration
 - `src/app/layout.config.tsx` - Base layout configuration
 
@@ -62,8 +62,8 @@ npm run postbuild    # Generate sitemap (automatic)
 
 ### Adding Interactive Components
 
-1. Create component in `src/components/tambo/`
-2. Register in `src/lib/tambo.ts`
+1. Create component in `src/components/genui/`
+2. Register in `src/lib/genui.ts`
 3. Use in MDX content directly
 4. Ensure SSR compatibility
 
@@ -76,12 +76,12 @@ npm run postbuild    # Generate sitemap (automatic)
 
 #### SEO and heading structure
 
-- Use exactly one H1 per page that clearly describes the main topic (for example, "Tambo CLI overview" instead of just "Overview").
+- Use exactly one H1 per page that clearly describes the main topic (for example, "Genui CLI overview" instead of just "Overview").
 - Structure sections as `H1 -> H2 -> H3` wherever possible. Avoid jumping straight to H3/H4 without an H2.
 - Make sure primary key phrases for the page appear in the H1 (or first H2) and in the opening paragraph.
-- Prefer descriptive headings over generic ones. Replace bare headings like "Overview" or "Introduction" with topic-aware variants such as "User authentication in Tambo".
+- Prefer descriptive headings over generic ones. Replace bare headings like "Overview" or "Introduction" with topic-aware variants such as "User authentication in Genui".
 - Keep headings scannable and short (aim for 3-7 words), and avoid repeating the exact same phrase across multiple headings on a single page.
-- Follow our existing product naming conventions (for example, "Tambo AI" and "Tambo Cloud") when including product names in headings so SEO signals stay consistent.
+- Follow our existing product naming conventions (for example, "Genui AI" and "Genui Cloud") when including product names in headings so SEO signals stay consistent.
 - When configuring agents or templates to generate docs, bake these heading and keyword rules into your prompts/system messages so automated output follows the same standard.
 
 ## Documentation Structure and Patterns
@@ -96,7 +96,7 @@ In general, try to fit changes into the following categories. If you can't find 
 
 1. **Getting Started** (3 pages)
    - quickstart - Template installation and first interactions
-   - integrate - Adding Tambo to existing projects
+   - integrate - Adding Genui to existing projects
    - components - Understanding registration patterns
 
 2. **Concepts** (11 pages across subsections)
@@ -153,7 +153,7 @@ In general, try to fit changes into the following categories. If you can't find 
      - hooks - React hooks for thread management, component state, streaming
      - types - TypeScript interfaces and types
      - utilities - Helper functions like defineTool() and withInteractable()
-     - providers - Provider components for configuring Tambo
+     - providers - Provider components for configuring Genui
      - mcp - Model Context Protocol hooks and types
      - **migration/** (1 page)
        - toolschema - Migration guide for tool schemas
@@ -161,7 +161,7 @@ In general, try to fit changes into the following categories. If you can't find 
      - hooks - V1 hooks for thread management, messaging, suggestions
      - types - V1 TypeScript interfaces and types
      - providers - V1 provider components
-   - rest-api - OpenAPI specification for Tambo Cloud REST API
+   - rest-api - OpenAPI specification for Genui Cloud REST API
    - **problems/** (1 page)
      - endpoint-deprecated - Documentation for endpoint deprecation errors (410 Gone)
    - **cli/** (6 pages including index)
@@ -181,7 +181,7 @@ In general, try to fit changes into the following categories. If you can't find 
    - expo-mobile-app - Expo/React Native mobile app guide
    - supabase-mcp-client - Integration examples
 
-7. **Tambo MCP Server** (1 page)
+7. **Genui MCP Server** (1 page)
    - index - MCP server documentation
 
 Please update the `Information Architecture` section in the AGENTS.md file to reflect changes when you make them. Keeping this up to date is VERY IMPORTANT.
@@ -250,8 +250,8 @@ Brief explanation with code example
 #### Writing Voice and Tone
 
 - **Direct and Practical**: Focus on what users need to accomplish
-- **Present Tense**: "Tambo allows you to..." not "Tambo will allow..."
-- **Active Voice**: "Register components with Tambo" not "Components are registered"
+- **Present Tense**: "Genui allows you to..." not "Genui will allow..."
+- **Active Voice**: "Register components with Genui" not "Components are registered"
 - **Conversational but Professional**: Use "you" and "your app"
 - **Outcome-Focused**: Start sections with what the user achieves
 
@@ -261,7 +261,7 @@ Brief explanation with code example
 
 ```tsx
 // ✅ Complete context
-import { TamboProvider } from "@tambo-ai/react";
+import { GenuiProvider } from "@workspace/react";
 import { z } from "zod";
 
 const components = [
@@ -278,9 +278,9 @@ const components = [
 
 export function App() {
   return (
-    <TamboProvider components={components}>
+    <GenuiProvider components={components}>
       <Chat />
-    </TamboProvider>
+    </GenuiProvider>
   );
 }
 ```
@@ -306,7 +306,7 @@ import LearnMore from "@/components/learn-more";
 
 <LearnMore
   title="Component Registration"
-  description="Learn how to register components with Tambo"
+  description="Learn how to register components with Genui"
   href="/concepts/components"
   icon={ComponentIcon} // Optional
 />
@@ -341,14 +341,14 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 Use titles for context:
 
 ```bash title="Install dependencies"
-npm install @tambo-ai/react
+npm install @workspace/react
 ```
 
 ### Content Consistency Patterns
 
 #### CLI Documentation Style
 
-- Show command first: `npx tambo add form`
+- Show command first: `npx genui add form`
 - Explain what it does in practical terms
 - List available options/components
 - Include realistic examples

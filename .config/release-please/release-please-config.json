@@ -7,7 +7,7 @@
   "commit-search-depth": 50,
   "packages": {
     "packages/react-ui-base": {
-      "component": "@tambo-ai/react-ui-base",
+      "component": "@workspace/react-ui-base",
       "bump-minor-pre-major": true,
       "bump-patch-for-minor-pre-major": true,
       "force-tag-creation": true
@@ -28,7 +28,7 @@
     "cli": {
       "component": "tambo"
     },
-    "create-tambo-app": {},
+    "create-genui-app": {},
     "docs": {},
     "apps/web": {},
     "apps/api": {}

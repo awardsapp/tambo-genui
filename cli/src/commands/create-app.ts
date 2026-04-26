@@ -26,12 +26,12 @@ const templates: Record<string, Template> = {
   standard: {
     name: "standard",
     description: "Tambo + Tools + MCP (recommended)",
-    repository: "https://github.com/tambo-ai/tambo-template.git",
+    repository: "https://github.com/awardsapp/tambo-genui-template.git",
   },
   vite: {
     name: "vite",
     description: "Tambo + TanStack Router + Vite",
-    repository: "https://github.com/tambo-ai/tambo-template-vite.git",
+    repository: "https://github.com/awardsapp/tambo-genui-template-vite.git",
   },
   analytics: {
     name: "analytics",
@@ -356,7 +356,7 @@ export async function handleCreateApp(
 
       try {
         // Run tambo init with full interactive behavior - user will be prompted for:
-        // - Hosting choice (Tambo Cloud or self-hosted)
+        // - Hosting choice (Genui Cloud or self-hosted)
         // - Authentication (device auth flow)
         // - Project selection
         // - Installation path

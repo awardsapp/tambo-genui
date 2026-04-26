@@ -1,8 +1,8 @@
 import { Injectable, Scope } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import type { TestingModule } from "@nestjs/testing";
-import { AiProviderType } from "@tambo-ai-cloud/core";
-import { operations, type HydraDatabase } from "@tambo-ai-cloud/db";
+import { AiProviderType } from "@workspace-cloud/core";
+import { operations, type HydraDatabase } from "@workspace-cloud/db";
 
 import { DATABASE } from "../common/database-provider";
 import { createTestRequestContext } from "../test/utils/create-test-request-context";
@@ -19,15 +19,15 @@ type MockedDbOperations = {
 };
 
 const getMockedDbOperations = (): MockedDbOperations =>
-  jest.requireMock("@tambo-ai-cloud/db").operations;
+  jest.requireMock("@workspace-cloud/db").operations;
 
 const createMockConfigService = () =>
   ({
     getOrThrow: jest.fn(),
   }) satisfies Pick<ConfigService, "getOrThrow">;
 
-jest.mock("@tambo-ai-cloud/db", () => {
-  const actual = jest.requireActual("@tambo-ai-cloud/db");
+jest.mock("@workspace-cloud/db", () => {
+  const actual = jest.requireActual("@workspace-cloud/db");
 
   return {
     ...actual,
@@ -122,7 +122,7 @@ describe("ProjectsService", () => {
 
     try {
       mockConfigService.getOrThrow.mockReturnValue("api-key-secret");
-      mockedOperations.createApiKey.mockResolvedValue("tambo_test_key");
+      mockedOperations.createApiKey.mockResolvedValue("genui_test_key");
 
       const service = module.get(ProjectsService);
       const apiKey = await service.generateApiKey(
@@ -131,7 +131,7 @@ describe("ProjectsService", () => {
         "key-name",
       );
 
-      expect(apiKey).toBe("tambo_test_key");
+      expect(apiKey).toBe("genui_test_key");
       expect(mockConfigService.getOrThrow).toHaveBeenCalledWith(
         "API_KEY_SECRET",
       );

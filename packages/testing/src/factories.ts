@@ -12,8 +12,8 @@ import {
   ThreadSystemMessage,
   ThreadToolMessage,
   ThreadUserMessage,
-} from "@tambo-ai-cloud/core";
-import { schema } from "@tambo-ai-cloud/db";
+} from "@workspace-cloud/core";
+import { schema } from "@workspace-cloud/db";
 
 const defaultOpenAITextContent: ChatCompletionContentPart[] = [
   { type: "text", text: "hi" },

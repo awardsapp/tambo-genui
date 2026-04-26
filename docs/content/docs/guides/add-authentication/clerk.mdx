@@ -1,9 +1,9 @@
 ---
 title: Clerk
-description: Learn how to integrate Tambo with Clerk for user authentication.
+description: Learn how to integrate Genui with Clerk for user authentication.
 ---
 
-Clerk is a complete authentication and user management solution that handles authentication through middleware without requiring specific API routes. This guide shows how to integrate it with Tambo.
+Clerk is a complete authentication and user management solution that handles authentication through middleware without requiring specific API routes. This guide shows how to integrate it with Genui.
 
 <Callout type="info" title="Prerequisites">
   This guide assumes you've already set up Clerk in your Next.js application,
@@ -16,7 +16,7 @@ Clerk is a complete authentication and user management solution that handles aut
 Install the required packages:
 
 ```bash
-npm install @clerk/nextjs @tambo-ai/react
+npm install @clerk/nextjs @workspace/react
 ```
 
 ## Integration Options
@@ -51,7 +51,7 @@ export default async function RootLayout({
 "use client";
 
 import { ClerkProvider } from "@clerk/nextjs";
-import { TamboProvider } from "@tambo-ai/react";
+import { GenuiProvider } from "@workspace/react";
 import { ReactNode } from "react";
 
 interface ClientLayoutProps {
@@ -65,7 +65,7 @@ export default function ClientLayout({
 }: ClientLayoutProps) {
   return (
     <ClerkProvider>
-      <TamboProvider userToken={userToken}>{children}</TamboProvider>
+      <GenuiProvider userToken={userToken}>{children}</GenuiProvider>
     </ClerkProvider>
   );
 }
@@ -102,7 +102,7 @@ export default function RootLayout({
 "use client";
 
 import { useAuth } from "@clerk/nextjs";
-import { TamboProvider } from "@tambo-ai/react";
+import { GenuiProvider } from "@workspace/react";
 import { ReactNode, useEffect, useState } from "react";
 
 interface ClientLayoutProps {
@@ -128,16 +128,16 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
     fetchToken();
   }, [isLoaded, isSignedIn, getToken]);
 
-  return <TamboProvider userToken={accessToken}>{children}</TamboProvider>;
+  return <GenuiProvider userToken={accessToken}>{children}</GenuiProvider>;
 }
 ```
 
 ## Usage
 
-Once configured, you can use Tambo components throughout your application:
+Once configured, you can use Genui components throughout your application:
 
 ```tsx title="app/dashboard/page.tsx"
-import { MessageThreadFull } from "@components/tambo/message-thread-full";
+import { MessageThreadFull } from "@components/genui/message-thread-full";
 
 export default function Dashboard() {
   return (
@@ -166,6 +166,6 @@ const token = await getToken({ template: "your-template-name" });
 
 <Callout type="info" title="Token Format">
   Clerk provides JWT tokens that include the user's ID in the `sub` claim, which
-  is exactly what Tambo needs for user identification. The token is
+  is exactly what Genui needs for user identification. The token is
   automatically signed and verified by Clerk.
 </Callout>

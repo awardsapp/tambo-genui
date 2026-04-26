@@ -1,7 +1,7 @@
 "use client";
 
-import { type Suggestion } from "@tambo-ai/react";
-import type { messageVariants } from "@tambo-ai/ui-registry/components/message";
+import { type Suggestion } from "@workspace/react";
+import type { messageVariants } from "@workspace/ui-registry/components/message";
 import {
   MessageInput,
   MessageInputError,
@@ -12,19 +12,19 @@ import {
   MessageInputSubmitButton,
   MessageInputTextarea,
   MessageInputToolbar,
-} from "@tambo-ai/ui-registry/components/message-input";
+} from "@workspace/ui-registry/components/message-input";
 import {
   MessageSuggestions,
   MessageSuggestionsList,
   MessageSuggestionsStatus,
-} from "@tambo-ai/ui-registry/components/message-suggestions";
-import { ScrollableMessageContainer } from "@tambo-ai/ui-registry/components/scrollable-message-container";
+} from "@workspace/ui-registry/components/message-suggestions";
+import { ScrollableMessageContainer } from "@workspace/ui-registry/components/scrollable-message-container";
 import {
   ThreadContent,
   ThreadContentMessages,
-} from "@tambo-ai/ui-registry/components/thread-content";
-import { ThreadDropdown } from "@tambo-ai/ui-registry/components/thread-dropdown";
-import { cn } from "@tambo-ai/ui-registry/utils";
+} from "@workspace/ui-registry/components/thread-content";
+import { ThreadDropdown } from "@workspace/ui-registry/components/thread-dropdown";
+import { cn } from "@workspace/ui-registry/utils";
 import { type VariantProps } from "class-variance-authority";
 import { XIcon } from "lucide-react";
 import { Collapsible } from "radix-ui";
@@ -41,7 +41,7 @@ export interface MessageThreadCollapsibleProps extends React.HTMLAttributes<HTML
   /**
    * Controls the visual styling of messages in the thread.
    * Possible values include: "default", "compact", etc.
-   * These values are defined in messageVariants from "@tambo-ai/ui-registry/components/message".
+   * These values are defined in messageVariants from "@workspace/ui-registry/components/message".
    * @example variant="compact"
    */
   variant?: VariantProps<typeof messageVariants>["variant"];
@@ -223,7 +223,7 @@ export const MessageThreadCollapsible = React.forwardRef<
     const THREAD_CONFIG = {
       labels: {
         openState: "Conversations",
-        closedState: "Start chatting with tambo",
+        closedState: "Start chatting with genui",
       },
     };
 

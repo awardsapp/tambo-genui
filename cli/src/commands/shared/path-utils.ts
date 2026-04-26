@@ -85,7 +85,7 @@ export function getLibDirectory(
       : path.resolve(projectRoot, installPath);
     const rel = path.relative(projectRoot, resolved);
 
-    // If the explicit prefix is under src/ (or exactly src), place tambo.ts in src/lib
+    // If the explicit prefix is under src/ (or exactly src), place genui.ts in src/lib
     const startsInSrc = rel === "src" || rel.startsWith(`src${path.sep}`);
     return startsInSrc
       ? path.join(projectRoot, "src", "lib")

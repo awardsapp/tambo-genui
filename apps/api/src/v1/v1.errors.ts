@@ -158,11 +158,11 @@ export function createProblemDetail(
   const errorId = crypto.randomUUID();
 
   return {
-    type: `urn:tambo:error:${code.toLowerCase()}`,
+    type: `urn:genui:error:${code.toLowerCase()}`,
     title: metadata.title,
     status: metadata.status,
     detail,
-    instance: `urn:tambo:error-instance:${errorId}`,
+    instance: `urn:genui:error-instance:${errorId}`,
     ...extra,
   };
 }

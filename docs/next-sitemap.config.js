@@ -1,5 +1,5 @@
 /** @type {import('next-sitemap').IConfig} */
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://docs.tambo.co";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://docs.genui.co";
 
 // We enumerate Fumadocs pages at build time to produce a stable sitemap
 // without relying on a runtime route. We read the content tree from

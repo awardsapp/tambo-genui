@@ -1,6 +1,6 @@
 import { describe, expect, it, jest } from "@jest/globals";
-import type { TamboThreadMessage } from "@tambo-ai/react";
-import { useTambo } from "@tambo-ai/react";
+import type { TamboThreadMessage } from "@workspace/react";
+import { useTambo } from "@workspace/react";
 import { render } from "@testing-library/react";
 import { Message } from "./index";
 

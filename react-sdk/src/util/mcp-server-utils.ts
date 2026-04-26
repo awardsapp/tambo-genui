@@ -1,5 +1,5 @@
-import type { McpServerInfo, NormalizedMcpServerInfo } from "@tambo-ai/client";
-import { getMcpServerUniqueKey, MCPTransport } from "@tambo-ai/client";
+import type { McpServerInfo, NormalizedMcpServerInfo } from "@workspace/client";
+import { getMcpServerUniqueKey, MCPTransport } from "@workspace/client";
 
 /**
  * Derives a short, meaningful key from a server URL.

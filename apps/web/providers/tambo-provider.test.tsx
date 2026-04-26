@@ -9,7 +9,7 @@ jest.mock("next-auth/react", () => ({
 }));
 
 let capturedUserToken: string | undefined;
-jest.mock("@tambo-ai/react", () => ({
+jest.mock("@workspace/react", () => ({
   TamboProvider: (props: { userToken?: string; children: React.ReactNode }) => {
     capturedUserToken = props.userToken;
     return <div data-testid="tambo-provider">{props.children}</div>;

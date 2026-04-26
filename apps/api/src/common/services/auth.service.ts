@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { TAMBO_MCP_ACCESS_KEY_CLAIM } from "@tambo-ai-cloud/core";
-import { type HydraDatabase } from "@tambo-ai-cloud/db";
+import { GENUI_MCP_ACCESS_KEY_CLAIM } from "@workspace-cloud/core";
+import { type HydraDatabase } from "@workspace-cloud/db";
 import { SignJWT } from "jose";
 import { DATABASE } from "../database-provider";
 
@@ -72,7 +72,7 @@ export class AuthService {
 
     // TODO: use a per-project, maybe per-thread, signing secret?
     const signedJwt = await new SignJWT({
-      [TAMBO_MCP_ACCESS_KEY_CLAIM]: claim,
+      [GENUI_MCP_ACCESS_KEY_CLAIM]: claim,
     })
       .setProtectedHeader({ alg: "HS256" })
       .setIssuer(projectId)

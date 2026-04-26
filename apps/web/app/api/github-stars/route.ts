@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     const response = await fetch(
-      "https://api.github.com/repos/tambo-ai/tambo",
+      "https://api.github.com/repos/genui-ai/genui",
       {
         headers: {
           Accept: "application/vnd.github.v3+json",

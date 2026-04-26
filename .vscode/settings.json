@@ -13,12 +13,12 @@
   "jest.jestCommandLine": "npx turbo test --",
   "jest.coverageFormatter": "GutterFormatter",
   "jest.virtualFolders": [
-    {"name": "@tambo-ai-cloud/web", "rootPath": "apps/web", "jestCommandLine": "npx turbo -F @tambo-ai-cloud/web test --"},
-    {"name": "@tambo-ai-cloud/api", "rootPath": "apps/api", "jestCommandLine": "npx turbo -F @tambo-ai-cloud/api test --"},
-    {"name": "@tambo-ai-cloud/core", "rootPath": "packages/core", "jestCommandLine": "npx turbo -F @tambo-ai-cloud/core test --"},
-    {"name": "@tambo-ai-cloud/backend", "rootPath": "packages/backend", "jestCommandLine": "npx turbo -F @tambo-ai-cloud/backend test --"},
-    {"name": "@tambo-ai/react", "rootPath": "react-sdk", "jestCommandLine": "npx turbo -F @tambo-ai/react test --"},
-    {"name": "@tambo-ai/showcase", "rootPath": "showcase", "jestCommandLine": "npx turbo -F @tambo-ai/showcase test --"},
+    {"name": "@workspace-cloud/web", "rootPath": "apps/web", "jestCommandLine": "npx turbo -F @workspace-cloud/web test --"},
+    {"name": "@workspace-cloud/api", "rootPath": "apps/api", "jestCommandLine": "npx turbo -F @workspace-cloud/api test --"},
+    {"name": "@workspace-cloud/core", "rootPath": "packages/core", "jestCommandLine": "npx turbo -F @workspace-cloud/core test --"},
+    {"name": "@workspace-cloud/backend", "rootPath": "packages/backend", "jestCommandLine": "npx turbo -F @workspace-cloud/backend test --"},
+    {"name": "@workspace/react", "rootPath": "react-sdk", "jestCommandLine": "npx turbo -F @workspace/react test --"},
+    {"name": "@workspace/showcase", "rootPath": "showcase", "jestCommandLine": "npx turbo -F @workspace/showcase test --"},
     {"name": "tambo-cli", "rootPath": "cli", "jestCommandLine": "npx turbo -F tambo test --"},
   ],
   "testing.automaticallyOpenTestResults": "neverOpen"

@@ -12,11 +12,11 @@ describe("v1.errors", () => {
         "A run is already active on thread thr_123",
       );
 
-      expect(result.type).toBe("urn:tambo:error:concurrent_run");
+      expect(result.type).toBe("urn:genui:error:concurrent_run");
       expect(result.title).toBe("Concurrent Run");
       expect(result.status).toBe(409);
       expect(result.detail).toBe("A run is already active on thread thr_123");
-      expect(result.instance).toMatch(/^urn:tambo:error-instance:[a-f0-9-]+$/);
+      expect(result.instance).toMatch(/^urn:genui:error-instance:[a-f0-9-]+$/);
     });
 
     it("should create problem detail for RUN_ACTIVE", () => {
@@ -25,7 +25,7 @@ describe("v1.errors", () => {
         "Cannot delete thread while run is active",
       );
 
-      expect(result.type).toBe("urn:tambo:error:run_active");
+      expect(result.type).toBe("urn:genui:error:run_active");
       expect(result.title).toBe("Run Active");
       expect(result.status).toBe(409);
       expect(result.detail).toBe("Cannot delete thread while run is active");
@@ -37,7 +37,7 @@ describe("v1.errors", () => {
         "Run run_abc not found",
       );
 
-      expect(result.type).toBe("urn:tambo:error:run_not_found");
+      expect(result.type).toBe("urn:genui:error:run_not_found");
       expect(result.title).toBe("Run Not Found");
       expect(result.status).toBe(404);
     });
@@ -48,7 +48,7 @@ describe("v1.errors", () => {
         "Thread thr_xyz not found",
       );
 
-      expect(result.type).toBe("urn:tambo:error:thread_not_found");
+      expect(result.type).toBe("urn:genui:error:thread_not_found");
       expect(result.title).toBe("Thread Not Found");
       expect(result.status).toBe(404);
     });
@@ -59,7 +59,7 @@ describe("v1.errors", () => {
         "Message msg_123 not found in thread thr_456",
       );
 
-      expect(result.type).toBe("urn:tambo:error:message_not_found");
+      expect(result.type).toBe("urn:genui:error:message_not_found");
       expect(result.title).toBe("Message Not Found");
       expect(result.status).toBe(404);
     });
@@ -70,7 +70,7 @@ describe("v1.errors", () => {
         "Component WeatherCard not found in registry",
       );
 
-      expect(result.type).toBe("urn:tambo:error:component_not_found");
+      expect(result.type).toBe("urn:genui:error:component_not_found");
       expect(result.title).toBe("Component Not Found");
       expect(result.status).toBe(404);
     });
@@ -81,7 +81,7 @@ describe("v1.errors", () => {
         "Tool call call_xyz is not pending",
       );
 
-      expect(result.type).toBe("urn:tambo:error:invalid_tool_call");
+      expect(result.type).toBe("urn:genui:error:invalid_tool_call");
       expect(result.title).toBe("Invalid Tool Call");
       expect(result.status).toBe(400);
     });
@@ -92,7 +92,7 @@ describe("v1.errors", () => {
         "previousRunId run_old does not match last completed run",
       );
 
-      expect(result.type).toBe("urn:tambo:error:invalid_previous_run");
+      expect(result.type).toBe("urn:genui:error:invalid_previous_run");
       expect(result.title).toBe("Invalid Previous Run");
       expect(result.status).toBe(400);
     });
@@ -103,7 +103,7 @@ describe("v1.errors", () => {
         "Invalid request body",
       );
 
-      expect(result.type).toBe("urn:tambo:error:validation_error");
+      expect(result.type).toBe("urn:genui:error:validation_error");
       expect(result.title).toBe("Validation Error");
       expect(result.status).toBe(400);
     });
@@ -114,7 +114,7 @@ describe("v1.errors", () => {
         "An unexpected error occurred",
       );
 
-      expect(result.type).toBe("urn:tambo:error:internal_error");
+      expect(result.type).toBe("urn:genui:error:internal_error");
       expect(result.title).toBe("Internal Error");
       expect(result.status).toBe(500);
     });
@@ -176,7 +176,7 @@ describe("v1.errors", () => {
         "message.role": "Role must be 'user'",
       });
 
-      expect(result.type).toBe("urn:tambo:error:validation_error");
+      expect(result.type).toBe("urn:genui:error:validation_error");
       expect(result.title).toBe("Validation Error");
       expect(result.status).toBe(400);
       expect(result.detail).toBe("Request validation failed");
@@ -208,7 +208,7 @@ describe("v1.errors", () => {
         field: "error",
       });
 
-      expect(result.instance).toMatch(/^urn:tambo:error-instance:[a-f0-9-]+$/);
+      expect(result.instance).toMatch(/^urn:genui:error-instance:[a-f0-9-]+$/);
     });
   });
 

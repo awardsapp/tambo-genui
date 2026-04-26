@@ -5,7 +5,7 @@ import {
   COMPONENT_SUBDIR,
   LEGACY_COMPONENT_SUBDIR,
 } from "../../constants/paths.js";
-import { getTamboComponentInfo } from "../add/utils.js";
+import { getGenuiComponentInfo } from "../add/utils.js";
 import { getInstallationPath } from "../init.js";
 import {
   getComponentDirectoryPath,
@@ -34,8 +34,8 @@ export async function handleListComponents(options: ListOptions = {}) {
   const installPath = prefix ?? (await getInstallationPath(yes));
   const isExplicitPrefix = Boolean(prefix);
 
-  // 3. Get detailed Tambo component information
-  const { mainComponents, supportComponents } = getTamboComponentInfo();
+  // 3. Get detailed Genui component information
+  const { mainComponents, supportComponents } = getGenuiComponentInfo();
 
   // 4. Get all .tsx files in both component directories
   const projectRoot = process.cwd();
@@ -121,14 +121,14 @@ export async function handleListComponents(options: ListOptions = {}) {
     console.log(chalk.green(`\n  In ${COMPONENT_SUBDIR}/:`));
 
     if (categorizedComponents.new.main.length > 0) {
-      console.log(chalk.cyan(`    Tambo components:`));
+      console.log(chalk.cyan(`    Genui components:`));
       categorizedComponents.new.main.forEach((component) => {
         console.log(`      - ${component}`);
       });
     }
 
     if (categorizedComponents.new.support.length > 0) {
-      console.log(chalk.cyan(`    Tambo support components:`));
+      console.log(chalk.cyan(`    Genui support components:`));
       categorizedComponents.new.support.forEach((component) => {
         console.log(`      - ${component}`);
       });
@@ -149,14 +149,14 @@ export async function handleListComponents(options: ListOptions = {}) {
     );
 
     if (categorizedComponents.legacy.main.length > 0) {
-      console.log(chalk.cyan(`    Tambo components:`));
+      console.log(chalk.cyan(`    Genui components:`));
       categorizedComponents.legacy.main.forEach((component) => {
         console.log(`      - ${component}`);
       });
     }
 
     if (categorizedComponents.legacy.support.length > 0) {
-      console.log(chalk.cyan(`    Tambo support components:`));
+      console.log(chalk.cyan(`    Genui support components:`));
       categorizedComponents.legacy.support.forEach((component) => {
         console.log(`      - ${component}`);
       });
@@ -169,25 +169,25 @@ export async function handleListComponents(options: ListOptions = {}) {
       });
     }
 
-    // Only show migration instructions if there are Tambo components in legacy location
-    const legacyTamboComponents =
+    // Only show migration instructions if there are Genui components in legacy location
+    const legacyGenuiComponents =
       categorizedComponents.legacy.main.length +
       categorizedComponents.legacy.support.length;
-    if (legacyTamboComponents > 0) {
+    if (legacyGenuiComponents > 0) {
       console.log(
         chalk.gray(
           `\n  💡 To migrate to the new directory structure:` +
             `\n     1. Move all files from ${LEGACY_COMPONENT_SUBDIR}/ to ${COMPONENT_SUBDIR}/` +
             `\n     2. Update imports: @/components/${LEGACY_COMPONENT_SUBDIR}/ → @/components/${COMPONENT_SUBDIR}/` +
-            `\n     3. Update any custom components in tambo.ts` +
-            `\n\n   or you can run ${chalk.bold("npx tambo migrate")} to migrate all components to the new location`,
+            `\n     3. Update any custom components in genui.ts` +
+            `\n\n   or you can run ${chalk.bold("npx genui migrate")} to migrate all components to the new location`,
         ),
       );
     }
   }
 
   // Show summary
-  const totalTambo =
+  const totalGenui =
     categorizedComponents.new.main.length +
     categorizedComponents.new.support.length +
     categorizedComponents.legacy.main.length +
@@ -199,7 +199,7 @@ export async function handleListComponents(options: ListOptions = {}) {
   console.log(
     chalk.blue(
       `\nTotal: ${totalComponents} component(s) ` +
-        `(${totalTambo} from Tambo, ${totalCustom} custom)`,
+        `(${totalGenui} from Genui, ${totalCustom} custom)`,
     ),
   );
 }

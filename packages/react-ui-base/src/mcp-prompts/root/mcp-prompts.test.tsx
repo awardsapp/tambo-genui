@@ -1,5 +1,5 @@
 import { describe, expect, it, jest } from "@jest/globals";
-import { useTamboMcpPrompt, useTamboMcpPromptList } from "@tambo-ai/react/mcp";
+import { useGenuiMcpPrompt, useGenuiMcpPromptList } from "@workspace/react/mcp";
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import * as React from "react";
@@ -13,11 +13,11 @@ function makePromptEntry(name: string, description?: string) {
 }
 
 describe("McpPrompts", () => {
-  const mockUseTamboMcpPromptList = jest.mocked(useTamboMcpPromptList);
-  const mockUseTamboMcpPrompt = jest.mocked(useTamboMcpPrompt);
+  const mockUseGenuiMcpPromptList = jest.mocked(useGenuiMcpPromptList);
+  const mockUseGenuiMcpPrompt = jest.mocked(useGenuiMcpPrompt);
 
   beforeEach(() => {
-    mockUseTamboMcpPromptList.mockReturnValue({
+    mockUseGenuiMcpPromptList.mockReturnValue({
       data: [
         makePromptEntry("test:greeting", "A greeting prompt"),
         makePromptEntry("test:farewell", "A farewell prompt"),
@@ -26,7 +26,7 @@ describe("McpPrompts", () => {
       error: undefined,
     } as never);
 
-    mockUseTamboMcpPrompt.mockReturnValue({
+    mockUseGenuiMcpPrompt.mockReturnValue({
       data: undefined,
       error: undefined,
     } as never);
@@ -44,7 +44,7 @@ describe("McpPrompts", () => {
   });
 
   it("renders nothing when no prompts are available", () => {
-    mockUseTamboMcpPromptList.mockReturnValue({
+    mockUseGenuiMcpPromptList.mockReturnValue({
       data: [],
       isLoading: false,
       error: undefined,
@@ -116,9 +116,9 @@ describe("McpPrompts", () => {
 
     await user.click(screen.getByText("Greeting"));
 
-    // Verify useTamboMcpPrompt was called with the selected name
+    // Verify useGenuiMcpPrompt was called with the selected name
     // The effect that processes the prompt data would be triggered
-    expect(mockUseTamboMcpPrompt).toHaveBeenCalledWith("test:greeting");
+    expect(mockUseGenuiMcpPrompt).toHaveBeenCalledWith("test:greeting");
   });
 
   it("marks selected item with data-selected attribute", async () => {
@@ -139,7 +139,7 @@ describe("McpPrompts", () => {
   it("calls onInsertText when prompt data is valid", () => {
     const onInsertText = jest.fn();
 
-    mockUseTamboMcpPrompt.mockReturnValue({
+    mockUseGenuiMcpPrompt.mockReturnValue({
       data: {
         messages: [{ content: { type: "text", text: "Hello world" } }],
       },
@@ -172,7 +172,7 @@ describe("McpPrompts", () => {
   });
 
   it("shows error state when prompt data is invalid", () => {
-    mockUseTamboMcpPrompt.mockReturnValue({
+    mockUseGenuiMcpPrompt.mockReturnValue({
       data: { invalid: true },
       error: undefined,
     } as never);
@@ -201,7 +201,7 @@ describe("McpPrompts", () => {
   });
 
   it("shows error state when fetch fails", () => {
-    mockUseTamboMcpPrompt.mockReturnValue({
+    mockUseGenuiMcpPrompt.mockReturnValue({
       data: undefined,
       error: new Error("Network error"),
     } as never);

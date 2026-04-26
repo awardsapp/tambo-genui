@@ -5,10 +5,10 @@ import {
   isUiToolName,
   MessageRole,
   type UnsavedThreadUserMessage,
-} from "@tambo-ai-cloud/core";
+} from "@workspace-cloud/core";
 import { MessageRequest } from "../threads/dto/message.dto";
 import { V1InitialContent, V1InputContent } from "./dto/message.dto";
-import { schema } from "@tambo-ai-cloud/db";
+import { schema } from "@workspace-cloud/db";
 import {
   V1ContentBlock,
   V1ComponentContentDto,
@@ -186,7 +186,7 @@ export function contentPartToV1Block(
  *
  * @throws Error if componentDecision exists with no componentName and no toolCallRequest
  *         (data integrity issue - componentDecision without componentName is only valid
- *         for tool call messages where it stores _tambo_* status messages)
+ *         for tool call messages where it stores _genui_* status messages)
  */
 export function contentToV1Blocks(
   message: DbMessage,
@@ -258,7 +258,7 @@ export function contentToV1Blocks(
       blocks.push(componentBlock);
     } else if (!message.toolCallRequest) {
       // componentDecision without componentName is only valid for tool call messages
-      // (where it stores _tambo_* status messages). For non-tool-call messages,
+      // (where it stores _genui_* status messages). For non-tool-call messages,
       // this indicates a data integrity issue - but we don't want to fail the
       // entire request over it.
       console.warn(
@@ -267,7 +267,7 @@ export function contentToV1Blocks(
       );
     }
     // If componentName is null but toolCallRequest exists, the componentDecision
-    // is being used for _tambo_* status messages, not for rendering a component.
+    // is being used for _genui_* status messages, not for rendering a component.
   }
 
   // Add tool_use content block if present (assistant messages with tool calls)
@@ -284,7 +284,7 @@ export function contentToV1Blocks(
       input[param.parameterName] = param.parameterValue;
     }
 
-    // Add _tambo_* display properties from componentDecision if present.
+    // Add _genui_* display properties from componentDecision if present.
     // These are stored in componentDecision (via LegacyComponentDecision spread)
     // but not typed in ComponentDecisionV2, so we access them with type assertions.
     // The SDK uses these to display status messages during tool execution.
@@ -294,10 +294,10 @@ export function contentToV1Blocks(
         unknown
       >;
       if (typeof decision.statusMessage === "string") {
-        input._tambo_statusMessage = decision.statusMessage;
+        input._genui_statusMessage = decision.statusMessage;
       }
       if (typeof decision.completionStatusMessage === "string") {
-        input._tambo_completionStatusMessage = decision.completionStatusMessage;
+        input._genui_completionStatusMessage = decision.completionStatusMessage;
       }
     }
 

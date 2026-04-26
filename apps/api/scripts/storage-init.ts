@@ -19,7 +19,7 @@ import {
   createS3Client,
   ensureBucket,
   isS3Configured,
-} from "@tambo-ai-cloud/backend";
+} from "@workspace-cloud/backend";
 
 const S3_ENDPOINT = process.env.S3_ENDPOINT ?? "";
 const S3_REGION = process.env.S3_REGION ?? "us-east-1";

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`getParametersFromToolSchema (via mapTamboToolToContextTool) Direct schema (shorthand for inputSchema) should accept JSON Schema object directly and extract parameters 1`] = `
+exports[`getParametersFromToolSchema (via mapGenuiToolToContextTool) Direct schema (shorthand for inputSchema) should accept JSON Schema object directly and extract parameters 1`] = `
 [
   {
     "description": "",
@@ -23,7 +23,7 @@ exports[`getParametersFromToolSchema (via mapTamboToolToContextTool) Direct sche
 ]
 `;
 
-exports[`getParametersFromToolSchema (via mapTamboToolToContextTool) Direct schema (shorthand for inputSchema) should accept Zod 3 object schema directly and extract parameters 1`] = `
+exports[`getParametersFromToolSchema (via mapGenuiToolToContextTool) Direct schema (shorthand for inputSchema) should accept Zod 3 object schema directly and extract parameters 1`] = `
 [
   {
     "description": "",
@@ -46,7 +46,7 @@ exports[`getParametersFromToolSchema (via mapTamboToolToContextTool) Direct sche
 ]
 `;
 
-exports[`getParametersFromToolSchema (via mapTamboToolToContextTool) Direct schema (shorthand for inputSchema) should accept Zod 4 object schema directly and extract parameters 1`] = `
+exports[`getParametersFromToolSchema (via mapGenuiToolToContextTool) Direct schema (shorthand for inputSchema) should accept Zod 4 object schema directly and extract parameters 1`] = `
 [
   {
     "description": "",
@@ -69,7 +69,7 @@ exports[`getParametersFromToolSchema (via mapTamboToolToContextTool) Direct sche
 ]
 `;
 
-exports[`getParametersFromToolSchema (via mapTamboToolToContextTool) inputSchema interface (object schemas) JSON Schema object schemas should extract parameters from object schema properties 1`] = `
+exports[`getParametersFromToolSchema (via mapGenuiToolToContextTool) inputSchema interface (object schemas) JSON Schema object schemas should extract parameters from object schema properties 1`] = `
 [
   {
     "description": "User name",
@@ -94,7 +94,7 @@ exports[`getParametersFromToolSchema (via mapTamboToolToContextTool) inputSchema
 ]
 `;
 
-exports[`getParametersFromToolSchema (via mapTamboToolToContextTool) inputSchema interface (object schemas) Zod 3 object schemas should extract parameters from object schema properties 1`] = `
+exports[`getParametersFromToolSchema (via mapGenuiToolToContextTool) inputSchema interface (object schemas) Zod 3 object schemas should extract parameters from object schema properties 1`] = `
 [
   {
     "description": "User name",
@@ -119,7 +119,7 @@ exports[`getParametersFromToolSchema (via mapTamboToolToContextTool) inputSchema
 ]
 `;
 
-exports[`getParametersFromToolSchema (via mapTamboToolToContextTool) inputSchema interface (object schemas) Zod 4 object schemas should extract parameters from object schema properties 1`] = `
+exports[`getParametersFromToolSchema (via mapGenuiToolToContextTool) inputSchema interface (object schemas) Zod 4 object schemas should extract parameters from object schema properties 1`] = `
 [
   {
     "description": "User name",
@@ -144,7 +144,7 @@ exports[`getParametersFromToolSchema (via mapTamboToolToContextTool) inputSchema
 ]
 `;
 
-exports[`getParametersFromToolSchema (via mapTamboToolToContextTool) inputSchema interface (object schemas) Zod 4 object schemas should handle complex nested objects 1`] = `
+exports[`getParametersFromToolSchema (via mapGenuiToolToContextTool) inputSchema interface (object schemas) Zod 4 object schemas should handle complex nested objects 1`] = `
 [
   {
     "description": "",

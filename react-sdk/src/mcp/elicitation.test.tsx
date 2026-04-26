@@ -7,8 +7,8 @@ import type {
 import { act, renderHook } from "@testing-library/react";
 import {
   useElicitation,
-  type TamboElicitationRequest,
-  type TamboElicitationResponse,
+  type GenuiElicitationRequest,
+  type GenuiElicitationResponse,
 } from "./elicitation";
 
 // Create a mock RequestHandlerExtra for testing
@@ -66,7 +66,7 @@ describe("useElicitation", () => {
       };
 
       // Start the handler but don't await yet
-      let handlerPromise: Promise<TamboElicitationResponse>;
+      let handlerPromise: Promise<GenuiElicitationResponse>;
       const extra = createMockExtra();
       act(() => {
         handlerPromise = result.current.defaultElicitationHandler(
@@ -127,7 +127,7 @@ describe("useElicitation", () => {
       };
 
       // Start the handler
-      let handlerPromise: Promise<TamboElicitationResponse>;
+      let handlerPromise: Promise<GenuiElicitationResponse>;
       const extra = createMockExtra();
       act(() => {
         handlerPromise = result.current.defaultElicitationHandler(
@@ -137,7 +137,7 @@ describe("useElicitation", () => {
       });
 
       // Resolve with accept
-      const response: TamboElicitationResponse = {
+      const response: GenuiElicitationResponse = {
         action: "accept",
         content: { email: "test@example.com" },
       };
@@ -168,7 +168,7 @@ describe("useElicitation", () => {
         },
       };
 
-      let handlerPromise: Promise<TamboElicitationResponse>;
+      let handlerPromise: Promise<GenuiElicitationResponse>;
       const extra = createMockExtra();
       act(() => {
         handlerPromise = result.current.defaultElicitationHandler(
@@ -177,7 +177,7 @@ describe("useElicitation", () => {
         );
       });
 
-      const response: TamboElicitationResponse = {
+      const response: GenuiElicitationResponse = {
         action: "decline",
       };
 
@@ -206,7 +206,7 @@ describe("useElicitation", () => {
         },
       };
 
-      let handlerPromise: Promise<TamboElicitationResponse>;
+      let handlerPromise: Promise<GenuiElicitationResponse>;
       const extra = createMockExtra();
       act(() => {
         handlerPromise = result.current.defaultElicitationHandler(
@@ -215,7 +215,7 @@ describe("useElicitation", () => {
         );
       });
 
-      const response: TamboElicitationResponse = {
+      const response: GenuiElicitationResponse = {
         action: "cancel",
       };
 
@@ -245,7 +245,7 @@ describe("useElicitation", () => {
         },
       };
 
-      let promise1: Promise<TamboElicitationResponse>;
+      let promise1: Promise<GenuiElicitationResponse>;
       const extra1 = createMockExtra();
       act(() => {
         promise1 = result.current.defaultElicitationHandler(request1, extra1);
@@ -278,7 +278,7 @@ describe("useElicitation", () => {
         },
       };
 
-      let promise2: Promise<TamboElicitationResponse>;
+      let promise2: Promise<GenuiElicitationResponse>;
       const extra2 = createMockExtra();
       act(() => {
         promise2 = result.current.defaultElicitationHandler(request2, extra2);
@@ -317,7 +317,7 @@ describe("useElicitation", () => {
     it("allows manual state updates via setElicitation", () => {
       const { result } = renderHook(() => useElicitation());
 
-      const customElicitation: TamboElicitationRequest = {
+      const customElicitation: GenuiElicitationRequest = {
         message: "Custom message",
         requestedSchema: {
           type: "object",
@@ -337,7 +337,7 @@ describe("useElicitation", () => {
     it("allows clearing elicitation state", () => {
       const { result } = renderHook(() => useElicitation());
 
-      const elicitation: TamboElicitationRequest = {
+      const elicitation: GenuiElicitationRequest = {
         message: "Test",
         requestedSchema: {
           type: "object",

@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { decryptApiKey, hashKey, hideApiKey } from "@tambo-ai-cloud/core";
+import { decryptApiKey, hashKey, hideApiKey } from "@workspace-cloud/core";
 import { Request } from "express";
 import { CorrelationLoggerService } from "../../common/services/logger.service";
 import { ProjectsService } from "../projects.service";

@@ -4,7 +4,7 @@ import { ImageResponse } from "@vercel/og";
 export const runtime = "edge";
 
 export const alt =
-  "tambo - A react package for adding generative UI to your AI assistant";
+  "genui - A react package for adding generative UI to your AI assistant";
 export const size = {
   width: 1200,
   height: 630,
@@ -40,8 +40,8 @@ export default async function Image() {
         }}
       >
         <img
-          src={`${siteConfig.url}/logo/lockup/Tambo-Lockup.svg`}
-          alt="Tambo Logo"
+          src={`${siteConfig.url}/logo/lockup/Genui-Lockup.svg`}
+          alt="Genui Logo"
           style={{ height: 200 }}
         />
       </div>

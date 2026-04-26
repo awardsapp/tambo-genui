@@ -1,18 +1,18 @@
 ---
 title: User Authentication
-description: Learn how to authenticate users in Tambo and keep each user's threads and messages isolated.
+description: Learn how to authenticate users in Genui and keep each user's threads and messages isolated.
 ---
 
-In a Tambo application, each user has their own threads and messages, isolated from other users' data. This user isolation is achieved through secure token-based authentication.
+In a Genui application, each user has their own threads and messages, isolated from other users' data. This user isolation is achieved through secure token-based authentication.
 
-## How Tambo Authentication Works
+## How Genui Authentication Works
 
-Tambo uses OAuth 2.0 [Token Exchange](https://datatracker.ietf.org/doc/html/rfc8693) to securely identify users. Here's what happens:
+Genui uses OAuth 2.0 [Token Exchange](https://datatracker.ietf.org/doc/html/rfc8693) to securely identify users. Here's what happens:
 
 1. **Your app authenticates the user** with your chosen OAuth provider (Auth0, Clerk, etc.)
 2. **Your app receives a JWT token** from the provider containing user information
-3. **Your app exchanges this token with Tambo** via the `/oauth/token` endpoint
-4. **Tambo returns a Tambo-specific token** that identifies the user for all subsequent API calls
+3. **Your app exchanges this token with Genui** via the `/oauth/token` endpoint
+4. **Genui returns a Genui-specific token** that identifies the user for all subsequent API calls
 
 <Mermaid
 chart="
@@ -20,23 +20,23 @@ sequenceDiagram
     participant User as User
     participant App as Your App
     participant OAuth as OAuth Provider
-    participant Tambo as Tambo API
+    participant Genui as Genui API
 
     User->>App: Login request
     App->>OAuth: Authenticate user
     OAuth-->>App: JWT Access Token
 
-    App->>Tambo: POST /oauth/token<br/>(with JWT)
-    Tambo-->>App: Tambo Token
+    App->>Genui: POST /oauth/token<br/>(with JWT)
+    Genui-->>App: Genui Token
 
-    App->>Tambo: API requests<br/>(Authorization: Bearer {tambo-token})
-    Tambo-->>App: User's threads & messages
+    App->>Genui: API requests<br/>(Authorization: Bearer {genui-token})
+    Genui-->>App: User's threads & messages
     "
     />
 
 ## Token Requirements
 
-Tambo supports any OAuth 2.0 provider that issues a [JSON Web Token (JWT)](https://datatracker.ietf.org/doc/html/rfc7519) with:
+Genui supports any OAuth 2.0 provider that issues a [JSON Web Token (JWT)](https://datatracker.ietf.org/doc/html/rfc7519) with:
 
 - A `sub` (subject) claim identifying the user
 - Proper signature for verification (when JWT verification is enabled)
@@ -63,24 +63,24 @@ This includes most popular providers like Google, Microsoft, Auth0, Clerk, and o
 - Required when using client-side routing with authentication guards
 - May show loading states during token retrieval
 
-## Using TamboProvider
+## Using GenuiProvider
 
-The `TamboProvider` component from `@tambo-ai/react` handles the token exchange process automatically:
+The `GenuiProvider` component from `@workspace/react` handles the token exchange process automatically:
 
 ```tsx title="Basic Setup"
 "use client";
-// TamboProvider must be in a client component to manage authentication state
+// GenuiProvider must be in a client component to manage authentication state
 
-import { TamboProvider } from "@tambo-ai/react";
+import { GenuiProvider } from "@workspace/react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const userToken = useUserToken(); // Get token from your auth provider
-  return <TamboProvider userToken={userToken}>{children}</TamboProvider>;
+  return <GenuiProvider userToken={userToken}>{children}</GenuiProvider>;
 }
 ```
 
 <Callout type="info" title="Why Client Component Required">
-  TamboProvider needs to be in a client component because it manages
+  GenuiProvider needs to be in a client component because it manages
   authentication state, handles token refresh, and provides React context to
   child components. Server components cannot manage state or provide React
   context.
@@ -92,22 +92,22 @@ For detailed integration examples with popular authentication providers, see the
 
 <Cards>
   <Card href="/guides/add-authentication/nextauth" title="Auth.js">
-    Learn how to integrate Tambo with Auth.js using Google OAuth as an example.
+    Learn how to integrate Genui with Auth.js using Google OAuth as an example.
   </Card>
   <Card href="/guides/add-authentication/auth0" title="Auth0">
-    Step-by-step guide for integrating Tambo with Auth0 authentication.
+    Step-by-step guide for integrating Genui with Auth0 authentication.
   </Card>
   <Card href="/guides/add-authentication/clerk" title="Clerk">
-    Complete example of using Tambo with Clerk's authentication system.
+    Complete example of using Genui with Clerk's authentication system.
   </Card>
   <Card href="/guides/add-authentication/supabase" title="Supabase">
-    Integration guide for Supabase Auth with Tambo in Next.js applications.
+    Integration guide for Supabase Auth with Genui in Next.js applications.
   </Card>
   <Card href="/guides/add-authentication/neon" title="Neon">
-    How to use Tambo with Auth.js and Neon PostgreSQL database integration.
+    How to use Genui with Auth.js and Neon PostgreSQL database integration.
   </Card>
   <Card href="/guides/add-authentication/workos" title="WorkOS">
-    Enterprise-grade authentication with WorkOS and Tambo integration.
+    Enterprise-grade authentication with WorkOS and Genui integration.
   </Card>
   <Card href="/guides/add-authentication/better-auth" title="Better Auth">
     Modern authentication toolkit with built-in support for multiple providers
@@ -117,7 +117,7 @@ For detailed integration examples with popular authentication providers, see the
 
 ## JWT Verification Strategies
 
-When your OAuth provider supports OpenID Connect Discovery (most do), Tambo automatically verifies tokens. For providers that don't, you can configure verification in your project dashboard:
+When your OAuth provider supports OpenID Connect Discovery (most do), Genui automatically verifies tokens. For providers that don't, you can configure verification in your project dashboard:
 
 - **OpenID Connect Discovery** (Default): Automatic verification using the provider's public keys
 - **Asymmetric JWT Verification**: Manual verification using a provided public key
@@ -126,7 +126,7 @@ When your OAuth provider supports OpenID Connect Discovery (most do), Tambo auto
 
 <Callout type="warn" title="Supabase Exception">
   Supabase Auth doesn't support asymmetric JWT verification. You'll need to
-  disable JWT verification in your Tambo project settings when using Supabase.
+  disable JWT verification in your Genui project settings when using Supabase.
 </Callout>
 
 All verification strategies can be configured in your project dashboard under Settings > User Authentication.

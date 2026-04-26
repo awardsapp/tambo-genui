@@ -32,7 +32,7 @@ const components: TamboComponent[] = [
 AI dynamically selects and renders these in response to user messages.
 
 ```tsx
-import { TamboProvider, TamboComponent } from "@tambo-ai/react";
+import { TamboProvider, TamboComponent } from "@workspace/react";
 import { z } from "zod";
 
 const WeatherCardSchema = z.object({
@@ -61,7 +61,7 @@ const components: TamboComponent[] = [
 Use `ComponentRenderer` to render AI-generated components in your message list:
 
 ```tsx
-import { ComponentRenderer } from "@tambo-ai/react";
+import { ComponentRenderer } from "@workspace/react";
 
 function Message({
   message,
@@ -106,7 +106,7 @@ function Message({
 Pre-place in your UI; AI can observe and update props via natural language.
 
 ```tsx
-import { withTamboInteractable } from "@tambo-ai/react";
+import { withTamboInteractable } from "@workspace/react";
 import { z } from "zod";
 
 const NoteSchema = z.object({

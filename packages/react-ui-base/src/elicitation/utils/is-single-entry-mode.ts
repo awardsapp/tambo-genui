@@ -1,7 +1,7 @@
 import type {
   PrimitiveSchemaDefinition as FieldSchema,
-  TamboElicitationRequest,
-} from "@tambo-ai/react/mcp";
+  GenuiElicitationRequest,
+} from "@workspace/react/mcp";
 
 /** Returns true if this field schema can be represented in the single-entry UI. */
 const isSingleEntryEligibleField = (schema: FieldSchema): boolean => {
@@ -11,7 +11,7 @@ const isSingleEntryEligibleField = (schema: FieldSchema): boolean => {
 };
 
 export const isSingleEntryMode = (
-  request: TamboElicitationRequest,
+  request: GenuiElicitationRequest,
 ): boolean => {
   const fields = Object.entries(request.requestedSchema.properties);
   if (fields.length !== 1) {

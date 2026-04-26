@@ -1,6 +1,6 @@
 import { EventType } from "@ag-ui/core";
 import { z } from "zod";
-import type { TamboTool } from "../../model/component-metadata";
+import type { GenuiTool } from "../../model/component-metadata";
 import {
   executeClientTool,
   executeAllPendingTools,
@@ -8,12 +8,12 @@ import {
   createThrottledStreamableExecutor,
   type PendingToolCall,
   ToolCallTracker,
-} from "@tambo-ai/client";
+} from "@workspace/client";
 
 describe("tool-executor", () => {
   describe("executeClientTool", () => {
     it("executes a tool and returns text result", async () => {
-      const tool: TamboTool = {
+      const tool: GenuiTool = {
         name: "get_weather",
         description: "Gets weather",
         tool: async ({ city }: { city: string }) =>
@@ -34,7 +34,7 @@ describe("tool-executor", () => {
     });
 
     it("stringifies non-string results", async () => {
-      const tool: TamboTool = {
+      const tool: GenuiTool = {
         name: "get_data",
         description: "Gets data",
         tool: async () => ({ value: 42 }),
@@ -52,7 +52,7 @@ describe("tool-executor", () => {
     });
 
     it("uses transformToContent when provided", async () => {
-      const tool: TamboTool = {
+      const tool: GenuiTool = {
         name: "custom_tool",
         description: "Custom tool",
         tool: async () => "custom result",
@@ -73,7 +73,7 @@ describe("tool-executor", () => {
     });
 
     it("handles transformToContent with non-text types by stringifying", async () => {
-      const tool: TamboTool = {
+      const tool: GenuiTool = {
         name: "image_tool",
         description: "Image tool",
         tool: async () => "image data",
@@ -102,7 +102,7 @@ describe("tool-executor", () => {
     });
 
     it("handles tool execution errors gracefully", async () => {
-      const tool: TamboTool = {
+      const tool: GenuiTool = {
         name: "failing_tool",
         description: "A tool that fails",
         tool: async () => {
@@ -123,7 +123,7 @@ describe("tool-executor", () => {
     });
 
     it("handles non-Error throws gracefully", async () => {
-      const tool: TamboTool = {
+      const tool: GenuiTool = {
         name: "throwing_tool",
         description: "A tool that throws a string",
         tool: async () => {
@@ -146,7 +146,7 @@ describe("tool-executor", () => {
 
   describe("executeAllPendingTools", () => {
     it("executes multiple tools with Map registry", async () => {
-      const registry = new Map<string, TamboTool>([
+      const registry = new Map<string, GenuiTool>([
         [
           "add",
           {
@@ -190,7 +190,7 @@ describe("tool-executor", () => {
     });
 
     it("executes tools with Record registry", async () => {
-      const registry: Record<string, TamboTool> = {
+      const registry: Record<string, GenuiTool> = {
         greet: {
           name: "greet",
           description: "Greets user",
@@ -215,7 +215,7 @@ describe("tool-executor", () => {
     });
 
     it("returns error result for unknown tools", async () => {
-      const registry = new Map<string, TamboTool>();
+      const registry = new Map<string, GenuiTool>();
 
       const toolCalls = new Map<string, PendingToolCall>([
         ["call-1", { name: "unknown_tool", input: {} }],
@@ -235,7 +235,7 @@ describe("tool-executor", () => {
     });
 
     it("handles mixed known and unknown tools", async () => {
-      const registry = new Map<string, TamboTool>([
+      const registry = new Map<string, GenuiTool>([
         [
           "known",
           {
@@ -286,16 +286,16 @@ describe("tool-executor", () => {
       return tracker;
     }
 
-    it("calls tool when tamboStreamableHint is true", async () => {
+    it("calls tool when genuiStreamableHint is true", async () => {
       const toolFn = jest.fn().mockResolvedValue(undefined);
-      const registry: Record<string, TamboTool> = {
+      const registry: Record<string, GenuiTool> = {
         write_story: {
           name: "write_story",
           description: "Writes a story",
           tool: toolFn,
           inputSchema: z.object({ text: z.string() }),
           outputSchema: z.void(),
-          annotations: { tamboStreamableHint: true },
+          annotations: { genuiStreamableHint: true },
         },
       };
 
@@ -310,16 +310,16 @@ describe("tool-executor", () => {
       expect(toolFn).toHaveBeenCalledWith({ text: "hello" });
     });
 
-    it("does NOT call tool when tamboStreamableHint is false", async () => {
+    it("does NOT call tool when genuiStreamableHint is false", async () => {
       const toolFn = jest.fn().mockResolvedValue(undefined);
-      const registry: Record<string, TamboTool> = {
+      const registry: Record<string, GenuiTool> = {
         write_story: {
           name: "write_story",
           description: "Writes a story",
           tool: toolFn,
           inputSchema: z.object({ text: z.string() }),
           outputSchema: z.void(),
-          annotations: { tamboStreamableHint: false },
+          annotations: { genuiStreamableHint: false },
         },
       };
 
@@ -334,9 +334,9 @@ describe("tool-executor", () => {
       expect(toolFn).not.toHaveBeenCalled();
     });
 
-    it("does NOT call tool when tamboStreamableHint is undefined", async () => {
+    it("does NOT call tool when genuiStreamableHint is undefined", async () => {
       const toolFn = jest.fn().mockResolvedValue(undefined);
-      const registry: Record<string, TamboTool> = {
+      const registry: Record<string, GenuiTool> = {
         write_story: {
           name: "write_story",
           description: "Writes a story",
@@ -358,7 +358,7 @@ describe("tool-executor", () => {
     });
 
     it("does NOT call tool when tool is not in registry", async () => {
-      const registry: Record<string, TamboTool> = {};
+      const registry: Record<string, GenuiTool> = {};
       const tracker = createTrackerWithToolCall("call_1", "missing_tool");
 
       // Should not throw
@@ -372,14 +372,14 @@ describe("tool-executor", () => {
 
     it("logs and swallows tool execution errors during streaming", async () => {
       const warnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
-      const registry: Record<string, TamboTool> = {
+      const registry: Record<string, GenuiTool> = {
         write_story: {
           name: "write_story",
           description: "Writes a story",
           tool: jest.fn().mockRejectedValue(new Error("tool error")),
           inputSchema: z.object({ text: z.string() }),
           outputSchema: z.void(),
-          annotations: { tamboStreamableHint: true },
+          annotations: { genuiStreamableHint: true },
         },
       };
 
@@ -402,14 +402,14 @@ describe("tool-executor", () => {
 
     it("returns early when tool call ID is not being tracked", async () => {
       const toolFn = jest.fn();
-      const registry: Record<string, TamboTool> = {
+      const registry: Record<string, GenuiTool> = {
         write_story: {
           name: "write_story",
           description: "Writes a story",
           tool: toolFn,
           inputSchema: z.object({ text: z.string() }),
           outputSchema: z.void(),
-          annotations: { tamboStreamableHint: true },
+          annotations: { genuiStreamableHint: true },
         },
       };
 
@@ -455,14 +455,14 @@ describe("tool-executor", () => {
 
     it("fires immediately on the leading edge", () => {
       const toolFn = jest.fn().mockResolvedValue(undefined);
-      const registry: Record<string, TamboTool> = {
+      const registry: Record<string, GenuiTool> = {
         write_story: {
           name: "write_story",
           description: "Writes a story",
           tool: toolFn,
           inputSchema: z.object({ text: z.string() }),
           outputSchema: z.void(),
-          annotations: { tamboStreamableHint: true },
+          annotations: { genuiStreamableHint: true },
         },
       };
 
@@ -481,14 +481,14 @@ describe("tool-executor", () => {
 
     it("collapses rapid calls, fires leading then trailing with latest args", () => {
       const toolFn = jest.fn().mockResolvedValue(undefined);
-      const registry: Record<string, TamboTool> = {
+      const registry: Record<string, GenuiTool> = {
         write_story: {
           name: "write_story",
           description: "Writes a story",
           tool: toolFn,
           inputSchema: z.object({ text: z.string() }),
           outputSchema: z.void(),
-          annotations: { tamboStreamableHint: true },
+          annotations: { genuiStreamableHint: true },
         },
       };
 
@@ -517,14 +517,14 @@ describe("tool-executor", () => {
 
     it("flush() executes pending trailing calls immediately", () => {
       const toolFn = jest.fn().mockResolvedValue(undefined);
-      const registry: Record<string, TamboTool> = {
+      const registry: Record<string, GenuiTool> = {
         write_story: {
           name: "write_story",
           description: "Writes a story",
           tool: toolFn,
           inputSchema: z.object({ text: z.string() }),
           outputSchema: z.void(),
-          annotations: { tamboStreamableHint: true },
+          annotations: { genuiStreamableHint: true },
         },
       };
 
@@ -551,7 +551,7 @@ describe("tool-executor", () => {
     });
 
     it("flush() is a no-op when nothing is pending", () => {
-      const registry: Record<string, TamboTool> = {};
+      const registry: Record<string, GenuiTool> = {};
       const tracker = new ToolCallTracker();
       const executor = createThrottledStreamableExecutor(
         tracker,

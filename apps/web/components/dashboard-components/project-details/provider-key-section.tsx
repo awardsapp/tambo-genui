@@ -4,7 +4,7 @@ import { Combobox } from "@/components/ui/combobox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { EditWithTamboButton } from "@/components/ui/tambo/edit-with-tambo-button";
+import { EditWithGenuiButton } from "@/components/ui/genui/edit-with-genui-button";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { api } from "@/trpc/react";
@@ -12,9 +12,9 @@ import {
   AgentProviderType,
   AiProviderType,
   DEFAULT_OPENAI_MODEL,
-} from "@tambo-ai-cloud/core";
-import type { Suggestion } from "@tambo-ai/react";
-import { withTamboInteractable } from "@tambo-ai/react";
+} from "@workspace-cloud/core";
+import type { Suggestion } from "@workspace/react";
+import { withGenuiInteractable } from "@workspace/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ExternalLinkIcon, InfoIcon, Loader2 } from "lucide-react";
 import {
@@ -111,7 +111,7 @@ export const InteractableProviderKeySectionProps = z.object({
     .number()
     .optional()
     .describe(
-      "When set, updates the maximum input tokens limit. Tambo will limit the number of tokens sent to the model to this value. Must be positive and within the model's maximum limit.",
+      "When set, updates the maximum input tokens limit. Genui will limit the number of tokens sent to the model to this value. Must be positive and within the model's maximum limit.",
     ),
   saveSettings: z
     .boolean()
@@ -1007,7 +1007,7 @@ export function ProviderKeySectionBase({
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg font-semibold">
             LLM Providers
-            <EditWithTamboButton description="Manage LLM providers for this project. Edit the provider and model, set the API key, and more." />
+            <EditWithGenuiButton description="Manage LLM providers for this project. Edit the provider and model, set the API key, and more." />
           </CardTitle>
           {hasActualChanges && (
             <Button
@@ -1066,7 +1066,7 @@ export function ProviderKeySectionBase({
         {mode === AiProviderType.LLM && (
           <div className="w-full">
             <p className="text-sm font-sans text-foreground">
-              Get started with 500 starter LLM calls. Tambo is BYO Model — add
+              Get started with 500 starter LLM calls. Genui is BYO Model — add
               your provider key anytime to continue.
             </p>
             <div className="flex items-center gap-2 mt-2 mb-2">
@@ -1157,7 +1157,7 @@ export function ProviderKeySectionBase({
                             </a>
                           )}
                           <a
-                            href="https://docs.tambo.co/reference/llm-providers/labels"
+                            href="https://docs.genui.co/reference/llm-providers/labels"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center text-link text-xs hover:underline"
@@ -1270,7 +1270,7 @@ export function ProviderKeySectionBase({
                           }}
                         />
                         <p className="text-xs text-foreground">
-                          Tambo will limit the number of tokens sent to the
+                          Genui will limit the number of tokens sent to the
                           model to this value.
                           {currentSelectedOption.model?.inputTokenLimit && (
                             <span>
@@ -1410,7 +1410,7 @@ export function ProviderKeySectionBase({
               <div className="border-t pt-2">
                 <div className="flex items-center justify-between text-xs">
                   <a
-                    href="https://github.com/tambo-ai/tambo/issues/new?template=feature_request.md&title=Add%20support%20for%20[Model%20Name]"
+                    href="https://github.com/genui-ai/genui/issues/new?template=feature_request.md&title=Add%20support%20for%20[Model%20Name]"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center text-foreground hover:text-primary transition-colors"
@@ -1451,7 +1451,7 @@ export function ProviderKeySectionBase({
 }
 
 // Export the interactable version
-export const InteractableProviderKeySection = withTamboInteractable(
+export const InteractableProviderKeySection = withGenuiInteractable(
   ProviderKeySectionBase,
   {
     componentName: COMPONENT_NAME,

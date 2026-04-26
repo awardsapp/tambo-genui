@@ -8,7 +8,7 @@ import {
   MessageRole,
   ContentPartType,
   GenerationStage,
-} from "@tambo-ai-cloud/core";
+} from "@workspace-cloud/core";
 import { SentryExceptionFilter } from "../../common/filters/sentry-exception.filter";
 import { ThreadsController } from "../threads.controller";
 import { ThreadMessageDto } from "../dto/message.dto";

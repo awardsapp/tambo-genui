@@ -1,5 +1,5 @@
 ---
-title: Make Tambo Aware of State
+title: Make Genui Aware of State
 description: Automatically include information about the user's current state on every message
 ---
 
@@ -32,7 +32,7 @@ Context helpers are perfect when:
 
 ## How It Works
 
-Context helpers are functions that run automatically before sending each message. Their results are merged into the message context and sent to Tambo along with the user's message.
+Context helpers are functions that run automatically before sending each message. Their results are merged into the message context and sent to Genui along with the user's message.
 
 ```tsx
 // Helper function (runs automatically)
@@ -42,7 +42,7 @@ const sessionHelper = async () => ({
 });
 
 // Registered in provider
-<TamboProvider
+<GenuiProvider
   contextHelpers={{
     session: sessionHelper, // Key becomes context name
   }}
@@ -62,30 +62,30 @@ const sessionHelper = async () => ({
 The most common approach is to configure context helpers at your application root:
 
 ```tsx
-import { TamboProvider } from "@tambo-ai/react";
+import { GenuiProvider } from "@workspace/react";
 import {
   currentTimeContextHelper,
   currentPageContextHelper,
-} from "@tambo-ai/react";
+} from "@workspace/react";
 
 function AppRoot({ children }: { children: React.ReactNode }) {
   return (
-    <TamboProvider
-      apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY!}
+    <GenuiProvider
+      apiKey={process.env.NEXT_PUBLIC_GENUI_API_KEY!}
       contextHelpers={{
         userTime: currentTimeContextHelper,
         userPage: currentPageContextHelper,
       }}
     >
       {children}
-    </TamboProvider>
+    </GenuiProvider>
   );
 }
 ```
 
 ### Step 2: Use Prebuilt Helpers
 
-Tambo provides these prebuilt context helpers:
+Genui provides these prebuilt context helpers:
 
 - **`currentTimeContextHelper`**: Provides current timestamp
 - **`currentPageContextHelper`**: Provides current URL and page title
@@ -96,7 +96,7 @@ Tambo provides these prebuilt context helpers:
 Add your own helpers inline or as separate functions:
 
 ```tsx
-<TamboProvider
+<GenuiProvider
   contextHelpers={{
     // Prebuilt helpers
     userTime: currentTimeContextHelper,
@@ -142,7 +142,7 @@ const sessionHelper = async () => ({
 
 - Return an object, primitive value, or `null`/`undefined`
 - Returning `null` or `undefined` skips including the context
-- Can be sync or async (Tambo waits for async helpers)
+- Can be sync or async (Genui waits for async helpers)
 - Should not throw errors (wrap in try/catch if needed)
 - Keep them fast—they run on every message
 
@@ -245,7 +245,7 @@ const safeHelper = async () => {
 Replace a prebuilt helper by using the same key:
 
 ```tsx
-<TamboProvider
+<GenuiProvider
   contextHelpers={{
     // Override built-in userTime helper with custom formatting
     userTime: () => ({
@@ -268,16 +268,16 @@ Replace a prebuilt helper by using the same key:
 
 ### Using the Hook API
 
-For runtime control over context helpers, use the `useTamboContextHelpers` hook:
+For runtime control over context helpers, use the `useGenuiContextHelpers` hook:
 
 ```tsx
-import { useTamboContextHelpers } from "@tambo-ai/react";
+import { useGenuiContextHelpers } from "@workspace/react";
 
 const {
   getContextHelpers, // Get current map of helpers
   addContextHelper, // Add or replace a helper
   removeContextHelper, // Remove a helper
-} = useTamboContextHelpers();
+} = useGenuiContextHelpers();
 ```
 
 ### Pattern: State-Based Context
@@ -286,7 +286,7 @@ Add or update helpers when application state changes:
 
 ```tsx
 function ProjectContextController({ projectId }: { projectId: string }) {
-  const { addContextHelper, removeContextHelper } = useTamboContextHelpers();
+  const { addContextHelper, removeContextHelper } = useGenuiContextHelpers();
 
   useEffect(() => {
     // Skip if no project selected
@@ -317,10 +317,10 @@ function App() {
   const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
 
   return (
-    <TamboProvider apiKey={apiKey}>
+    <GenuiProvider apiKey={apiKey}>
       <ProjectContextController projectId={currentProjectId} />
       <YourApp />
-    </TamboProvider>
+    </GenuiProvider>
   );
 }
 ```
@@ -331,7 +331,7 @@ Add session context on login and remove on logout:
 
 ```tsx
 function SessionContextManager() {
-  const { addContextHelper, removeContextHelper } = useTamboContextHelpers();
+  const { addContextHelper, removeContextHelper } = useGenuiContextHelpers();
   const { user, session } = useAuth();
 
   useEffect(() => {
@@ -365,7 +365,7 @@ Add helpers only when certain conditions are met:
 
 ```tsx
 function FeatureContextManager() {
-  const { addContextHelper, removeContextHelper } = useTamboContextHelpers();
+  const { addContextHelper, removeContextHelper } = useGenuiContextHelpers();
   const { features } = useFeatureFlags();
 
   useEffect(() => {
@@ -390,16 +390,16 @@ function FeatureContextManager() {
 
 ## Page-Specific Context
 
-### Using TamboContextHelpersProvider
+### Using GenuiContextHelpersProvider
 
-For page-scoped context, use `TamboContextHelpersProvider` to add helpers only while specific routes or layouts are mounted:
+For page-scoped context, use `GenuiContextHelpersProvider` to add helpers only while specific routes or layouts are mounted:
 
 ```tsx title="app/dashboard/page.tsx"
-import { TamboContextHelpersProvider } from "@tambo-ai/react";
+import { GenuiContextHelpersProvider } from "@workspace/react";
 
 export default function DashboardPage() {
   return (
-    <TamboContextHelpersProvider
+    <GenuiContextHelpersProvider
       contextHelpers={{
         dashboardData: async () => ({
           widgets: await getActiveWidgets(),
@@ -409,7 +409,7 @@ export default function DashboardPage() {
       }}
     >
       <DashboardContent />
-    </TamboContextHelpersProvider>
+    </GenuiContextHelpersProvider>
   );
 }
 ```
@@ -422,7 +422,7 @@ export default function DashboardPage() {
 
 **Important notes:**
 
-- You still need `TamboProvider` higher in the component tree
+- You still need `GenuiProvider` higher in the component tree
 - If the same key is registered in multiple places, the most recently mounted registration takes effect
 - Helpers are only active while the provider is mounted
 
@@ -521,18 +521,18 @@ addContextHelper("settings:preferences", preferencesHelper);
 Full implementation with root helpers, custom helpers, and dynamic management:
 
 ```tsx
-import { TamboProvider, useTamboContextHelpers } from "@tambo-ai/react";
+import { GenuiProvider, useGenuiContextHelpers } from "@workspace/react";
 import {
   currentTimeContextHelper,
   currentPageContextHelper,
-} from "@tambo-ai/react";
+} from "@workspace/react";
 import { useEffect } from "react";
 
 // Root-level helpers
 function App() {
   return (
-    <TamboProvider
-      apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY!}
+    <GenuiProvider
+      apiKey={process.env.NEXT_PUBLIC_GENUI_API_KEY!}
       contextHelpers={{
         // Prebuilt helpers
         userTime: currentTimeContextHelper,
@@ -558,13 +558,13 @@ function App() {
       <SessionManager />
       <ProjectManager />
       <AppContent />
-    </TamboProvider>
+    </GenuiProvider>
   );
 }
 
 // Dynamic session management
 function SessionManager() {
-  const { addContextHelper, removeContextHelper } = useTamboContextHelpers();
+  const { addContextHelper, removeContextHelper } = useGenuiContextHelpers();
   const { user } = useAuth();
 
   useEffect(() => {
@@ -589,7 +589,7 @@ function SessionManager() {
 
 // Dynamic project context
 function ProjectManager() {
-  const { addContextHelper, removeContextHelper } = useTamboContextHelpers();
+  const { addContextHelper, removeContextHelper } = useGenuiContextHelpers();
   const { projectId } = useCurrentProject();
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 /** @type {import("@typescript-eslint/utils").TSESLint.FlatConfig.ConfigArray} */
 
 import eslint from "@eslint/js";
-import config from "@tambo-ai/eslint-config/base";
+import config from "@workspace/eslint-config/base";
 import jsdoc from "eslint-plugin-jsdoc";
 import eslintPluginReact from "eslint-plugin-react";
 import eslintPluginReactHooks from "eslint-plugin-react-hooks";

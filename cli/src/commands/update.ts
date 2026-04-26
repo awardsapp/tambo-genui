@@ -65,7 +65,7 @@ export async function handleUpdateComponents(
       if (installedComponents.length === 0) {
         if (!options.silent) {
           console.log(
-            chalk.blue("ℹ No tambo components are currently installed."),
+            chalk.blue("ℹ No genui components are currently installed."),
           );
         }
         return;
@@ -87,7 +87,7 @@ export async function handleUpdateComponents(
       for (const componentName of componentNames) {
         if (!componentExists(componentName)) {
           throw new Error(
-            `Component ${componentName} not found in registry. Use 'npx tambo add ${componentName}' to add it.`,
+            `Component ${componentName} not found in registry. Use 'npx genui add ${componentName}' to add it.`,
           );
         }
       }
@@ -362,7 +362,7 @@ export async function handleUpdateComponents(
         );
         console.log(
           chalk.gray(
-            `• Run 'npx tambo migrate' anytime to move all components to ${COMPONENT_SUBDIR}/`,
+            `• Run 'npx genui migrate' anytime to move all components to ${COMPONENT_SUBDIR}/`,
           ),
         );
       }

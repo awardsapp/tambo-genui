@@ -1,4 +1,4 @@
-import type TamboAI from "@tambo-ai/typescript-sdk";
+import type GenuiAI from "@workspace/typescript-sdk";
 
 /**
  * Narrow a value to a ChatCompletionContentPart by checking for an object with string `type`.
@@ -7,7 +7,7 @@ import type TamboAI from "@tambo-ai/typescript-sdk";
  */
 export function isContentPart(
   val: unknown,
-): val is TamboAI.Beta.Threads.ChatCompletionContentPart {
+): val is GenuiAI.Beta.Threads.ChatCompletionContentPart {
   return (
     !!val &&
     typeof val === "object" &&
@@ -22,7 +22,7 @@ export function isContentPart(
  */
 export function isContentPartArray(
   val: unknown,
-): val is TamboAI.Beta.Threads.ChatCompletionContentPart[] {
+): val is GenuiAI.Beta.Threads.ChatCompletionContentPart[] {
   return Array.isArray(val) && val.every((item) => isContentPart(item));
 }
 

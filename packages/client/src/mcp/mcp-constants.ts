@@ -5,10 +5,10 @@
 export const ServerType = {
   /** Client-side MCP server passed via mcpServers prop */
   BROWSER_SIDE: "browser-side",
-  /** Internal Tambo MCP server at /mcp endpoint (server-side MCP) */
-  TAMBO_INTERNAL: "tambo-internal",
+  /** Internal Genui MCP server at /mcp endpoint (server-side MCP) */
+  GENUI_INTERNAL: "genui-internal",
   /** Virtual server representing browser-only registry resources */
-  TAMBO_REGISTRY: "tambo-registry",
+  GENUI_REGISTRY: "genui-registry",
 } as const;
 
 export type ServerType = (typeof ServerType)[keyof typeof ServerType];

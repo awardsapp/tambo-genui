@@ -1,5 +1,5 @@
 /**
- * `@tambo-ai/react` - React SDK for Tambo AI
+ * `@workspace/react` - React SDK for Tambo AI
  *
  * Provides React hooks and providers for building AI-powered applications
  * using the streaming API with AG-UI protocol.
@@ -19,12 +19,12 @@
  *   TamboProvider,
  *   useTambo,
  *   useTamboThreadInput,
- * } from '@tambo-ai/react';
+ * } from '@workspace/react';
  *
  * function App() {
  *   return (
  *     <TamboProvider
- *       apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY!}
+ *       apiKey={process.env.NEXT_PUBLIC_GENUI_API_KEY!}
  *       userKey={currentUserId} // Required: identifies thread owner
  *       components={[WeatherCard]}
  *       tools={[searchTool]}
@@ -59,14 +59,14 @@
  * ## Type Imports
  *
  * Types are imported directly:
- * - Thread state: `import type { TamboThread } from '@tambo-ai/react'`
- * - Messages: `import type { TamboThreadMessage } from '@tambo-ai/react'`
+ * - Thread state: `import type { TamboThread } from '@workspace/react'`
+ * - Messages: `import type { TamboThreadMessage } from '@workspace/react'`
  *
- * SDK types: `import type { ... } from '@tambo-ai/typescript-sdk'`
+ * SDK types: `import type { ... } from '@workspace/typescript-sdk'`
  * AG-UI events: `import { EventType, type BaseEvent } from '@ag-ui/core'`
  */
 
-import type TamboAI from "@tambo-ai/typescript-sdk";
+import type TamboAI from "@workspace/typescript-sdk";
 
 // =============================================================================
 // Providers
@@ -125,9 +125,9 @@ export {
 
 export { useTambo, type UseTamboReturn } from "./hooks/use-tambo-v1";
 
-export type { TamboAuthState } from "@tambo-ai/client";
+export type { TamboAuthState } from "@workspace/client";
 
-export type { ToolChoice } from "@tambo-ai/client";
+export type { ToolChoice } from "@workspace/client";
 
 export { useTamboThreadInput } from "./hooks/use-tambo-v1-thread-input";
 
@@ -205,8 +205,8 @@ export type {
 } from "../model/component-metadata";
 
 // MCP server types
-export { MCPTransport } from "@tambo-ai/client";
-export type { McpServerInfo, NormalizedMcpServerInfo } from "@tambo-ai/client";
+export { MCPTransport } from "@workspace/client";
+export type { McpServerInfo, NormalizedMcpServerInfo } from "@workspace/client";
 
 // Resource types
 export type {
@@ -220,7 +220,7 @@ export type {
   APIError,
   RateLimitError,
   TamboAIError,
-} from "@tambo-ai/typescript-sdk";
+} from "@workspace/typescript-sdk";
 
 // Suggestion types from Tambo TypeScript SDK
 export type Suggestion = TamboAI.Beta.Threads.Suggestion;
@@ -228,7 +228,7 @@ export type {
   SuggestionGenerateParams,
   SuggestionGenerateResponse,
   SuggestionListResponse,
-} from "@tambo-ai/typescript-sdk/resources/beta/threads/suggestions";
+} from "@workspace/typescript-sdk/resources/beta/threads/suggestions";
 
 // Extended content types with computed state
 export type {
@@ -265,7 +265,7 @@ export type {
   ThreadCreateResponse,
   ThreadRetrieveResponse,
   ThreadListResponse,
-} from "@tambo-ai/client";
+} from "@workspace/client";
 
 // Component content context
 export {

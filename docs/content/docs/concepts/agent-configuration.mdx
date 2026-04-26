@@ -1,15 +1,15 @@
 ---
 title: Agent Configuration
-description: Configure your Tambo agent's behavior, LLM provider, MCP servers, and authentication settings
+description: Configure your Genui agent's behavior, LLM provider, MCP servers, and authentication settings
 ---
 
-Messages sent from your app to Tambo are processed by the Tambo agent, which you can configure through your project settings page. You can add custom instructions to change Tambo's behavior and personality, configure the underlying LLM model and its options, connect MCP servers to extend capabilities, and set up user authentication.
+Messages sent from your app to Genui are processed by the Genui agent, which you can configure through your project settings page. You can add custom instructions to change Genui's behavior and personality, configure the underlying LLM model and its options, connect MCP servers to extend capabilities, and set up user authentication.
 
 ## Custom Instructions
 
-Custom instructions define how Tambo behaves and responds to users.
+Custom instructions define how Genui behaves and responds to users.
 
-When you add custom instructions, you're customizing Tambo's "system prompt". This is where you define the agent's role (is it a support agent? a creative partner? a data analyst?), set the tone and personality (formal or casual? friendly or professional?), establish behavioral guidelines for handling different types of requests, and give your AI a name or identity to help users understand who they're talking to.
+When you add custom instructions, you're customizing Genui's "system prompt". This is where you define the agent's role (is it a support agent? a creative partner? a data analyst?), set the tone and personality (formal or casual? friendly or professional?), establish behavioral guidelines for handling different types of requests, and give your AI a name or identity to help users understand who they're talking to.
 
 Here's how you might configure custom instructions for a creative writing application:
 
@@ -26,11 +26,11 @@ These instructions persist across all conversations in your project, ensuring co
 
 ## LLM Configuration
 
-The LLM configuration determines which AI model powers your Tambo agent and how it behaves. You can change the provider, select specific models, and fine-tune parameters to match your application's needs.
+The LLM configuration determines which AI model powers your Genui agent and how it behaves. You can change the provider, select specific models, and fine-tune parameters to match your application's needs.
 
 ### Choosing a Provider and Model
 
-Tambo integrates with major AI providers including OpenAI, Anthropic, Google, Groq, and Mistral. Each provider offers different models optimized for various use cases. See the [Models and Providers](/reference/llm-providers) page for a complete list of available providers and their capabilities. You can also use any OpenAI-compatible model by selecting the "OpenAI Compatible" provider and specifying a custom endpoint.
+Genui integrates with major AI providers including OpenAI, Anthropic, Google, Groq, and Mistral. Each provider offers different models optimized for various use cases. See the [Models and Providers](/reference/llm-providers) page for a complete list of available providers and their capabilities. You can also use any OpenAI-compatible model by selecting the "OpenAI Compatible" provider and specifying a custom endpoint.
 
 Each project starts with free messages to help you get started and test your configuration. Once you've used your free messages, you can add your own API key for the underlying LLM provider.
 
@@ -58,7 +58,7 @@ For details on how memory works, scoping, and capacity limits, see the [Memory c
 
 ## MCP Server Connection
 
-Model Context Protocol servers extend your Tambo agent's capabilities by providing access to external tools, data sources, and services. You can connect MCP servers directly from your project settings page, making their capabilities available to all users of your application.
+Model Context Protocol servers extend your Genui agent's capabilities by providing access to external tools, data sources, and services. You can connect MCP servers directly from your project settings page, making their capabilities available to all users of your application.
 
 Once connected, your agent can call tools to perform actions and retrieve data, access resources like files, documents, and databases, and use prompts for structured interactions. MCP connections are configured at the project level and shared across all users. This means you set it up once, and every conversation in your project has access to those capabilities.
 
@@ -66,6 +66,6 @@ To learn more about MCP, how it works, and what you can do with it, see the [Mod
 
 ## User Authentication
 
-User authentication determines how Tambo identifies and isolates users in your application. Each user has their own threads and messages, kept separate from other users' data through secure token-based authentication.
+User authentication determines how Genui identifies and isolates users in your application. Each user has their own threads and messages, kept separate from other users' data through secure token-based authentication.
 
 For more information on how authentication works and how to integrate with your provider, see the [User Authentication concept page](/concepts/user-authentication).

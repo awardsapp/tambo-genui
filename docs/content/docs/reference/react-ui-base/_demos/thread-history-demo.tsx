@@ -1,11 +1,11 @@
 "use client";
 
 import { DemoPreview } from "@/components/demos/demo-preview";
-import { ThreadHistory } from "@tambo-ai/react-ui-base/thread-history";
+import { ThreadHistory } from "@workspace/react-ui-base/thread-history";
 import { Plus, Search } from "lucide-react";
 
 export const threadHistoryDemoCode = `
-import { ThreadHistory } from "@tambo-ai/react-ui-base/thread-history";
+import { ThreadHistory } from "@workspace/react-ui-base/thread-history";
 import { Plus, Search } from "lucide-react";
 
 export function DemoThreadHistory() {

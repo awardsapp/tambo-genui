@@ -1,5 +1,5 @@
 import { env } from "@/lib/env";
-import { getDb, schema } from "@tambo-ai-cloud/db";
+import { getDb, schema } from "@workspace-cloud/db";
 import { eq, sql } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";

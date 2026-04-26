@@ -23,8 +23,8 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@tambo-ai/eslint-config": "*",
-    "@tambo-ai/typescript-config": "*",
+    "@workspace/eslint-config": "*",
+    "@workspace/typescript-config": "*",
     "@types/node": "^22.19.15",
     "typescript": "^5.9.3"
   }

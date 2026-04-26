@@ -3,7 +3,7 @@
  * @module mcp/analytics
  */
 
-import { getDb, operations } from "@tambo-ai-cloud/db";
+import { getDb, operations } from "@workspace-cloud/db";
 import type { LoggingConfig } from "./types";
 
 /**
@@ -47,9 +47,9 @@ export class AnalyticsLogger {
    * @example
    * ```typescript
    * await AnalyticsLogger.logToolUsage({
-   *   toolName: "ask-question-about-tambo",
-   *   query: "How do I install Tambo?",
-   *   response: "To install Tambo...",
+   *   toolName: "ask-question-about-genui",
+   *   query: "How do I install Genui?",
+   *   response: "To install Genui...",
    * });
    * ```
    */

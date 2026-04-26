@@ -184,7 +184,7 @@ export function getComponentNames(
 
 function extractComponentImportsFromSource(content: string): string[] {
   const matches = content.matchAll(
-    /@tambo-ai\/ui-registry\/components\/([a-z0-9-]+)/gi,
+    /@workspace\/ui-registry\/components\/([a-z0-9-]+)/gi,
   );
 
   const referencedComponents: string[] = [];
@@ -312,7 +312,7 @@ export function validateComponentRequires(
 
     const fileContent = fs.readFileSync(filePath, "utf-8");
 
-    // 1) Package imports like `@tambo-ai/ui-registry/components/<name>`
+    // 1) Package imports like `@workspace/ui-registry/components/<name>`
     for (const referencedComponent of extractComponentImportsFromSource(
       fileContent,
     )) {

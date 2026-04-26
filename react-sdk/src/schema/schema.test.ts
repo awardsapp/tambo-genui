@@ -1,14 +1,14 @@
 import type { JSONSchema7 } from "json-schema";
 import * as z3 from "zod/v3";
 import * as z4 from "zod/v4";
-import { TamboTool } from "../model/component-metadata";
+import { GenuiTool } from "../model/component-metadata";
 import { looksLikeJSONSchema } from "./json-schema";
 import {
   getParametersFromToolSchema,
   safeSchemaToJsonSchema,
   schemaToJsonSchema,
   isStandardSchema,
-} from "@tambo-ai/client";
+} from "@workspace/client";
 
 describe("schema utilities", () => {
   describe("looksLikeJSONSchema", () => {
@@ -55,7 +55,7 @@ describe("schema utilities", () => {
   describe("getParametersFromToolSchema", () => {
     describe("inputSchema interface (object schemas)", () => {
       it("extracts parameters from Zod 4 object schema properties", () => {
-        const tool: TamboTool = {
+        const tool: GenuiTool = {
           name: "test-tool",
           description: "Test tool",
           tool: jest.fn(),
@@ -91,7 +91,7 @@ describe("schema utilities", () => {
       });
 
       it("extracts parameters from Zod 3 object schema properties", () => {
-        const tool: TamboTool = {
+        const tool: GenuiTool = {
           name: "test-tool",
           description: "Test tool",
           tool: jest.fn(),
@@ -118,7 +118,7 @@ describe("schema utilities", () => {
       });
 
       it("extracts parameters from JSON Schema object properties", () => {
-        const tool: TamboTool = {
+        const tool: GenuiTool = {
           name: "test-tool",
           description: "Test tool",
           tool: jest.fn(),
@@ -156,7 +156,7 @@ describe("schema utilities", () => {
       });
 
       it("handles empty object schema", () => {
-        const tool: TamboTool = {
+        const tool: GenuiTool = {
           name: "test-tool",
           description: "Test tool",
           tool: jest.fn(),
@@ -169,7 +169,7 @@ describe("schema utilities", () => {
       });
 
       it("handles nested object schemas", () => {
-        const tool: TamboTool = {
+        const tool: GenuiTool = {
           name: "test-tool",
           description: "Test tool",
           tool: jest.fn(),
@@ -202,7 +202,7 @@ describe("schema utilities", () => {
       });
 
       it("handles array properties", () => {
-        const tool: TamboTool = {
+        const tool: GenuiTool = {
           name: "test-tool",
           description: "Test tool",
           tool: jest.fn(),
@@ -230,7 +230,7 @@ describe("schema utilities", () => {
 
     describe("realistic inputSchema scenarios", () => {
       it("handles enum properties", () => {
-        const tool: TamboTool = {
+        const tool: GenuiTool = {
           name: "test-tool",
           description: "Test tool",
           tool: jest.fn(),
@@ -259,7 +259,7 @@ describe("schema utilities", () => {
       });
 
       it("handles nullable properties", () => {
-        const tool: TamboTool = {
+        const tool: GenuiTool = {
           name: "test-tool",
           description: "Test tool",
           tool: jest.fn(),
@@ -282,7 +282,7 @@ describe("schema utilities", () => {
       });
 
       it("handles deeply nested schemas and preserves full schema", () => {
-        const tool: TamboTool = {
+        const tool: GenuiTool = {
           name: "test-tool",
           description: "Test tool",
           tool: jest.fn(),
@@ -307,7 +307,7 @@ describe("schema utilities", () => {
       });
 
       it("handles mixed required and optional fields correctly", () => {
-        const tool: TamboTool = {
+        const tool: GenuiTool = {
           name: "test-tool",
           description: "Test tool",
           tool: jest.fn(),
@@ -336,7 +336,7 @@ describe("schema utilities", () => {
     describe("edge cases and error handling", () => {
       it("returns empty params when inputSchema is unknown type", () => {
         // Create a tool with an invalid inputSchema that isn't Standard Schema or JSON Schema
-        const tool: TamboTool = {
+        const tool: GenuiTool = {
           name: "test-tool",
           description: "Test tool",
           tool: jest.fn(),
@@ -353,7 +353,7 @@ describe("schema utilities", () => {
 
       it("handles JSON Schema with no properties field", () => {
         // Test the fallback: const properties = schema.properties ?? {};
-        const tool: TamboTool = {
+        const tool: GenuiTool = {
           name: "test-tool",
           description: "Test tool",
           tool: jest.fn(),
@@ -370,7 +370,7 @@ describe("schema utilities", () => {
 
       it("handles JSON Schema properties without descriptions", () => {
         // Test the fallback: propSchema.description ?? ""
-        const tool: TamboTool = {
+        const tool: GenuiTool = {
           name: "test-tool",
           description: "Test tool",
           tool: jest.fn(),
@@ -393,7 +393,7 @@ describe("schema utilities", () => {
 
       it("handles JSON Schema with non-object property values", () => {
         // Test the fallback: typeof propSchema === "object" && propSchema !== null ? propSchema : {}
-        const tool: TamboTool = {
+        const tool: GenuiTool = {
           name: "test-tool",
           description: "Test tool",
           tool: jest.fn(),

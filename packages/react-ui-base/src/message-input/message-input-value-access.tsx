@@ -3,7 +3,7 @@
 import * as React from "react";
 import {
   useMessageInputContext,
-  type TamboEditor,
+  type GenuiEditor,
 } from "./message-input-context";
 
 /**
@@ -14,8 +14,8 @@ export interface MessageInputValueAccessState {
   value: string;
   /** Update the input value */
   setValue: (value: string) => void;
-  /** Reference to the TamboEditor instance */
-  editorRef: React.RefObject<TamboEditor | null>;
+  /** Reference to the GenuiEditor instance */
+  editorRef: React.RefObject<GenuiEditor | null>;
 }
 
 /**

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRender } from "@base-ui/react/use-render";
-import { useTamboMcpPrompt, useTamboMcpPromptList } from "@tambo-ai/react/mcp";
+import { useGenuiMcpPrompt, useGenuiMcpPromptList } from "@workspace/react/mcp";
 import * as React from "react";
 import {
   McpPromptsContext,
@@ -82,13 +82,13 @@ export const McpPromptsRoot = React.forwardRef<
   HTMLDivElement,
   McpPromptsRootProps
 >(({ onInsertText, ...props }, ref) => {
-  const { data: prompts, isLoading } = useTamboMcpPromptList();
+  const { data: prompts, isLoading } = useGenuiMcpPromptList();
   const [selectedPromptName, setSelectedPromptName] = React.useState<
     string | null
   >(null);
   const [status, setStatus] = React.useState<McpPromptsStatus>("idle");
   const [error, setError] = React.useState<string | null>(null);
-  const { data: promptData, error: fetchError } = useTamboMcpPrompt(
+  const { data: promptData, error: fetchError } = useGenuiMcpPrompt(
     selectedPromptName ?? undefined,
   );
 

@@ -4,7 +4,7 @@ import type {
   ElicitRequest,
   ElicitResult,
 } from "@modelcontextprotocol/sdk/types.js";
-import type { MCPHandlers } from "@tambo-ai-cloud/core";
+import type { MCPHandlers } from "@workspace-cloud/core";
 import type { ThreadMcpClient } from "./elicitations";
 import { registerElicitationHandlers } from "./elicitations";
 

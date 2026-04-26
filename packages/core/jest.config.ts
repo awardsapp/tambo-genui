@@ -5,7 +5,7 @@ const config: JestConfigWithTsJest = {
   testEnvironment: "node",
   extensionsToTreatAsEsm: [".ts"],
   moduleNameMapper: {
-    "^@tambo-ai-cloud/(.*)$": "<rootDir>/../../packages/$1/src",
+    "^@workspace-cloud/(.*)$": "<rootDir>/../../packages/$1/src",
   },
   prettierPath: "prettier-2",
   transform: {
