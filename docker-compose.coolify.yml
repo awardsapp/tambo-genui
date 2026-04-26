@@ -12,7 +12,10 @@
 #   - genui-web and genui-api built from this repo (Coolify builds via build context)
 #
 # Required Coolify Application config:
-#   FQDNs:    https://tambo.awardsapp.ai, https://tambo-api.awardsapp.ai
+#   FQDNs:    https://ai.awardsapp.ai, https://ai-api.awardsapp.ai
+#             (drives via the docker_compose_domains JSON field on the
+#             application record — NOT SERVICE_FQDN_* env vars; Coolify
+#             auto-generates Traefik labels from that field)
 #   Build:    Dockerfile (per-service, see build.dockerfile entries below)
 #   Branch:   main
 #   Source:   github.com/awardsapp/tambo-genui
@@ -75,7 +78,7 @@ services:
       retries: 4
       start_period: 20s
 
-  # ---- API (NestJS) — exposed at https://tambo-api.awardsapp.ai ----
+  # ---- API (NestJS) — exposed at https://ai-api.awardsapp.ai ----
   api:
     build:
       context: .
@@ -136,7 +139,7 @@ services:
       migrate:
         condition: service_completed_successfully
 
-  # ---- Web (Next.js) — exposed at https://tambo.awardsapp.ai ----
+  # ---- Web (Next.js) — exposed at https://ai.awardsapp.ai ----
   web:
     build:
       context: .
@@ -152,7 +155,7 @@ services:
       PORT: "3000"
       NODE_ENV: production
       # Browser-side: must use public HTTPS URL (sent in HTML to client)
-      NEXT_PUBLIC_TAMBO_API_URL: ${NEXT_PUBLIC_TAMBO_API_URL:-https://tambo-api.awardsapp.ai}
+      NEXT_PUBLIC_TAMBO_API_URL: ${NEXT_PUBLIC_TAMBO_API_URL:-https://ai-api.awardsapp.ai}
       NEXT_PUBLIC_TAMBO_API_KEY: ${NEXT_PUBLIC_TAMBO_API_KEY:-}
       NEXT_PUBLIC_POSTHOG_HOST: ${NEXT_PUBLIC_POSTHOG_HOST:-}
       NEXT_PUBLIC_POSTHOG_KEY: ${NEXT_PUBLIC_POSTHOG_KEY:-}
@@ -173,7 +176,7 @@ services:
       GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID:-}
       GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET:-}
       NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
-      NEXTAUTH_URL: ${NEXTAUTH_URL:-https://tambo.awardsapp.ai}
+      NEXTAUTH_URL: ${NEXTAUTH_URL:-https://ai.awardsapp.ai}
       NEXT_PUBLIC_SENTRY_DSN: ${NEXT_PUBLIC_SENTRY_DSN:-}
       NEXT_PUBLIC_SENTRY_ORG: ${NEXT_PUBLIC_SENTRY_ORG:-}
       NEXT_PUBLIC_SENTRY_PROJECT: ${NEXT_PUBLIC_SENTRY_PROJECT:-}
