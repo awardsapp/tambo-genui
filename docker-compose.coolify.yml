@@ -118,8 +118,14 @@ services:
       SENTRY_DSN: ${SENTRY_DSN:-}
       POSTHOG_API_KEY: ${POSTHOG_API_KEY:-}
       POSTHOG_HOST: ${POSTHOG_HOST:-}
+    # Healthcheck uses CMD-SHELL so $$HOSTNAME expands inside the container.
+    # Tambo's Next.js / NestJS apps bind to the container's hostname/eth0 IP,
+    # not 0.0.0.0 — so wget on `localhost:3000` fails with connection refused
+    # even though the app is healthy. Container marked `unhealthy` triggers
+    # Traefik to filter and return 503. The Dockerfile already does the right
+    # thing (wget http://${HOSTNAME}:${PORT}); replicate that pattern here.
     healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/health"]
+      test: ["CMD-SHELL", "wget -q --spider http://$$HOSTNAME:3000/health || exit 1"]
       interval: 15s
       timeout: 5s
       retries: 5
@@ -175,8 +181,15 @@ services:
       NEXT_PUBLIC_TAMBO_WHITELABEL_ORG_NAME: ${NEXT_PUBLIC_TAMBO_WHITELABEL_ORG_NAME:-AwardsApp}
       TAMBO_WHITELABEL_ORG_LOGO: ${TAMBO_WHITELABEL_ORG_LOGO:-}
       NEXT_PUBLIC_TAMBO_WHITELABEL_ORG_LOGO: ${NEXT_PUBLIC_TAMBO_WHITELABEL_ORG_LOGO:-}
+    # See api healthcheck comment above. Next.js standalone server binds to
+    # the container's hostname (HOSTNAME env var, set automatically by Docker
+    # to the short container ID) — not 0.0.0.0 — so localhost:3000 inside the
+    # container connects to nothing. The Dockerfile correctly uses
+    # `wget http://${HOSTNAME}:${PORT}` for HEALTHCHECK; we replicate the
+    # same pattern here so this compose-level healthcheck doesn't override
+    # the Dockerfile's correct one with a broken localhost-based test.
     healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/api/health"]
+      test: ["CMD-SHELL", "wget -q --spider http://$$HOSTNAME:3000/health || exit 1"]
       interval: 15s
       timeout: 5s
       retries: 5
