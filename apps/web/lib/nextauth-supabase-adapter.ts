@@ -1,4 +1,4 @@
-import { withDbClient } from "@workspace-cloud/db";
+import { withDbClient } from "@tambo-ai-cloud/db";
 import { Adapter, AdapterSession, AdapterUser } from "next-auth/adapters";
 import { env } from "./env";
 

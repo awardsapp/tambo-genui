@@ -13,19 +13,19 @@ const stats = [
     title: "160+",
     subtitle: "Stars on GitHub",
     icon: <Icons.github className="h-5 w-5" />,
-    href: "https://github.com/genui-ai",
+    href: "https://github.com/tambo-ai",
   },
   {
     title: "165+",
     subtitle: "Discord Members",
     icon: <Icons.discord className="h-5 w-5" />,
-    href: "https://discord.gg/genui-ai",
+    href: "https://discord.gg/tambo-ai",
   },
   {
     title: "5K+",
     subtitle: "Downloads",
     icon: <Icons.npm className="h-5 w-5" />,
-    href: "https://www.npmjs.com/package/genui-ai",
+    href: "https://www.npmjs.com/package/tambo-ai",
   },
 ];
 

@@ -1,4 +1,4 @@
-import GenuiLogo from "@/public/logo/lockup/Genui-Lockup.svg";
+import TamboLogo from "@/public/logo/lockup/Tambo-Lockup.svg";
 import { DiscordLogoIcon } from "@radix-ui/react-icons";
 
 type IconProps = React.HTMLAttributes<SVGElement> & {
@@ -8,7 +8,7 @@ type IconProps = React.HTMLAttributes<SVGElement> & {
 
 export const Icons = {
   logo: (props: IconProps) => (
-    <GenuiLogo
+    <TamboLogo
       width="auto"
       height={10}
       viewBox="0 0 2072 450"

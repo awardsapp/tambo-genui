@@ -3,7 +3,7 @@ import {
   ContentPartType,
   MessageRole,
   ThreadMessage,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 import { streamText } from "ai";
 import { generateDecisionLoopPrompt } from "../../prompt/decision-loop-prompts";
 import { formatTemplate, objectTemplate } from "../../util/template";
@@ -348,7 +348,7 @@ describe("AISdkClient", () => {
     function callMergeProviderSkills(
       client: AISdkClient,
       config: Record<string, unknown>,
-      skillConfig: import("@workspace-cloud/core").ProviderSkillConfig,
+      skillConfig: import("@tambo-ai-cloud/core").ProviderSkillConfig,
       providerKey: string,
     ) {
       return (client as any).mergeProviderSkills(

@@ -19,17 +19,17 @@ const config: Config = {
     "^react/jsx-dev-runtime$":
       "<rootDir>/../../node_modules/react/jsx-dev-runtime",
     // Internal package imports
-    "^@workspace/ui-registry/utils$": "<rootDir>/src/utils",
-    "^@workspace/ui-registry/lib/(.*)$": "<rootDir>/src/lib/$1",
-    "^@workspace/ui-registry/components/(.*)$": "<rootDir>/src/components/$1",
-    // Mock @workspace/react
-    "^@workspace/react$": "<rootDir>/__tests__/__mocks__/@workspace-react.ts",
-    // Mock @workspace/react/mcp
-    "^@workspace/react/mcp$":
-      "<rootDir>/__tests__/__mocks__/@workspace-react-mcp.ts",
-    // Map @workspace/react-ui-base to source
-    "^@workspace/react-ui-base$": "<rootDir>/../react-ui-base/src/index.ts",
-    "^@workspace/react-ui-base/(.*)$":
+    "^@tambo-ai/ui-registry/utils$": "<rootDir>/src/utils",
+    "^@tambo-ai/ui-registry/lib/(.*)$": "<rootDir>/src/lib/$1",
+    "^@tambo-ai/ui-registry/components/(.*)$": "<rootDir>/src/components/$1",
+    // Mock @tambo-ai/react
+    "^@tambo-ai/react$": "<rootDir>/__tests__/__mocks__/@tambo-ai-react.ts",
+    // Mock @tambo-ai/react/mcp
+    "^@tambo-ai/react/mcp$":
+      "<rootDir>/__tests__/__mocks__/@tambo-ai-react-mcp.ts",
+    // Map @tambo-ai/react-ui-base to source
+    "^@tambo-ai/react-ui-base$": "<rootDir>/../react-ui-base/src/index.ts",
+    "^@tambo-ai/react-ui-base/(.*)$":
       "<rootDir>/../react-ui-base/src/$1/index.tsx",
     // Mock CSS imports
     "\\.(css|less|scss|sass)$": "<rootDir>/__tests__/__mocks__/styleMock.js",

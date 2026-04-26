@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Tooltip, TooltipProvider } from "@/components/ui/tooltip";
-import { LlmParameterUIType } from "@workspace-cloud/core";
+import { LlmParameterUIType } from "@tambo-ai-cloud/core";
 import { Plus } from "lucide-react";
 import { PARAMETER_SUGGESTIONS } from "./types";
 

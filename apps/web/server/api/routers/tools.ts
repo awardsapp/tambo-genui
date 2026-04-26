@@ -18,13 +18,13 @@ import {
   ToolProviderType,
   isValidServerKey,
   validateMcpServer,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 import {
   HydraDb,
   OAuthLocalProvider,
   operations,
   schema,
-} from "@workspace-cloud/db";
+} from "@tambo-ai-cloud/db";
 import { TRPCError } from "@trpc/server";
 import { and, eq, isNotNull } from "drizzle-orm";
 import { z } from "zod/v3";

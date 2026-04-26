@@ -4,7 +4,7 @@ import {
   MessageRole,
   ThreadMessage,
   ThreadUserMessage,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 import OpenAI from "openai";
 import {
   AgentClient,

@@ -4,7 +4,7 @@ Detailed guidance for Claude Code agents working with the React SDK package.
 
 ## Project Overview
 
-This is the **@workspace/react** package - the core React SDK for building AI-powered generative UI applications. It provides hooks, providers, and utilities that enable AI to dynamically generate and manage React components through natural language interaction.
+This is the **@tambo-ai/react** package - the core React SDK for building AI-powered generative UI applications. It provides hooks, providers, and utilities that enable AI to dynamically generate and manage React components through natural language interaction.
 
 ## Essential Commands
 
@@ -22,20 +22,20 @@ npm run clean           # Remove build artifacts
 
 ### Core Provider System
 
-The SDK uses a nested provider hierarchy (`src/providers/genui-provider.tsx`):
+The SDK uses a nested provider hierarchy (`src/providers/tambo-provider.tsx`):
 
-1. **GenuiClientProvider** - API client, authentication, session management
-2. **GenuiRegistryProvider** - Component and tool registration system
-3. **GenuiContextHelpersProvider** - Additional context utilities
-4. **GenuiThreadProvider** - Message thread and conversation management
-5. **GenuiThreadInputProvider** - User input handling and submission
-6. **GenuiComponentProvider** - Component lifecycle and state management
-7. **GenuiInteractableProvider** - Interactive component tracking
+1. **TamboClientProvider** - API client, authentication, session management
+2. **TamboRegistryProvider** - Component and tool registration system
+3. **TamboContextHelpersProvider** - Additional context utilities
+4. **TamboThreadProvider** - Message thread and conversation management
+5. **TamboThreadInputProvider** - User input handling and submission
+6. **TamboComponentProvider** - Component lifecycle and state management
+7. **TamboInteractableProvider** - Interactive component tracking
 
 ### Component Registration Pattern
 
 ```typescript
-const components: GenuiComponent[] = [
+const components: TamboComponent[] = [
   {
     name: "ComponentName",
     description: "Clear description for AI understanding",
@@ -50,7 +50,7 @@ const components: GenuiComponent[] = [
 Tools can be registered with an optional `transformToContent` function to control how tool responses are converted into content parts:
 
 ```typescript
-const tools: GenuiTool[] = [
+const tools: TamboTool[] = [
   {
     name: "toolName",
     description: "Tool description for AI",
@@ -75,18 +75,18 @@ By default, tool responses are stringified and wrapped in a text content part. T
 
 ### Key Hook System
 
-- **`useGenui()`** - Primary hook accessing all Genui functionality
-- **`useGenuiThreadInput()`** - Message submission, input state management
-- **`useGenuiComponentState()`** - AI-managed component state with streaming
-- **`useGenuiStreamStatus()`** - Monitor AI response streaming status
-- **`useGenuiThreadList()`** - Thread management and navigation
-- **`useGenuiInteractable()`** - Track interactive component registry
+- **`useTambo()`** - Primary hook accessing all Tambo functionality
+- **`useTamboThreadInput()`** - Message submission, input state management
+- **`useTamboComponentState()`** - AI-managed component state with streaming
+- **`useTamboStreamStatus()`** - Monitor AI response streaming status
+- **`useTamboThreadList()`** - Thread management and navigation
+- **`useTamboInteractable()`** - Track interactive component registry
 
 ## Key Files and Directories
 
 ### Source Structure
 
-- `src/hooks/` - React hooks for Genui functionality
+- `src/hooks/` - React hooks for Tambo functionality
 - `src/providers/` - Context providers and state management
 - `src/model/` - TypeScript interfaces and data models
 - `src/util/` - Utility functions and helpers
@@ -95,19 +95,19 @@ By default, tool responses are stringified and wrapped in a text content part. T
 
 ### Critical Files
 
-- `src/providers/genui-provider.tsx` - Main provider implementation
+- `src/providers/tambo-provider.tsx` - Main provider implementation
 - `src/model/component-metadata.ts` - Component and tool type definitions
-- `src/hooks/use-genui-threads.ts` - Thread management logic
-- `src/providers/genui-prop-stream-provider/` - Streaming prop system
+- `src/hooks/use-tambo-threads.ts` - Thread management logic
+- `src/providers/tambo-prop-stream-provider/` - Streaming prop system
 
 ## Development Patterns
 
 ### Component State Management
 
-Components can have AI-managed state using `useGenuiComponentState`:
+Components can have AI-managed state using `useTamboComponentState`:
 
 ```typescript
-const [state, setState, { isPending }] = useGenuiComponentState(
+const [state, setState, { isPending }] = useTamboComponentState(
   "uniqueStateKey",
   initialState,
 );
@@ -119,7 +119,7 @@ Each interface should use unique context keys for thread separation:
 
 - Enables multiple independent AI conversations
 - Threads persist via API and are retrieved by context key
-- Managed through `contextKey` prop on `GenuiProvider`
+- Managed through `contextKey` prop on `TamboProvider`
 
 ### Streaming Response Handling
 
@@ -127,7 +127,7 @@ The SDK supports real-time streaming of AI responses:
 
 - Text content streams character by character
 - Component props stream and update in real-time
-- Status monitoring via `useGenuiStreamStatus()`
+- Status monitoring via `useTamboStreamStatus()`
 
 ## Build System
 
@@ -140,9 +140,9 @@ The SDK supports real-time streaming of AI responses:
 ### Dependencies
 
 - **Peer Dependencies** - React 18/19, TypeScript types (no react-dom requirement, enabling React Native support)
-- **Core Dependencies** - Genui TypeScript SDK, React Query, `@modelcontextprotocol/sdk`
+- **Core Dependencies** - Tambo TypeScript SDK, React Query, `@modelcontextprotocol/sdk`
 - **Optional Peer Dependencies**
-  - `zod` (`^3.25` or `^4.0`) and `zod-to-json-schema` (`^3.25.0`) for component schemas and JSON Schema generation when using the `@workspace/react/mcp` subpath
+  - `zod` (`^3.25` or `^4.0`) and `zod-to-json-schema` (`^3.25.0`) for component schemas and JSON Schema generation when using the `@tambo-ai/react/mcp` subpath
 
 ## Testing
 
@@ -164,7 +164,7 @@ The SDK supports real-time streaming of AI responses:
 
 Model Context Protocol support enables extending AI capabilities:
 
-- Client-side MCP connections via the `mcpServers` prop on `GenuiProvider`
+- Client-side MCP connections via the `mcpServers` prop on `TamboProvider`
 - Tool discovery and execution
 - Resource access and management
 - Custom protocol implementations
@@ -175,8 +175,8 @@ Model Context Protocol support enables extending AI capabilities:
 
 Do NOT use `useQuery`, `useMutation`, or `useQueryClient` from `@tanstack/react-query`. Use the SDK's internal wrappers instead:
 
-- `useGenuiQuery()`, `useGenuiMutation()`, `useGenuiQueries()` from `src/hooks/react-query-hooks.ts`
-- `useGenuiQueryClient()` from `src/providers/genui-client-provider.tsx`
+- `useTamboQuery()`, `useTamboMutation()`, `useTamboQueries()` from `src/hooks/react-query-hooks.ts`
+- `useTamboQueryClient()` from `src/providers/tambo-client-provider.tsx`
 
 This ensures all SDK code shares the same internal `QueryClient` and avoids conflicts with user applications.
 

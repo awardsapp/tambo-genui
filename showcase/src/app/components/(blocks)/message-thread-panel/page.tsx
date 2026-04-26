@@ -2,7 +2,7 @@
 
 import { ComponentCodePreview } from "@/components/component-code-preview";
 import { InstallationSection } from "@/components/installation-section";
-import { MessageThreadPanel } from "@workspace/ui-registry/components/message-thread-panel";
+import { MessageThreadPanel } from "@tambo-ai/ui-registry/components/message-thread-panel";
 
 export default function MessageThreadPanelPage() {
   const exampleSuggestions = [
@@ -69,7 +69,7 @@ export default function MessageThreadPanelPage() {
                 />
               </div>
             }
-            code={`import { MessageThreadPanel } from "@/components/genui/message-thread-panel";
+            code={`import { MessageThreadPanel } from "@/components/tambo/message-thread-panel";
 
 export function DashboardWithChat() {
   const exampleSuggestions = [
@@ -109,7 +109,7 @@ export function DashboardWithChat() {
 
       {/* Installation */}
       <section>
-        <InstallationSection cliCommand="npx genui add message-thread-panel" />
+        <InstallationSection cliCommand="npx tambo add message-thread-panel" />
       </section>
 
       {/* Component API */}

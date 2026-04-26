@@ -4,7 +4,7 @@ import { ComponentCodePreview } from "@/components/component-code-preview";
 import { InstallationSection } from "@/components/installation-section";
 import { GraphChatInterface } from "@/components/generative/GraphChatInterface";
 import { SyntaxHighlighter } from "@/components/ui/syntax-highlighter";
-import { Graph } from "@workspace/ui-registry/components/graph";
+import { Graph } from "@tambo-ai/ui-registry/components/graph";
 
 export default function GraphPage() {
   return (
@@ -102,7 +102,7 @@ export function QuarterlySalesChart() {
             component={<GraphChatInterface />}
             code={`import { Graph, graphSchema } from "@/components/tambo/graph";
 import { MessageThreadFull } from "@/components/tambo/message-thread-full";
-import { useTambo } from "@workspace/react";
+import { useTambo } from "@tambo-ai/react";
 import { useEffect } from "react";
 
 export function GraphDemo() {
@@ -156,7 +156,7 @@ export function GraphDemo() {
               language="tsx"
               code={`import { Graph, graphSchema } from "@/components/tambo/graph";
 import { MessageThreadFull } from "@/components/tambo/message-thread-full";
-import { useTambo } from "@workspace/react";
+import { useTambo } from "@tambo-ai/react";
 import { useEffect } from "react";
 
 export function App() {

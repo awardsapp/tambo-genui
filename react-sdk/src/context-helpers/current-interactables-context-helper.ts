@@ -23,7 +23,7 @@ export interface InteractablesContext {
  * @example
  * ```tsx
  * // To disable the default interactables context
- * const { addContextHelper } = useGenuiContextHelpers();
+ * const { addContextHelper } = useTamboContextHelpers();
  * addContextHelper("interactables", () => null);
  *
  * // To customize the context
@@ -41,7 +41,7 @@ export const currentInteractablesContextHelper: ContextHelperFn = () => {
 
 /**
  * Creates an interactables context helper with access to the current components.
- * This is used internally by GenuiInteractableProvider.
+ * This is used internally by TamboInteractableProvider.
  * @param components Array of interactable components
  * @returns A context helper function that returns component metadata or null if no components exist
  */

@@ -4,7 +4,7 @@ import {
   MessageRole,
   ThreadMessage,
   ToolCallRequest,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 import OpenAI from "openai";
 import {
   prefetchAndCacheResources,
@@ -60,7 +60,7 @@ export async function* runAgentLoop(
         `Dropping AG-UI message with unsupported role '${message.role}' (id: '${message.id}')`,
       );
       // `@ag-ui/core` messages can include roles (like `developer`/`activity`) that
-      // aren't represented in `@workspace-cloud/core`'s `MessageRole` enum.
+      // aren't represented in `@tambo-ai-cloud/core`'s `MessageRole` enum.
       continue;
     }
 

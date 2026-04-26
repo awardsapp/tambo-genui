@@ -1,9 +1,9 @@
 ---
 title: Auth0
-description: Learn how to integrate Genui with Auth0 for user authentication.
+description: Learn how to integrate Tambo with Auth0 for user authentication.
 ---
 
-Auth0 is a comprehensive identity and access management platform that provides secure authentication and authorization services. This guide shows how to integrate it with Genui in a Next.js application.
+Auth0 is a comprehensive identity and access management platform that provides secure authentication and authorization services. This guide shows how to integrate it with Tambo in a Next.js application.
 
 <Callout type="info" title="Prerequisites">
   This guide assumes you've already set up Auth0 in your Next.js application. If
@@ -16,7 +16,7 @@ Auth0 is a comprehensive identity and access management platform that provides s
 Install the required packages:
 
 ```bash
-npm install @auth0/nextjs-auth0 @workspace/react
+npm install @auth0/nextjs-auth0 @tambo-ai/react
 ```
 
 ## Integration Options
@@ -59,7 +59,7 @@ export default async function RootLayout({
 "use client";
 
 import { UserProvider } from "@auth0/nextjs-auth0/client";
-import { GenuiProvider } from "@workspace/react";
+import { TamboProvider } from "@tambo-ai/react";
 import { ReactNode } from "react";
 
 interface ClientLayoutProps {
@@ -73,7 +73,7 @@ export default function ClientLayout({
 }: ClientLayoutProps) {
   return (
     <UserProvider>
-      <GenuiProvider userToken={userToken}>{children}</GenuiProvider>
+      <TamboProvider userToken={userToken}>{children}</TamboProvider>
     </UserProvider>
   );
 }
@@ -105,14 +105,14 @@ Then use Auth0's `useUser` hook in your client layout:
 "use client";
 
 import { UserProvider, useUser } from "@auth0/nextjs-auth0/client";
-import { GenuiProvider } from "@workspace/react";
+import { TamboProvider } from "@tambo-ai/react";
 import { ReactNode, useEffect, useState } from "react";
 
 interface ClientLayoutProps {
   children: ReactNode;
 }
 
-function GenuiWrapper({ children }: { children: ReactNode }) {
+function TamboWrapper({ children }: { children: ReactNode }) {
   const { user, isLoading } = useUser();
   const [accessToken, setAccessToken] = useState<string | undefined>();
 
@@ -132,13 +132,13 @@ function GenuiWrapper({ children }: { children: ReactNode }) {
     }
   }, [user, isLoading]);
 
-  return <GenuiProvider userToken={accessToken}>{children}</GenuiProvider>;
+  return <TamboProvider userToken={accessToken}>{children}</TamboProvider>;
 }
 
 export default function ClientLayout({ children }: ClientLayoutProps) {
   return (
     <UserProvider>
-      <GenuiWrapper>{children}</GenuiWrapper>
+      <TamboWrapper>{children}</TamboWrapper>
     </UserProvider>
   );
 }
@@ -146,10 +146,10 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
 
 ## Usage
 
-Once configured, you can use Genui components throughout your application:
+Once configured, you can use Tambo components throughout your application:
 
 ```tsx title="app/dashboard/page.tsx"
-import { MessageThreadFull } from "@components/genui/message-thread-full";
+import { MessageThreadFull } from "@components/tambo/message-thread-full";
 
 export default function Dashboard() {
   return (
@@ -183,6 +183,6 @@ In your Auth0 dashboard, verify that your application is configured to:
 
 <Callout type="info" title="Token Security">
   Auth0 access tokens are JWTs that include the user's ID in the `sub` claim,
-  which is exactly what Genui needs for user identification. The tokens are
+  which is exactly what Tambo needs for user identification. The tokens are
   automatically signed by Auth0 and can be verified using Auth0's public keys.
 </Callout>

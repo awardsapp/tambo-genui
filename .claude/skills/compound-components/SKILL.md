@@ -37,19 +37,19 @@ import { useComponentContext } from "../base/component/component-context";
 
 ### No Custom Data Fetching in Primitives
 
-Base components can use `@workspace/react` SDK hooks (components require Genui provider anyway). **Custom data fetching logic** (combining sources, external providers) belongs in the styled layer.
+Base components can use `@tambo-ai/react` SDK hooks (components require Tambo provider anyway). **Custom data fetching logic** (combining sources, external providers) belongs in the styled layer.
 
 ```tsx
 // OK - SDK hooks in primitive
 const Root = ({ children }) => {
-  const { value, setValue, submit } = useGenuiThreadInput();
-  const { isIdle, cancel } = useGenuiThread();
+  const { value, setValue, submit } = useTamboThreadInput();
+  const { isIdle, cancel } = useTamboThread();
   return <Context.Provider value={{ value, setValue, isIdle }}>{children}</Context.Provider>;
 };
 
 // WRONG - custom data fetching in primitive
 const Textarea = ({ resourceProvider }) => {
-  const { data: mcpResources } = useGenuiMcpResourceList(search);
+  const { data: mcpResources } = useTamboMcpResourceList(search);
   const externalResources = useFetchExternal(resourceProvider);
   const combined = [...mcpResources, ...externalResources];
   return <div>{combined.map(...)}</div>;
@@ -234,7 +234,7 @@ export type { ComponentContentProps } from "./component-content";
 - **Throw on missing context** - fail fast with clear error messages
 - **Export types** - consumers need `ComponentProps`, `RenderProps` interfaces
 - **Hooks stay internal** - never export from index, expose state via render props
-- **SDK hooks OK, custom fetching not** - `@workspace/react` hooks are fine, combining logic goes in styled layer
+- **SDK hooks OK, custom fetching not** - `@tambo-ai/react` hooks are fine, combining logic goes in styled layer
 - **Pre-compute collection props** - use `useMemo` arrays, not getter functions
 
 ## Pattern Selection

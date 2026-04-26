@@ -45,7 +45,7 @@ export function findFileInAncestors(
  * (pnpm-lock.yaml, yarn.lock) since Rush can use different package managers internally.
  *
  * We search ancestor directories because lockfiles typically live at the monorepo root,
- * but genui commands are often run from package subdirectories.
+ * but tambo commands are often run from package subdirectories.
  *
  * @param projectRoot The directory to start searching from (defaults to cwd)
  * @returns The detected package manager

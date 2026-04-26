@@ -1,39 +1,39 @@
 # AGENTS.md
 
-Detailed guidance for Claude Code agents working with the Genui AI monorepo.
+Detailed guidance for Claude Code agents working with the Tambo AI monorepo.
 
-This file provides comprehensive instructions for maintaining code quality, architectural consistency, and project-specific requirements across both the Genui AI framework and the Genui Cloud platform.
+This file provides comprehensive instructions for maintaining code quality, architectural consistency, and project-specific requirements across both the Tambo AI framework and the Tambo Cloud platform.
 
 ## 1. Repository Structure
 
-This is a Turborepo monorepo containing both the Genui AI framework packages and the Genui Cloud platform.
+This is a Turborepo monorepo containing both the Tambo AI framework packages and the Tambo Cloud platform.
 
 ### Framework Packages (Turborepo root)
 
-- **react-sdk/** - Main React SDK package (`@workspace/react`)
+- **react-sdk/** - Main React SDK package (`@tambo-ai/react`)
   - Core hooks, providers, and utilities for building AI-powered React apps
   - Exports: hooks, providers, types for component registration and thread management
   - Build outputs: CommonJS (`dist/`) and ESM (`esm/`) for broad compatibility
 
-- **packages/client/** - Framework-agnostic client (`@workspace/client`)
+- **packages/client/** - Framework-agnostic client (`@tambo-ai/client`)
   - Streaming, tool execution, thread management without React dependencies
-  - `GenuiClient` class with `getState()`/`subscribe()` for framework integration
-  - `GenuiStream` async iterable for streaming AI responses
-  - Used by `@workspace/react` as its core engine; also usable standalone (Node.js, Vue, Svelte, etc.)
+  - `TamboClient` class with `getState()`/`subscribe()` for framework integration
+  - `TamboStream` async iterable for streaming AI responses
+  - Used by `@tambo-ai/react` as its core engine; also usable standalone (Node.js, Vue, Svelte, etc.)
   - Build outputs: CommonJS (`dist/`) and ESM (`esm/`)
 
-- **cli/** - Command-line interface (`genui`)
+- **cli/** - Command-line interface (`tambo`)
   - Project scaffolding, component generation, and development utilities
-  - Component registry auto-syncs to `/showcase/src/components/genui/` from `/cli/src/registry/`
+  - Component registry auto-syncs to `/showcase/src/components/tambo/` from `/cli/src/registry/`
   - Built as ESM module with executable binary
 
-- **showcase/** - Demo application (`@workspace/showcase`)
+- **showcase/** - Demo application (`@tambo-ai/showcase`)
   - Runs on port 8262
-  - Next.js app demonstrating all Genui components and patterns
+  - Next.js app demonstrating all Tambo components and patterns
   - Components auto-synced from CLI registry - edit CLI registry, not showcase components directly
   - Serves as both documentation and testing ground
 
-- **docs/** - Documentation site (`@workspace/docs`)
+- **docs/** - Documentation site (`@tambo-ai/docs`)
   - Runs on port 8263
   - Built with Fumadocs, includes comprehensive guides and API reference
   - This package contains ui components that originated from the cli/ package.
@@ -42,14 +42,14 @@ This is a Turborepo monorepo containing both the Genui AI framework packages and
   - MDX-based content with interactive examples
   - Integrated search and component documentation
 
-- **create-genui-app/** - App bootstrapper (`create-genui-app`)
-  - Initializes new Genui projects from templates
+- **create-tambo-app/** - App bootstrapper (`create-tambo-app`)
+  - Initializes new Tambo projects from templates
   - Handles git setup, dependency installation, and configuration
 
 - **community/** - Community resources and event materials
 - **packages/** - Shared configuration packages (ESLint, TypeScript configs)
 
-### Genui Cloud Platform
+### Tambo Cloud Platform
 
 - **apps/web** - Next.js app (UI) - runs on port 8260
 - **apps/api** - NestJS app (OpenAPI server) - runs on port 8261
@@ -121,9 +121,9 @@ eval "$(mise activate)"   # Interactive shells only
 - **Booleans**: start with is/has/can/should.
 - **Functions**: use verbs; boolean-returning: isX/hasX/canX. If a function returns void, prefer executeX/saveX naming.
 - **React-specific naming** (follows devdocs/NAMING_CONVENTIONS.md):
-  - Components: GenuiXxx
-  - Hooks: useGenuiXxx
-  - Props interfaces: GenuiXxxProps
+  - Components: TamboXxx
+  - Hooks: useTamboXxx
+  - Props interfaces: TamboXxxProps
   - Event props start with onX; internal handlers use handleX
 
 ### Code Organization (Functions & Classes)
@@ -317,7 +317,7 @@ npm run db:studio -w packages/db    # Open Drizzle Studio
 
 ```bash
 # Development (two different apps!)
-npm run dev:cloud        # Start Genui Cloud (web + API) - ports 8260 + 8261 - uses turbo watch
+npm run dev:cloud        # Start Tambo Cloud (web + API) - ports 8260 + 8261 - uses turbo watch
 npm run dev              # Start React SDK (showcase + docs)
 npm run dev:sdk          # Start React SDK in watch mode + showcase (for SDK development)
 npm run build:sdk        # One-time build of React SDK
@@ -377,7 +377,7 @@ turbo check-types       # Type-check all packages
 
 - Shared configs in `packages/` (eslint-config, typescript-config)
 - Cross-package dependencies use workspace protocol (`*`)
-- TypeScript SDK dependency (`@workspace/typescript-sdk`) is external
+- TypeScript SDK dependency (`@tambo-ai/typescript-sdk`) is external
 
 ### Cross-Package Development
 
@@ -502,4 +502,4 @@ Common scopes: api, web, core, db, deps, ci, config, react-sdk, cli, showcase, d
 - When adding/editing JSDoc comments, make sure to add @returns to provide a description of the function return (the type should not be specified since TS will infer the return from the code, not the comment.)
 - Never reference planning documents, proposals, or design docs in code comments (e.g., `// See plans/foo.md`). These artifacts are short-lived but comments persist indefinitely. Code comments should be self-contained.
 - Store planning documents, proposals, and design docs in the `devdocs/` folder. Solutions go in `devdocs/solutions/`, brainstorming goes in `devdocs/brainstorms/`, etc. The only exception is `plans/` which stays at the repo root for visibility.
-- For any Genui-owned URLs you include in comments or documentation, use the `genui.co` domain (not the legacy `.ai` domain). When you encounter existing Genui-owned links using the legacy domain, prefer updating them to `genui.co` as part of related changes. External (non-Genui) links are fine.
+- For any Tambo-owned URLs you include in comments or documentation, use the `tambo.co` domain (not the legacy `.ai` domain). When you encounter existing Tambo-owned links using the legacy domain, prefer updating them to `tambo.co` as part of related changes. External (non-Tambo) links are fine.

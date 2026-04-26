@@ -1,7 +1,7 @@
 /** Migrated from libretto: https://github.com/libretto-ai/openai-ts/blob/main/src/template.ts  */
 // we only support the simplest of template expressions
 
-import { ThreadMessage } from "@workspace-cloud/core";
+import { ThreadMessage } from "@tambo-ai-cloud/core";
 
 /** Match a full template expression, e.g. '{foo}' in 'replace {foo} now' */
 const templateExpression = /({[a-zA-Z0-9_[\].]+})/g;

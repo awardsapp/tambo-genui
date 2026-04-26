@@ -1,11 +1,11 @@
-import type GenuiAI from "@workspace/typescript-sdk";
-import type { GenuiToolRegistry } from "../model/component-metadata";
+import type TamboAI from "@tambo-ai/typescript-sdk";
+import type { TamboToolRegistry } from "../model/component-metadata";
 import { handleToolCall } from "./tool-caller";
 
 function makeRegistry(
   toolName: string,
   impl: (input: Record<string, unknown>) => unknown,
-): GenuiToolRegistry {
+): TamboToolRegistry {
   return {
     [toolName]: {
       name: toolName,
@@ -20,7 +20,7 @@ function makeRegistry(
 describe("handleToolCall", () => {
   it("calls the registered tool with reconstructed parameters", async () => {
     const registry = makeRegistry("myTool", (input) => `got ${input.name}`);
-    const request: GenuiAI.ToolCallRequest = {
+    const request: TamboAI.ToolCallRequest = {
       toolName: "myTool",
       parameters: [{ parameterName: "name", parameterValue: "Alice" }],
     };
@@ -33,14 +33,14 @@ describe("handleToolCall", () => {
   it("throws when toolName is missing", async () => {
     await expect(
       handleToolCall(
-        { toolName: "", parameters: [] } as GenuiAI.ToolCallRequest,
+        { toolName: "", parameters: [] } as TamboAI.ToolCallRequest,
         {},
       ),
     ).rejects.toThrow("Tool name is required");
   });
 
   it("returns error message when tool is not found and no fallback", async () => {
-    const request: GenuiAI.ToolCallRequest = {
+    const request: TamboAI.ToolCallRequest = {
       toolName: "missing",
       parameters: [],
     };
@@ -52,7 +52,7 @@ describe("handleToolCall", () => {
 
   it("calls onCallUnregisteredTool fallback when tool not in registry", async () => {
     const fallback = jest.fn().mockResolvedValue("fallback result");
-    const request: GenuiAI.ToolCallRequest = {
+    const request: TamboAI.ToolCallRequest = {
       toolName: "unregistered",
       parameters: [{ parameterName: "x", parameterValue: "1" }],
     };
@@ -67,7 +67,7 @@ describe("handleToolCall", () => {
     const registry = makeRegistry("boom", () => {
       throw new Error("kaboom");
     });
-    const request: GenuiAI.ToolCallRequest = {
+    const request: TamboAI.ToolCallRequest = {
       toolName: "boom",
       parameters: [],
     };
@@ -82,7 +82,7 @@ describe("handleToolCall", () => {
     const request = {
       toolName: "noArgs",
       parameters: null,
-    } as unknown as GenuiAI.ToolCallRequest;
+    } as unknown as TamboAI.ToolCallRequest;
 
     const { result } = await handleToolCall(request, registry);
     expect(result).toBe("ok");

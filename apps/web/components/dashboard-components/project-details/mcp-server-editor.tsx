@@ -13,7 +13,7 @@ import {
   deriveServerKey,
   isValidServerKey,
   MCPTransport,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 import { useMutation } from "@tanstack/react-query";
 import { TRPCClientErrorLike } from "@trpc/client";
 import { Check, Info, Loader2 } from "lucide-react";

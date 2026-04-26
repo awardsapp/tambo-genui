@@ -1,15 +1,15 @@
 ---
 title: Troubleshooting
-description: Common issues and fixes for self-hosted Genui deployments.
+description: Common issues and fixes for self-hosted Tambo deployments.
 ---
 
-Solutions to the most common problems with self-hosted Genui.
+Solutions to the most common problems with self-hosted Tambo.
 
 ## Services won't start
 
 1. Check Docker is running: `docker info`
 2. Check `docker.env` exists and has all required variables
-3. View logs: `./scripts/cloud/genui-logs.sh`
+3. View logs: `./scripts/cloud/tambo-logs.sh`
 
 ## Database connection errors
 
@@ -32,9 +32,9 @@ Stop and remove all containers and volumes, then start fresh:
 ```bash
 # Stop and remove containers + volumes
 docker compose --env-file docker.env down -v
-docker volume rm genui_genui_postgres_data
+docker volume rm tambo_tambo_postgres_data
 
 # Start fresh
-./scripts/cloud/genui-start.sh
+./scripts/cloud/tambo-start.sh
 ./scripts/cloud/init-database.sh
 ```

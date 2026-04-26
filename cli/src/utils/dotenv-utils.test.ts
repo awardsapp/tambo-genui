@@ -1,10 +1,10 @@
 import { describe, expect, it } from "@jest/globals";
 import {
-  findAllGenuiApiKeys,
-  findGenuiApiKey,
+  findAllTamboApiKeys,
+  findTamboApiKey,
   parseDotenvContent,
-  removeGenuiApiKeys,
-  setGenuiApiKey,
+  removeTamboApiKeys,
+  setTamboApiKey,
 } from "./dotenv-utils.js";
 
 describe("parseDotenvContent", () => {
@@ -39,192 +39,192 @@ describe("parseDotenvContent", () => {
   });
 });
 
-describe("findGenuiApiKey", () => {
-  it("finds NEXT_PUBLIC_GENUI_API_KEY", () => {
-    const content = "OTHER=value\nNEXT_PUBLIC_GENUI_API_KEY=my-key\n";
-    const result = findGenuiApiKey(content);
+describe("findTamboApiKey", () => {
+  it("finds NEXT_PUBLIC_TAMBO_API_KEY", () => {
+    const content = "OTHER=value\nNEXT_PUBLIC_TAMBO_API_KEY=my-key\n";
+    const result = findTamboApiKey(content);
     expect(result).toEqual({
-      keyName: "NEXT_PUBLIC_GENUI_API_KEY",
+      keyName: "NEXT_PUBLIC_TAMBO_API_KEY",
       value: "my-key",
     });
   });
 
-  it("finds VITE_GENUI_API_KEY", () => {
-    const content = "VITE_GENUI_API_KEY=vite-key";
-    const result = findGenuiApiKey(content);
+  it("finds VITE_TAMBO_API_KEY", () => {
+    const content = "VITE_TAMBO_API_KEY=vite-key";
+    const result = findTamboApiKey(content);
     expect(result).toEqual({
-      keyName: "VITE_GENUI_API_KEY",
+      keyName: "VITE_TAMBO_API_KEY",
       value: "vite-key",
     });
   });
 
-  it("finds REACT_APP_GENUI_API_KEY", () => {
-    const content = "REACT_APP_GENUI_API_KEY=cra-key";
-    const result = findGenuiApiKey(content);
+  it("finds REACT_APP_TAMBO_API_KEY", () => {
+    const content = "REACT_APP_TAMBO_API_KEY=cra-key";
+    const result = findTamboApiKey(content);
     expect(result).toEqual({
-      keyName: "REACT_APP_GENUI_API_KEY",
+      keyName: "REACT_APP_TAMBO_API_KEY",
       value: "cra-key",
     });
   });
 
-  it("finds GENUI_API_KEY (no prefix)", () => {
-    const content = "GENUI_API_KEY=plain-key";
-    const result = findGenuiApiKey(content);
+  it("finds TAMBO_API_KEY (no prefix)", () => {
+    const content = "TAMBO_API_KEY=plain-key";
+    const result = findTamboApiKey(content);
     expect(result).toEqual({
-      keyName: "GENUI_API_KEY",
+      keyName: "TAMBO_API_KEY",
       value: "plain-key",
     });
   });
 
   it("returns first match in priority order", () => {
     const content =
-      "GENUI_API_KEY=plain\nNEXT_PUBLIC_GENUI_API_KEY=next\nVITE_GENUI_API_KEY=vite";
-    const result = findGenuiApiKey(content);
+      "TAMBO_API_KEY=plain\nNEXT_PUBLIC_TAMBO_API_KEY=next\nVITE_TAMBO_API_KEY=vite";
+    const result = findTamboApiKey(content);
     // NEXT_PUBLIC comes first in priority order
     expect(result).toEqual({
-      keyName: "NEXT_PUBLIC_GENUI_API_KEY",
+      keyName: "NEXT_PUBLIC_TAMBO_API_KEY",
       value: "next",
     });
   });
 
   it("returns null when no key is found", () => {
     const content = "OTHER_KEY=value\nANOTHER=thing";
-    const result = findGenuiApiKey(content);
+    const result = findTamboApiKey(content);
     expect(result).toBeNull();
   });
 
   it("returns null for empty content", () => {
-    const result = findGenuiApiKey("");
+    const result = findTamboApiKey("");
     expect(result).toBeNull();
   });
 });
 
-describe("findAllGenuiApiKeys", () => {
+describe("findAllTamboApiKeys", () => {
   it("finds all key variants", () => {
     const content =
-      "NEXT_PUBLIC_GENUI_API_KEY=a\nVITE_GENUI_API_KEY=b\nGENUI_API_KEY=c";
-    const result = findAllGenuiApiKeys(content);
+      "NEXT_PUBLIC_TAMBO_API_KEY=a\nVITE_TAMBO_API_KEY=b\nTAMBO_API_KEY=c";
+    const result = findAllTamboApiKeys(content);
     expect(result).toEqual([
-      "NEXT_PUBLIC_GENUI_API_KEY",
-      "VITE_GENUI_API_KEY",
-      "GENUI_API_KEY",
+      "NEXT_PUBLIC_TAMBO_API_KEY",
+      "VITE_TAMBO_API_KEY",
+      "TAMBO_API_KEY",
     ]);
   });
 
   it("returns empty array when no keys found", () => {
     const content = "OTHER=value";
-    const result = findAllGenuiApiKeys(content);
+    const result = findAllTamboApiKeys(content);
     expect(result).toEqual([]);
   });
 
   it("finds single key", () => {
-    const content = "VITE_GENUI_API_KEY=only-one";
-    const result = findAllGenuiApiKeys(content);
-    expect(result).toEqual(["VITE_GENUI_API_KEY"]);
+    const content = "VITE_TAMBO_API_KEY=only-one";
+    const result = findAllTamboApiKeys(content);
+    expect(result).toEqual(["VITE_TAMBO_API_KEY"]);
   });
 });
 
-describe("setGenuiApiKey", () => {
+describe("setTamboApiKey", () => {
   it("appends key to empty content", () => {
-    const result = setGenuiApiKey("", "NEXT_PUBLIC_GENUI_API_KEY", "new-key");
-    expect(result).toBe("NEXT_PUBLIC_GENUI_API_KEY=new-key\n");
+    const result = setTamboApiKey("", "NEXT_PUBLIC_TAMBO_API_KEY", "new-key");
+    expect(result).toBe("NEXT_PUBLIC_TAMBO_API_KEY=new-key\n");
   });
 
-  it("appends key to content without existing Genui key", () => {
+  it("appends key to content without existing Tambo key", () => {
     const content = "OTHER=value\n";
-    const result = setGenuiApiKey(
+    const result = setTamboApiKey(
       content,
-      "NEXT_PUBLIC_GENUI_API_KEY",
+      "NEXT_PUBLIC_TAMBO_API_KEY",
       "new-key",
     );
-    expect(result).toBe("OTHER=value\nNEXT_PUBLIC_GENUI_API_KEY=new-key\n");
+    expect(result).toBe("OTHER=value\nNEXT_PUBLIC_TAMBO_API_KEY=new-key\n");
   });
 
   it("replaces existing key with same name", () => {
-    const content = "OTHER=value\nNEXT_PUBLIC_GENUI_API_KEY=old-key\n";
-    const result = setGenuiApiKey(
+    const content = "OTHER=value\nNEXT_PUBLIC_TAMBO_API_KEY=old-key\n";
+    const result = setTamboApiKey(
       content,
-      "NEXT_PUBLIC_GENUI_API_KEY",
+      "NEXT_PUBLIC_TAMBO_API_KEY",
       "new-key",
     );
-    expect(result).toBe("OTHER=value\nNEXT_PUBLIC_GENUI_API_KEY=new-key\n");
+    expect(result).toBe("OTHER=value\nNEXT_PUBLIC_TAMBO_API_KEY=new-key\n");
   });
 
   it("replaces existing key with different variant", () => {
-    const content = "OTHER=value\nVITE_GENUI_API_KEY=old-key\n";
-    const result = setGenuiApiKey(
+    const content = "OTHER=value\nVITE_TAMBO_API_KEY=old-key\n";
+    const result = setTamboApiKey(
       content,
-      "NEXT_PUBLIC_GENUI_API_KEY",
+      "NEXT_PUBLIC_TAMBO_API_KEY",
       "new-key",
     );
-    expect(result).toBe("OTHER=value\nNEXT_PUBLIC_GENUI_API_KEY=new-key\n");
+    expect(result).toBe("OTHER=value\nNEXT_PUBLIC_TAMBO_API_KEY=new-key\n");
   });
 
   it("removes all existing variants and adds new one", () => {
     const content =
-      "NEXT_PUBLIC_GENUI_API_KEY=a\nOTHER=value\nVITE_GENUI_API_KEY=b\nGENUI_API_KEY=c\n";
-    const result = setGenuiApiKey(content, "VITE_GENUI_API_KEY", "new-key");
-    expect(result).toBe("OTHER=value\nVITE_GENUI_API_KEY=new-key\n");
+      "NEXT_PUBLIC_TAMBO_API_KEY=a\nOTHER=value\nVITE_TAMBO_API_KEY=b\nTAMBO_API_KEY=c\n";
+    const result = setTamboApiKey(content, "VITE_TAMBO_API_KEY", "new-key");
+    expect(result).toBe("OTHER=value\nVITE_TAMBO_API_KEY=new-key\n");
   });
 
   it("preserves comments", () => {
     const content = "# Environment vars\nOTHER=value\n# API key below\n";
-    const result = setGenuiApiKey(
+    const result = setTamboApiKey(
       content,
-      "NEXT_PUBLIC_GENUI_API_KEY",
+      "NEXT_PUBLIC_TAMBO_API_KEY",
       "new-key",
     );
     expect(result).toBe(
-      "# Environment vars\nOTHER=value\n# API key below\nNEXT_PUBLIC_GENUI_API_KEY=new-key\n",
+      "# Environment vars\nOTHER=value\n# API key below\nNEXT_PUBLIC_TAMBO_API_KEY=new-key\n",
     );
   });
 
   it("preserves empty lines", () => {
     const content = "FOO=bar\n\nBAZ=qux\n";
-    const result = setGenuiApiKey(
+    const result = setTamboApiKey(
       content,
-      "NEXT_PUBLIC_GENUI_API_KEY",
+      "NEXT_PUBLIC_TAMBO_API_KEY",
       "new-key",
     );
     expect(result).toBe(
-      "FOO=bar\n\nBAZ=qux\nNEXT_PUBLIC_GENUI_API_KEY=new-key\n",
+      "FOO=bar\n\nBAZ=qux\nNEXT_PUBLIC_TAMBO_API_KEY=new-key\n",
     );
   });
 
   it("handles content without trailing newline", () => {
     const content = "OTHER=value";
-    const result = setGenuiApiKey(
+    const result = setTamboApiKey(
       content,
-      "NEXT_PUBLIC_GENUI_API_KEY",
+      "NEXT_PUBLIC_TAMBO_API_KEY",
       "new-key",
     );
-    expect(result).toBe("OTHER=value\nNEXT_PUBLIC_GENUI_API_KEY=new-key\n");
+    expect(result).toBe("OTHER=value\nNEXT_PUBLIC_TAMBO_API_KEY=new-key\n");
   });
 });
 
-describe("removeGenuiApiKeys", () => {
+describe("removeTamboApiKeys", () => {
   it("removes single key", () => {
-    const content = "OTHER=value\nNEXT_PUBLIC_GENUI_API_KEY=key\nFOO=bar";
-    const result = removeGenuiApiKeys(content);
+    const content = "OTHER=value\nNEXT_PUBLIC_TAMBO_API_KEY=key\nFOO=bar";
+    const result = removeTamboApiKeys(content);
     expect(result).toBe("OTHER=value\nFOO=bar");
   });
 
   it("removes all key variants", () => {
     const content =
-      "NEXT_PUBLIC_GENUI_API_KEY=a\nOTHER=value\nVITE_GENUI_API_KEY=b";
-    const result = removeGenuiApiKeys(content);
+      "NEXT_PUBLIC_TAMBO_API_KEY=a\nOTHER=value\nVITE_TAMBO_API_KEY=b";
+    const result = removeTamboApiKeys(content);
     expect(result).toBe("OTHER=value");
   });
 
   it("returns unchanged content when no keys present", () => {
     const content = "FOO=bar\nBAZ=qux";
-    const result = removeGenuiApiKeys(content);
+    const result = removeTamboApiKeys(content);
     expect(result).toBe("FOO=bar\nBAZ=qux");
   });
 
   it("preserves comments and empty lines", () => {
-    const content = "# Comment\nNEXT_PUBLIC_GENUI_API_KEY=key\n\nFOO=bar";
-    const result = removeGenuiApiKeys(content);
+    const content = "# Comment\nNEXT_PUBLIC_TAMBO_API_KEY=key\n\nFOO=bar";
+    const result = removeTamboApiKeys(content);
     expect(result).toBe("# Comment\n\nFOO=bar");
   });
 });

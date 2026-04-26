@@ -4,8 +4,8 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "@/server/api/trpc";
-import { SessionSource } from "@workspace-cloud/core";
-import { schema } from "@workspace-cloud/db";
+import { SessionSource } from "@tambo-ai-cloud/core";
+import { schema } from "@tambo-ai-cloud/db";
 import { TRPCError } from "@trpc/server";
 import { and, eq, gt, isNull, sql } from "drizzle-orm";
 import { z } from "zod";

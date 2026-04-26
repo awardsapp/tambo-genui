@@ -9,7 +9,7 @@
 import { EventType, type AGUIEvent } from "@ag-ui/core";
 import type { JSONSchema7 } from "json-schema";
 import { parse as parsePartialJson } from "partial-json";
-import type { GenuiTool } from "../model/component-metadata";
+import type { TamboTool } from "../model/component-metadata";
 import { schemaToJsonSchema } from "../schema/schema";
 import type { PendingToolCall } from "./tool-executor";
 import { unstrictifyToolCallParamsFromSchema } from "./unstrictify";
@@ -22,7 +22,7 @@ import { unstrictifyToolCallParamsFromSchema } from "./unstrictify";
  * @returns Map of tool name → JSON Schema
  */
 function buildToolSchemas(
-  toolRegistry: Record<string, GenuiTool>,
+  toolRegistry: Record<string, TamboTool>,
 ): Map<string, JSONSchema7> {
   const schemas = new Map<string, JSONSchema7>();
   for (const tool of Object.values(toolRegistry)) {
@@ -55,7 +55,7 @@ export class ToolCallTracker {
   private accumulatingArgs = new Map<string, string>();
   private _toolSchemas: Map<string, JSONSchema7>;
 
-  constructor(toolRegistry?: Record<string, GenuiTool>) {
+  constructor(toolRegistry?: Record<string, TamboTool>) {
     this._toolSchemas = toolRegistry
       ? buildToolSchemas(toolRegistry)
       : new Map();

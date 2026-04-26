@@ -1,5 +1,5 @@
 import { z } from "zod/v3";
-import type { GenuiComponent, GenuiTool } from "../model/component-metadata";
+import type { TamboComponent, TamboTool } from "../model/component-metadata";
 import {
   validateAndPrepareComponent,
   validateTool,
@@ -8,7 +8,7 @@ import {
 
 describe("validateTool", () => {
   it("should validate tool with valid name", () => {
-    const tool: GenuiTool = {
+    const tool: TamboTool = {
       name: "valid-tool-name",
       description: "A valid tool",
       tool: () => "result",
@@ -20,7 +20,7 @@ describe("validateTool", () => {
   });
 
   it("should throw when tool name contains invalid characters", () => {
-    const tool: GenuiTool = {
+    const tool: TamboTool = {
       name: "invalid tool name",
       description: "A tool",
       tool: () => "result",
@@ -34,7 +34,7 @@ describe("validateTool", () => {
   });
 
   it("should throw when tool name contains special characters", () => {
-    const tool: GenuiTool = {
+    const tool: TamboTool = {
       name: "tool@name",
       description: "A tool",
       tool: () => "result",
@@ -53,7 +53,7 @@ describe("validateTool", () => {
       description: "A tool using deprecated API",
       tool: () => "result",
       toolSchema: z.function().args().returns(z.string()),
-    } as unknown as GenuiTool;
+    } as unknown as TamboTool;
 
     expect(() => validateTool(tool)).toThrow(
       'Tool "deprecated-tool" uses deprecated "toolSchema" property.',
@@ -136,7 +136,7 @@ describe("validateTool", () => {
   });
 
   it("should throw when inputSchema contains z.record()", () => {
-    const tool: GenuiTool = {
+    const tool: TamboTool = {
       name: "invalid-tool",
       description: "A tool",
       tool: () => "result",
@@ -152,7 +152,7 @@ describe("validateTool", () => {
   });
 
   it("should validate tool with inputSchema (new interface)", () => {
-    const tool: GenuiTool = {
+    const tool: TamboTool = {
       name: "tool-with-input-schema",
       description: "A tool with input schema",
       tool: (input: { query: string }) => input.query,
@@ -166,7 +166,7 @@ describe("validateTool", () => {
   });
 
   it("should throw when inputSchema is not an object schema (string)", () => {
-    const tool: GenuiTool = {
+    const tool: TamboTool = {
       name: "tool-with-string-schema",
       description: "A tool with invalid schema",
       tool: () => "result",
@@ -180,7 +180,7 @@ describe("validateTool", () => {
   });
 
   it("should throw when inputSchema is not an object schema (number)", () => {
-    const tool: GenuiTool = {
+    const tool: TamboTool = {
       name: "tool-with-number-schema",
       description: "A tool with invalid schema",
       tool: () => "result",
@@ -194,7 +194,7 @@ describe("validateTool", () => {
   });
 
   it("should throw when inputSchema is not an object schema (array)", () => {
-    const tool: GenuiTool = {
+    const tool: TamboTool = {
       name: "tool-with-array-schema",
       description: "A tool with invalid schema",
       tool: () => "result",
@@ -208,7 +208,7 @@ describe("validateTool", () => {
   });
 
   it("should throw when inputSchema JSON Schema is not an object type", () => {
-    const tool: GenuiTool = {
+    const tool: TamboTool = {
       name: "tool-with-json-string-schema",
       description: "A tool with invalid JSON schema",
       tool: () => "result",
@@ -222,7 +222,7 @@ describe("validateTool", () => {
   });
 
   it("should accept JSON Schema with object type", () => {
-    const tool: GenuiTool = {
+    const tool: TamboTool = {
       name: "tool-with-json-object-schema",
       description: "A tool with valid JSON schema",
       tool: () => "result",
@@ -239,7 +239,7 @@ describe("validateTool", () => {
   });
 
   it("should accept JSON Schema with properties but no explicit type", () => {
-    const tool: GenuiTool = {
+    const tool: TamboTool = {
       name: "tool-with-implicit-object-schema",
       description: "A tool with implicit object schema",
       tool: () => "result",
@@ -256,7 +256,7 @@ describe("validateTool", () => {
 
   describe("maxCalls validation", () => {
     it("should throw when maxCalls is a negative integer", () => {
-      const tool: GenuiTool = {
+      const tool: TamboTool = {
         name: "tool-with-negative-maxcalls",
         description: "A tool with negative maxCalls",
         tool: () => "result",
@@ -271,7 +271,7 @@ describe("validateTool", () => {
     });
 
     it("should throw when maxCalls is a decimal number", () => {
-      const tool: GenuiTool = {
+      const tool: TamboTool = {
         name: "tool-with-decimal-maxcalls",
         description: "A tool with decimal maxCalls",
         tool: () => "result",
@@ -286,7 +286,7 @@ describe("validateTool", () => {
     });
 
     it("should throw when maxCalls is NaN", () => {
-      const tool: GenuiTool = {
+      const tool: TamboTool = {
         name: "tool-with-nan-maxcalls",
         description: "A tool with NaN maxCalls",
         tool: () => "result",
@@ -301,7 +301,7 @@ describe("validateTool", () => {
     });
 
     it("should accept tool with maxCalls as zero", () => {
-      const tool: GenuiTool = {
+      const tool: TamboTool = {
         name: "tool-with-zero-maxcalls",
         description: "A tool with zero maxCalls",
         tool: () => "result",
@@ -314,7 +314,7 @@ describe("validateTool", () => {
     });
 
     it("should accept tool with explicitly undefined maxCalls", () => {
-      const tool: GenuiTool = {
+      const tool: TamboTool = {
         name: "tool-with-undefined-maxcalls",
         description: "A tool with undefined maxCalls",
         tool: () => "result",
@@ -330,7 +330,7 @@ describe("validateTool", () => {
 
 describe("validateAndPrepareComponent", () => {
   it("should validate component with propsSchema", () => {
-    const component: GenuiComponent = {
+    const component: TamboComponent = {
       name: "valid-component",
       description: "A valid component",
       component: () => null,
@@ -348,7 +348,7 @@ describe("validateAndPrepareComponent", () => {
   });
 
   it("should validate component with propsDefinition", () => {
-    const component: GenuiComponent = {
+    const component: TamboComponent = {
       name: "valid-component",
       description: "A valid component",
       component: () => null,
@@ -366,7 +366,7 @@ describe("validateAndPrepareComponent", () => {
   });
 
   it("should throw when component name contains invalid characters", () => {
-    const component: GenuiComponent = {
+    const component: TamboComponent = {
       name: "invalid component name",
       description: "A component",
       component: () => null,
@@ -379,7 +379,7 @@ describe("validateAndPrepareComponent", () => {
   });
 
   it("should throw when neither propsSchema nor propsDefinition is provided", () => {
-    const component: GenuiComponent = {
+    const component: TamboComponent = {
       name: "component-without-props",
       description: "A component",
       component: () => null,
@@ -391,7 +391,7 @@ describe("validateAndPrepareComponent", () => {
   });
 
   it("should throw when both propsSchema and propsDefinition are provided", () => {
-    const component: GenuiComponent = {
+    const component: TamboComponent = {
       name: "component-with-both",
       description: "A component",
       component: () => null,
@@ -408,7 +408,7 @@ describe("validateAndPrepareComponent", () => {
   });
 
   it("should throw when propsSchema contains z.record()", () => {
-    const component: GenuiComponent = {
+    const component: TamboComponent = {
       name: "component-with-record",
       description: "A component",
       component: () => null,
@@ -423,7 +423,7 @@ describe("validateAndPrepareComponent", () => {
   });
 
   it("should convert Zod schema to JSON Schema", () => {
-    const component: GenuiComponent = {
+    const component: TamboComponent = {
       name: "component-with-zod",
       description: "A component",
       component: () => null,
@@ -445,7 +445,7 @@ describe("validateAndPrepareComponent", () => {
   });
 
   it("should handle complex Zod schema", () => {
-    const component: GenuiComponent = {
+    const component: TamboComponent = {
       name: "component-complex",
       description: "A component",
       component: () => null,
@@ -470,7 +470,7 @@ describe("validateAndPrepareComponent", () => {
   });
 
   it("should allow JSON Schema (non-Zod) without validation", () => {
-    const component: GenuiComponent = {
+    const component: TamboComponent = {
       name: "component-json-schema",
       description: "A component",
       component: () => null,

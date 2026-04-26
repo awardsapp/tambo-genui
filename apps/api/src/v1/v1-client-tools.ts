@@ -34,7 +34,7 @@ export interface PendingToolCall {
  * Tracks client-executable tool call state during streaming.
  *
  * This is used to determine whether a V1 run should emit
- * `genui.run.awaiting_input`.
+ * `tambo.run.awaiting_input`.
  *
  * Instances are intended to be used for a single streamed run only and should
  * not be reused across requests.
@@ -184,21 +184,21 @@ export class ClientToolCallTracker {
 export type AwaitingInputEvent = CustomEvent & {
   // NOTE: if `CustomEvent` gains additional required fields upstream, this type
   // and `createAwaitingInputEvent` should be updated accordingly.
-  name: "genui.run.awaiting_input";
+  name: "tambo.run.awaiting_input";
   value: {
     pendingToolCalls: PendingToolCall[];
   };
 };
 
 /**
- * Create the genui.run.awaiting_input event payload.
+ * Create the tambo.run.awaiting_input event payload.
  */
 export function createAwaitingInputEvent(
   pendingToolCalls: PendingToolCall[],
 ): AwaitingInputEvent {
   return {
     type: EventType.CUSTOM,
-    name: "genui.run.awaiting_input",
+    name: "tambo.run.awaiting_input",
     value: {
       pendingToolCalls: pendingToolCalls.map((tc) => ({
         toolCallId: tc.toolCallId,

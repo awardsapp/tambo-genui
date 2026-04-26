@@ -21,7 +21,7 @@ const nextConfig: NextConfig = {
     if (dev) {
       config.resolve.conditionNames = mergeConditions(
         config.resolve.conditionNames,
-        "@workspace/source",
+        "@tambo-ai/source",
       );
     }
 

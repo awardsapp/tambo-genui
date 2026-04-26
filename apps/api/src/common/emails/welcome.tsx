@@ -26,15 +26,15 @@ function WelcomeEmailComponent({
       <Body style={body}>
         <Container style={container}>
           <Img
-            src="https://genui.co/logo/lockup/Genui-Lockup.png"
-            alt="genui"
+            src="https://tambo.co/logo/lockup/Tambo-Lockup.png"
+            alt="tambo"
             width="150"
             style={logo}
           />
 
           <Heading style={h1}>Hey {displayName}, you&apos;re in.</Heading>
           <Text style={paragraph}>
-            Genui lets you build agents that render your actual React
+            Tambo lets you build agents that render your actual React
             components. You register them with Zod schemas, and the agent picks
             the right one and streams the props. Pick a setup path below.
           </Text>
@@ -45,15 +45,15 @@ function WelcomeEmailComponent({
               Creates a new project with the SDK, a sample component, and a
               working agent:
             </Text>
-            <code style={codeBlock}>npm create genui-app@latest my-app</code>
+            <code style={codeBlock}>npm create tambo-app@latest my-app</code>
           </Section>
 
           <Section style={card}>
             <Text style={cardTitle}>Add to your React app</Text>
             <Text style={cardText}>
-              Already have an app? One command to drop Genui in:
+              Already have an app? One command to drop Tambo in:
             </Text>
-            <code style={codeBlock}>npx genui full-send</code>
+            <code style={codeBlock}>npx tambo full-send</code>
           </Section>
 
           <Section style={card}>
@@ -64,7 +64,7 @@ function WelcomeEmailComponent({
           </Section>
 
           <Section style={buttonSection}>
-            <Link href="https://console.genui.co" style={button}>
+            <Link href="https://console.tambo.co" style={button}>
               Open Dashboard
             </Link>
           </Section>
@@ -72,7 +72,7 @@ function WelcomeEmailComponent({
           <Text style={listItem}>
             {"\u2022"}{" "}
             <Link
-              href="https://docs.genui.co/getting-started/quickstart"
+              href="https://docs.tambo.co/getting-started/quickstart"
               style={link}
             >
               Quickstart guide
@@ -81,21 +81,21 @@ function WelcomeEmailComponent({
           </Text>
           <Text style={listItem}>
             {"\u2022"}{" "}
-            <Link href="https://ui.genui.co" style={link}>
+            <Link href="https://ui.tambo.co" style={link}>
               Component library
             </Link>{" "}
-            - pre-built components you can add with <code>npx genui add</code>
+            - pre-built components you can add with <code>npx tambo add</code>
           </Text>
           <Text style={listItem}>
             {"\u2022"}{" "}
-            <Link href="https://genui.co/discord" style={link}>
+            <Link href="https://tambo.co/discord" style={link}>
               Discord
             </Link>{" "}
             - if you get stuck or want to show off what you&apos;re building
           </Text>
 
           <Hr style={hr} />
-          <Text style={footer}>The Genui Team</Text>
+          <Text style={footer}>The Tambo Team</Text>
         </Container>
         <Text style={copyright}>Fractal Dynamics Inc</Text>
       </Body>

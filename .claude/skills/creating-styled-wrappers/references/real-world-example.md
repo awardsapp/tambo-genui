@@ -34,9 +34,9 @@ const MessageInputInternal = React.forwardRef<HTMLFormElement, Props>(
       images,
       addImages,
       removeImage,
-    } = useGenuiThreadInput();
-    const { cancel, thread } = useGenuiThread();
-    const { elicitation, resolveElicitation } = useGenuiElicitationContext();
+    } = useTamboThreadInput();
+    const { cancel, thread } = useTamboThread();
+    const { elicitation, resolveElicitation } = useTamboElicitationContext();
 
     // Duplicate state
     const [displayValue, setDisplayValue] = React.useState("");
@@ -95,7 +95,7 @@ const MessageInputInternal = React.forwardRef<HTMLFormElement, Props>(
 // components/message-input/message-input.tsx (AFTER)
 
 // Import base components
-import { MessageInput as MessageInputBase } from "@workspace/react-ui-base/message-input";
+import { MessageInput as MessageInputBase } from "@tambo-ai/react-ui-base/message-input";
 
 // No duplicate context - use base
 // No duplicate hooks - handled by base Root
@@ -106,7 +106,7 @@ const MessageInput = React.forwardRef<HTMLFormElement, MessageInputProps>(
     return (
       <MessageInputBase.Root
         ref={ref}
-        inputRef={inputRef as React.RefObject<GenuiEditor | null>}
+        inputRef={inputRef as React.RefObject<TamboEditor | null>}
         className={cn(messageInputVariants({ variant }), className)}
         {...props}
       >
@@ -160,8 +160,8 @@ const MessageInput = React.forwardRef<HTMLFormElement, MessageInputProps>(
 const MessageInputSubmitButton = React.forwardRef<HTMLButtonElement, Props>(
   ({ className, children, ...props }, ref) => {
     const { isPending } = useMessageInputContext();
-    const { cancel, isIdle } = useGenuiThread(); // Duplicate hook!
-    const isUpdatingToken = useIsGenuiTokenUpdating(); // Duplicate hook!
+    const { cancel, isIdle } = useTamboThread(); // Duplicate hook!
+    const isUpdatingToken = useIsTamboTokenUpdating(); // Duplicate hook!
 
     const showCancelButton = isPending || !isIdle;
 
@@ -211,7 +211,7 @@ const MessageInputSubmitButton = React.forwardRef<HTMLButtonElement, Props>(
 // BEFORE
 const MessageInputStagedImages = React.forwardRef<HTMLDivElement, Props>(
   ({ className, ...props }, ref) => {
-    const { images, removeImage } = useGenuiThreadInput(); // Duplicate hook!
+    const { images, removeImage } = useTamboThreadInput(); // Duplicate hook!
     const [expandedImageId, setExpandedImageId] = React.useState<string | null>(
       null,
     );
@@ -280,7 +280,7 @@ export function useCombinedResourceList(
   createMcpIcon?: (serverName: string) => React.ReactNode,
 ) {
   // Data fetching logic lives in base
-  const { data: mcpResources } = useGenuiMcpResourceList(search);
+  const { data: mcpResources } = useTamboMcpResourceList(search);
   // ... deduplication, filtering, etc.
 
   // Icon factory keeps styling in styled layer

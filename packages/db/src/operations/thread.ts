@@ -5,7 +5,7 @@ import {
   UnsavedThreadMessage,
   assertUnreachable,
   validateUnsavedThreadMessage,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 import {
   and,
   count,

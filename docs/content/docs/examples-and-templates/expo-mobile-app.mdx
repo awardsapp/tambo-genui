@@ -5,7 +5,7 @@ description: Build AI-powered React Native apps with Tambo and Expo
 
 import LearnMore from "@/components/learn-more";
 
-Tambo uses the same `@workspace/react` SDK for Expo and React Native as it does for web apps. Hooks like `useTambo()` and `useTamboThreadInput()` work the same way — you just build native UI instead of using the pre-built web components.
+Tambo uses the same `@tambo-ai/react` SDK for Expo and React Native as it does for web apps. Hooks like `useTambo()` and `useTamboThreadInput()` work the same way — you just build native UI instead of using the pre-built web components.
 
 ## Create an Expo app
 
@@ -26,12 +26,12 @@ The CLI detects Expo and skips web component installation automatically.
 Wrap your app with `TamboProvider` the same way you would in a web app:
 
 ```tsx title="App.tsx"
-import { TamboProvider } from "@workspace/react";
+import { TamboProvider } from "@tambo-ai/react";
 
 export default function App() {
   return (
     <TamboProvider
-      apiKey={process.env.EXPO_PUBLIC_GENUI_API_KEY!}
+      apiKey={process.env.EXPO_PUBLIC_TAMBO_API_KEY!}
       userKey="user-1"
       components={components}
       tools={tools}

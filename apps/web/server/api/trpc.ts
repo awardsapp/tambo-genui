@@ -15,7 +15,7 @@ import { ZodError } from "zod/v3";
 import { authOptions } from "@/lib/auth";
 import { env } from "@/lib/env";
 import * as Sentry from "@sentry/nextjs";
-import { getDb, HydraDb, operations } from "@workspace-cloud/db";
+import { getDb, HydraDb, operations } from "@tambo-ai-cloud/db";
 import { sql } from "drizzle-orm";
 import { getServerSession, User } from "next-auth";
 import { headers } from "next/headers";
@@ -160,7 +160,7 @@ const transactionMiddleware = t.middleware<Context>(async ({ next, ctx }) => {
       ? {
           sub: user.id,
           iss: "nextauth", // NextAuth as issuer
-          aud: "genui",
+          aud: "tambo",
           iat: Math.floor(Date.now() / 1000),
           exp: Math.floor(Date.now() / 1000) + 3600, // 1 hour expiry
           email: user.email,

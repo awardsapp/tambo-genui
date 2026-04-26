@@ -69,9 +69,9 @@ describe("upgradeAgentDocsAndRemoveCursorRules", () => {
     expect(memfsFs.existsSync("/mock-project/AGENTS.md")).toBe(false);
   });
 
-  it("removes legacy genui-ai.mdc cursor rules file", async () => {
+  it("removes legacy tambo-ai.mdc cursor rules file", async () => {
     vol.fromJSON({
-      "/mock-project/.cursor/rules/genui-ai.mdc": "# Legacy Genui rules",
+      "/mock-project/.cursor/rules/tambo-ai.mdc": "# Legacy Tambo rules",
       "/mock-project/package.json": "{}",
     });
 
@@ -80,7 +80,7 @@ describe("upgradeAgentDocsAndRemoveCursorRules", () => {
     ).resolves.toBe(true);
 
     // Legacy file should be removed
-    expect(memfsFs.existsSync("/mock-project/.cursor/rules/genui-ai.mdc")).toBe(
+    expect(memfsFs.existsSync("/mock-project/.cursor/rules/tambo-ai.mdc")).toBe(
       false,
     );
     // Empty rules directory should be cleaned up
@@ -93,7 +93,7 @@ describe("upgradeAgentDocsAndRemoveCursorRules", () => {
 
   it("keeps other cursor rules files (user-owned)", async () => {
     vol.fromJSON({
-      "/mock-project/.cursor/rules/genui-ai.mdc": "# Legacy Genui rules",
+      "/mock-project/.cursor/rules/tambo-ai.mdc": "# Legacy Tambo rules",
       "/mock-project/.cursor/rules/my-rules.md": "# My custom rules",
       "/mock-project/package.json": "{}",
     });
@@ -102,8 +102,8 @@ describe("upgradeAgentDocsAndRemoveCursorRules", () => {
       upgradeAgentDocsAndRemoveCursorRules({ yes: true }),
     ).resolves.toBe(true);
 
-    // Legacy Genui file should be removed
-    expect(memfsFs.existsSync("/mock-project/.cursor/rules/genui-ai.mdc")).toBe(
+    // Legacy Tambo file should be removed
+    expect(memfsFs.existsSync("/mock-project/.cursor/rules/tambo-ai.mdc")).toBe(
       false,
     );
     // User's custom rules should be kept
@@ -124,7 +124,7 @@ describe("upgradeAgentDocsAndRemoveCursorRules", () => {
       upgradeAgentDocsAndRemoveCursorRules({ yes: true }),
     ).resolves.toBe(true);
 
-    // .cursorrules is not a Genui-created file, should be kept
+    // .cursorrules is not a Tambo-created file, should be kept
     expect(memfsFs.existsSync("/mock-project/.cursorrules")).toBe(true);
     expect(memfsFs.existsSync("/mock-project/AGENTS.md")).toBe(true);
   });
@@ -142,6 +142,6 @@ describe("upgradeAgentDocsAndRemoveCursorRules", () => {
     // Should update CLAUDE.md, not create AGENTS.md
     expect(memfsFs.existsSync("/mock-project/AGENTS.md")).toBe(false);
     const content = memfsFs.readFileSync("/mock-project/CLAUDE.md", "utf-8");
-    expect(content).toContain("Genui AI");
+    expect(content).toContain("Tambo AI");
   });
 });

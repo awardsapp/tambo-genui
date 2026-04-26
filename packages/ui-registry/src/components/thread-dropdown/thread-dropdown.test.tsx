@@ -4,16 +4,16 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ThreadDropdown } from "./thread-dropdown";
-import { useGenui, useGenuiThreadList } from "@workspace/react";
+import { useTambo, useTamboThreadList } from "@tambo-ai/react";
 
-// @workspace/react is mocked via moduleNameMapper in jest.config.ts
+// @tambo-ai/react is mocked via moduleNameMapper in jest.config.ts
 
 describe("ThreadDropdown", () => {
-  const mockUseGenui = jest.mocked(useGenui);
-  const mockUseGenuiThreadList = jest.mocked(useGenuiThreadList);
+  const mockUseTambo = jest.mocked(useTambo);
+  const mockUseTamboThreadList = jest.mocked(useTamboThreadList);
 
   beforeEach(() => {
-    mockUseGenui.mockReturnValue({
+    mockUseTambo.mockReturnValue({
       switchThread: jest.fn(),
       startNewThread: jest.fn(),
       currentThreadId: "mock-thread-id",
@@ -22,7 +22,7 @@ describe("ThreadDropdown", () => {
       isIdle: true,
     } as never);
 
-    mockUseGenuiThreadList.mockReturnValue({
+    mockUseTamboThreadList.mockReturnValue({
       data: { threads: [] },
       isLoading: false,
       error: null,
@@ -42,9 +42,9 @@ describe("ThreadDropdown", () => {
     expect(dropdown).toHaveClass("custom-class");
   });
 
-  it("calls useGenuiThreadList without arguments (contextKey comes from provider)", () => {
+  it("calls useTamboThreadList without arguments (contextKey comes from provider)", () => {
     render(<ThreadDropdown />);
-    expect(mockUseGenuiThreadList).toHaveBeenCalledWith();
+    expect(mockUseTamboThreadList).toHaveBeenCalledWith();
   });
 
   describe("keyboard navigation", () => {
@@ -56,7 +56,7 @@ describe("ThreadDropdown", () => {
 
     it("opens dropdown with keyboard", async () => {
       const user = userEvent.setup();
-      mockUseGenuiThreadList.mockReturnValue({
+      mockUseTamboThreadList.mockReturnValue({
         data: {
           threads: [{ id: "thread-1", createdAt: new Date().toISOString() }],
         },

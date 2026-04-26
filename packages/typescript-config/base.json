@@ -11,7 +11,7 @@
     "module": "NodeNext",
     "moduleDetection": "force",
     "moduleResolution": "NodeNext",
-    "customConditions": ["@workspace/source"],
+    "customConditions": ["@tambo-ai/source"],
     "noUncheckedIndexedAccess": false,
     "resolveJsonModule": true,
     "skipLibCheck": true,

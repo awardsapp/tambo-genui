@@ -60,13 +60,13 @@ const config = {
       {
         source: "/docs",
         destination:
-          process.env.NEXT_PUBLIC_DOCS_URL || "https://docs.genui.co",
+          process.env.NEXT_PUBLIC_DOCS_URL || "https://docs.tambo.co",
         permanent: true,
       },
       {
         source: "/docs/:path*",
         destination:
-          process.env.NEXT_PUBLIC_DOCS_URL || "https://docs.genui.co",
+          process.env.NEXT_PUBLIC_DOCS_URL || "https://docs.tambo.co",
         permanent: true,
       },
       {
@@ -86,12 +86,12 @@ const config = {
       },
       {
         source: "/gh",
-        destination: "https://github.com/genui-ai/genui",
+        destination: "https://github.com/tambo-ai/tambo",
         permanent: false,
       },
       {
         source: "/issue",
-        destination: "https://github.com/genui-ai/genui/issues/new",
+        destination: "https://github.com/tambo-ai/tambo/issues/new",
         permanent: false,
       },
       {
@@ -116,7 +116,7 @@ const config = {
       {
         source: "/start",
         destination:
-          "https://stackblitz.com/~/github.com/genui-ai/genui-template",
+          "https://stackblitz.com/~/github.com/tambo-ai/tambo-template",
         permanent: false,
       },
       {
@@ -128,7 +128,7 @@ const config = {
       },
       {
         source: "/x",
-        destination: "https://x.com/genui_ai",
+        destination: "https://x.com/tambo_ai",
         permanent: false,
       },
       // Redirect old dashboard URLs to new root paths
@@ -185,7 +185,7 @@ const config = {
     if (dev) {
       config.resolve.conditionNames = mergeConditions(
         config.resolve.conditionNames,
-        "@workspace/source",
+        "@tambo-ai/source",
       );
     }
 

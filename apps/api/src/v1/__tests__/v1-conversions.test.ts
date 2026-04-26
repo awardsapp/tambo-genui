@@ -3,7 +3,7 @@ import {
   GenerationStage,
   MessageRole,
   ContentPartType,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 import {
   roleToV1,
   threadToDto,
@@ -345,7 +345,7 @@ describe("v1-conversions", () => {
 
     it("should NOT throw when componentDecision has no componentName but has toolCallRequest", () => {
       // componentDecision without componentName is valid for tool call messages
-      // because it stores _genui_* status messages
+      // because it stores _tambo_* status messages
       const message = {
         ...baseMessage,
         role: "assistant",

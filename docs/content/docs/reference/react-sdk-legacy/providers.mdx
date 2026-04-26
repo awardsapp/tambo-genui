@@ -1,26 +1,26 @@
 ---
 title: Provider Components
-description: Reference for GenuiProvider and other provider components used to configure Genui in your React application.
+description: Reference for TamboProvider and other provider components used to configure Tambo in your React application.
 ---
 
-Provider components configure Genui functionality and make hooks available throughout your component tree.
+Provider components configure Tambo functionality and make hooks available throughout your component tree.
 
-## GenuiProvider
+## TamboProvider
 
-The main provider that wraps your application and provides access to the full Genui API. This is the primary way to integrate Genui into your React app.
+The main provider that wraps your application and provides access to the full Tambo API. This is the primary way to integrate Tambo into your React app.
 
 ```tsx
-import { GenuiProvider } from "@workspace/react";
+import { TamboProvider } from "@tambo-ai/react";
 
 function App() {
   return (
-    <GenuiProvider
-      apiKey={process.env.GENUI_API_KEY}
+    <TamboProvider
+      apiKey={process.env.TAMBO_API_KEY}
       components={myComponents}
       tools={myTools}
     >
       <YourApp />
-    </GenuiProvider>
+    </TamboProvider>
   );
 }
 ```
@@ -29,19 +29,19 @@ function App() {
 
 | Prop                        | Type                          | Required | Description                                      |
 | --------------------------- | ----------------------------- | -------- | ------------------------------------------------ |
-| `apiKey`                    | `string`                      | Yes\*    | Your Genui API key                               |
+| `apiKey`                    | `string`                      | Yes\*    | Your Tambo API key                               |
 | `userToken`                 | `string`                      | No       | OAuth token for user authentication              |
-| `genuiUrl`                  | `string`                      | No       | Custom Genui API URL                             |
+| `tamboUrl`                  | `string`                      | No       | Custom Tambo API URL                             |
 | `environment`               | `string`                      | No       | Environment name                                 |
-| `components`                | `GenuiComponent[]`            | No       | Components to register                           |
-| `tools`                     | `GenuiTool[]`                 | No       | Tools to register                                |
+| `components`                | `TamboComponent[]`            | No       | Components to register                           |
+| `tools`                     | `TamboTool[]`                 | No       | Tools to register                                |
 | `mcpServers`                | `McpServerInfo[]`             | No       | MCP servers to connect                           |
 | `contextHelpers`            | `ContextHelpers`              | No       | Context helper functions                         |
 | `contextKey`                | `string`                      | No       | Key for thread scoping                           |
 | `streaming`                 | `boolean`                     | No       | Enable streaming (default: `true`)               |
 | `autoGenerateThreadName`    | `boolean`                     | No       | Auto-generate thread names (default: `true`)     |
 | `autoGenerateNameThreshold` | `number`                      | No       | Message count for name generation (default: `3`) |
-| `initialMessages`           | `InitialGenuiThreadMessage[]` | No       | Initial messages for new threads                 |
+| `initialMessages`           | `InitialTamboThreadMessage[]` | No       | Initial messages for new threads                 |
 | `onCallUnregisteredTool`    | `function`                    | No       | Callback for unregistered tool calls             |
 | `resources`                 | `ListResourceItem[]`          | No       | Static resources for MCP                         |
 | `listResources`             | `function`                    | No       | Dynamic resource listing                         |
@@ -53,13 +53,13 @@ function App() {
 
 ```tsx
 import {
-  GenuiProvider,
+  TamboProvider,
   currentPageContextHelper,
-  type GenuiComponent,
-  type GenuiTool,
-} from "@workspace/react";
+  type TamboComponent,
+  type TamboTool,
+} from "@tambo-ai/react";
 
-const components: GenuiComponent[] = [
+const components: TamboComponent[] = [
   {
     name: "WeatherCard",
     description: "Displays weather information",
@@ -71,7 +71,7 @@ const components: GenuiComponent[] = [
   },
 ];
 
-const tools: GenuiTool[] = [
+const tools: TamboTool[] = [
   {
     name: "get_weather",
     description: "Fetch weather for a city",
@@ -81,8 +81,8 @@ const tools: GenuiTool[] = [
   },
 ];
 
-<GenuiProvider
-  apiKey={process.env.GENUI_API_KEY}
+<TamboProvider
+  apiKey={process.env.TAMBO_API_KEY}
   components={components}
   tools={tools}
   contextHelpers={{
@@ -93,36 +93,36 @@ const tools: GenuiTool[] = [
   autoGenerateNameThreshold={3}
 >
   <App />
-</GenuiProvider>;
+</TamboProvider>;
 ```
 
 ### Provider Hierarchy
 
-`GenuiProvider` internally nests several sub-providers in this order:
+`TamboProvider` internally nests several sub-providers in this order:
 
-1. `GenuiClientProvider` - API client and authentication
-2. `GenuiRegistryProvider` - Component and tool registration
-3. `GenuiContextHelpersProvider` - Context helper management
-4. `GenuiThreadProvider` - Thread state and messaging
-5. `GenuiMcpTokenProvider` - MCP token management
-6. `GenuiMcpProvider` - MCP server connections
-7. `GenuiContextAttachmentProvider` - Context attachments
-8. `GenuiComponentProvider` - Component lifecycle
-9. `GenuiInteractableProvider` - Interactable components
-10. `GenuiThreadInputProvider` - Input handling
+1. `TamboClientProvider` - API client and authentication
+2. `TamboRegistryProvider` - Component and tool registration
+3. `TamboContextHelpersProvider` - Context helper management
+4. `TamboThreadProvider` - Thread state and messaging
+5. `TamboMcpTokenProvider` - MCP token management
+6. `TamboMcpProvider` - MCP server connections
+7. `TamboContextAttachmentProvider` - Context attachments
+8. `TamboComponentProvider` - Component lifecycle
+9. `TamboInteractableProvider` - Interactable components
+10. `TamboThreadInputProvider` - Input handling
 
-For advanced use cases, you can use individual providers directly instead of `GenuiProvider`.
+For advanced use cases, you can use individual providers directly instead of `TamboProvider`.
 
-## GenuiStubProvider
+## TamboStubProvider
 
 A stub provider for testing and development that doesn't require API connectivity.
 
 ```tsx
-import { GenuiStubProvider } from "@workspace/react";
+import { TamboStubProvider } from "@tambo-ai/react";
 
 function TestApp() {
   return (
-    <GenuiStubProvider
+    <TamboStubProvider
       stubResponses={[
         {
           component: {
@@ -133,7 +133,7 @@ function TestApp() {
       ]}
     >
       <YourComponent />
-    </GenuiStubProvider>
+    </TamboStubProvider>
   );
 }
 ```
@@ -142,20 +142,20 @@ function TestApp() {
 
 | Prop             | Type                   | Description              |
 | ---------------- | ---------------------- | ------------------------ |
-| `stubResponses`  | `GenuiThreadMessage[]` | Pre-configured responses |
-| `components`     | `GenuiComponent[]`     | Components to register   |
-| `tools`          | `GenuiTool[]`          | Tools to register        |
+| `stubResponses`  | `TamboThreadMessage[]` | Pre-configured responses |
+| `components`     | `TamboComponent[]`     | Components to register   |
+| `tools`          | `TamboTool[]`          | Tools to register        |
 | `contextHelpers` | `ContextHelpers`       | Context helpers          |
 
-## GenuiMcpProvider
+## TamboMcpProvider
 
 Provider for Model Context Protocol (MCP) server connections. Required when using MCP features.
 
 ```tsx
-import { GenuiMcpProvider } from "@workspace/react/mcp";
+import { TamboMcpProvider } from "@tambo-ai/react/mcp";
 
-// Inside GenuiProvider
-<GenuiMcpProvider
+// Inside TamboProvider
+<TamboMcpProvider
   handlers={{
     elicitation: async (request, extra, serverInfo) => {
       // Handle elicitation requests
@@ -165,7 +165,7 @@ import { GenuiMcpProvider } from "@workspace/react/mcp";
   contextKey="my-context"
 >
   <App />
-</GenuiMcpProvider>;
+</TamboMcpProvider>;
 ```
 
 ### Props
@@ -176,15 +176,15 @@ import { GenuiMcpProvider } from "@workspace/react/mcp";
 | `contextKey` | `string`              | Context key for threadless MCP tokens |
 | `children`   | `ReactNode`           | Child components                      |
 
-**Note**: MCP servers are configured on `GenuiProvider` via the `mcpServers` prop. `GenuiMcpProvider` manages the connections and provides hooks to interact with them.
+**Note**: MCP servers are configured on `TamboProvider` via the `mcpServers` prop. `TamboMcpProvider` manages the connections and provides hooks to interact with them.
 
 ### MCP Server Configuration
 
-Configure MCP servers on `GenuiProvider`:
+Configure MCP servers on `TamboProvider`:
 
 ```tsx
-<GenuiProvider
-  apiKey={process.env.GENUI_API_KEY}
+<TamboProvider
+  apiKey={process.env.TAMBO_API_KEY}
   mcpServers={[
     {
       name: "linear",
@@ -203,10 +203,10 @@ Configure MCP servers on `GenuiProvider`:
     },
   ]}
 >
-  <GenuiMcpProvider>
+  <TamboMcpProvider>
     <App />
-  </GenuiMcpProvider>
-</GenuiProvider>
+  </TamboMcpProvider>
+</TamboProvider>
 ```
 
 See the [MCP reference](/reference/react-sdk/mcp) for hooks and types related to MCP functionality.
@@ -215,83 +215,83 @@ See the [MCP reference](/reference/react-sdk/mcp) for hooks and types related to
 
 For advanced use cases, you can use individual providers directly:
 
-### GenuiClientProvider
+### TamboClientProvider
 
 Provides the API client and authentication context.
 
 ```tsx
-import { GenuiClientProvider, useGenuiClient } from "@workspace/react";
+import { TamboClientProvider, useTamboClient } from "@tambo-ai/react";
 
-<GenuiClientProvider
-  apiKey={process.env.GENUI_API_KEY}
-  genuiUrl="https://api.genui.co"
+<TamboClientProvider
+  apiKey={process.env.TAMBO_API_KEY}
+  tamboUrl="https://api.tambo.co"
 >
   <App />
-</GenuiClientProvider>;
+</TamboClientProvider>;
 ```
 
-### GenuiRegistryProvider
+### TamboRegistryProvider
 
 Manages component and tool registration.
 
 ```tsx
-import { GenuiRegistryProvider, useGenuiRegistry } from "@workspace/react";
+import { TamboRegistryProvider, useTamboRegistry } from "@tambo-ai/react";
 
-<GenuiRegistryProvider
+<TamboRegistryProvider
   components={components}
   tools={tools}
   mcpServers={mcpServers}
 >
   <App />
-</GenuiRegistryProvider>;
+</TamboRegistryProvider>;
 ```
 
-### GenuiThreadProvider
+### TamboThreadProvider
 
 Manages thread state and message sending.
 
 ```tsx
-import { GenuiThreadProvider, useGenuiThread } from "@workspace/react";
+import { TamboThreadProvider, useTamboThread } from "@tambo-ai/react";
 
-<GenuiThreadProvider
+<TamboThreadProvider
   contextKey="chat"
   streaming={true}
   autoGenerateThreadName={true}
 >
   <App />
-</GenuiThreadProvider>;
+</TamboThreadProvider>;
 ```
 
-### GenuiContextHelpersProvider
+### TamboContextHelpersProvider
 
 Manages context helpers that provide additional information to the AI.
 
 ```tsx
 import {
-  GenuiContextHelpersProvider,
-  useGenuiContextHelpers,
-} from "@workspace/react";
+  TamboContextHelpersProvider,
+  useTamboContextHelpers,
+} from "@tambo-ai/react";
 
-<GenuiContextHelpersProvider
+<TamboContextHelpersProvider
   contextHelpers={{
     currentPage: () => ({ url: window.location.href }),
   }}
 >
   <App />
-</GenuiContextHelpersProvider>;
+</TamboContextHelpersProvider>;
 ```
 
-### GenuiInteractableProvider
+### TamboInteractableProvider
 
 Manages interactable component registration and state.
 
 ```tsx
 import {
-  GenuiInteractableProvider,
-  useGenuiInteractable,
-} from "@workspace/react";
+  TamboInteractableProvider,
+  useTamboInteractable,
+} from "@tambo-ai/react";
 
-<GenuiInteractableProvider>
+<TamboInteractableProvider>
   <App />
-</GenuiInteractableProvider>;
+</TamboInteractableProvider>;
 ```

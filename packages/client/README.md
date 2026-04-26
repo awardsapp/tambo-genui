@@ -1,19 +1,19 @@
-# @workspace/client
+# @tambo-ai/client
 
-Framework-agnostic client for [Genui AI](https://genui.co). Provides streaming, tool execution, and thread management without React dependencies.
+Framework-agnostic client for [Tambo AI](https://tambo.co). Provides streaming, tool execution, and thread management without React dependencies.
 
 ## Installation
 
 ```sh
-npm install @workspace/client
+npm install @tambo-ai/client
 ```
 
 ## Quick Start
 
 ```ts
-import { GenuiClient } from "@workspace/client";
+import { TamboClient } from "@tambo-ai/client";
 
-const client = new GenuiClient({ apiKey: "your-api-key" });
+const client = new TamboClient({ apiKey: "your-api-key" });
 
 // Send a message and await the final thread state
 const stream = client.run("Hello!");
@@ -67,21 +67,21 @@ client.registerTool({
 
 ### React integration
 
-For React applications, use `@workspace/react` which wraps this package with hooks and providers:
+For React applications, use `@tambo-ai/react` which wraps this package with hooks and providers:
 
 ```sh
-npm install @workspace/react
+npm install @tambo-ai/react
 ```
 
-See [@workspace/react](https://genui.co/docs) for React-specific documentation.
+See [@tambo-ai/react](https://tambo.co/docs) for React-specific documentation.
 
 ## API
 
-### `GenuiClient`
+### `TamboClient`
 
 The main client class. Implements `getState()` and `subscribe()` for use with `useSyncExternalStore` or similar framework bindings.
 
-### `GenuiStream`
+### `TamboStream`
 
 Returned by `client.run()`. Two consumption modes:
 
@@ -90,9 +90,9 @@ Returned by `client.run()`. Two consumption modes:
 
 ### Key types
 
-- `GenuiThread` - Thread state with messages, status, and metadata
+- `TamboThread` - Thread state with messages, status, and metadata
 - `StreamEvent` - Event/snapshot pair yielded during streaming
-- `GenuiClientOptions` - Configuration for client creation
+- `TamboClientOptions` - Configuration for client creation
 - `ClientState` - Full client state (thread map, current thread, streaming state)
 
 ## License

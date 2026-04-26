@@ -3,9 +3,9 @@
 import { mergeProps } from "@base-ui/react/merge-props";
 import { useRender } from "@base-ui/react/use-render";
 import type {
-  GenuiElicitationRequest,
-  GenuiElicitationResponse,
-} from "@workspace/react/mcp";
+  TamboElicitationRequest,
+  TamboElicitationResponse,
+} from "@tambo-ai/react/mcp";
 import * as React from "react";
 import { useMessageInputContext } from "./message-input-context";
 
@@ -17,9 +17,9 @@ export interface MessageInputContentState extends Record<string, unknown> {
   /** Whether files are being dragged over the input */
   isDragging: boolean;
   /** Current elicitation request if active */
-  elicitation: GenuiElicitationRequest | null;
+  elicitation: TamboElicitationRequest | null;
   /** Callback to resolve the elicitation */
-  resolveElicitation: ((response: GenuiElicitationResponse) => void) | null;
+  resolveElicitation: ((response: TamboElicitationResponse) => void) | null;
 }
 
 /**

@@ -1,5 +1,5 @@
 import { Provider, Scope } from "@nestjs/common";
-import { getDb } from "@workspace-cloud/db";
+import { getDb } from "@tambo-ai-cloud/db";
 
 export const DATABASE = Symbol("DATABASE");
 export const DatabaseProvider: Provider = {

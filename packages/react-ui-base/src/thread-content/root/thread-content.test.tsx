@@ -1,13 +1,13 @@
 import { describe, expect, it, jest } from "@jest/globals";
-import { useGenui } from "@workspace/react";
+import { useTambo } from "@tambo-ai/react";
 import { render, screen } from "@testing-library/react";
 import { ThreadContent } from "../index";
 
 describe("ThreadContent", () => {
-  const mockUseGenui = jest.mocked(useGenui);
+  const mockUseTambo = jest.mocked(useTambo);
 
   beforeEach(() => {
-    mockUseGenui.mockReturnValue({
+    mockUseTambo.mockReturnValue({
       messages: [],
       isStreaming: false,
       isIdle: true,
@@ -39,7 +39,7 @@ describe("ThreadContent", () => {
   });
 
   it("exposes messages data-slot", () => {
-    mockUseGenui.mockReturnValue({
+    mockUseTambo.mockReturnValue({
       messages: [
         {
           id: "msg-1",
@@ -81,7 +81,7 @@ describe("ThreadContent", () => {
   });
 
   it("hides Empty slot when messages exist", () => {
-    mockUseGenui.mockReturnValue({
+    mockUseTambo.mockReturnValue({
       messages: [
         {
           id: "msg-1",
@@ -110,7 +110,7 @@ describe("ThreadContent", () => {
   });
 
   it("keeps Empty mounted with keepMounted and sets data-hidden", () => {
-    mockUseGenui.mockReturnValue({
+    mockUseTambo.mockReturnValue({
       messages: [
         {
           id: "msg-1",
@@ -141,7 +141,7 @@ describe("ThreadContent", () => {
   });
 
   it("renders Loading slot when generating with no messages", () => {
-    mockUseGenui.mockReturnValue({
+    mockUseTambo.mockReturnValue({
       messages: [],
       isStreaming: true,
       isIdle: false,
@@ -195,7 +195,7 @@ describe("ThreadContent", () => {
   });
 
   it("filters out system messages from Messages render state", () => {
-    mockUseGenui.mockReturnValue({
+    mockUseTambo.mockReturnValue({
       messages: [
         {
           id: "sys-1",
@@ -231,7 +231,7 @@ describe("ThreadContent", () => {
   });
 
   it("filters out standalone tool_result messages from Messages", () => {
-    mockUseGenui.mockReturnValue({
+    mockUseTambo.mockReturnValue({
       messages: [
         {
           id: "msg-1",
@@ -269,7 +269,7 @@ describe("ThreadContent", () => {
   });
 
   it("exposes isGenerating state on Root render prop", () => {
-    mockUseGenui.mockReturnValue({
+    mockUseTambo.mockReturnValue({
       messages: [],
       isStreaming: true,
       isIdle: false,

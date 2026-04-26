@@ -1,5 +1,5 @@
 import { describe, expect, it, jest } from "@jest/globals";
-import { useGenuiMcpResourceList } from "@workspace/react/mcp";
+import { useTamboMcpResourceList } from "@tambo-ai/react/mcp";
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { McpResources } from "../index";
@@ -12,10 +12,10 @@ function makeResourceEntry(uri: string, name?: string, description?: string) {
 }
 
 describe("McpResources", () => {
-  const mockUseGenuiMcpResourceList = jest.mocked(useGenuiMcpResourceList);
+  const mockUseTamboMcpResourceList = jest.mocked(useTamboMcpResourceList);
 
   beforeEach(() => {
-    mockUseGenuiMcpResourceList.mockReturnValue({
+    mockUseTamboMcpResourceList.mockReturnValue({
       data: [
         makeResourceEntry("test:file://doc.md", "Documentation", "Main docs"),
         makeResourceEntry("test:file://readme.md", "README"),
@@ -37,7 +37,7 @@ describe("McpResources", () => {
   });
 
   it("renders nothing when no resources are available", () => {
-    mockUseGenuiMcpResourceList.mockReturnValue({
+    mockUseTamboMcpResourceList.mockReturnValue({
       data: [],
       isLoading: false,
       error: undefined,
@@ -118,7 +118,7 @@ describe("McpResources", () => {
     act(() => {
       jest.advanceTimersByTime(150);
     });
-    expect(mockUseGenuiMcpResourceList).toHaveBeenCalledWith("doc");
+    expect(mockUseTamboMcpResourceList).toHaveBeenCalledWith("doc");
 
     jest.useRealTimers();
   });

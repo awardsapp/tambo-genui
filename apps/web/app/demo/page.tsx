@@ -1,22 +1,22 @@
 "use client";
 
-import { demoComponents } from "@/components/ui/genui/demo-config";
-import { MessageThreadFull } from "@workspace/ui-registry/components/message-thread-full";
-import { GenuiEmailButton } from "@/components/ui/genui/genui-email-button";
+import { demoComponents } from "@/components/ui/tambo/demo-config";
+import { MessageThreadFull } from "@tambo-ai/ui-registry/components/message-thread-full";
+import { TamboEmailButton } from "@/components/ui/tambo/tambo-email-button";
 import { env } from "@/lib/env";
-import { GenuiProvider } from "@workspace/react";
+import { TamboProvider } from "@tambo-ai/react";
 export default function DemoPage() {
   return (
     <div className="w-full flex justify-center items-center h-screen">
       <div className="w-full flex justify-center items-center bg-white">
-        <GenuiProvider
-          apiKey={env.NEXT_PUBLIC_GENUI_API_KEY!}
-          genuiUrl={env.NEXT_PUBLIC_GENUI_API_URL}
+        <TamboProvider
+          apiKey={env.NEXT_PUBLIC_TAMBO_API_KEY!}
+          tamboUrl={env.NEXT_PUBLIC_TAMBO_API_URL}
           components={demoComponents}
         >
           <MessageThreadFull />
-          <GenuiEmailButton />
-        </GenuiProvider>
+          <TamboEmailButton />
+        </TamboProvider>
       </div>
     </div>
   );

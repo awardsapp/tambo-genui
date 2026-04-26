@@ -64,7 +64,7 @@ describe("convertContentToMarkdown", () => {
         },
       ];
       expect(convertContentToMarkdown(content)).toBe(
-        "[Test File](genui-resource://file%3A%2F%2F%2Ftest.txt)",
+        "[Test File](tambo-resource://file%3A%2F%2F%2Ftest.txt)",
       );
     });
 
@@ -78,7 +78,7 @@ describe("convertContentToMarkdown", () => {
         },
       ];
       expect(convertContentToMarkdown(content)).toBe(
-        "[file:///test.txt](genui-resource://file%3A%2F%2F%2Ftest.txt)",
+        "[file:///test.txt](tambo-resource://file%3A%2F%2F%2Ftest.txt)",
       );
     });
 
@@ -106,7 +106,7 @@ describe("convertContentToMarkdown", () => {
         },
       ];
       expect(convertContentToMarkdown(content)).toBe(
-        "See [docs](genui-resource://file%3A%2F%2F%2Fdoc.md)",
+        "See [docs](tambo-resource://file%3A%2F%2F%2Fdoc.md)",
       );
     });
 

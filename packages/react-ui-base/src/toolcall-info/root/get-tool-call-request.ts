@@ -1,4 +1,4 @@
-import type { GenuiThreadMessage, GenuiToolUseContent } from "@workspace/react";
+import type { TamboThreadMessage, TamboToolUseContent } from "@tambo-ai/react";
 
 /**
  * Get the first tool_use content block from the message.
@@ -8,9 +8,9 @@ import type { GenuiThreadMessage, GenuiToolUseContent } from "@workspace/react";
  * @returns The first tool_use content block, or undefined
  */
 export function getToolCallRequest(
-  message: GenuiThreadMessage,
-): GenuiToolUseContent | undefined {
+  message: TamboThreadMessage,
+): TamboToolUseContent | undefined {
   return message.content.find(
-    (block): block is GenuiToolUseContent => block.type === "tool_use",
+    (block): block is TamboToolUseContent => block.type === "tool_use",
   );
 }

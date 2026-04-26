@@ -172,12 +172,12 @@ function displaySelfHostInstructions(): void {
   console.log(chalk.cyan("\nStep 1: Self-host setup (time: 5-10 minutes)\n"));
   console.log(
     chalk.gray(
-      "You can run the open-source Genui Cloud API locally or self-host it.",
+      "You can run the open-source Tambo Cloud API locally or self-host it.",
     ),
   );
   console.log(
     chalk.gray("Repo:"),
-    chalk.cyan("https://github.com/awardsapp/tambo-genui"),
+    chalk.cyan("https://github.com/tambo-ai/tambo"),
   );
 
   console.log(chalk.bold("\nQuick start with Docker:"));
@@ -678,13 +678,13 @@ async function handleHostingChoiceAndAuth(): Promise<boolean> {
       default: true,
     },
     chalk.yellow(
-      "Cannot prompt to open browser in non-interactive mode. Visit https://github.com/awardsapp/tambo-genui-cloud manually.",
+      "Cannot prompt to open browser in non-interactive mode. Visit https://github.com/tambo-ai/tambo-cloud manually.",
     ),
   );
   if (openRepo) {
     try {
       await open(
-        "https://github.com/awardsapp/tambo-genui/blob/main/README.md#getting-started",
+        "https://github.com/tambo-ai/tambo/blob/main/README.md#getting-started",
       );
     } catch (_e) {
       // non-fatal
@@ -779,7 +779,7 @@ async function handleFullSendInit(options: InitOptions): Promise<void> {
     console.log(
       chalk.gray(
         "  The component registry contains web-only components (DOM + Tailwind).\n" +
-          "  Use @workspace/react hooks directly to build your native UI.",
+          "  Use @tambo-ai/react hooks directly to build your native UI.",
       ),
     );
 
@@ -921,7 +921,7 @@ function displayFullSendInstructions(selectedComponents: string[] = []): void {
       tamboImportPath = `./${tamboImportPath}`;
     }
 
-    const providerSnippet = `import { TamboProvider } from "@workspace/react";
+    const providerSnippet = `import { TamboProvider } from "@tambo-ai/react";
 import { components } from "${tamboImportPath}";
 
 export default function App() {
@@ -951,7 +951,7 @@ export default function App() {
     console.log(chalk.bold("\n2. Build your native UI"));
     console.log(
       chalk.gray(
-        "   Use @workspace/react hooks (useTamboThread, useTamboComponentState, etc.)",
+        "   Use @tambo-ai/react hooks (useTamboThread, useTamboComponentState, etc.)",
       ),
     );
     console.log(
@@ -1027,7 +1027,7 @@ export default function App() {
     ? "export default function App() {"
     : "export default function Page() {";
 
-  const providerSnippet = `${useClientDirective}import { TamboProvider } from "@workspace/react";
+  const providerSnippet = `${useClientDirective}import { TamboProvider } from "@tambo-ai/react";
 import { components } from "../../lib/tambo";
 ${importStatements}
 // other imports

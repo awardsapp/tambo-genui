@@ -131,11 +131,11 @@ interface StubRouter {
 // ============================================================================
 
 /**
- * Returns the base URL for the Genui Console API (apps/web at console.genui.co).
- * Note: This is NOT the NestJS REST API at api.genui.co.
+ * Returns the base URL for the Tambo Console API (apps/web at console.tambo.co).
+ * Note: This is NOT the NestJS REST API at api.tambo.co.
  */
 export function getConsoleBaseUrl(): string {
-  return process.env.GENUI_CLI_CONSOLE_BASE_URL ?? "https://console.genui.co";
+  return process.env.TAMBO_CLI_CONSOLE_BASE_URL ?? "https://console.tambo.co";
 }
 
 export class ApiError extends Error {

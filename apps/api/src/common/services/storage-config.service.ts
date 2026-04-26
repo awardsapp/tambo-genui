@@ -1,7 +1,7 @@
 import { S3Client } from "@aws-sdk/client-s3";
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { createS3Client, isS3Configured } from "@workspace-cloud/backend";
+import { createS3Client, isS3Configured } from "@tambo-ai-cloud/backend";
 import { Merge } from "ts-essentials";
 /**
  * Centralized S3 storage configuration service.

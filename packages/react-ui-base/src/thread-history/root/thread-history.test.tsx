@@ -1,5 +1,5 @@
 import { jest } from "@jest/globals";
-import { useTambo, useTamboThreadList } from "@workspace/react";
+import { useTambo, useTamboThreadList } from "@tambo-ai/react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ThreadHistory } from "../index";

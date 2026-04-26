@@ -5,20 +5,20 @@ import {
   McpToolRegistry,
   type McpToolSource,
   prefixToolName,
-} from "@workspace-cloud/backend";
+} from "@tambo-ai-cloud/backend";
 import {
   getToolName,
   LogLevel,
   MCPClient,
   MCPHandlers,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 import {
   HydraDatabase,
   HydraDb,
   OAuthLocalProvider,
   operations,
   schema,
-} from "@workspace-cloud/db";
+} from "@tambo-ai-cloud/db";
 import { eq } from "drizzle-orm";
 import OpenAI from "openai";
 import { env } from "process";

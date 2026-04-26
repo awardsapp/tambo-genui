@@ -1,4 +1,4 @@
-import type { GenuiToolUseContent } from "@workspace/react";
+import type { TamboToolUseContent } from "@tambo-ai/react";
 import { getToolStatusMessage } from "./get-tool-status-message";
 
 describe("getToolStatusMessage", () => {
@@ -7,7 +7,7 @@ describe("getToolStatusMessage", () => {
   });
 
   it('returns "Calling name" when loading', () => {
-    const toolCallRequest: GenuiToolUseContent = {
+    const toolCallRequest: TamboToolUseContent = {
       type: "tool_use",
       id: "tc-1",
       name: "search",
@@ -17,7 +17,7 @@ describe("getToolStatusMessage", () => {
   });
 
   it('returns "Called name" when not loading', () => {
-    const toolCallRequest: GenuiToolUseContent = {
+    const toolCallRequest: TamboToolUseContent = {
       type: "tool_use",
       id: "tc-1",
       name: "search",
@@ -27,7 +27,7 @@ describe("getToolStatusMessage", () => {
   });
 
   it("treats undefined isLoading as not loading", () => {
-    const toolCallRequest: GenuiToolUseContent = {
+    const toolCallRequest: TamboToolUseContent = {
       type: "tool_use",
       id: "tc-1",
       name: "search",
@@ -40,7 +40,7 @@ describe("getToolStatusMessage", () => {
   });
 
   it("returns custom statusMessage when loading", () => {
-    const toolCallRequest: GenuiToolUseContent = {
+    const toolCallRequest: TamboToolUseContent = {
       type: "tool_use",
       id: "tc-1",
       name: "search",
@@ -53,7 +53,7 @@ describe("getToolStatusMessage", () => {
   });
 
   it('falls back to "tool" when name is missing', () => {
-    const toolCallRequest: GenuiToolUseContent = {
+    const toolCallRequest: TamboToolUseContent = {
       type: "tool_use",
       id: "tc-1",
       name: undefined as never,

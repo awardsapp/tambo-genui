@@ -1,10 +1,10 @@
 "use client";
 
-import { type Content, type GenuiThreadMessage } from "@workspace/react";
+import { type Content, type TamboThreadMessage } from "@tambo-ai/react";
 import {
   ThreadContent as ThreadContentPrimitive,
   type ThreadContentMessagesState,
-} from "@workspace/react-ui-base/thread-content";
+} from "@tambo-ai/react-ui-base/thread-content";
 import {
   Message,
   MessageContent,
@@ -13,8 +13,8 @@ import {
   ReasoningInfo,
   ToolcallInfo,
   type messageVariants,
-} from "@workspace/ui-registry/components/message";
-import { cn } from "@workspace/ui-registry/utils";
+} from "@tambo-ai/ui-registry/components/message";
+import { cn } from "@tambo-ai/ui-registry/utils";
 import { type VariantProps } from "class-variance-authority";
 import * as React from "react";
 
@@ -158,7 +158,7 @@ function MessageList({
 }
 
 interface ThreadMessageProps {
-  message: GenuiThreadMessage;
+  message: TamboThreadMessage;
   isLast: boolean;
   isGenerating: boolean;
   variant?: VariantProps<typeof messageVariants>["variant"];

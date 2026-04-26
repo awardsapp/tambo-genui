@@ -16,8 +16,8 @@ import {
   ApiTags,
 } from "@nestjs/swagger";
 import * as Sentry from "@sentry/nestjs";
-import { OAuthValidationMode } from "@workspace-cloud/core";
-import { getDb, operations } from "@workspace-cloud/db";
+import { OAuthValidationMode } from "@tambo-ai-cloud/core";
+import { getDb, operations } from "@tambo-ai-cloud/db";
 import { type Request } from "express";
 import { SignJWT } from "jose";
 import {
@@ -40,7 +40,7 @@ export class OAuthController {
   @ApiOperation({
     summary: "OAuth 2.0 Token Exchange Endpoint",
     description:
-      "Exchanges an OAuth subject token for a Genui access token following RFC 6749 and RFC 8693 specifications. Accepts form-encoded data and validates the subject token based on project OAuth validation settings.",
+      "Exchanges an OAuth subject token for a Tambo access token following RFC 6749 and RFC 8693 specifications. Accepts form-encoded data and validates the subject token based on project OAuth validation settings.",
   })
   @ApiResponse({
     status: 200,
@@ -155,7 +155,7 @@ export class OAuthController {
       const accessToken = await new SignJWT({
         sub: verifiedPayload.sub,
         iss: projectId,
-        aud: "genui",
+        aud: "tambo",
         iat: currentTime,
         exp: currentTime + expiresIn,
         // Include original issuer as a custom claim for unique context key generation

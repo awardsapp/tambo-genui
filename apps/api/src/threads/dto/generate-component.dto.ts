@@ -3,7 +3,7 @@ import {
   AvailableComponent,
   ComponentContextToolMetadata,
   type ComponentPropsMetadata,
-} from "@workspace-cloud/backend";
+} from "@tambo-ai-cloud/backend";
 import { JSONSchema7 } from "json-schema";
 
 @ApiSchema({ name: "AvailableComponent" })

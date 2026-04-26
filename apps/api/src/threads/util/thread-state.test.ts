@@ -1,4 +1,4 @@
-import { operations } from "@workspace-cloud/db";
+import { operations } from "@tambo-ai-cloud/db";
 
 import { Logger } from "@nestjs/common";
 import {
@@ -11,11 +11,11 @@ import {
   MessageRole,
   V1RunStatus,
   ThreadMessage,
-} from "@workspace-cloud/core";
-import { HydraDb } from "@workspace-cloud/db";
+} from "@tambo-ai-cloud/core";
+import { HydraDb } from "@tambo-ai-cloud/db";
 import { SQL } from "drizzle-orm";
 import { PgTable, PgTransaction } from "drizzle-orm/pg-core";
-import type { DecisionStreamItem } from "@workspace-cloud/backend";
+import type { DecisionStreamItem } from "@tambo-ai-cloud/backend";
 import {
   addUserMessage,
   appendNewMessageToThread,
@@ -26,10 +26,10 @@ import {
 } from "./thread-state";
 import * as messagesModule from "./messages";
 
-const schema = jest.requireActual("@workspace-cloud/db").schema;
+const schema = jest.requireActual("@tambo-ai-cloud/db").schema;
 
-jest.mock("@workspace-cloud/db", () => {
-  const schema = jest.requireActual("@workspace-cloud/db").schema;
+jest.mock("@tambo-ai-cloud/db", () => {
+  const schema = jest.requireActual("@tambo-ai-cloud/db").schema;
 
   return {
     operations: {

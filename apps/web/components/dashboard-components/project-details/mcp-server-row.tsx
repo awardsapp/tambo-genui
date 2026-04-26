@@ -1,5 +1,5 @@
 import { api } from "@/trpc/react";
-import { MCPTransport } from "@workspace-cloud/core";
+import { MCPTransport } from "@tambo-ai-cloud/core";
 import { useEffect, useState } from "react";
 import { McpServerEditor, MCPServerInfo } from "./mcp-server-editor";
 

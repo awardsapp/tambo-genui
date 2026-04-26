@@ -43,7 +43,7 @@ NODE
 done
 
 # 1. Start Postgres (if not running)
-if ! docker ps | grep -q genui_postgres; then
+if ! docker ps | grep -q tambo_postgres; then
   echo "Starting Postgres..."
   docker compose --env-file docker.env up postgres -d
   sleep 3
@@ -82,7 +82,7 @@ fi
 
 # 3. Run migrations (idempotent)
 echo "Running migrations..."
-DATABASE_URL="postgresql://postgres:postgres@localhost:5433/genui" npm run db:migrate -w packages/db 2>/dev/null || true
+DATABASE_URL="postgresql://postgres:postgres@localhost:5433/tambo" npm run db:migrate -w packages/db 2>/dev/null || true
 
 # 4. Start all dev servers
 echo ""

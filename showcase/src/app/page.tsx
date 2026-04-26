@@ -1,7 +1,7 @@
 "use client";
 
-import type { Suggestion } from "@workspace/react";
-import { MessageThreadFull } from "@workspace/ui-registry/components/message-thread-full";
+import type { Suggestion } from "@tambo-ai/react";
+import { MessageThreadFull } from "@tambo-ai/ui-registry/components/message-thread-full";
 import Link from "next/link";
 import { DemoWrapper } from "./components/demo-wrapper";
 
@@ -40,7 +40,7 @@ export default function DocsPage() {
           Build your AI app faster
         </h1>
         <p className="text-2xl text-muted-foreground mt-4 mb-8">
-          Components with AI superpowers built on top of genui-ai.
+          Components with AI superpowers built on top of tambo-ai.
         </p>
         <div className="flex gap-4">
           <Link
@@ -50,10 +50,10 @@ export default function DocsPage() {
             Get Started
           </Link>
           <Link
-            href="https://genui.co"
+            href="https://tambo.co"
             className="border border-border text-foreground px-6 py-3 rounded-full font-medium hover:bg-muted transition-colors"
           >
-            What is genui-ai?
+            What is tambo-ai?
           </Link>
         </div>
       </div>

@@ -10,12 +10,12 @@ const cliItems = [
   {
     id: "template",
     label: "Start with a Template",
-    command: "npm create genui-app my-app",
+    command: "npm create tambo-app my-app",
   },
   {
     id: "existing",
     label: "Add to Existing App",
-    command: "npx genui full-send",
+    command: "npx tambo full-send",
   },
 ];
 

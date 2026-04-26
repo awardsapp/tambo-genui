@@ -62,7 +62,7 @@ export class OAuthTokenRequestDto {
 })
 export class OAuthTokenResponseDto {
   @ApiProperty({
-    description: "JWT access token signed by Genui with projectId as issuer",
+    description: "JWT access token signed by Tambo with projectId as issuer",
     example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
   })
   access_token!: string;

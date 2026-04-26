@@ -1,7 +1,7 @@
-import { Graph, graphSchema } from "@workspace/ui-registry/components/graph";
-import { MessageThreadFull } from "@workspace/ui-registry/components/message-thread-full";
-import type { Suggestion } from "@workspace/react";
-import { useGenui } from "@workspace/react";
+import { Graph, graphSchema } from "@tambo-ai/ui-registry/components/graph";
+import { MessageThreadFull } from "@tambo-ai/ui-registry/components/message-thread-full";
+import type { Suggestion } from "@tambo-ai/react";
+import { useTambo } from "@tambo-ai/react";
 import { useEffect } from "react";
 
 const graphThreadSuggestions = [
@@ -31,7 +31,7 @@ const graphThreadSuggestions = [
 ] satisfies Suggestion[];
 
 export const GraphChatInterface = () => {
-  const { registerComponent, currentThreadId } = useGenui();
+  const { registerComponent, currentThreadId } = useTambo();
 
   useEffect(() => {
     registerComponent({

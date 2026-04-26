@@ -1,9 +1,9 @@
-import { cn } from "@workspace/ui-registry/utils";
+import { cn } from "@tambo-ai/ui-registry/utils";
 import {
   useCanvasDetection,
   usePositioning,
   useMergeRefs,
-} from "@workspace/ui-registry/lib/thread-hooks";
+} from "@tambo-ai/ui-registry/lib/thread-hooks";
 import * as React from "react";
 import { useRef } from "react";
 

@@ -1,5 +1,5 @@
 import { LLMCopyButton, OpenDropdown } from "@/components/ai-actions";
-import { MessageThreadCollapsible } from "@/components/genui/message-thread-collapsible";
+import { MessageThreadCollapsible } from "@/components/tambo/message-thread-collapsible";
 import { getLLMText } from "@/lib/get-llm-text";
 import { source } from "@/lib/source";
 import { getMDXComponents } from "@/mdx-components";
@@ -26,7 +26,7 @@ export default async function Page(props: {
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}>
       <Suspense fallback={<div>Loading...</div>}>
-        <MessageThreadCollapsible className="genui-theme" />
+        <MessageThreadCollapsible className="tambo-theme" />
       </Suspense>
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
@@ -34,8 +34,8 @@ export default async function Page(props: {
       <div className="flex items-center gap-2 mb-6 pb-4 border-b border-fd-border">
         <LLMCopyButton content={llmContent} />
         <OpenDropdown
-          markdownUrl={`${process.env.NEXT_PUBLIC_DOCS_URL || "https://docs.genui.co"}${page.url}`}
-          githubUrl={`https://github.com/genui-ai/genui/blob/main/docs/content/docs/${page.path}`}
+          markdownUrl={`${process.env.NEXT_PUBLIC_DOCS_URL || "https://docs.tambo.co"}${page.url}`}
+          githubUrl={`https://github.com/tambo-ai/tambo/blob/main/docs/content/docs/${page.path}`}
         />
       </div>
 

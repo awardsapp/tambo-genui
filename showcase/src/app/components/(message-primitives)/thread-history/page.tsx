@@ -8,10 +8,10 @@ import {
   ThreadHistoryList,
   ThreadHistoryNewButton,
   ThreadHistorySearch,
-} from "@workspace/ui-registry/components/thread-history";
-import { GenuiStubProvider, GenuiThread } from "@workspace/react";
+} from "@tambo-ai/ui-registry/components/thread-history";
+import { TamboStubProvider, TamboThread } from "@tambo-ai/react";
 
-const mockThreads: GenuiThread[] = [
+const mockThreads: TamboThread[] = [
   {
     id: "1",
     name: "Mock Thread",
@@ -68,7 +68,7 @@ export default function ThreadHistoryPage() {
             title="Left Position (Expanded)"
             component={
               <div className="relative h-96 bg-muted rounded-lg overflow-hidden border">
-                <GenuiStubProvider thread={mockThreads[0]}>
+                <TamboStubProvider thread={mockThreads[0]}>
                   <ThreadHistory
                     position="left"
                     defaultCollapsed={false}
@@ -79,7 +79,7 @@ export default function ThreadHistoryPage() {
                     <ThreadHistorySearch />
                     <ThreadHistoryList />
                   </ThreadHistory>
-                </GenuiStubProvider>
+                </TamboStubProvider>
                 <div className="ml-64 p-4 h-full">
                   <p className="text-muted-foreground">
                     Main content area would go here
@@ -93,7 +93,7 @@ export default function ThreadHistoryPage() {
   ThreadHistoryNewButton,
   ThreadHistorySearch,
   ThreadHistoryList,
-} from "@/components/genui/thread-history";
+} from "@/components/tambo/thread-history";
 
 export function ChatSidebar() {
   return (
@@ -113,7 +113,7 @@ export function ChatSidebar() {
             title="Collapsed State"
             component={
               <div className="relative h-96 bg-muted rounded-lg overflow-hidden border">
-                <GenuiStubProvider thread={mockThreads[0]}>
+                <TamboStubProvider thread={mockThreads[0]}>
                   <ThreadHistory
                     position="left"
                     defaultCollapsed={true}
@@ -124,7 +124,7 @@ export function ChatSidebar() {
                     <ThreadHistorySearch />
                     <ThreadHistoryList />
                   </ThreadHistory>
-                </GenuiStubProvider>
+                </TamboStubProvider>
                 <div className="ml-12 p-4 h-full">
                   <p className="text-muted-foreground">
                     Main content area adjusts when sidebar is collapsed
@@ -141,7 +141,7 @@ export function ChatSidebar() {
   ThreadHistoryNewButton,
   ThreadHistorySearch,
   ThreadHistoryList,
-} from "@/components/genui/thread-history";
+} from "@/components/tambo/thread-history";
 
 export function CollapsedSidebar() {
   return (
@@ -166,7 +166,7 @@ export function CollapsedSidebar() {
                     Main content area with right sidebar
                   </p>
                 </div>
-                <GenuiStubProvider thread={mockThreads[0]}>
+                <TamboStubProvider thread={mockThreads[0]}>
                   <ThreadHistory
                     position="right"
                     defaultCollapsed={false}
@@ -178,7 +178,7 @@ export function CollapsedSidebar() {
                     <ThreadHistorySearch />
                     <ThreadHistoryList />
                   </ThreadHistory>
-                </GenuiStubProvider>
+                </TamboStubProvider>
               </div>
             }
             code={`import {
@@ -187,7 +187,7 @@ export function CollapsedSidebar() {
   ThreadHistoryNewButton,
   ThreadHistorySearch,
   ThreadHistoryList,
-} from "@/components/genui/thread-history";
+} from "@/components/tambo/thread-history";
 
 export function RightSidebarLayout() {
   return (
@@ -217,7 +217,7 @@ export function RightSidebarLayout() {
             title="Minimal (Header Only)"
             component={
               <div className="relative h-64 bg-muted rounded-lg overflow-hidden border">
-                <GenuiStubProvider thread={mockThreads[0]}>
+                <TamboStubProvider thread={mockThreads[0]}>
                   <ThreadHistory
                     position="left"
                     defaultCollapsed={false}
@@ -227,7 +227,7 @@ export function RightSidebarLayout() {
                     <ThreadHistoryHeader />
                     <ThreadHistoryList />
                   </ThreadHistory>
-                </GenuiStubProvider>
+                </TamboStubProvider>
                 <div className="ml-64 p-4 h-full">
                   <p className="text-muted-foreground">
                     Minimal sidebar with just header and list
@@ -239,7 +239,7 @@ export function RightSidebarLayout() {
   ThreadHistory,
   ThreadHistoryHeader,
   ThreadHistoryList,
-} from "@/components/genui/thread-history";
+} from "@/components/tambo/thread-history";
 
 export function MinimalSidebar() {
   return (
@@ -257,7 +257,7 @@ export function MinimalSidebar() {
       </section>
 
       <section>
-        <InstallationSection cliCommand="npx genui add thread-history" />
+        <InstallationSection cliCommand="npx tambo add thread-history" />
       </section>
 
       <section className="space-y-6">

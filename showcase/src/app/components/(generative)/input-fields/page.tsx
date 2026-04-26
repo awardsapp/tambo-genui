@@ -4,7 +4,7 @@ import { ComponentCodePreview } from "@/components/component-code-preview";
 import { InstallationSection } from "@/components/installation-section";
 import { InputFieldsChatInterface } from "@/components/generative/InputFieldsChatInterface";
 import { SyntaxHighlighter } from "@/components/ui/syntax-highlighter";
-import { InputFields } from "@workspace/ui-registry/components/input-fields";
+import { InputFields } from "@tambo-ai/ui-registry/components/input-fields";
 
 export default function InputFieldsComponentPage() {
   return (
@@ -156,7 +156,7 @@ export function UserRegistrationFields() {
   inputFieldsSchema,
 } from "@/components/tambo/input-fields";
 import { MessageThreadFull } from "@/components/tambo/message-thread-full";
-import { useTambo } from "@workspace/react";
+import { useTambo } from "@tambo-ai/react";
 import { useEffect } from "react";
 
 export function InputFieldsDemo() {
@@ -213,7 +213,7 @@ export function InputFieldsDemo() {
   inputFieldsSchema,
 } from "@/components/tambo/input-fields";
 import { MessageThreadFull } from "@/components/tambo/message-thread-full";
-import { useTambo } from "@workspace/react";
+import { useTambo } from "@tambo-ai/react";
 import { useEffect } from "react";
 
 export function App() {

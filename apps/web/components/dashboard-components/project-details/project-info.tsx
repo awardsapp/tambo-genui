@@ -114,7 +114,7 @@ export function ProjectInfo({
     });
   };
 
-  // Compact version - to be used in chat with genui
+  // Compact version - to be used in chat with tambo
   if (compact) {
     return (
       <Card className="border-card-background bg-card-background rounded-lg overflow-hidden">

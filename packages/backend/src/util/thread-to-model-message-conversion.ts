@@ -6,7 +6,7 @@ import {
   ThreadMessage,
   stringifyJsonForMarkupText,
   tryParseJson,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 import type {
   AssistantModelMessage,
   ModelMessage,

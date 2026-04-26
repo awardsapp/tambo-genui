@@ -1,4 +1,4 @@
-import { LogLevel } from "@workspace-cloud/core";
+import { LogLevel } from "@tambo-ai-cloud/core";
 import * as schema from "../schema";
 import { HydraDb } from "../types";
 

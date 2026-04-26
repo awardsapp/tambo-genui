@@ -93,7 +93,7 @@ export function MobileDashboardNavigation() {
             <div className="flex flex-col text-left">
               <span className="text-sm font-medium">Hi, {displayName}</span>
               <span className="text-xs text-muted-foreground">
-                {session?.user?.email || "demo@genui.co"}
+                {session?.user?.email || "demo@tambo.co"}
               </span>
             </div>
           </DrawerTitle>
@@ -156,10 +156,10 @@ export function MobileDashboardNavigation() {
                 src="/logo/icon/Octo-Icon.svg"
                 width={16}
                 height={16}
-                alt="Genui Assistant"
+                alt="Tambo Assistant"
                 className="w-5 h-5"
               />
-              Ask Genui
+              Ask Tambo
             </button>
           </DrawerClose>
         </div>

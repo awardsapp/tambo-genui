@@ -1,4 +1,4 @@
-import { defineTool } from "@workspace/react";
+import { defineTool } from "@tambo-ai/react";
 import z from "zod";
 
 const getWriteStoryTool = (onToolCall: (text: string) => void) =>
@@ -14,7 +14,7 @@ const getWriteStoryTool = (onToolCall: (text: string) => void) =>
       text: z.string().describe("The story or text to display"),
     }),
     outputSchema: z.string().describe("The result of writing the story"),
-    annotations: { genuiStreamableHint: true },
+    annotations: { tamboStreamableHint: true },
   });
 
 export { getWriteStoryTool };

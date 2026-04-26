@@ -5,8 +5,8 @@ import { Sidebar } from "@/components/sidebar";
 import { useUserContextKey } from "@/lib/useUserContextKey";
 import { MobileProvider } from "@/providers/mobile-provider";
 import { ThemeProvider } from "@/providers/theme-provider";
-import { defineTool, GenuiProvider } from "@workspace/react";
-import { MCPTransport } from "@workspace/react/mcp";
+import { defineTool, TamboProvider } from "@tambo-ai/react";
+import { MCPTransport } from "@tambo-ai/react/mcp";
 import { usePathname } from "next/navigation";
 import { z } from "zod";
 
@@ -27,7 +27,7 @@ const generateParamsTool = defineTool({
 });
 
 const MCP_DEMO_URL =
-  process.env.NEXT_PUBLIC_MCP_DEMO_URL || "https://everything-mcp.genui.co/mcp";
+  process.env.NEXT_PUBLIC_MCP_DEMO_URL || "https://everything-mcp.tambo.co/mcp";
 
 export default function Template({
   children,
@@ -55,10 +55,10 @@ export default function Template({
                   {children}
                 </div>
               ) : (
-                <GenuiProvider
+                <TamboProvider
                   key={userContextKey}
-                  apiKey={process.env.NEXT_PUBLIC_GENUI_API_KEY ?? ""}
-                  genuiUrl={process.env.NEXT_PUBLIC_GENUI_API_URL ?? ""}
+                  apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY ?? ""}
+                  tamboUrl={process.env.NEXT_PUBLIC_TAMBO_API_URL ?? ""}
                   mcpServers={[
                     { url: MCP_DEMO_URL, transport: MCPTransport.HTTP },
                   ]}
@@ -91,7 +91,7 @@ export default function Template({
                   <div className="container mx-auto px-4 md:px-6 pt-6">
                     {children}
                   </div>
-                </GenuiProvider>
+                </TamboProvider>
               )}
             </main>
           </div>

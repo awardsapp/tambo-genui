@@ -1,9 +1,9 @@
 /// <reference types="@testing-library/jest-dom" />
 import { describe, expect, it, jest } from "@jest/globals";
 import type {
-  GenuiElicitationRequest,
-  GenuiElicitationResponse,
-} from "@workspace/react/mcp";
+  TamboElicitationRequest,
+  TamboElicitationResponse,
+} from "@tambo-ai/react/mcp";
 import { fireEvent, render, screen } from "@testing-library/react";
 import * as React from "react";
 import { MessageInputContent } from "./message-input-content";
@@ -19,7 +19,7 @@ const NOOP_SET_STRING: React.Dispatch<
   React.SetStateAction<string | null>
 > = () => undefined;
 
-const createRequest = (): GenuiElicitationRequest => ({
+const createRequest = (): TamboElicitationRequest => ({
   message: "Choose one",
   requestedSchema: {
     type: "object",
@@ -175,7 +175,7 @@ describe("MessageInput elicitation visibility", () => {
 
   it("renders elicitation primitive when elicitation exists", () => {
     const resolveElicitation = jest.fn(
-      (_response: GenuiElicitationResponse) => undefined,
+      (_response: TamboElicitationResponse) => undefined,
     );
 
     renderWithContext(<MessageInputElicitation />, {

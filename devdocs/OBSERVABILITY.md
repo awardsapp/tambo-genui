@@ -1,6 +1,6 @@
 # Observability Guide
 
-Genui relies on a consistent observability stack across the monorepo. This document tells you **where** instrumentation lives and **how** to extend it safely.
+Tambo relies on a consistent observability stack across the monorepo. This document tells you **where** instrumentation lives and **how** to extend it safely.
 
 ## Stack Overview
 
@@ -10,7 +10,7 @@ Genui relies on a consistent observability stack across the monorepo. This docum
 | Web (Next.js)    | Sentry (edge + server) + PostHog                      | `apps/web/sentry.*.config.ts`, `apps/web/lib/analytics.ts` |
 | Backend packages | Langfuse helpers + OTEL context propagation           | `packages/backend`, `packages/core`                        |
 | CLI              | PostHog via `posthog-node` SDK                        | `cli/src/lib/telemetry.ts`                                 |
-| React SDK        | Host-app instrumentation only (no built-in telemetry) | `react-sdk/` (wrap `GenuiProvider` in your own handlers)   |
+| React SDK        | Host-app instrumentation only (no built-in telemetry) | `react-sdk/` (wrap `TamboProvider` in your own handlers)   |
 
 ## Principles
 
@@ -43,11 +43,11 @@ Genui relies on a consistent observability stack across the monorepo. This docum
 ## CLI (`cli/`)
 
 - Uses the `posthog-node` SDK. Events are sent directly to PostHog (`us.i.posthog.com`) via `client.capture()`, and `await client.shutdown()` is called before the CLI exits to flush pending events.
-- If the user is logged in, their Genui user ID is used as the distinct ID; otherwise a random UUID is used. The PostHog project API key is embedded in the CLI (public by design — same as any frontend bundle).
-- Opt-out: `GENUI_TELEMETRY_DISABLED=1`. A one-time notice is shown on first run.
+- If the user is logged in, their Tambo user ID is used as the distinct ID; otherwise a random UUID is used. The PostHog project API key is embedded in the CLI (public by design — same as any frontend bundle).
+- Opt-out: `TAMBO_TELEMETRY_DISABLED=1`. A one-time notice is shown on first run.
 - All event names use dot notation matching the web convention: `cli.command.completed`, `cli.command.error`, `cli.component.added`, `cli.init.completed`, `cli.auth.login`, `cli.auth.logout`.
 - State is stored in the XDG data directory (`env-paths`): `telemetry.json` for the anonymous UUID.
-- Dev override: set `GENUI_TELEMETRY_HOST` to point at a different PostHog-compatible ingest endpoint.
+- Dev override: set `TAMBO_TELEMETRY_HOST` to point at a different PostHog-compatible ingest endpoint.
 - When adding new CLI events:
   1. Add the event name to `EVENTS` in `cli/src/lib/telemetry.ts`.
   2. Call `trackEvent(EVENTS.NEW_EVENT, { ... })` in the relevant command handler.
@@ -61,7 +61,7 @@ Genui relies on a consistent observability stack across the monorepo. This docum
 ## React SDK
 
 - The SDK intentionally ships **without** Sentry/Langfuse/PostHog dependencies. Host apps are responsible for instrumenting via their own providers.
-- When you need telemetry, derive identifiers through hooks such as `useGenuiThread`, `useGenuiStreamStatus`, or props exposed by `GenuiProvider` (e.g., `contextKey`, `onCallUnregisteredTool`) and forward events to your app’s logging layer.
+- When you need telemetry, derive identifiers through hooks such as `useTamboThread`, `useTamboStreamStatus`, or props exposed by `TamboProvider` (e.g., `contextKey`, `onCallUnregisteredTool`) and forward events to your app’s logging layer.
 - Avoid sprinkling `console.log` in exported hooks/components. Instead, surface callbacks/return values so downstream apps can plug in their own analytics.
 
 ## Adding New Instrumentation

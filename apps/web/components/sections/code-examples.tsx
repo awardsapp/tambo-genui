@@ -28,12 +28,12 @@ const fileInfo: Record<
   demo: {
     filename: "localhost:3000",
     icon: <MonitorIcon className="w-4 h-4" />,
-    description: "Live demo component showing the Genui chat interface",
+    description: "Live demo component showing the Tambo chat interface",
   },
   provider: {
     filename: "App.tsx",
     icon: <Code className="w-4 h-4" />,
-    description: "Root component with GenuiProvider setup",
+    description: "Root component with TamboProvider setup",
   },
   props: {
     filename: "EmailProps.ts",
@@ -43,10 +43,10 @@ const fileInfo: Record<
   component: {
     filename: "EmailForm.tsx",
     icon: <FileCode className="w-4 h-4" />,
-    description: "Custom component with Genui state hooks",
+    description: "Custom component with Tambo state hooks",
   },
   register: {
-    filename: "GenuiConfig.ts",
+    filename: "TamboConfig.ts",
     icon: <PackageIcon className="w-4 h-4" />,
     description: "Configuration to register custom components",
   },
@@ -62,22 +62,22 @@ const highlightedLines: Record<Exclude<TabKey, "demo">, number[]> = {
 
 // Code examples for different tabs
 const codeExamples: Record<Exclude<TabKey, "demo">, string> = {
-  provider: `// First we wrap our app in a GenuiProvider
+  provider: `// First we wrap our app in a TamboProvider
 // Second we import the MessageThread
 // The MessageThreadFull is the main component that will render the chat interface
-// Add the component using the genui cli \`npx genui add message-thread-full\`
+// Add the component using the tambo cli \`npx tambo add message-thread-full\`
 
-import { GenuiProvider } from "@workspace/react";
+import { TamboProvider } from "@tambo-ai/react";
 import { MessageThreadFull } from "@components/ui/message-thread";
-import { genuiComponents } from "./GenuiConfig";
+import { tamboComponents } from "./TamboConfig";
 
 export default function Chat() {
   return (
-    <GenuiProvider
-      components={genuiComponents}
+    <TamboProvider
+      components={tamboComponents}
     >
       <MessageThreadFull />
-    </GenuiProvider>
+    </TamboProvider>
   );
 }`,
 
@@ -95,15 +95,15 @@ export const EmailProps = z.object({
 export type EmailProps = z.infer<typeof EmailProps>;
 `,
 
-  component: `// Create a component like normal but with genui-ai for state management
-import { useGenuiComponentState } from "@workspace/react";
+  component: `// Create a component like normal but with tambo-ai for state management
+import { useTamboComponentState } from "@tambo-ai/react";
 import { EmailProps } from "./EmailProps"; // from file before
 
 export function EmailForm(EmailProps: EmailProps) {
-  // Use Genui state hooks to pass the values to the AI
-  const [emailSubject, setEmailSubject] = useGenuiComponentState("emailSubject", subject);
-  const [emailMessage, setEmailMessage] = useGenuiComponentState("emailMessage", message);
-  const [status, setStatus] = useGenuiComponentState("emailStatus", "pending");
+  // Use Tambo state hooks to pass the values to the AI
+  const [emailSubject, setEmailSubject] = useTamboComponentState("emailSubject", subject);
+  const [emailMessage, setEmailMessage] = useTamboComponentState("emailMessage", message);
+  const [status, setStatus] = useTamboComponentState("emailStatus", "pending");
 
   return (
     <form onSubmit={handleSubmit}>
@@ -128,7 +128,7 @@ export function EmailForm(EmailProps: EmailProps) {
 import { EmailForm } from "./EmailForm";
 import { EmailProps } from "./EmailProps";
 
-export const genuiComponents = [
+export const tamboComponents = [
   {
     name: "EmailForm",
     description: "A form to email the team",

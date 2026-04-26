@@ -1,4 +1,4 @@
-import type { GenuiThreadMessage } from "@workspace/react";
+import type { TamboThreadMessage } from "@tambo-ai/react";
 import * as React from "react";
 import { useEffect, useState } from "react";
 
@@ -144,7 +144,7 @@ function preprocessMentions(
  * @returns A renderable string or React element.
  */
 export function getSafeContent(
-  content: GenuiThreadMessage["content"] | React.ReactNode | undefined | null,
+  content: TamboThreadMessage["content"] | React.ReactNode | undefined | null,
   interactableNames?: string[],
 ): string | React.ReactElement {
   if (!content) return "";
@@ -198,7 +198,7 @@ function hasContentInItem(item: unknown): boolean {
  * @returns True if there is content, false otherwise.
  */
 export function checkHasContent(
-  content: GenuiThreadMessage["content"] | React.ReactNode | undefined | null,
+  content: TamboThreadMessage["content"] | React.ReactNode | undefined | null,
 ): boolean {
   if (!content) return false;
   if (typeof content === "string") return content.trim().length > 0;

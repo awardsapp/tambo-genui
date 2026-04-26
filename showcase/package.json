@@ -1,5 +1,5 @@
 {
-  "name": "@workspace/showcase",
+  "name": "@tambo-ai/showcase",
   "version": "0.37.6",
   "description": "Tambo AI component showcase",
   "private": true,
@@ -25,8 +25,9 @@
     "@react-leaflet/core": "^2.1.0",
     "@tailwindcss/postcss": "^4.2.2",
     "@tailwindcss/typography": "^0.5.19",
-    "@workspace/react": "*",
-    "@workspace/ui-registry": "*",
+    "@tambo-ai/react": "*",
+    "@tambo-ai/typescript-sdk": "^0.95.0",
+    "@tambo-ai/ui-registry": "*",
     "@tiptap/extension-document": "^3.22.1",
     "@tiptap/extension-hard-break": "^3.22.1",
     "@tiptap/extension-mention": "^3.22.1",
@@ -61,14 +62,13 @@
     "tailwindcss": "^4.1.18",
     "tailwindcss-animate": "^1.0.7",
     "tippy.js": "^6.3.7",
-    "use-debounce": "^10.1.0",
-    "@tambo-ai/typescript-sdk": "^0.95.0"
+    "use-debounce": "^10.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@svgr/webpack": "^8.1.0",
-    "@workspace/eslint-config": "*",
-    "@workspace/typescript-config": "*",
+    "@tambo-ai/eslint-config": "*",
+    "@tambo-ai/typescript-config": "*",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",

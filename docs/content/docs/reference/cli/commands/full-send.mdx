@@ -1,16 +1,16 @@
 ---
 title: full-send
-description: Run the `genui full-send` command to initialize your project, generate config, and install recommended Genui components in one step.
+description: Run the `tambo full-send` command to initialize your project, generate config, and install recommended Tambo components in one step.
 ---
 
-`npx genui full-send`
+`npx tambo full-send`
 
 For instant project setup, performs the same project setup steps as `init`, and also installs a few useful components.
 
 **What it does:**
 
 1. Sets up authentication and API key
-2. Creates the `lib/genui.ts` configuration file
+2. Creates the `lib/tambo.ts` configuration file
 3. Prompts you to select starter components to install
 4. Installs selected components and their dependencies
 5. Provides setup instructions with code snippets
@@ -19,13 +19,13 @@ For instant project setup, performs the same project setup steps as `init`, and 
 
 ```bash
 # Interactive setup with component selection
-npx genui full-send
+npx tambo full-send
 
 # Skip prompts and install all starter components
-npx genui full-send --yes
+npx tambo full-send --yes
 
 # Use legacy peer deps
-npx genui full-send --legacy-peer-deps
+npx tambo full-send --legacy-peer-deps
 ```
 
 ## Component Selection
@@ -59,24 +59,24 @@ After you select components, the CLI:
 
 1. Installs all selected components
 2. Installs all required dependencies automatically
-3. Creates the `lib/genui.ts` configuration file
+3. Creates the `lib/tambo.ts` configuration file
 4. Registers all components in the configuration
-5. Copies GenuiProvider setup code to your clipboard
+5. Copies TamboProvider setup code to your clipboard
 
 <Callout type="info" title="Clipboard Integration">
-  The setup code for GenuiProvider is automatically copied to your clipboard.
+  The setup code for TamboProvider is automatically copied to your clipboard.
   Just paste it into your layout file to complete the setup.
 </Callout>
 
 To skip selection and install all starter components:
 
 ```bash
-npx genui full-send --yes
+npx tambo full-send --yes
 ```
 
 **Manual Provider Setup:**
 
-After running `full-send`, add the GenuiProvider to your app. The CLI detects your framework and shows the appropriate setup code.
+After running `full-send`, add the TamboProvider to your app. The CLI detects your framework and shows the appropriate setup code.
 
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
@@ -84,20 +84,20 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 <Tab value="Next.js">
 ```tsx title="app/layout.tsx"
 "use client";
-import { GenuiProvider } from "@workspace/react";
-import { components } from "../lib/genui";
-import { MessageThreadFull } from "@/components/genui/message-thread-full";
+import { TamboProvider } from "@tambo-ai/react";
+import { components } from "../lib/tambo";
+import { MessageThreadFull } from "@/components/tambo/message-thread-full";
 
 export default function Layout({ children }) {
   return (
     <div>
-      <GenuiProvider
-        apiKey={process.env.NEXT_PUBLIC_GENUI_API_KEY ?? ""}
+      <TamboProvider
+        apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY ?? ""}
         components={components}
       >
         <MessageThreadFull />
         {children}
-      </GenuiProvider>
+      </TamboProvider>
     </div>
   );
 }
@@ -105,19 +105,19 @@ export default function Layout({ children }) {
 </Tab>
 <Tab value="Vite">
 ```tsx title="src/App.tsx"
-import { GenuiProvider } from "@workspace/react";
-import { components } from "./lib/genui";
-import { MessageThreadFull } from "./components/genui/message-thread-full";
+import { TamboProvider } from "@tambo-ai/react";
+import { components } from "./lib/tambo";
+import { MessageThreadFull } from "./components/tambo/message-thread-full";
 
 export default function App() {
   return (
     <div>
-      <GenuiProvider
-        apiKey={import.meta.env.VITE_GENUI_API_KEY ?? ""}
+      <TamboProvider
+        apiKey={import.meta.env.VITE_TAMBO_API_KEY ?? ""}
         components={components}
       >
         <MessageThreadFull />
-      </GenuiProvider>
+      </TamboProvider>
     </div>
   );
 }
@@ -125,16 +125,16 @@ export default function App() {
 </Tab>
 <Tab value="Expo">
 
-For Expo projects, `full-send` skips web component installation since the registry components use DOM and Tailwind CSS. Use `@workspace/react` hooks directly to build your native UI.
+For Expo projects, `full-send` skips web component installation since the registry components use DOM and Tailwind CSS. Use `@tambo-ai/react` hooks directly to build your native UI.
 
 ```tsx title="App.tsx"
-import { TamboProvider } from "@workspace/react";
+import { TamboProvider } from "@tambo-ai/react";
 import { components } from "./lib/tambo";
 
 export default function App() {
   return (
     <TamboProvider
-      apiKey={process.env.EXPO_PUBLIC_GENUI_API_KEY ?? ""}
+      apiKey={process.env.EXPO_PUBLIC_TAMBO_API_KEY ?? ""}
       components={components}
     >
       {/* Your React Native content */}
@@ -165,7 +165,7 @@ The default file location is `app/globals.css` for Next.js or `src/index.css` fo
 
 @layer base {
   :root {
-    /* Tailwind CSS Variables customized with Genui colors */
+    /* Tailwind CSS Variables customized with Tambo colors */
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
@@ -190,7 +190,7 @@ The default file location is `app/globals.css` for Next.js or `src/index.css` fo
     --chart-4: 160 60% 45.1%;
     --chart-5: 280 64.7% 60%;
 
-    /* Genui-specific variables for component layouts */
+    /* Tambo-specific variables for component layouts */
     --radius: 0.5rem;
     --container: 210 29% 97%;
     --backdrop: 210 88% 14% / 0.25;
@@ -226,7 +226,7 @@ The default file location is `app/globals.css` for Next.js or `src/index.css` fo
     --chart-4: 160 60% 45.1%;
     --chart-5: 280 64.7% 60%;
 
-    /* Genui-specific variables for component layouts */
+    /* Tambo-specific variables for component layouts */
     --radius: 0.5rem;
     --container: 210 29% 97%;
     --backdrop: 210 88% 14% / 0.25;
@@ -294,7 +294,7 @@ The default file location is `app/globals.css` for Next.js or `src/index.css` fo
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
 
-  /* Genui-specific color mappings */
+  /* Tambo-specific color mappings */
   --color-container: var(--container);
   --color-backdrop: var(--backdrop);
   --color-muted-backdrop: var(--muted-backdrop);
@@ -326,7 +326,7 @@ The default file location is `app/globals.css` for Next.js or `src/index.css` fo
   --chart-4: oklch(0.7 0.13 165);
   --chart-5: oklch(0.62 0.2 313);
 
-  /* Genui-specific layout variables */
+  /* Tambo-specific layout variables */
   --container: oklch(0.98 0 247);
   --backdrop: oklch(0.25 0.07 252 / 0.25);
   --muted-backdrop: oklch(0.25 0.07 252 / 0.1);
@@ -362,7 +362,7 @@ The default file location is `app/globals.css` for Next.js or `src/index.css` fo
   --chart-4: oklch(0.7 0.13 165);
   --chart-5: oklch(0.62 0.2 313);
 
-  /* Genui-specific layout variables */
+  /* Tambo-specific layout variables */
   --container: oklch(0.98 0 247);
   --backdrop: oklch(0.25 0.07 252 / 0.25);
   --muted-backdrop: oklch(0.25 0.07 252 / 0.1);
@@ -386,11 +386,11 @@ The default file location is `app/globals.css` for Next.js or `src/index.css` fo
 <Callout type="info" title="Automatic Configuration">
   The `full-send` command detects your Tailwind version and applies the
   appropriate CSS format automatically. You typically won't need to manually
-  configure these files unless you're customizing the default Genui styling.
+  configure these files unless you're customizing the default Tambo styling.
 </Callout>
 
 <Callout type="warn" title="CSS Variable Requirements">
-  Genui components require specific CSS variables to function properly. The
+  Tambo components require specific CSS variables to function properly. The
   layout variables (`--panel-left-width`, `--panel-right-width`,
   `--sidebar-width`) control component dimensions and should not be removed.
 </Callout>

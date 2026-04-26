@@ -2,7 +2,7 @@
 
 import { ComponentCodePreview } from "@/components/component-code-preview";
 import { InstallationSection } from "@/components/installation-section";
-import { MessageThreadFull } from "@workspace/ui-registry/components/message-thread-full";
+import { MessageThreadFull } from "@tambo-ai/ui-registry/components/message-thread-full";
 
 export default function MessageThreadFullPage() {
   const exampleSuggestions = [
@@ -58,7 +58,7 @@ export default function MessageThreadFullPage() {
                 initialSuggestions={exampleSuggestions}
               />
             }
-            code={`import { MessageThreadFull } from "@/components/genui/message-thread-full";
+            code={`import { MessageThreadFull } from "@/components/tambo/message-thread-full";
 
 export function ChatPage() {
   const exampleSuggestions = [
@@ -88,7 +88,7 @@ export function ChatPage() {
 
       {/* Installation */}
       <section>
-        <InstallationSection cliCommand="npx genui add message-thread-full" />
+        <InstallationSection cliCommand="npx tambo add message-thread-full" />
       </section>
 
       {/* Component API */}

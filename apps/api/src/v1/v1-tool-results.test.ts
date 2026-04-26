@@ -1,4 +1,4 @@
-import { ContentPartType, MessageRole } from "@workspace-cloud/core";
+import { ContentPartType, MessageRole } from "@tambo-ai-cloud/core";
 import {
   convertToolResultsToMessages,
   dedupeToolResults,

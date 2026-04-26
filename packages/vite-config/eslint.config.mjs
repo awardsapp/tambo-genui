@@ -1,4 +1,4 @@
-import baseConfig from "@workspace/eslint-config/base";
+import baseConfig from "@tambo-ai/eslint-config/base";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig(baseConfig, {

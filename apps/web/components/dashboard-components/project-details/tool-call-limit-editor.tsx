@@ -10,11 +10,11 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { EditWithGenuiButton } from "@/components/ui/genui/edit-with-genui-button";
+import { EditWithTamboButton } from "@/components/ui/tambo/edit-with-tambo-button";
 import { useToast } from "@/hooks/use-toast";
 import { api } from "@/trpc/react";
-import type { Suggestion } from "@workspace/react";
-import { withGenuiInteractable } from "@workspace/react";
+import type { Suggestion } from "@tambo-ai/react";
+import { withTamboInteractable } from "@tambo-ai/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useId, useRef, useState } from "react";
 import { z } from "zod/v3";
@@ -103,7 +103,7 @@ export function ToolCallLimitEditor({
     }
   }, [maxToolCallLimit, isEditing]);
 
-  // When Genui sends editedLimit, enter edit mode with that value
+  // When Tambo sends editedLimit, enter edit mode with that value
   useEffect(() => {
     if (editedLimit != null && editedLimit !== prevEditedLimitRef.current) {
       prevEditedLimitRef.current = editedLimit;
@@ -138,7 +138,7 @@ export function ToolCallLimitEditor({
       // Mark as just saved to prevent useEffect from resetting limitValue to old prop
       justSavedRef.current = true;
       setIsEditing(false);
-      // Reset ref so Genui can trigger the same action again later
+      // Reset ref so Tambo can trigger the same action again later
       prevEditedLimitRef.current = undefined;
       onEdited?.();
     } catch (_error) {
@@ -153,7 +153,7 @@ export function ToolCallLimitEditor({
   const handleCancel = () => {
     setLimitValue(maxToolCallLimit.toString());
     setIsEditing(false);
-    // Reset ref so Genui can trigger the same action again later
+    // Reset ref so Tambo can trigger the same action again later
     prevEditedLimitRef.current = undefined;
   };
 
@@ -162,7 +162,7 @@ export function ToolCallLimitEditor({
       <CardHeader>
         <CardTitle className="text-lg font-semibold">
           Tool Call Limit
-          <EditWithGenuiButton description="Manage the tool call limit for this project." />
+          <EditWithTamboButton description="Manage the tool call limit for this project." />
         </CardTitle>
         <CardDescription className="text-sm font-sans text-foreground">
           Set the maximum number of tool calls allowed per response. This helps
@@ -248,7 +248,7 @@ export function ToolCallLimitEditor({
                   </motion.div>
                 </div>
                 <p className="text-xs text-foreground">
-                  When the Genui reaches this limit, it will finish the response
+                  When the Tambo reaches this limit, it will finish the response
                   with a message that it has reached the limit.
                 </p>
               </motion.div>
@@ -260,7 +260,7 @@ export function ToolCallLimitEditor({
   );
 }
 
-export const InteractableToolCallLimitEditor = withGenuiInteractable(
+export const InteractableToolCallLimitEditor = withTamboInteractable(
   ToolCallLimitEditor,
   {
     componentName: COMPONENT_NAME,

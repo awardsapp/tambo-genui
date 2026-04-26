@@ -1,11 +1,11 @@
 import { describe, expect, it, jest } from "@jest/globals";
-import type { GenuiElicitationRequest } from "@workspace/react/mcp";
+import type { TamboElicitationRequest } from "@tambo-ai/react/mcp";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Elicitation, useElicitationField } from "./index";
 
 const createRequest = (
-  overrides?: Partial<GenuiElicitationRequest>,
-): GenuiElicitationRequest => {
+  overrides?: Partial<TamboElicitationRequest>,
+): TamboElicitationRequest => {
   return {
     message: "Please provide details",
     requestedSchema: {

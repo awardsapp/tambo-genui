@@ -4,7 +4,7 @@ import { NextAuthLogoutButton } from "@/components/auth/nextauth-logout-button";
 import { buttonVariants } from "@/components/ui/button";
 import { DiscordLink } from "@/components/ui/discord-link";
 // import { GitHubLink } from "@/components/ui/github-link";
-import { GenuiChatTrigger } from "@/components/genui-chat-trigger";
+import { TamboChatTrigger } from "@/components/tambo-chat-trigger";
 import { siteConfig } from "@/lib/config";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -36,7 +36,7 @@ export function HeaderActions({
         Pricing
       </Link>
       <a
-        href={process.env.NEXT_PUBLIC_DOCS_URL || "https://docs.genui.co"}
+        href={process.env.NEXT_PUBLIC_DOCS_URL || "https://docs.tambo.co"}
         className={cn(
           buttonVariants({ variant: "link" }),
           "h-9 rounded-md group tracking-tight font-medium",
@@ -62,7 +62,7 @@ export function HeaderActions({
       >
         Blog
       </Link>
-      <GenuiChatTrigger />
+      <TamboChatTrigger />
       {/* <GitHubLink href={siteConfig.links.github} text="Github" /> */}
       {showDiscordButton && (
         <DiscordLink href={siteConfig.links.discord} text="Discord" />

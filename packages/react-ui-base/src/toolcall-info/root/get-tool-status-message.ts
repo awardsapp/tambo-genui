@@ -1,4 +1,4 @@
-import type { GenuiToolUseContent } from "@workspace/react";
+import type { TamboToolUseContent } from "@tambo-ai/react";
 
 /**
  * Gets the status message for a single tool call request.
@@ -9,7 +9,7 @@ import type { GenuiToolUseContent } from "@workspace/react";
  * @returns The status message string, or null if `toolCallRequest` is not provided.
  */
 export function getToolStatusMessage(
-  toolCallRequest: GenuiToolUseContent | null | undefined,
+  toolCallRequest: TamboToolUseContent | null | undefined,
   isLoading: boolean | undefined,
 ): string | null {
   if (!toolCallRequest) {

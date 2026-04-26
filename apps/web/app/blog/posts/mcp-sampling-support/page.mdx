@@ -1,5 +1,5 @@
 ---
-title: "Apps using Genui now support MCP Sampling"
+title: "Apps using Tambo now support MCP Sampling"
 date: "2025-10-22"
 description: "MCP servers can now use your app's LLM. Includes built-in UI for displaying sampling sub-conversations."
 author: "Michael Milstead"
@@ -13,11 +13,11 @@ author: "Michael Milstead"
   />
 </ImageZoom>
 
-[Genui](https://genui.co) helps developers build LLM-based AI web apps by discovering, understanding, and packaging up emerging UX patterns so you can integrate them without building from scratch.
+[Tambo](https://tambo.co) helps developers build LLM-based AI web apps by discovering, understanding, and packaging up emerging UX patterns so you can integrate them without building from scratch.
 
 [MCP (Model Context Protocol)](https://modelcontextprotocol.io/docs/getting-started/intro) has become the standard for how AI apps connect to external services and tools to extend their abilities. While MCP defines the technical protocol, it's up to developers to figure out how to present these capabilities to users in their app's UI.
 
-At Genui, we're building comprehensive MCP support so your app becomes "MCP-enabled" automatically. Today we're announcing support for [MCP Sampling](https://modelcontextprotocol.io/docs/learn/client-concepts#sampling), following our previous release of [MCP tools](https://modelcontextprotocol.io/docs/learn/server-concepts#tools) support.
+At Tambo, we're building comprehensive MCP support so your app becomes "MCP-enabled" automatically. Today we're announcing support for [MCP Sampling](https://modelcontextprotocol.io/docs/learn/client-concepts#sampling), following our previous release of [MCP tools](https://modelcontextprotocol.io/docs/learn/server-concepts#tools) support.
 
 ## What is MCP Sampling?
 
@@ -28,7 +28,7 @@ Without MCP sampling, the server would need its own AI setup.
 ```mermaid
 sequenceDiagram
     participant U as User
-    participant T as Genui
+    participant T as Tambo
     participant M as Weather MCP Server
     participant L as Server's own LLM
 
@@ -41,12 +41,12 @@ sequenceDiagram
 
 ```
 
-With MCP Sampling through Genui, the server uses Genui's AI setup.
+With MCP Sampling through Tambo, the server uses Tambo's AI setup.
 
 ```mermaid
 sequenceDiagram
     participant U as User
-    participant T as Genui
+    participant T as Tambo
     participant M as Weather MCP Server
 
     U->>T: What's the weather in San Francisco?
@@ -58,11 +58,11 @@ sequenceDiagram
 
 ```
 
-## The UX of Sampling in Genui
+## The UX of Sampling in Tambo
 
-Genui apps using our pre-built `Message` component display an expandable dropdown when Genui decides to use a tool. This dropdown shows details of the tool call to the user. We consider sampling requests as "sub-conversations" between the MCP tool and Genui, so Genui represents them as expandable lists of messages within the tool's information dropdown.
+Tambo apps using our pre-built `Message` component display an expandable dropdown when Tambo decides to use a tool. This dropdown shows details of the tool call to the user. We consider sampling requests as "sub-conversations" between the MCP tool and Tambo, so Tambo represents them as expandable lists of messages within the tool's information dropdown.
 
-The following example uses an `emojify_via_llm` MCP tool which uses Sampling to turn a string into emojis. Within the dropdown you can see the messages the tool sent to Genui and the responses it received.
+The following example uses an `emojify_via_llm` MCP tool which uses Sampling to turn a string into emojis. Within the dropdown you can see the messages the tool sent to Tambo and the responses it received.
 
 <ImageZoom>
   <img
@@ -82,11 +82,11 @@ The title of the dropdown defaults to “finished additional work” but is cust
   />
 </ImageZoom>
 
-## How to customize Genui's Sampling UI
+## How to customize Tambo's Sampling UI
 
-Behind the scenes, Genui adds messages sent and returned through sampling requests to the user's conversation thread. The sampling messages have a `parentMessageId` field pointing to the assistant message tool call that triggered the sampling request. This is what distinguishes them as "sub messages" of a normal conversation message. Note that Genui passes a `_meta` field containing the `parentMessageId` to MCP tools and expects sampling requests to pass that along to Genui.
+Behind the scenes, Tambo adds messages sent and returned through sampling requests to the user's conversation thread. The sampling messages have a `parentMessageId` field pointing to the assistant message tool call that triggered the sampling request. This is what distinguishes them as "sub messages" of a normal conversation message. Note that Tambo passes a `_meta` field containing the `parentMessageId` to MCP tools and expects sampling requests to pass that along to Tambo.
 
-To build your own custom sampling UI, use Genui’s [React SDK](https://github.com/genui-ai/genui) to get the list of messages for the current thread, and use the `parentMessageId` field on the messages to group and show sampling messages in any way you prefer.
+To build your own custom sampling UI, use Tambo’s [React SDK](https://github.com/tambo-ai/tambo) to get the list of messages for the current thread, and use the `parentMessageId` field on the messages to group and show sampling messages in any way you prefer.
 
 <ImageZoom>
   <img
@@ -96,14 +96,14 @@ To build your own custom sampling UI, use Genui’s [React SDK](https://github.c
   />
 </ImageZoom>
 
-## How to enable MCP Sampling in your app using Genui
+## How to enable MCP Sampling in your app using Tambo
 
-If you already have an app with Genui running, you’ll need to:
+If you already have an app with Tambo running, you’ll need to:
 
-- Upgrade your `genui-ai/react` dependency to at least version `0.57.0` using `npm install @workspace/react@0.57.0`
-- Upgrade your installed Genui `Message` component using `npx genui@latest upgrade message`
+- Upgrade your `tambo-ai/react` dependency to at least version `0.57.0` using `npm install @tambo-ai/react@0.57.0`
+- Upgrade your installed Tambo `Message` component using `npx tambo@latest upgrade message`
 
-If you haven’t integrated Genui into your web app yet, new installations will automatically contain MCP Sampling functionality and UI. To get started, check out our [documentation](https://docs.genui.co/getting-started/quickstart).
+If you haven’t integrated Tambo into your web app yet, new installations will automatically contain MCP Sampling functionality and UI. To get started, check out our [documentation](https://docs.tambo.co/getting-started/quickstart).
 
 ## Up next for MCP Sampling support
 

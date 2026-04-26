@@ -1,5 +1,5 @@
 {
-  "name": "@workspace-cloud/db",
+  "name": "@tambo-ai-cloud/db",
   "version": "0.0.0",
   "private": true,
   "license": "Apache-2.0",
@@ -24,15 +24,15 @@
     "clean": "rm -rf dist coverage"
   },
   "devDependencies": {
-    "@workspace-cloud/backend": "*",
-    "@workspace/eslint-config": "*",
-    "@workspace/typescript-config": "*",
+    "@tambo-ai-cloud/backend": "*",
+    "@tambo-ai/eslint-config": "*",
+    "@tambo-ai/typescript-config": "*",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/pg": "^8.18.0",
     "drizzle-kit": "^0.31.10"
   },
   "dependencies": {
-    "@workspace-cloud/core": "*",
+    "@tambo-ai-cloud/core": "*",
     "drizzle-orm": "^0.45.2",
     "jsonwebtoken": "^9.0.2",
     "openai": "^6.16.0",

@@ -1,4 +1,4 @@
-import type { CustomLlmParameters, JSONValue } from "@workspace-cloud/core";
+import type { CustomLlmParameters, JSONValue } from "@tambo-ai-cloud/core";
 import { z } from "zod/v3";
 
 /**

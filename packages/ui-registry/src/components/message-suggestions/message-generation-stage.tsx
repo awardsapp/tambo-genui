@@ -1,7 +1,7 @@
 "use client";
 
-import { cn } from "@workspace/ui-registry/utils";
-import { useGenui } from "@workspace/react";
+import { cn } from "@tambo-ai/ui-registry/utils";
+import { useTambo } from "@tambo-ai/react";
 import { Loader2Icon } from "lucide-react";
 import * as React from "react";
 
@@ -20,7 +20,7 @@ export function MessageGenerationStage({
   showLabel = true,
   ...props
 }: GenerationStageProps) {
-  const { isStreaming, isWaiting, isIdle } = useGenui();
+  const { isStreaming, isWaiting, isIdle } = useTambo();
 
   if (isIdle) {
     return null;

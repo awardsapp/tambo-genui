@@ -1,12 +1,12 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "@workspace/typescript-config/nextjs.json",
+  "extends": "@tambo-ai/typescript-config/nextjs.json",
   "compilerOptions": {
     "incremental": true,
     "paths": {
       "@/*": ["./src/*"],
-      "@workspace/react": ["../react-sdk/src"],
-      "@workspace/react/mcp": ["../react-sdk/src/mcp"]
+      "@tambo-ai/react": ["../react-sdk/src"],
+      "@tambo-ai/react/mcp": ["../react-sdk/src/mcp"]
     }
   },
   "include": [

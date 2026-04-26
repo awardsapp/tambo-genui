@@ -2,8 +2,8 @@
  * Copies the component registry from packages/ui-registry/src/ to cli/dist/registry/
  * This script runs as part of the CLI build process.
  *
- * The registry files are copied with their original @workspace/ui-registry/* imports
- * intact - these are transformed at runtime when users run `genui add`.
+ * The registry files are copied with their original @tambo-ai/ui-registry/* imports
+ * intact - these are transformed at runtime when users run `tambo add`.
  */
 import fs from "fs";
 import path from "path";

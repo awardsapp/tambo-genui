@@ -4,7 +4,7 @@ import { ComponentCodePreview } from "@/components/component-code-preview";
 import { FormChatInterface } from "@/components/generative/FormChatInterface";
 import { InstallationSection } from "@/components/installation-section";
 import { SyntaxHighlighter } from "@/components/ui/syntax-highlighter";
-import { FormComponent } from "@workspace/ui-registry/components/form";
+import { FormComponent } from "@tambo-ai/ui-registry/components/form";
 
 export default function FormComponentPage() {
   return (
@@ -138,7 +138,7 @@ export function ContactForm() {
             component={<FormChatInterface />}
             code={`import { FormComponent, formSchema } from "@/components/tambo/form";
 import { MessageThreadFull } from "@/components/tambo/message-thread-full";
-import { useTambo } from "@workspace/react";
+import { useTambo } from "@tambo-ai/react";
 import { useEffect } from "react";
 
 export function FormDemo() {
@@ -192,7 +192,7 @@ export function FormDemo() {
               language="tsx"
               code={`import { FormComponent, formSchema } from "@/components/tambo/form";
 import { MessageThreadFull } from "@/components/tambo/message-thread-full";
-import { useTambo } from "@workspace/react";
+import { useTambo } from "@tambo-ai/react";
 import { useEffect } from "react";
 
 export function App() {

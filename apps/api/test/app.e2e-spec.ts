@@ -31,6 +31,6 @@ describe("AppController (e2e)", () => {
     return request(app.getHttpServer())
       .get("/")
       .expect(200)
-      .expect("Welcome to the Genui AI API!");
+      .expect("Welcome to the Tambo AI API!");
   });
 });

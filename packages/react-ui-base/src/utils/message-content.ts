@@ -1,4 +1,4 @@
-import type { GenuiThreadMessage } from "@workspace/react";
+import type { TamboThreadMessage } from "@tambo-ai/react";
 import * as React from "react";
 
 /**
@@ -25,7 +25,7 @@ function escapeMarkdownLinkText(text: string): string {
  * @returns A markdown string ready for streamdown rendering
  */
 export function convertContentToMarkdown(
-  content: GenuiThreadMessage["content"] | React.ReactNode | undefined | null,
+  content: TamboThreadMessage["content"] | React.ReactNode | undefined | null,
 ): string {
   if (!content) return "";
   if (typeof content === "string") return content;
@@ -54,10 +54,10 @@ export function convertContentToMarkdown(
           // Escape special characters in display name to prevent markdown syntax breaking
           const escapedDisplayName = escapeMarkdownLinkText(displayName);
           // Use a custom protocol that looks more standard to avoid blocking
-          // Format: genui-resource://<encoded-uri>
+          // Format: tambo-resource://<encoded-uri>
           // We'll detect this in the link component and decode the URI
           const encodedUri = encodeURIComponent(uri);
-          parts.push(`[${escapedDisplayName}](genui-resource://${encodedUri})`);
+          parts.push(`[${escapedDisplayName}](tambo-resource://${encodedUri})`);
         }
       }
     }

@@ -8,7 +8,7 @@ import {
   type HydraDatabase,
   operations,
   ThreadNotFoundError,
-} from "@workspace-cloud/db";
+} from "@tambo-ai-cloud/db";
 import { type Request } from "express";
 import { DATABASE } from "../../common/database-provider";
 import { CorrelationLoggerService } from "../../common/services/logger.service";

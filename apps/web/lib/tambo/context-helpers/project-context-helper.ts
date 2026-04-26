@@ -1,7 +1,7 @@
 "use client";
 
 import { api } from "@/trpc/react";
-import { useTamboContextHelpers } from "@workspace/react";
+import { useTamboContextHelpers } from "@tambo-ai/react";
 import { useCallback, useEffect } from "react";
 
 /**

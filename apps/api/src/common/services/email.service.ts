@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { render } from "@react-email/components";
-import { isResendEmailUnsubscribed, maskEmail } from "@workspace-cloud/core";
+import { isResendEmailUnsubscribed, maskEmail } from "@tambo-ai-cloud/core";
 import { Resend } from "resend";
 import { FREE_MESSAGE_LIMIT } from "../../threads/types/errors";
 import { firstMessageEmail } from "../emails/first-message";

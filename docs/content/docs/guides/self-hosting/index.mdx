@@ -1,16 +1,16 @@
 ---
-title: Self-hosting Genui
-description: Deploy and run Genui on your own infrastructure with Docker Compose or Kubernetes.
+title: Self-hosting Tambo
+description: Deploy and run Tambo on your own infrastructure with Docker Compose or Kubernetes.
 icon: Server
 ---
 
 import LearnMore from "@/components/learn-more";
 
-Genui Cloud is the hosted platform behind Genui AI. Self-hosting gives you full control over your data, infrastructure, and authentication.
+Tambo Cloud is the hosted platform behind Tambo AI. Self-hosting gives you full control over your data, infrastructure, and authentication.
 
 ## Architecture
 
-Genui consists of three services:
+Tambo consists of three services:
 
 | Service        | Technology    | Host Port | Description                  |
 | -------------- | ------------- | --------- | ---------------------------- |
@@ -22,7 +22,7 @@ The web service serves the dashboard UI and communicates with the API. The API h
 
 ## Authentication model
 
-Genui supports two mutually exclusive authentication modes:
+Tambo supports two mutually exclusive authentication modes:
 
 - **OAuth** (Google and/or GitHub) — used when any OAuth provider is configured
 - **Email login** (via Resend magic links) — only active when no OAuth providers are configured

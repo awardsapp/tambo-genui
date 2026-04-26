@@ -10,8 +10,8 @@ import {
 } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { ApiHeader, ApiOperation, ApiTags } from "@nestjs/swagger";
-import type { HydraDatabase } from "@workspace-cloud/db";
-import { operations } from "@workspace-cloud/db";
+import type { HydraDatabase } from "@tambo-ai-cloud/db";
+import { operations } from "@tambo-ai-cloud/db";
 import { DATABASE } from "../common/database-provider";
 import { EmailService } from "../common/services/email.service";
 import { CorrelationLoggerService } from "../common/services/logger.service";

@@ -1,8 +1,8 @@
-// Re-exported from @workspace/client
-export { looksLikeJSONSchema, makeJsonSchemaPartial } from "@workspace/client";
+// Re-exported from @tambo-ai/client
+export { looksLikeJSONSchema, makeJsonSchemaPartial } from "@tambo-ai/client";
 
 // These types and functions are only used internally within the react-sdk
-// and are not exported from @workspace/client. Keep local definitions.
+// and are not exported from @tambo-ai/client. Keep local definitions.
 import { JSONSchema7 } from "json-schema";
 
 /**

@@ -1,23 +1,23 @@
 /**
  * Message and Content Types
  *
- * Re-exports message and content types from `@workspace/typescript-sdk`.
+ * Re-exports message and content types from `@tambo-ai/typescript-sdk`.
  * Messages use Anthropic-style content blocks pattern where a message
  * contains an array of content blocks (text, tool calls, tool results, components).
  */
 
 // Re-export content block types from TypeScript SDK
-// Note: ToolUseContent and ComponentContent are NOT re-exported - use GenuiToolUseContent
-// and GenuiComponentContent instead, which include computed state properties.
+// Note: ToolUseContent and ComponentContent are NOT re-exported - use TamboToolUseContent
+// and TamboComponentContent instead, which include computed state properties.
 export type {
   TextContent,
   ToolResultContent,
   ResourceContent,
-} from "@workspace/typescript-sdk/resources/threads/threads";
+} from "@tambo-ai/typescript-sdk/resources/threads/threads";
 
 // Re-export message types from TypeScript SDK
-export type { InputMessage } from "@workspace/typescript-sdk/resources/threads/runs";
-import type { RunCreateParams } from "@workspace/typescript-sdk/resources/threads/runs";
+export type { InputMessage } from "@tambo-ai/typescript-sdk/resources/threads/runs";
+import type { RunCreateParams } from "@tambo-ai/typescript-sdk/resources/threads/runs";
 
 /**
  * Message type for initial messages that seed a new thread.
@@ -29,7 +29,7 @@ export type InitialInputMessage = RunCreateParams.Thread.InitialMessage;
 export type {
   MessageListResponse,
   MessageGetResponse,
-} from "@workspace/typescript-sdk/resources/threads/messages";
+} from "@tambo-ai/typescript-sdk/resources/threads/messages";
 
 // Import for Content union type
 import type {
@@ -38,7 +38,7 @@ import type {
   ToolResultContent,
   ComponentContent,
   ResourceContent,
-} from "@workspace/typescript-sdk/resources/threads/threads";
+} from "@tambo-ai/typescript-sdk/resources/threads/threads";
 
 /**
  * Streaming state for component content blocks.
@@ -50,7 +50,7 @@ export type ComponentStreamingState = "started" | "streaming" | "done";
  * Extended ComponentContent with streaming state.
  * Used by the SDK to track component rendering lifecycle.
  */
-export interface GenuiComponentContent extends ComponentContent {
+export interface TamboComponentContent extends ComponentContent {
   /**
    * Current streaming state of this component's props.
    * - 'started': Component block created, awaiting props
@@ -66,46 +66,46 @@ export interface GenuiComponentContent extends ComponentContent {
  * Special display properties that can be included in tool input.
  * These are used to customize tool status messages shown in the UI.
  */
-export interface GenuiToolDisplayProps {
+export interface TamboToolDisplayProps {
   /** Message shown while the tool is executing */
-  _genui_statusMessage?: string;
+  _tambo_statusMessage?: string;
   /** Message shown after the tool completes */
-  _genui_completionStatusMessage?: string;
+  _tambo_completionStatusMessage?: string;
 }
 
 /**
  * Extended ToolUseContent with computed state properties.
  * Used by the SDK to provide pre-computed tool state to consumers.
  *
- * Note: The computed properties are populated by `useGenui()` hook.
+ * Note: The computed properties are populated by `useTambo()` hook.
  * When accessed via lower-level APIs, they may be undefined.
  */
-export interface GenuiToolUseContent extends Omit<ToolUseContent, "input"> {
+export interface TamboToolUseContent extends Omit<ToolUseContent, "input"> {
   /**
-   * Tool input parameters with internal `_genui_*` properties removed.
+   * Tool input parameters with internal `_tambo_*` properties removed.
    * Consumers see only the actual tool parameters.
    */
   input: Record<string, unknown>;
 
   /**
    * Whether this tool call has completed (has a matching tool_result).
-   * Computed by `useGenui()` based on presence of matching tool_result.
+   * Computed by `useTambo()` based on presence of matching tool_result.
    */
   hasCompleted?: boolean;
 
   /**
    * The status message to display, resolved based on tool execution state.
    * Automatically updates as tool progresses through execution lifecycle.
-   * Computed by `useGenui()`.
+   * Computed by `useTambo()`.
    */
   statusMessage?: string;
 
   /**
-   * Extracted Genui display properties from the tool input.
+   * Extracted Tambo display properties from the tool input.
    * Consumers can use these for custom rendering if needed.
-   * Computed by `useGenui()`.
+   * Computed by `useTambo()`.
    */
-  genuiDisplayProps?: GenuiToolDisplayProps;
+  tamboDisplayProps?: TamboToolDisplayProps;
 }
 
 /**
@@ -116,19 +116,19 @@ export type MessageRole = "user" | "assistant" | "system";
 
 /**
  * Union type of all content block types.
- * Uses GenuiComponentContent and GenuiToolUseContent which include computed state.
+ * Uses TamboComponentContent and TamboToolUseContent which include computed state.
  */
 export type Content =
   | TextContent
-  | GenuiToolUseContent
+  | TamboToolUseContent
   | ToolResultContent
-  | GenuiComponentContent
+  | TamboComponentContent
   | ResourceContent;
 
 /**
  * Message in a thread (simplified from SDK's MessageGetResponse)
  */
-export interface GenuiThreadMessage {
+export interface TamboThreadMessage {
   /** Unique message identifier */
   id: string;
 

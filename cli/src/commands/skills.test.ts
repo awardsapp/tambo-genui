@@ -134,7 +134,7 @@ let mockEnvApiKey: string | null = null;
 jest.unstable_mockModule("../utils/dotenv-utils.js", () => ({
   findTamboApiKey: () =>
     mockEnvApiKey
-      ? { keyName: "NEXT_PUBLIC_GENUI_API_KEY", value: mockEnvApiKey }
+      ? { keyName: "NEXT_PUBLIC_TAMBO_API_KEY", value: mockEnvApiKey }
       : null,
 }));
 
@@ -218,7 +218,7 @@ describe("skills commands", () => {
     mockDeleteError = null;
     mockSkillsList = [];
     mockFiles = {
-      ".env.local": "NEXT_PUBLIC_GENUI_API_KEY=tambo_test_key",
+      ".env.local": "NEXT_PUBLIC_TAMBO_API_KEY=tambo_test_key",
     };
     mockConfirmResult = true;
     mockIsInteractive = true;
@@ -307,7 +307,7 @@ describe("skills commands", () => {
 
     it("falls back to .env when .env.local is absent", async () => {
       mockFiles = {
-        ".env": "NEXT_PUBLIC_GENUI_API_KEY=tambo_fallback_key",
+        ".env": "NEXT_PUBLIC_TAMBO_API_KEY=tambo_fallback_key",
       };
       mockSkillsList = [];
       await handleSkills("list", [], {});

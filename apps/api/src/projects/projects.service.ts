@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { decryptProviderKey } from "@workspace-cloud/core";
-import { type HydraDatabase, operations } from "@workspace-cloud/db";
+import { decryptProviderKey } from "@tambo-ai-cloud/core";
+import { type HydraDatabase, operations } from "@tambo-ai-cloud/db";
 import { DATABASE } from "../common/database-provider";
 import { APIKeyResponse } from "./dto/api-key-response.dto";
 import {

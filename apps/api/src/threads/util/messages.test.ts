@@ -5,13 +5,13 @@ import {
   LegacyComponentDecision,
   MessageRole,
   ThreadMessage,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 import {
   HydraDatabase,
   HydraTransaction,
   operations,
   schema,
-} from "@workspace-cloud/db";
+} from "@tambo-ai-cloud/db";
 import { ThreadMessageDto } from "../dto/message.dto";
 import {
   addAssistantMessageToThread,
@@ -20,8 +20,8 @@ import {
   verifyLatestMessageConsistency,
 } from "./messages";
 
-jest.mock("@workspace-cloud/db", () => {
-  const actual = jest.requireActual("@workspace-cloud/db");
+jest.mock("@tambo-ai-cloud/db", () => {
+  const actual = jest.requireActual("@tambo-ai-cloud/db");
   return {
     ...actual,
     operations: {

@@ -11,7 +11,7 @@
 | Phase 4: Registry Reuse      | ✅ Complete    | Beta SDK registry reused                 |
 | Phase 5: React Query         | ✅ Complete    | Mutations, queries, caching              |
 | Phase 6: Tool Execution      | ✅ Complete    | Auto-execution with continuation         |
-| Phase 7: Provider & Hooks    | ✅ Complete    | GenuiV1Provider, all hooks               |
+| Phase 7: Provider & Hooks    | ✅ Complete    | TamboV1Provider, all hooks               |
 | Phase 8: Component Rendering | ✅ Complete    | Renderer, state sync, props sanitization |
 | Phase 9: Context Helpers     | ✅ Complete    | userKey integrated, API calls working    |
 | Phase 9b: Documentation      | 🔄 In Progress | JSDoc done, examples needed              |
@@ -24,7 +24,7 @@
 
 ## Overview
 
-Implement a new v1 subpackage in `@workspace/react` that provides React hooks and providers for the new streaming-first v1 API defined in `plans/api-v1-proposal.md`. The v1 SDK will be importable via `@workspace/react/v1` and expose name-compatible hooks (`useGenuiV1()`, `useGenuiV1Thread()`) that work with the new AG-UI event-based streaming protocol.
+Implement a new v1 subpackage in `@tambo-ai/react` that provides React hooks and providers for the new streaming-first v1 API defined in `plans/api-v1-proposal.md`. The v1 SDK will be importable via `@tambo-ai/react/v1` and expose name-compatible hooks (`useTamboV1()`, `useTamboV1Thread()`) that work with the new AG-UI event-based streaming protocol.
 
 **Key Design Decisions:**
 
@@ -35,17 +35,17 @@ Implement a new v1 subpackage in `@workspace/react` that provides React hooks an
 
 ## Problem Statement / Motivation
 
-The current React SDK (`@workspace/react`) was built for the beta API which has accumulated inconsistencies and redundant patterns. The v1 API introduces:
+The current React SDK (`@tambo-ai/react`) was built for the beta API which has accumulated inconsistencies and redundant patterns. The v1 API introduces:
 
 1. **Streaming-only responses** via Server-Sent Events with AG-UI protocol
 2. **Content blocks pattern** (Anthropic-style) for messages with inline tool calls/results
-3. **First-class components** as content blocks that stream via `genui.component.*` events
+3. **First-class components** as content blocks that stream via `tambo.component.*` events
 4. **Bidirectional tool execution** (server-side MCP tools vs. client-side browser tools)
 5. **Simplified thread state** with clear run lifecycle (`idle`/`waiting`/`streaming`)
 
 The v1 SDK needs to:
 
-- Consume the streaming API client (`@workspace/typescript-sdk`)
+- Consume the streaming API client (`@tambo-ai/typescript-sdk`)
 - Accumulate AG-UI events into fully-formed React state (threads, messages, components)
 - Maintain familiar hook patterns for easy migration
 - Provide type-safe access to v1 API structures
@@ -54,9 +54,9 @@ The v1 SDK needs to:
 
 Create a new subpackage at `react-sdk/src/v1/` following the established MCP subpackage pattern (`react-sdk/src/mcp/`). The v1 SDK will:
 
-1. **Export via package.json**: Add `"./v1"` entry point for `@workspace/react/v1` imports
-2. **Provider hierarchy**: `GenuiV1Provider` wraps streaming state management
-3. **Hook layer**: `useGenuiV1()`, `useGenuiV1Thread()`, `useGenuiV1Messages()` expose accumulated state
+1. **Export via package.json**: Add `"./v1"` entry point for `@tambo-ai/react/v1` imports
+2. **Provider hierarchy**: `TamboV1Provider` wraps streaming state management
+3. **Hook layer**: `useTamboV1()`, `useTamboV1Thread()`, `useTamboV1Messages()` expose accumulated state
 4. **Event accumulation**: Use `useReducer` to transform AG-UI event streams into React state
 5. **React Query integration**: Leverage existing caching for thread list, thread fetching
 6. **Type definitions**: Import v1 types from TypeScript SDK, extend with React-specific interfaces
@@ -69,17 +69,17 @@ The v1 SDK will be developed and released in phases to minimize risk for existin
 
 **Phase 1: Early Adopter Testing (v1 Subpackage)**
 
-- Develop v1 SDK as a subpackage at `@workspace/react/v1`
+- Develop v1 SDK as a subpackage at `@tambo-ai/react/v1`
 - Release to select group of early adopters for testing and feedback
 - Beta SDK remains unchanged and fully supported
-- Users can import both: `@workspace/react` (beta) and `@workspace/react/v1`
+- Users can import both: `@tambo-ai/react` (beta) and `@tambo-ai/react/v1`
 - Iterate based on early adopter feedback
 
 **Phase 2: Breaking Change Release (1.0)**
 
 - Once v1 is validated and stable with early adopters
 - Move v1 implementation to main package exports
-- Release as `@workspace/react@1.0.0` with breaking changes
+- Release as `@tambo-ai/react@1.0.0` with breaking changes
 - Provide comprehensive migration guide with:
   - Side-by-side code comparisons (beta → v1)
   - Breaking changes documentation
@@ -100,18 +100,18 @@ graph TB
     end
 
     subgraph "React SDK v1"
-        Provider[GenuiV1Provider]
+        Provider[TamboV1Provider]
         StreamContext[Stream State Context]
         RegistryContext[Component Registry Context]
         Reducer[Event Reducer]
     end
 
     subgraph "Streaming Layer"
-        TSDK[@workspace/typescript-sdk]
+        TSDK[@tambo-ai/typescript-sdk]
         SSE[SSE Stream Handler]
     end
 
-    subgraph "Genui Cloud API"
+    subgraph "Tambo Cloud API"
         V1API[/v1/threads/runs endpoint]
     end
 
@@ -131,16 +131,16 @@ graph TB
 react-sdk/src/v1/
 ├── index.ts                              # Public exports
 ├── providers/
-│   ├── genui-v1-provider.tsx            # Main provider component
-│   ├── genui-v1-stream-context.tsx      # Stream state management
-│   ├── genui-v1-registry-context.tsx    # Component/tool registry
+│   ├── tambo-v1-provider.tsx            # Main provider component
+│   ├── tambo-v1-stream-context.tsx      # Stream state management
+│   ├── tambo-v1-registry-context.tsx    # Component/tool registry
 │   └── index.ts
 ├── hooks/
-│   ├── use-genui-v1.ts                  # Main hook (combines all contexts)
-│   ├── use-genui-v1-thread.ts           # Thread operations
-│   ├── use-genui-v1-messages.ts         # Message list access
-│   ├── use-genui-v1-send-message.ts     # Send message mutation
-│   ├── use-genui-v1-component-state.ts  # Component state management
+│   ├── use-tambo-v1.ts                  # Main hook (combines all contexts)
+│   ├── use-tambo-v1-thread.ts           # Thread operations
+│   ├── use-tambo-v1-messages.ts         # Message list access
+│   ├── use-tambo-v1-send-message.ts     # Send message mutation
+│   ├── use-tambo-v1-component-state.ts  # Component state management
 │   └── index.ts
 ├── types/
 │   ├── thread.ts                        # Thread type extensions
@@ -169,15 +169,15 @@ react-sdk/src/v1/
 
 **Goals:**
 
-- **CRITICAL:** Verify `GenuiClientProvider` actually works with v1 API (don't assume)
-- Determine if `GenuiRegistryProvider` can be reused or needs v1-specific version
+- **CRITICAL:** Verify `TamboClientProvider` actually works with v1 API (don't assume)
+- Determine if `TamboRegistryProvider` can be reused or needs v1-specific version
 - Extract tool execution utilities that both APIs can use
 - Ensure existing SDK still works (no breaking changes)
 
 **Tasks:**
 
-- [x] **Verify GenuiClientProvider v1 Compatibility** - SKIPPED: Deferred to Phase 7
-- [x] **Assess GenuiRegistryProvider Reusability** - SKIPPED: Deferred to Phase 4
+- [x] **Verify TamboClientProvider v1 Compatibility** - SKIPPED: Deferred to Phase 7
+- [x] **Assess TamboRegistryProvider Reusability** - SKIPPED: Deferred to Phase 4
 - [x] Extract tool execution utilities - SKIPPED: Will implement directly in Phase 6 when needed
 - [x] Write tests for extracted utilities - SKIPPED
 - [x] Verify existing SDK tests still pass - SKIPPED: No changes to beta SDK in this phase
@@ -209,10 +209,10 @@ This phase was skipped in favor of a direct implementation approach. Analysis de
 
 - [x] Create `/react-sdk/src/v1/` directory structure - Created v1/, v1/types/, v1/utils/
 - [x] Add `"./v1"` export to `react-sdk/package.json` - Added subpackage export configuration
-- [x] Define `GenuiV1Thread` type extending API Thread type - Imported from typescript-sdk, added StreamingState wrapper
-- [x] Define `GenuiV1Message` type with rendered components - Imported Content types from typescript-sdk
-- [x] Define `GenuiV1Component` type for registered components - Deferred to Phase 4 (registry)
-- [x] Define `GenuiV1Tool` type for registered tools - Deferred to Phase 4 (registry)
+- [x] Define `TamboV1Thread` type extending API Thread type - Imported from typescript-sdk, added StreamingState wrapper
+- [x] Define `TamboV1Message` type with rendered components - Imported Content types from typescript-sdk
+- [x] Define `TamboV1Component` type for registered components - Deferred to Phase 4 (registry)
+- [x] Define `TamboV1Tool` type for registered tools - Deferred to Phase 4 (registry)
 - [x] Import AG-UI event types from `@ag-ui/core` - Added @ag-ui/core@^0.0.42 dependency, types imported
 - [x] Create event accumulator state types (`StreamState`, `StreamEvent`) - Defined in Phase 2
 - [x] Write unit tests for type definitions - Deferred to Phase 10
@@ -221,32 +221,32 @@ This phase was skipped in favor of a direct implementation approach. Analysis de
 
 ```typescript
 // react-sdk/src/v1/types/thread.ts
-import type { Thread, RunStatus } from "@workspace/typescript-sdk/v1";
+import type { Thread, RunStatus } from "@tambo-ai/typescript-sdk/v1";
 
-export interface GenuiV1Thread extends Thread {
-  messages: GenuiV1Message[];
+export interface TamboV1Thread extends Thread {
+  messages: TamboV1Message[];
   // React-specific additions
   isLoading?: boolean;
   error?: Error;
 }
 
 // react-sdk/src/v1/types/message.ts
-import type { Message, Content } from "@workspace/typescript-sdk/v1";
+import type { Message, Content } from "@tambo-ai/typescript-sdk/v1";
 import type { ReactElement } from "react";
 
-export interface GenuiV1Message extends Message {
+export interface TamboV1Message extends Message {
   // Rendered React elements for component content blocks
   renderedComponents?: Map<string, ReactElement>;
 }
 
 // react-sdk/src/v1/types/component.ts
 import type { ComponentType } from "react";
-import type { AvailableComponent } from "@workspace/typescript-sdk/v1";
+import type { AvailableComponent } from "@tambo-ai/typescript-sdk/v1";
 
-export interface GenuiV1Component extends AvailableComponent {
+export interface TamboV1Component extends AvailableComponent {
   component: ComponentType<any>;
   loadingComponent?: ComponentType<any>;
-  associatedTools?: GenuiV1Tool[];
+  associatedTools?: TamboV1Tool[];
 }
 
 // react-sdk/src/v1/types/event.ts
@@ -267,15 +267,15 @@ export type StreamingState =
 - [x] All types compile without errors - Zero TypeScript errors
 - [x] Types exported from `react-sdk/src/v1/index.ts` - Header with import guidance, no barrel re-exports
 - [x] Build succeeds with dual CJS/ESM outputs - Not tested yet (deferred to Phase 10)
-- [x] Import from `@workspace/react/v1` works in test file - Not tested yet (deferred to Phase 10)
+- [x] Import from `@tambo-ai/react/v1` works in test file - Not tested yet (deferred to Phase 10)
 
 **Actual Implementation:**
 
 Created type system following "import from source" philosophy:
 
-- **types/event.ts**: Defines only Genui custom events (ComponentStartEvent, ComponentPropsDeltaEvent, etc.)
-- **types/message.ts**: Re-exports SDK content types with aliases (TextContent, ToolUseContent, etc.) + GenuiV1Message
-- **types/thread.ts**: Re-exports SDK thread types + defines GenuiV1Thread with streaming state
+- **types/event.ts**: Defines only Tambo custom events (ComponentStartEvent, ComponentPropsDeltaEvent, etc.)
+- **types/message.ts**: Re-exports SDK content types with aliases (TextContent, ToolUseContent, etc.) + TamboV1Message
+- **types/thread.ts**: Re-exports SDK thread types + defines TamboV1Thread with streaming state
 - **types/component.ts**: Stub file for future component types
 - **types/tool.ts**: Stub file for future tool types
 - **v1/index.ts**: Entry point with documentation, NO type re-exports (users import from specific files)
@@ -284,7 +284,7 @@ Key decisions:
 
 - Deleted types/index.ts barrel export to prevent confusion about type sources
 - Users import AG-UI events directly from @ag-ui/core
-- Users import SDK types directly from @workspace/typescript-sdk
+- Users import SDK types directly from @tambo-ai/typescript-sdk
 - Only React-specific types are exported from v1 subpackage
 
 #### Phase 2: Event Accumulation Logic (Est: 2-3 days)
@@ -295,7 +295,7 @@ Key decisions:
 
 - Implement reducer for AG-UI event → React state transformation
 - Handle all standard AG-UI events (TEXT*MESSAGE*_, TOOL*CALL*_, RUN\_\*)
-- Handle Genui CUSTOM events (genui.component.\*, genui.run.awaiting_input)
+- Handle Tambo CUSTOM events (tambo.component.\*, tambo.run.awaiting_input)
 
 **Tasks:**
 
@@ -308,11 +308,11 @@ Key decisions:
 - [x] Handle `TOOL_CALL_ARGS` - accumulate JSON args string, parse on END - ✅ handleToolCallArgs() with event.delta
 - [x] Handle `TOOL_CALL_END` - finalize tool call - ✅ handleToolCallEnd()
 - [x] Handle `TOOL_CALL_RESULT` - create tool_result content block (server-side tools) - ✅ handleToolCallResult()
-- [x] Handle `CUSTOM: genui.component.start` - create component content block - ✅ handleComponentStart()
-- [x] Handle `CUSTOM: genui.component.props_delta` - apply JSON Patch to props - ✅ handleComponentPropsDelta()
-- [x] Handle `CUSTOM: genui.component.state_delta` - apply JSON Patch to state - ✅ handleComponentStateDelta()
-- [x] Handle `CUSTOM: genui.component.end` - finalize component - ✅ handleComponentEnd()
-- [x] Handle `CUSTOM: genui.run.awaiting_input` - transition to awaiting state - ✅ handleRunAwaitingInput()
+- [x] Handle `CUSTOM: tambo.component.start` - create component content block - ✅ handleComponentStart()
+- [x] Handle `CUSTOM: tambo.component.props_delta` - apply JSON Patch to props - ✅ handleComponentPropsDelta()
+- [x] Handle `CUSTOM: tambo.component.state_delta` - apply JSON Patch to state - ✅ handleComponentStateDelta()
+- [x] Handle `CUSTOM: tambo.component.end` - finalize component - ✅ handleComponentEnd()
+- [x] Handle `CUSTOM: tambo.run.awaiting_input` - transition to awaiting state - ✅ handleRunAwaitingInput()
 - [x] Handle `RUN_FINISHED` - transition to complete state - ✅ handleRunFinished()
 - [x] Handle `RUN_ERROR` - transition to error state - ✅ handleRunError()
 - [x] Add `fast-json-patch` dependency to react-sdk/package.json - Added ^3.1.1
@@ -325,10 +325,10 @@ Key decisions:
 ```typescript
 // react-sdk/src/v1/utils/event-accumulator.ts
 import { EventType, type BaseEvent } from "@ag-ui/core";
-import type { GenuiV1Thread, GenuiV1Message, StreamingState } from "../types";
+import type { TamboV1Thread, TamboV1Message, StreamingState } from "../types";
 
 export type StreamState = {
-  thread: GenuiV1Thread;
+  thread: TamboV1Thread;
   streamingState: StreamingState;
   pendingToolCalls: Map<string, { name: string; input: string }>;
   accumulatingComponents: Map<
@@ -363,7 +363,7 @@ export function streamReducer(
     case EventType.TEXT_MESSAGE_START: {
       const e = event as TextMessageStartEvent;
       // Create new message stub
-      const newMessage: GenuiV1Message = {
+      const newMessage: TamboV1Message = {
         id: e.messageId,
         role: e.role,
         content: [],
@@ -439,7 +439,7 @@ function isTextMessageContentEvent(
 
 // react-sdk/src/v1/utils/json-patch.ts
 import { applyPatch, type Operation } from "fast-json-patch";
-import type { JsonPatchOperation } from "@workspace/typescript-sdk/v1";
+import type { JsonPatchOperation } from "@tambo-ai/typescript-sdk/v1";
 
 /**
  * Apply JSON Patch operations to an object (RFC 6902).
@@ -520,8 +520,8 @@ Key fixes during implementation:
 - [x] Implement `useStreamHandler()` hook wrapping SDK `Stream.fromSSEResponse()` - ✅ Implemented native SSE parser in stream-handler.ts
 - [x] Handle stream lifecycle (connecting → streaming → complete → idle) - ✅ Managed via StreamingState in reducer
 - [ ] Implement automatic reconnection on disconnect (if API supports) - Deferred to Phase 5 (React Query integration)
-- [x] Create `GenuiV1StreamContext` with state + dispatch - ✅ Split contexts for optimal re-render performance
-- [x] Implement `GenuiV1StreamProvider` using `useReducer(streamReducer)` - ✅ Provider with flexible initialization
+- [x] Create `TamboV1StreamContext` with state + dispatch - ✅ Split contexts for optimal re-render performance
+- [x] Implement `TamboV1StreamProvider` using `useReducer(streamReducer)` - ✅ Provider with flexible initialization
 - [x] Handle stream cancellation via AbortController - ✅ Built into handleSSEStream generator function
 - [ ] Implement error boundaries for stream errors - Deferred to Phase 8 (Component Rendering)
 - [x] Add debug logging for event flow (dev mode only) - ✅ Optional debug flag in stream handler
@@ -546,7 +546,7 @@ export async function* handleEventStream(
   }
 }
 
-// react-sdk/src/v1/providers/genui-v1-stream-context.tsx
+// react-sdk/src/v1/providers/tambo-v1-stream-context.tsx
 import { createContext, useReducer, useContext, type Dispatch } from 'react';
 import type { BaseEvent } from '@ag-ui/core';
 import { streamReducer, type StreamState } from '../utils/event-accumulator';
@@ -554,7 +554,7 @@ import { streamReducer, type StreamState } from '../utils/event-accumulator';
 const StreamStateContext = createContext<StreamState | null>(null);
 const StreamDispatchContext = createContext<Dispatch<StreamAction> | null>(null);
 
-export function GenuiV1StreamProvider({ children, userKey }: { children: ReactNode; userKey?: string }) {
+export function TamboV1StreamProvider({ children, userKey }: { children: ReactNode; userKey?: string }) {
   // Lazy initializer - userKey stored in state, threads managed via dispatch
   const [state, dispatch] = useReducer(
     streamReducer,
@@ -578,7 +578,7 @@ export function GenuiV1StreamProvider({ children, userKey }: { children: ReactNo
 export function useStreamState() {
   const context = useContext(StreamStateContext);
   if (!context) {
-    throw new Error('useStreamState must be used within GenuiV1StreamProvider');
+    throw new Error('useStreamState must be used within TamboV1StreamProvider');
   }
   return context;
 }
@@ -586,7 +586,7 @@ export function useStreamState() {
 export function useStreamDispatch() {
   const context = useContext(StreamDispatchContext);
   if (!context) {
-    throw new Error('useStreamDispatch must be used within GenuiV1StreamProvider');
+    throw new Error('useStreamDispatch must be used within TamboV1StreamProvider');
   }
   return context;
 }
@@ -610,9 +610,9 @@ Created complete streaming infrastructure in v1/:
   - Optional debug logging (dev mode only)
   - Simple pass-through wrapper that adds observability
 
-- **providers/genui-v1-stream-context.tsx**: React Context for stream state
+- **providers/tambo-v1-stream-context.tsx**: React Context for stream state
   - Split-context pattern (separate StreamStateContext and StreamDispatchContext)
-  - GenuiV1StreamProvider with useReducer(streamReducer)
+  - TamboV1StreamProvider with useReducer(streamReducer)
   - useStreamState() and useStreamDispatch() hooks with error checking
   - useThreadManagement() hook for initThread/switchThread/startNewThread
   - userKey stored in StreamState (not a prop-controlled threadId)
@@ -636,17 +636,17 @@ Key design decisions:
 
 **Goals:**
 
-- Reuse existing `GenuiRegistryProvider` from beta SDK (confirmed compatible in Phase 0)
+- Reuse existing `TamboRegistryProvider` from beta SDK (confirmed compatible in Phase 0)
 - Create v1-specific type aliases and conversion utilities only where needed
 - Minimal new code - maximize reuse
 
 **Rationale:**
 
-After Phase 0 analysis, `GenuiRegistryProvider` is API-agnostic - it just stores Maps of components/tools and handles schema conversion. The v1 API needs the same registry functionality, so we'll reuse it directly rather than duplicating (~150 LOC saved).
+After Phase 0 analysis, `TamboRegistryProvider` is API-agnostic - it just stores Maps of components/tools and handles schema conversion. The v1 API needs the same registry functionality, so we'll reuse it directly rather than duplicating (~150 LOC saved).
 
 **Tasks:**
 
-- [x] Import and re-export `GenuiRegistryProvider` from beta SDK in `src/v1/providers/index.ts` - ✅ Re-exported with context
+- [x] Import and re-export `TamboRegistryProvider` from beta SDK in `src/v1/providers/index.ts` - ✅ Re-exported with context
 - [x] Create v1 type aliases in `src/v1/types/component.ts` and `src/v1/types/tool.ts` (if types differ from beta) - ✅ Already existed from Phase 1
 - [x] Create conversion utilities in `src/v1/utils/registry-conversion.ts`:
   - `toAvailableComponents(components)` - Map → v1 API format - ✅ Implemented with schema conversion
@@ -658,17 +658,17 @@ After Phase 0 analysis, `GenuiRegistryProvider` is API-agnostic - it just stores
 
 ```typescript
 // react-sdk/src/v1/providers/index.ts
-export { GenuiRegistryProvider } from "../../providers/genui-registry-provider";
+export { TamboRegistryProvider } from "../../providers/tambo-registry-provider";
 
 // react-sdk/src/v1/utils/registry-conversion.ts
-import type { GenuiComponent, GenuiTool } from "../../model/component-metadata";
-import type { AvailableComponent, Tool } from "@workspace/typescript-sdk/v1";
+import type { TamboComponent, TamboTool } from "../../model/component-metadata";
+import type { AvailableComponent, Tool } from "@tambo-ai/typescript-sdk/v1";
 
 /**
  * Convert registered components to v1 API format.
  */
 export function toAvailableComponents(
-  components: Map<string, GenuiComponent>,
+  components: Map<string, TamboComponent>,
 ): AvailableComponent[] {
   return Array.from(components.values()).map((c) => ({
     name: c.name,
@@ -681,7 +681,7 @@ export function toAvailableComponents(
 /**
  * Convert registered tools to v1 API format.
  */
-export function toAvailableTools(tools: Map<string, GenuiTool>): Tool[] {
+export function toAvailableTools(tools: Map<string, TamboTool>): Tool[] {
   return Array.from(tools.values()).map((t) => ({
     name: t.name,
     description: t.description,
@@ -692,7 +692,7 @@ export function toAvailableTools(tools: Map<string, GenuiTool>): Tool[] {
 
 **Success Criteria:**
 
-- [x] Beta `GenuiRegistryProvider` works without modification for v1 - ✅ Re-exported directly
+- [x] Beta `TamboRegistryProvider` works without modification for v1 - ✅ Re-exported directly
 - [x] Conversion utilities correctly transform to v1 API format - ✅ Handles Standard Schema → JSON Schema
 - [x] No duplication of registry logic - ✅ Reused 100% of registry code
 - [ ] Tests verify conversion accuracy - Deferred to Phase 10
@@ -702,23 +702,23 @@ export function toAvailableTools(tools: Map<string, GenuiTool>): Tool[] {
 Created registry conversion layer in v1/:
 
 - **providers/index.ts**: Re-exports from beta SDK
-  - GenuiRegistryProvider (unchanged, works for both APIs)
-  - GenuiRegistryContext and type
+  - TamboRegistryProvider (unchanged, works for both APIs)
+  - TamboRegistryContext and type
   - Zero duplication - full reuse of beta SDK registry logic
 
 - **utils/registry-conversion.ts**: Conversion utilities for v1 API format
-  - toAvailableComponent() - Converts GenuiComponent → AvailableComponent
+  - toAvailableComponent() - Converts TamboComponent → AvailableComponent
   - toAvailableComponents() - Batch conversion with error handling
-  - toAvailableTool() - Converts GenuiTool → Tool
+  - toAvailableTool() - Converts TamboTool → Tool
   - toAvailableTools() - Batch conversion with error handling
   - Uses schemaToJsonSchema() from beta SDK to handle Standard Schema → JSON Schema conversion
   - Graceful error handling with console warnings for invalid components/tools
 
 Key differences between beta and v1:
 
-- **Beta SDK**: GenuiComponent uses `propsSchema` (Standard Schema or JSON Schema)
+- **Beta SDK**: TamboComponent uses `propsSchema` (Standard Schema or JSON Schema)
 - **v1 API**: AvailableComponent requires JSON Schema only for `propsSchema`
-- **State schema**: v1 supports `stateSchema` but beta SDK doesn't have it on GenuiComponent
+- **State schema**: v1 supports `stateSchema` but beta SDK doesn't have it on TamboComponent
 - **Conversion**: Automatically converts Zod/Valibot/other Standard Schemas to JSON Schema
 
 Components/tools missing required schemas will be skipped with warnings during conversion.
@@ -735,12 +735,12 @@ Components/tools missing required schemas will be skipped with warnings during c
 
 **Tasks:**
 
-- [x] Create `useGenuiV1SendMessage()` mutation hook - ✅ Implemented with optional threadId
+- [x] Create `useTamboV1SendMessage()` mutation hook - ✅ Implemented with optional threadId
 - [x] Handle streaming response in mutation `onSuccess` - ✅ Query invalidation on completion
 - [x] Dispatch AG-UI events to stream context during mutation - ✅ Events dispatched with threadId
 - [ ] Implement optimistic updates for new messages - Deferred (not required for MVP)
-- [x] Create `useGenuiV1ThreadList()` query hook - ✅ Implemented with pagination
-- [x] Create `useGenuiV1Thread()` query hook - ✅ Implemented (renamed from Get)
+- [x] Create `useTamboV1ThreadList()` query hook - ✅ Implemented with pagination
+- [x] Create `useTamboV1Thread()` query hook - ✅ Implemented (renamed from Get)
 - [x] Implement automatic refetch on thread updates - ✅ Query invalidation in onSuccess
 - [ ] Handle tool execution within mutation (automatic continuation) - Deferred to Phase 6
 - [x] Add query invalidation on successful mutations - ✅ Invalidates thread queries
@@ -750,15 +750,15 @@ Components/tools missing required schemas will be skipped with warnings during c
 **Files:**
 
 ```typescript
-// react-sdk/src/v1/hooks/use-genui-v1-send-message.ts
+// react-sdk/src/v1/hooks/use-tambo-v1-send-message.ts
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useGenuiClient } from "../providers/genui-v1-provider";
-import { useStreamDispatch } from "../providers/genui-v1-stream-context";
-import { useRegistry } from "../providers/genui-v1-registry-context";
+import { useTamboClient } from "../providers/tambo-v1-provider";
+import { useStreamDispatch } from "../providers/tambo-v1-stream-context";
+import { useRegistry } from "../providers/tambo-v1-registry-context";
 import { handleSSEStream } from "../utils/stream-handler";
 
-export function useGenuiV1SendMessage(threadId: string) {
-  const client = useGenuiClient();
+export function useTamboV1SendMessage(threadId: string) {
+  const client = useTamboClient();
   const dispatch = useStreamDispatch();
   const { getAvailableComponents, getAvailableTools } = useRegistry();
   const queryClient = useQueryClient();
@@ -784,7 +784,7 @@ export function useGenuiV1SendMessage(threadId: string) {
         // Check for awaiting_input (client-side tool calls)
         if (
           event.type === "CUSTOM" &&
-          event.name === "genui.run.awaiting_input"
+          event.name === "tambo.run.awaiting_input"
         ) {
           // Execute tools and continue (Phase 6)
           await executeToolsAndContinue(event.value.pendingToolCallIds);
@@ -798,18 +798,18 @@ export function useGenuiV1SendMessage(threadId: string) {
   });
 }
 
-// react-sdk/src/v1/hooks/use-genui-v1-thread.ts
+// react-sdk/src/v1/hooks/use-tambo-v1-thread.ts
 import { useQuery } from "@tanstack/react-query";
-import { useGenuiClient } from "../providers/genui-v1-provider";
+import { useTamboClient } from "../providers/tambo-v1-provider";
 
-export function useGenuiV1Thread(threadId: string) {
-  const client = useGenuiClient();
+export function useTamboV1Thread(threadId: string) {
+  const client = useTamboClient();
 
   return useQuery({
     queryKey: ["v1-threads", threadId],
     queryFn: async () => {
       const response = await client.threads.get(threadId);
-      return response as GenuiV1Thread;
+      return response as TamboV1Thread;
     },
     staleTime: 1000, // Consider stale after 1s (real-time data)
   });
@@ -828,19 +828,19 @@ export function useGenuiV1Thread(threadId: string) {
 
 Created React Query hooks in v1/hooks/:
 
-- **use-genui-v1-send-message.ts**: Mutation hook for sending messages
+- **use-tambo-v1-send-message.ts**: Mutation hook for sending messages
   - Handles both thread creation (no threadId) and existing threads (with threadId)
   - Extracts threadId from RUN_STARTED event when creating new threads
   - Dispatches AG-UI events to stream context with threadId
   - Invalidates thread queries on success
   - Returns { threadId } from mutation result
 
-- **use-genui-v1-thread.ts**: Query hook for fetching single thread
+- **use-tambo-v1-thread.ts**: Query hook for fetching single thread
   - Uses React Query with ["v1-threads", threadId] key
   - Returns ThreadRetrieveResponse directly from SDK (no transformation)
   - Stale time: 1s for real-time data
 
-- **use-genui-v1-thread-list.ts**: Query hook for fetching thread list
+- **use-tambo-v1-thread-list.ts**: Query hook for fetching thread list
   - Supports pagination via cursor, limit, userKey
   - Returns ThreadListResponse directly from SDK
   - Stale time: 5s for list data
@@ -867,7 +867,7 @@ After Phase 5 implementation, additional refactoring was done based on code revi
    - Only exception: package entry points
 
 4. **Documentation Improvements** - Simplified examples:
-   - useGenuiV1SendMessage shows single component handling both scenarios
+   - useTamboV1SendMessage shows single component handling both scenarios
    - Removed redundant separate examples for with/without threadId
 
 #### Phase 6: Automatic Tool Execution (Est: 2-3 days)
@@ -876,7 +876,7 @@ After Phase 5 implementation, additional refactoring was done based on code revi
 
 **Goals:**
 
-- Detect `genui.run.awaiting_input` events
+- Detect `tambo.run.awaiting_input` events
 - Execute client-side tools automatically
 - Continue stream with tool results
 
@@ -888,11 +888,11 @@ After Phase 5 implementation, additional refactoring was done based on code revi
 - [x] Handle tool errors gracefully (isError flag) - ✅ Returns tool_result with isError: true
 - [x] Transform tool results to `ToolResultContent` format - ✅ Uses transformToContent if provided
 - [x] Use `transformToContent` if provided by tool - ✅ Falls back to JSON stringify
-- [x] Implement `continueWithToolResults()` mutation - ✅ In useGenuiV1SendMessage via executeToolsAndContinue()
+- [x] Implement `continueWithToolResults()` mutation - ✅ In useTamboV1SendMessage via executeToolsAndContinue()
 - [x] POST tool results to continue run (with `previousRunId`) - ✅ Uses client.threads.runs.run() with previousRunId
 - [x] Handle multi-tool scenarios (execute all, then continue) - ✅ executeAllPendingTools() processes all pending tools
 - [ ] Add configurable timeout for tool execution - Deferred
-- [x] Add `mcpServers` prop to GenuiV1Provider for MCP server registration
+- [x] Add `mcpServers` prop to TamboV1Provider for MCP server registration
 - [x] Add `onCallUnregisteredTool` prop callback for handling unknown tools
 - [x] Write tests for tool execution flow - ✅ tool-executor.test.ts
 - [ ] Test error handling and recovery - Deferred to Phase 10
@@ -914,8 +914,8 @@ Created tool execution system in v1/:
   - getToolCallsById() retrieves specific tool calls for execution
   - clearToolCalls() removes executed tools from tracking
 
-- **hooks/use-genui-v1-send-message.ts**: Integrated tool execution
-  - Detects genui.run.awaiting_input custom events
+- **hooks/use-tambo-v1-send-message.ts**: Integrated tool execution
+  - Detects tambo.run.awaiting_input custom events
   - Calls executeAllPendingTools() with tracked tool calls
   - Continues run with tool results via previousRunId
   - Flat loop pattern handles multi-round tool execution (tool→AI→tool→AI chains)
@@ -924,11 +924,11 @@ Created tool execution system in v1/:
 
 ```typescript
 // react-sdk/src/v1/utils/tool-executor.ts
-import type { GenuiV1Tool } from "../types";
-import type { ToolResultContent } from "@workspace/typescript-sdk/v1";
+import type { TamboV1Tool } from "../types";
+import type { ToolResultContent } from "@tambo-ai/typescript-sdk/v1";
 
 export async function executeClientTool(
-  tool: GenuiV1Tool,
+  tool: TamboV1Tool,
   toolCallId: string,
   args: Record<string, unknown>,
 ): Promise<ToolResultContent> {
@@ -973,7 +973,7 @@ export async function executeClientTool(
 
 export async function executeAllPendingTools(
   toolCalls: Map<string, { name: string; input: Record<string, unknown> }>,
-  registry: Map<string, GenuiV1Tool>,
+  registry: Map<string, TamboV1Tool>,
 ): Promise<ToolResultContent[]> {
   const results: ToolResultContent[] = [];
 
@@ -1013,22 +1013,22 @@ export async function executeAllPendingTools(
 
 **Goals:**
 
-- Implement `GenuiV1Provider` reusing existing providers where possible
-- Create main `useGenuiV1()` hook exposing combined state
+- Implement `TamboV1Provider` reusing existing providers where possible
+- Create main `useTamboV1()` hook exposing combined state
 - Implement specialized hooks for common operations
 
 **Tasks:**
 
-- [x] Create `GenuiV1Provider` wrapping reusable providers - ✅ Composes all necessary providers
-- [x] Reuse `GenuiClientProvider` (works as-is with v1 API) - ✅ Re-exported and used
-- [x] Reuse `GenuiRegistryProvider` (via extracted `useRegistryState()`) - ✅ Re-exported and used
-- [x] Implement `useGenuiV1()` combining all context hooks - ✅ Returns thread state, messages, streaming state
-- [x] Implement `useGenuiV1Thread()` for thread state - ✅ React Query hook for fetching single thread
-- [x] Implement `useGenuiV1Messages()` for message list - ✅ Hook for accessing thread messages with rendering
-- [x] Implement `useGenuiV1SendMessage()` for sending - ✅ Mutation hook with streaming and tool execution
-- [x] Implement `useGenuiV1ComponentState()` for component state updates - ✅ Bidirectional state sync (Phase 8)
-- [x] Implement dynamic registration via useGenuiRegistry() - ✅ Re-exported from beta SDK
-- [x] Add `userToken` prop for OAuth authentication pass-through to GenuiClientProvider
+- [x] Create `TamboV1Provider` wrapping reusable providers - ✅ Composes all necessary providers
+- [x] Reuse `TamboClientProvider` (works as-is with v1 API) - ✅ Re-exported and used
+- [x] Reuse `TamboRegistryProvider` (via extracted `useRegistryState()`) - ✅ Re-exported and used
+- [x] Implement `useTamboV1()` combining all context hooks - ✅ Returns thread state, messages, streaming state
+- [x] Implement `useTamboV1Thread()` for thread state - ✅ React Query hook for fetching single thread
+- [x] Implement `useTamboV1Messages()` for message list - ✅ Hook for accessing thread messages with rendering
+- [x] Implement `useTamboV1SendMessage()` for sending - ✅ Mutation hook with streaming and tool execution
+- [x] Implement `useTamboV1ComponentState()` for component state updates - ✅ Bidirectional state sync (Phase 8)
+- [x] Implement dynamic registration via useTamboRegistry() - ✅ Re-exported from beta SDK
+- [x] Add `userToken` prop for OAuth authentication pass-through to TamboClientProvider
 - [ ] Add `autoGenerateThreadName` prop - Deferred (requires server-side support)
 - [ ] Add `autoGenerateNameThreshold` prop - Deferred (requires server-side support)
 - [x] Add hook documentation with JSDoc comments - ✅ All hooks documented
@@ -1039,76 +1039,76 @@ export async function executeAllPendingTools(
 
 Created provider and hooks system in v1/:
 
-- **providers/genui-v1-provider.tsx**: Main provider component
-  - Composes GenuiClientProvider, GenuiRegistryProvider, GenuiContextHelpersProvider, GenuiV1StreamProvider
-  - Supports all authentication options (apiKey, genuiUrl, environment, userToken)
+- **providers/tambo-v1-provider.tsx**: Main provider component
+  - Composes TamboClientProvider, TamboRegistryProvider, TamboContextHelpersProvider, TamboV1StreamProvider
+  - Supports all authentication options (apiKey, tamboUrl, environment, userToken)
   - Component/tool/MCP server registration via props
   - Resource registration (static and dynamic)
   - Context helpers configuration
   - ContextKey for thread scoping
   - Optional custom QueryClient
 
-- **hooks/use-genui-v1.ts**: Main hook for thread state
+- **hooks/use-tambo-v1.ts**: Main hook for thread state
   - Returns messages, isStreaming, streamingState, thread management functions
   - Integrates with stream context for real-time updates
   - Provides startNewThread(), switchThread(), initThread() functions
 
-- **hooks/use-genui-v1-thread-input.ts**: Input management hook
+- **hooks/use-tambo-v1-thread-input.ts**: Input management hook
   - Manages input value state with setValue
   - submit() function sends message and clears input
   - Returns isPending, isError, error, isSuccess, reset
-  - Mirrors beta SDK's useGenuiThreadInput API
+  - Mirrors beta SDK's useTamboThreadInput API
 
 **Files:**
 
 ```typescript
-// react-sdk/src/v1/providers/genui-v1-provider.tsx
-import { GenuiClientProvider } from '../../providers/genui-client-provider';
-import { GenuiRegistryProvider } from '../../providers/genui-registry-provider';
-import { GenuiV1StreamProvider } from './genui-v1-stream-context';
+// react-sdk/src/v1/providers/tambo-v1-provider.tsx
+import { TamboClientProvider } from '../../providers/tambo-client-provider';
+import { TamboRegistryProvider } from '../../providers/tambo-registry-provider';
+import { TamboV1StreamProvider } from './tambo-v1-stream-context';
 
-export interface GenuiV1ProviderProps {
+export interface TamboV1ProviderProps {
   apiKey: string;
   apiBaseUrl?: string;
   children: ReactNode;
 
-  // Registry props (passed through to GenuiRegistryProvider)
-  components?: GenuiComponent[];
-  tools?: GenuiTool[];
+  // Registry props (passed through to TamboRegistryProvider)
+  components?: TamboComponent[];
+  tools?: TamboTool[];
 
   // Optional custom query client
   queryClient?: QueryClient;
 }
 
-export function GenuiV1Provider({
+export function TamboV1Provider({
   apiKey,
   apiBaseUrl,
   children,
   components,
   tools,
   queryClient,
-}: GenuiV1ProviderProps) {
+}: TamboV1ProviderProps) {
   return (
-    <GenuiClientProvider
+    <TamboClientProvider
       apiKey={apiKey}
-      genuiUrl={apiBaseUrl}
+      tamboUrl={apiBaseUrl}
       queryClient={queryClient}
     >
-      <GenuiRegistryProvider
+      <TamboRegistryProvider
         components={components}
         tools={tools}
       >
-        <GenuiV1StreamProvider>
+        <TamboV1StreamProvider>
           {children}
-        </GenuiV1StreamProvider>
-      </GenuiRegistryProvider>
-    </GenuiClientProvider>
+        </TamboV1StreamProvider>
+      </TamboRegistryProvider>
+    </TamboClientProvider>
   );
 }
 
-// react-sdk/src/v1/hooks/use-genui-v1.ts
-export function useGenuiV1() {
-  const client = useGenuiClient();
+// react-sdk/src/v1/hooks/use-tambo-v1.ts
+export function useTamboV1() {
+  const client = useTamboClient();
   const streamState = useStreamState();
   const registry = useRegistry();
 
@@ -1157,17 +1157,17 @@ export function useGenuiV1() {
 - [x] Render loading component during props streaming - ✅ Uses loadingComponent during streaming
 - [x] Switch to main component when props complete - ✅ Checks streamingState !== "done"
 - [x] Pass streamed props to component via React props - ✅ Props spread to component with sanitization
-- [x] Implement `useGenuiV1ComponentState()` hook for components - ✅ Bidirectional sync with debouncing
+- [x] Implement `useTamboV1ComponentState()` hook for components - ✅ Bidirectional sync with debouncing
 - [x] Handle JSON Patch state updates from server - ✅ Syncs from streamState
 - [x] Implement debounced state updates to server - ✅ useDebouncedCallback with configurable delay
 - [x] POST to `/threads/{id}/components/{componentId}/state` endpoint - ✅ Uses client.threads.state.updateState()
 - [x] Handle conflicts (server updates during client typing) - ✅ hasPendingLocalChangeRef prevents overwrites
 - [ ] Add error boundaries around component rendering - Deferred
-- [x] Add `resources` prop for static resource registration - ✅ Via GenuiRegistryProvider
-- [x] Add `listResources` prop for dynamic resource listing callback - ✅ Via GenuiRegistryProvider
-- [x] Add `getResource` prop for dynamic resource retrieval callback - ✅ Via GenuiRegistryProvider
+- [x] Add `resources` prop for static resource registration - ✅ Via TamboRegistryProvider
+- [x] Add `listResources` prop for dynamic resource listing callback - ✅ Via TamboRegistryProvider
+- [x] Add `getResource` prop for dynamic resource retrieval callback - ✅ Via TamboRegistryProvider
 - [x] Write tests for component lifecycle - ✅ component-renderer.test.tsx
-- [x] Test state synchronization scenarios - ✅ use-genui-v1-component-state.test.tsx
+- [x] Test state synchronization scenarios - ✅ use-tambo-v1-component-state.test.tsx
 
 **Actual Implementation:**
 
@@ -1184,7 +1184,7 @@ Created component rendering system in v1/:
   - Props sanitization filters dangerous props (event handlers, refs, dangerouslySetInnerHTML)
   - Suspense wrapping for lazy-loaded components
 
-- **hooks/use-genui-v1-component-state.ts**: Bidirectional state sync hook
+- **hooks/use-tambo-v1-component-state.ts**: Bidirectional state sync hook
   - Returns [currentState, setState, { isPending, error, flush }] tuple
   - Debounced sync to server (default 500ms, configurable)
   - Syncs from server state via streamState updates
@@ -1198,11 +1198,11 @@ Created component rendering system in v1/:
 ```typescript
 // react-sdk/src/v1/utils/component-renderer.tsx
 import { type ReactElement, Suspense } from 'react';
-import type { GenuiV1Component, ComponentContent } from '../types';
+import type { TamboV1Component, ComponentContent } from '../types';
 
 export function renderComponentContent(
   content: ComponentContent,
-  registry: Map<string, GenuiV1Component>,
+  registry: Map<string, TamboV1Component>,
 ): ReactElement | null {
   const componentDef = registry.get(content.name);
   if (!componentDef) {
@@ -1225,13 +1225,13 @@ export function renderComponentContent(
   );
 }
 
-// react-sdk/src/v1/hooks/use-genui-v1-component-state.ts
-export function useGenuiV1ComponentState<S>(
+// react-sdk/src/v1/hooks/use-tambo-v1-component-state.ts
+export function useTamboV1ComponentState<S>(
   componentId: string,
   initialValue: S,
   debounceTime = 500,
 ) {
-  const client = useGenuiClient();
+  const client = useTamboClient();
   const streamState = useStreamState();
   const [localState, setLocalState] = useState<S>(initialValue);
 
@@ -1284,9 +1284,9 @@ export function useGenuiV1ComponentState<S>(
 
 **Tasks:**
 
-- [x] Add `contextHelpers` prop for context helper configuration - ✅ Via GenuiContextHelpersProvider
+- [x] Add `contextHelpers` prop for context helper configuration - ✅ Via TamboContextHelpersProvider
 - [x] Add `userKey` prop for thread ownership - ✅ Stored in StreamState, passed to API calls
-- [x] Re-export context helpers from beta SDK - ✅ GenuiContextHelpersProvider, useGenuiContextHelpers
+- [x] Re-export context helpers from beta SDK - ✅ TamboContextHelpersProvider, useTamboContextHelpers
 - [x] Re-export built-in context helpers - ✅ currentPageContextHelper, currentTimeContextHelper
 - [x] Export context helper types - ✅ AdditionalContext, ContextHelperFn, ContextHelpers
 - [x] Send userKey to thread creation - ✅ Passed to runs.create() and runs.run() API calls
@@ -1296,21 +1296,21 @@ export function useGenuiV1ComponentState<S>(
 
 Context helpers and userKey are fully integrated:
 
-- **providers/genui-v1-provider.tsx**: Provider supports contextHelpers and userKey props
-  - GenuiContextHelpersProvider wraps children for context helper registration
-  - userKey passed to GenuiV1StreamProvider for storage in StreamState
+- **providers/tambo-v1-provider.tsx**: Provider supports contextHelpers and userKey props
+  - TamboContextHelpersProvider wraps children for context helper registration
+  - userKey passed to TamboV1StreamProvider for storage in StreamState
 
-- **providers/genui-v1-stream-context.tsx**: Stream context manages userKey
+- **providers/tambo-v1-stream-context.tsx**: Stream context manages userKey
   - userKey stored directly in StreamState (not a separate context)
   - Accessed via useStreamState().userKey
   - Thread management via initThread/switchThread/startNewThread (threadId is internal state, not a prop)
 
-- **hooks/use-genui-v1-send-message.ts**: userKey passed to API calls
+- **hooks/use-tambo-v1-send-message.ts**: userKey passed to API calls
   - runs.create() receives userKey in thread parameter for new threads
   - runs.run() receives userKey for existing threads
 
 - **v1/index.ts**: Full exports for context helpers
-  - GenuiContextHelpersProvider and useGenuiContextHelpers from beta SDK
+  - TamboContextHelpersProvider and useTamboContextHelpers from beta SDK
   - currentPageContextHelper and currentTimeContextHelper built-ins
   - AdditionalContext, ContextHelperFn, ContextHelpers types
 
@@ -1322,7 +1322,7 @@ Context helpers and userKey are fully integrated:
 2. **No separate UserKeyContext** - userKey is stored in StreamState for simplicity.
    Access via useStreamState().userKey rather than a separate hook.
 
-3. **Thread management is internal** - Removed threadId prop from GenuiV1StreamProvider.
+3. **Thread management is internal** - Removed threadId prop from TamboV1StreamProvider.
    Threads managed via initThread/switchThread/startNewThread to prevent state loss on thread switching.
 
 **Note:** additionalContext integration is blocked pending TypeScript SDK updates.
@@ -1358,14 +1358,14 @@ The SDK's RunCreateParams and RunRunParams interfaces don't include this paramet
 ````markdown
 <!-- react-sdk/src/v1/README.md -->
 
-# @workspace/react/v1
+# @tambo-ai/react/v1
 
-React SDK for Genui AI v1 API with streaming-first architecture and AG-UI event protocol.
+React SDK for Tambo AI v1 API with streaming-first architecture and AG-UI event protocol.
 
 ## Installation
 
 ```bash
-npm install @workspace/react
+npm install @tambo-ai/react
 ```
 ````
 
@@ -1373,22 +1373,22 @@ npm install @workspace/react
 
 ```tsx
 import {
-  GenuiV1Provider,
-  useGenuiV1,
-  useGenuiV1SendMessage,
-} from "@workspace/react/v1";
+  TamboV1Provider,
+  useTamboV1,
+  useTamboV1SendMessage,
+} from "@tambo-ai/react/v1";
 
 function App() {
   return (
-    <GenuiV1Provider apiKey={process.env.GENUI_API_KEY}>
+    <TamboV1Provider apiKey={process.env.TAMBO_API_KEY}>
       <ChatInterface />
-    </GenuiV1Provider>
+    </TamboV1Provider>
   );
 }
 
 function ChatInterface() {
-  const { thread, messages, isStreaming } = useGenuiV1();
-  const sendMessage = useGenuiV1SendMessage(thread.id);
+  const { thread, messages, isStreaming } = useTamboV1();
+  const sendMessage = useTamboV1SendMessage(thread.id);
 
   return (
     <div>
@@ -1406,7 +1406,7 @@ function ChatInterface() {
 
 ### Provider Setup
 
-The `GenuiV1Provider` wraps your app and provides:
+The `TamboV1Provider` wraps your app and provides:
 
 - API client initialization
 - Component/tool registry
@@ -1420,15 +1420,15 @@ Register components once at the provider level:
 ```tsx
 function App() {
   return (
-    <GenuiV1Provider apiKey={apiKey}>
+    <TamboV1Provider apiKey={apiKey}>
       <ComponentRegistration />
       <ChatInterface />
-    </GenuiV1Provider>
+    </TamboV1Provider>
   );
 }
 
 function ComponentRegistration() {
-  const { registerComponent } = useGenuiV1();
+  const { registerComponent } = useTamboV1();
 
   useEffect(() => {
     registerComponent({
@@ -1452,7 +1452,7 @@ Register tools for client-side execution:
 
 ```tsx
 function ToolRegistration() {
-  const { registerTool } = useGenuiV1();
+  const { registerTool } = useTamboV1();
 
   useEffect(() => {
     registerTool({
@@ -1542,9 +1542,9 @@ See `/examples` directory for full working examples.
 - Harder to maintain as APIs diverge
 
 **Decision:** Partially adopted with refinements:
-- **Reuse providers** where they're API-agnostic (`GenuiClientProvider`, `GenuiRegistryProvider`)
+- **Reuse providers** where they're API-agnostic (`TamboClientProvider`, `TamboRegistryProvider`)
 - **Extract shared utilities** (tool execution, registry management) into reusable hooks
-- **Implement new providers** only where streaming models fundamentally differ (`GenuiV1StreamProvider`)
+- **Implement new providers** only where streaming models fundamentally differ (`TamboV1StreamProvider`)
 - This hybrid approach minimizes duplication while avoiding complex translation layers
 
 ### 2. Fork Current SDK (Rejected)
@@ -1595,7 +1595,7 @@ See `/examples` directory for full working examples.
 - [ ] 90%+ test coverage - In progress
 - [ ] Documentation complete with examples - In progress
 - [x] Build succeeds for CJS + ESM
-- [x] Import works: `import { GenuiV1Provider } from '@workspace/react/v1'`
+- [x] Import works: `import { TamboV1Provider } from '@tambo-ai/react/v1'`
 - [x] No console warnings in development
 - [x] TypeScript errors: zero
 - [x] ESLint warnings: zero (pre-existing warnings only)
@@ -1632,7 +1632,7 @@ See `/examples` directory for full working examples.
 ## Dependencies & Prerequisites
 
 **Required:**
-- `@workspace/typescript-sdk` updated with v1 API support
+- `@tambo-ai/typescript-sdk` updated with v1 API support
 - `@ag-ui/core` for event type definitions
 - React 18+ (peer dependency)
 - `@tanstack/react-query` v5+ (peer dependency)
@@ -1700,11 +1700,11 @@ See `/examples` directory for full working examples.
 
 ### Internal References
 
-- API Proposal: `/Users/alecf/genui/genui-worktrees/alecf/implement-sdk-v1/plans/api-v1-proposal.md`
-- Current SDK Provider: `/Users/alecf/genui/genui-worktrees/alecf/implement-sdk-v1/react-sdk/src/providers/genui-provider.tsx:1-500`
-- Current Hook Patterns: `/Users/alecf/genui/genui-worktrees/alecf/implement-sdk-v1/react-sdk/src/hooks/use-genui-threads.ts:1-50`
-- MCP Subpackage Pattern: `/Users/alecf/genui/genui-worktrees/alecf/implement-sdk-v1/react-sdk/src/mcp/index.ts:1-20`
-- Package Exports: `/Users/alecf/genui/genui-worktrees/alecf/implement-sdk-v1/react-sdk/package.json:30-45`
+- API Proposal: `/Users/alecf/tambo/tambo-worktrees/alecf/implement-sdk-v1/plans/api-v1-proposal.md`
+- Current SDK Provider: `/Users/alecf/tambo/tambo-worktrees/alecf/implement-sdk-v1/react-sdk/src/providers/tambo-provider.tsx:1-500`
+- Current Hook Patterns: `/Users/alecf/tambo/tambo-worktrees/alecf/implement-sdk-v1/react-sdk/src/hooks/use-tambo-threads.ts:1-50`
+- MCP Subpackage Pattern: `/Users/alecf/tambo/tambo-worktrees/alecf/implement-sdk-v1/react-sdk/src/mcp/index.ts:1-20`
+- Package Exports: `/Users/alecf/tambo/tambo-worktrees/alecf/implement-sdk-v1/react-sdk/package.json:30-45`
 
 ### External References
 
@@ -1717,8 +1717,8 @@ See `/examples` directory for full working examples.
 
 ### Related Work
 
-- Beta SDK Implementation: Current `@workspace/react` package
-- TypeScript SDK: `@workspace/typescript-sdk` (already updated for v1)
+- Beta SDK Implementation: Current `@tambo-ai/react` package
+- TypeScript SDK: `@tambo-ai/typescript-sdk` (already updated for v1)
 - AG-UI Protocol Spec: See api-v1-proposal.md Part 2
 
 ---
@@ -1736,7 +1736,7 @@ Use this checklist during implementation:
 **Event System:**
 - [x] Event reducer implemented
 - [x] All AG-UI events handled
-- [x] All Genui CUSTOM events handled
+- [x] All Tambo CUSTOM events handled
 - [x] JSON Patch utilities working
 - [x] Tests for event accumulation passing
 
@@ -1802,7 +1802,7 @@ Use this checklist during implementation:
 
 - **TypeScript SDK Caveat**: The event streams return `RunCreateResponse | RunRunResponse` which will need type casting to `BaseEvent` - this is expected per the user's description.
 
-- **Component Streaming**: The `streaming` field in `genui.component.props_delta` events indicates which props are still being populated (started/streaming/done). Use this to show skeleton states or partial renders.
+- **Component Streaming**: The `streaming` field in `tambo.component.props_delta` events indicates which props are still being populated (started/streaming/done). Use this to show skeleton states or partial renders.
 
 - **Tool Result Format**: When multiple tool calls are pending, return all results in a single message's content array (multiple `tool_result` content blocks).
 

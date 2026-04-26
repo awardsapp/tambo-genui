@@ -16,7 +16,7 @@ import {
   type ToolCallResultEvent,
   type ToolCallStartEvent,
 } from "@ag-ui/core";
-import type { ToolUseContent } from "@workspace/typescript-sdk/resources/threads/threads";
+import type { ToolUseContent } from "@tambo-ai/typescript-sdk/resources/threads/threads";
 import {
   PLACEHOLDER_THREAD_ID,
   createInitialState,
@@ -24,9 +24,9 @@ import {
   streamReducer,
   type StreamState,
   type ThreadState,
-} from "@workspace/client";
+} from "@tambo-ai/client";
 import type { JSONSchema7 } from "json-schema";
-import type { Content, GenuiComponentContent } from "../types/message";
+import type { Content, TamboComponentContent } from "../types/message";
 
 /**
  * Helper to extract a ToolUseContent from a message content array.
@@ -39,16 +39,16 @@ function asToolUseContent(content: Content[], index: number): ToolUseContent {
 }
 
 /**
- * Helper to extract a GenuiComponentContent from a message content array.
+ * Helper to extract a TamboComponentContent from a message content array.
  * @param content - Content array from a message
  * @param index - Index of the content item
- * @returns The content as GenuiComponentContent
+ * @returns The content as TamboComponentContent
  */
 function asComponentContent(
   content: Content[],
   index: number,
-): GenuiComponentContent {
-  return content[index] as GenuiComponentContent;
+): TamboComponentContent {
+  return content[index] as TamboComponentContent;
 }
 
 // Helper to create a base thread state for testing
@@ -1508,7 +1508,7 @@ describe("streamReducer", () => {
   });
 
   describe("custom component events", () => {
-    it("handles genui.component.start event", () => {
+    it("handles tambo.component.start event", () => {
       const state = createTestStreamState("thread_1");
       state.threadMap.thread_1.thread.messages = [
         {
@@ -1521,7 +1521,7 @@ describe("streamReducer", () => {
 
       const event: CustomEvent = {
         type: EventType.CUSTOM,
-        name: "genui.component.start",
+        name: "tambo.component.start",
         value: {
           messageId: "msg_1",
           componentId: "comp_1",
@@ -1546,7 +1546,7 @@ describe("streamReducer", () => {
       });
     });
 
-    it("handles genui.component.props_delta event", () => {
+    it("handles tambo.component.props_delta event", () => {
       const state = createTestStreamState("thread_1");
       state.threadMap.thread_1.thread.messages = [
         {
@@ -1567,7 +1567,7 @@ describe("streamReducer", () => {
 
       const event: CustomEvent = {
         type: EventType.CUSTOM,
-        name: "genui.component.props_delta",
+        name: "tambo.component.props_delta",
         value: {
           componentId: "comp_1",
           operations: [{ op: "add", path: "/temperature", value: 72 }],
@@ -1601,7 +1601,7 @@ describe("streamReducer", () => {
 
       const event: CustomEvent = {
         type: EventType.CUSTOM,
-        name: "genui.component.props_delta",
+        name: "tambo.component.props_delta",
         value: {
           componentId: "unknown_comp",
           operations: [{ op: "add", path: "/value", value: 1 }],
@@ -1617,13 +1617,13 @@ describe("streamReducer", () => {
       }).toThrow("component unknown_comp not found");
     });
 
-    it("handles genui.run.awaiting_input event", () => {
+    it("handles tambo.run.awaiting_input event", () => {
       const state = createTestStreamState("thread_1");
       state.threadMap.thread_1.thread.status = "streaming";
 
       const event: CustomEvent = {
         type: EventType.CUSTOM,
-        name: "genui.run.awaiting_input",
+        name: "tambo.run.awaiting_input",
         value: {
           pendingToolCalls: [
             { toolCallId: "tool_1", toolName: "test1", arguments: "{}" },
@@ -1642,7 +1642,7 @@ describe("streamReducer", () => {
       expect(result.threadMap.thread_1.streaming.status).toBe("waiting");
     });
 
-    it("handles genui.component.state_delta event", () => {
+    it("handles tambo.component.state_delta event", () => {
       const state = createTestStreamState("thread_1");
       state.threadMap.thread_1.thread.messages = [
         {
@@ -1663,7 +1663,7 @@ describe("streamReducer", () => {
 
       const event: CustomEvent = {
         type: EventType.CUSTOM,
-        name: "genui.component.state_delta",
+        name: "tambo.component.state_delta",
         value: {
           componentId: "comp_1",
           operations: [{ op: "add", path: "/count", value: 42 }],
@@ -1684,7 +1684,7 @@ describe("streamReducer", () => {
       expect(component.streamingState).toBe("streaming");
     });
 
-    it("handles genui.component.end event", () => {
+    it("handles tambo.component.end event", () => {
       const state = createTestStreamState("thread_1");
       state.threadMap.thread_1.thread.messages = [
         {
@@ -1705,7 +1705,7 @@ describe("streamReducer", () => {
 
       const event: CustomEvent = {
         type: EventType.CUSTOM,
-        name: "genui.component.end",
+        name: "tambo.component.end",
         value: { componentId: "comp_1" },
       };
 
@@ -1725,7 +1725,7 @@ describe("streamReducer", () => {
       });
     });
 
-    it("creates message on-demand when not found for genui.component.start", () => {
+    it("creates message on-demand when not found for tambo.component.start", () => {
       const state = createTestStreamState("thread_1");
       state.threadMap.thread_1.thread.messages = [
         {
@@ -1738,7 +1738,7 @@ describe("streamReducer", () => {
 
       const event: CustomEvent = {
         type: EventType.CUSTOM,
-        name: "genui.component.start",
+        name: "tambo.component.start",
         value: {
           messageId: "unknown_msg",
           componentId: "comp_1",
@@ -1767,7 +1767,7 @@ describe("streamReducer", () => {
       });
     });
 
-    it("throws when component not found for genui.component.end", () => {
+    it("throws when component not found for tambo.component.end", () => {
       const state = createTestStreamState("thread_1");
       state.threadMap.thread_1.thread.messages = [
         {
@@ -1780,7 +1780,7 @@ describe("streamReducer", () => {
 
       const event: CustomEvent = {
         type: EventType.CUSTOM,
-        name: "genui.component.end",
+        name: "tambo.component.end",
         value: { componentId: "unknown_comp" },
       };
 
@@ -1814,7 +1814,7 @@ describe("streamReducer", () => {
 
       const event: CustomEvent = {
         type: EventType.CUSTOM,
-        name: "genui.component.props_delta",
+        name: "tambo.component.props_delta",
         value: {
           componentId: "comp_1",
           operations: [
@@ -1862,7 +1862,7 @@ describe("streamReducer", () => {
       // Add second component
       const event: CustomEvent = {
         type: EventType.CUSTOM,
-        name: "genui.component.start",
+        name: "tambo.component.start",
         value: {
           messageId: "msg_1",
           componentId: "comp_2",
@@ -1911,7 +1911,7 @@ describe("streamReducer", () => {
       // Update second component
       const event: CustomEvent = {
         type: EventType.CUSTOM,
-        name: "genui.component.props_delta",
+        name: "tambo.component.props_delta",
         value: {
           componentId: "comp_2",
           operations: [{ op: "replace", path: "/value", value: 99 }],
@@ -2034,7 +2034,7 @@ describe("streamReducer", () => {
       // COMPONENT_START
       const compStart: CustomEvent = {
         type: EventType.CUSTOM,
-        name: "genui.component.start",
+        name: "tambo.component.start",
         value: {
           messageId: "msg_1",
           componentId: "comp_1",
@@ -2050,7 +2050,7 @@ describe("streamReducer", () => {
       // COMPONENT_PROPS_DELTA - add city
       const propsDelta1: CustomEvent = {
         type: EventType.CUSTOM,
-        name: "genui.component.props_delta",
+        name: "tambo.component.props_delta",
         value: {
           componentId: "comp_1",
           operations: [{ op: "add", path: "/city", value: "New York" }],
@@ -2065,7 +2065,7 @@ describe("streamReducer", () => {
       // COMPONENT_PROPS_DELTA - add temperature
       const propsDelta2: CustomEvent = {
         type: EventType.CUSTOM,
-        name: "genui.component.props_delta",
+        name: "tambo.component.props_delta",
         value: {
           componentId: "comp_1",
           operations: [{ op: "add", path: "/temperature", value: 72 }],
@@ -2080,7 +2080,7 @@ describe("streamReducer", () => {
       // COMPONENT_END
       const compEnd: CustomEvent = {
         type: EventType.CUSTOM,
-        name: "genui.component.end",
+        name: "tambo.component.end",
         value: { componentId: "comp_1" },
       };
       state = streamReducer(state, {
@@ -3033,13 +3033,13 @@ describe("streamReducer", () => {
     });
   });
 
-  describe("genui.message.parent event", () => {
+  describe("tambo.message.parent event", () => {
     it("creates message with parentMessageId when message does not exist", () => {
       const state = createTestStreamState("thread_1");
 
       const event: CustomEvent = {
         type: EventType.CUSTOM,
-        name: "genui.message.parent",
+        name: "tambo.message.parent",
         value: {
           messageId: "msg_child",
           parentMessageId: "msg_parent",
@@ -3073,7 +3073,7 @@ describe("streamReducer", () => {
 
       const event: CustomEvent = {
         type: EventType.CUSTOM,
-        name: "genui.message.parent",
+        name: "tambo.message.parent",
         value: {
           messageId: "msg_child",
           parentMessageId: "msg_parent",
@@ -3101,10 +3101,10 @@ describe("streamReducer", () => {
         runId: "run_1",
       };
 
-      // First: genui.message.parent creates message with parentMessageId
+      // First: tambo.message.parent creates message with parentMessageId
       const parentEvent: CustomEvent = {
         type: EventType.CUSTOM,
-        name: "genui.message.parent",
+        name: "tambo.message.parent",
         value: {
           messageId: "msg_child",
           parentMessageId: "msg_parent",

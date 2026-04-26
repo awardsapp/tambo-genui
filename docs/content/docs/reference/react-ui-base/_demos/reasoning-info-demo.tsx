@@ -2,19 +2,19 @@
 
 import { useDemoControls } from "@/components/demos/demo-controls";
 import { DemoPreview } from "@/components/demos/demo-preview";
-import type { Content, GenuiThreadMessage } from "@workspace/react";
-import { ReasoningInfo } from "@workspace/react-ui-base/reasoning-info";
+import type { Content, TamboThreadMessage } from "@tambo-ai/react";
+import { ReasoningInfo } from "@tambo-ai/react-ui-base/reasoning-info";
 import { ChevronDown } from "lucide-react";
 import { useMemo } from "react";
 
 export const reasoningInfoDemoCode = `
-import { ReasoningInfo } from "@workspace/react-ui-base/reasoning-info";
-import type { GenuiThreadMessage } from "@workspace/react";
+import { ReasoningInfo } from "@tambo-ai/react-ui-base/reasoning-info";
+import type { TamboThreadMessage } from "@tambo-ai/react";
 import { ChevronDown } from "lucide-react";
 
 // message.reasoning is a string[] of reasoning steps
 // message.reasoningDurationMS is the total thinking time
-export function DemoReasoningInfo({ message }: { message: GenuiThreadMessage }) {
+export function DemoReasoningInfo({ message }: { message: TamboThreadMessage }) {
   return (
     <ReasoningInfo.Root message={message} isLoading={false} autoCollapse={false}>
       <ReasoningInfo.Trigger className="flex items-center gap-2 text-sm text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100">
@@ -65,7 +65,7 @@ function ReasoningInfoDemo() {
           "The trade-off is memory usage, but for this data size the overhead is acceptable.",
         ],
         reasoningDurationMS: state === "completed" ? 4200 : undefined,
-      }) satisfies GenuiThreadMessage,
+      }) satisfies TamboThreadMessage,
     [state],
   );
 

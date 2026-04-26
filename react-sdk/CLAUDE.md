@@ -4,4 +4,4 @@
 
 ## Quick Reference
 
-The **@workspace/react** package - the core React SDK for AI-powered generative UI applications.
+The **@tambo-ai/react** package - the core React SDK for AI-powered generative UI applications.

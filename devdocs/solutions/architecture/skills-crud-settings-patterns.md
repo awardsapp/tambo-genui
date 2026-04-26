@@ -148,7 +148,7 @@ const isSupported = !providerName || SUPPORTED_PROVIDERS.has(providerName);
 
 - **SkillCard** (presentational): No mocks needed. Test rendering, click handlers, aria-labels directly.
 - **SkillForm** (form with mutations): Mock `@/trpc/react` and `@/hooks/use-toast`. Use a `shouldFailWith` variable to toggle between success/error paths in the mock.
-- **SkillsSection** (orchestrator): Mock `@workspace/react` and `EditWithTamboButton`. Test list states, import flow, overwrite dialog, provider notice.
+- **SkillsSection** (orchestrator): Mock `@tambo-ai/react` and `EditWithTamboButton`. Test list states, import flow, overwrite dialog, provider notice.
 - **Frontmatter parser**: Pure function — no mocks. Test all edge cases including YAML special characters, Windows line endings, round-trip fidelity.
 - **Drag-and-drop**: Skip in jsdom tests — `DragEvent`/`DataTransfer` are not properly supported. These need Playwright/e2e testing.
 - **Mutation error paths**: Valuable to test — verify destructive toasts show correct messages for name conflicts.

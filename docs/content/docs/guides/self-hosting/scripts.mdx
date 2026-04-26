@@ -7,23 +7,23 @@ description: Complete reference for all self-hosting helper scripts and npm conv
 
 | Script                             | Description                         |
 | ---------------------------------- | ----------------------------------- |
-| `./scripts/cloud/genui-setup.sh`   | First-time environment setup        |
-| `./scripts/cloud/genui-start.sh`   | Start all services                  |
-| `./scripts/cloud/genui-stop.sh`    | Stop all services                   |
-| `./scripts/cloud/genui-logs.sh`    | View logs (all or specific service) |
-| `./scripts/cloud/genui-build.sh`   | Build Docker images                 |
+| `./scripts/cloud/tambo-setup.sh`   | First-time environment setup        |
+| `./scripts/cloud/tambo-start.sh`   | Start all services                  |
+| `./scripts/cloud/tambo-stop.sh`    | Stop all services                   |
+| `./scripts/cloud/tambo-logs.sh`    | View logs (all or specific service) |
+| `./scripts/cloud/tambo-build.sh`   | Build Docker images                 |
 | `./scripts/cloud/init-database.sh` | Run database migrations             |
-| `./scripts/cloud/genui-psql.sh`    | PostgreSQL CLI access               |
+| `./scripts/cloud/tambo-psql.sh`    | PostgreSQL CLI access               |
 
-### genui-logs.sh
+### tambo-logs.sh
 
 Accepts an optional service name argument:
 
 ```bash
-./scripts/cloud/genui-logs.sh           # All services
-./scripts/cloud/genui-logs.sh postgres  # PostgreSQL only
-./scripts/cloud/genui-logs.sh api       # API only
-./scripts/cloud/genui-logs.sh web       # Web only
+./scripts/cloud/tambo-logs.sh           # All services
+./scripts/cloud/tambo-logs.sh postgres  # PostgreSQL only
+./scripts/cloud/tambo-logs.sh api       # API only
+./scripts/cloud/tambo-logs.sh web       # Web only
 ```
 
 ## npm convenience aliases
@@ -32,6 +32,6 @@ These are shorthand for the shell scripts above. They require **bash**, so Windo
 
 | Command               | Equivalent script                |
 | --------------------- | -------------------------------- |
-| `npm run genui:setup` | `./scripts/cloud/genui-setup.sh` |
-| `npm run genui:start` | `./scripts/cloud/genui-start.sh` |
-| `npm run genui:stop`  | `./scripts/cloud/genui-stop.sh`  |
+| `npm run tambo:setup` | `./scripts/cloud/tambo-setup.sh` |
+| `npm run tambo:start` | `./scripts/cloud/tambo-start.sh` |
+| `npm run tambo:stop`  | `./scripts/cloud/tambo-stop.sh`  |

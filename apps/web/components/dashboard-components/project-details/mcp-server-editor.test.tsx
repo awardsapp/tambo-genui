@@ -1,4 +1,4 @@
-import { MCPTransport } from "@workspace-cloud/core";
+import { MCPTransport } from "@tambo-ai-cloud/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";

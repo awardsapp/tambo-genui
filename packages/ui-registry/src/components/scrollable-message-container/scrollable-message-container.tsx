@@ -1,7 +1,7 @@
 "use client";
 
-import { useGenui } from "@workspace/react";
-import { cn } from "@workspace/ui-registry/utils";
+import { useTambo } from "@tambo-ai/react";
+import { cn } from "@tambo-ai/ui-registry/utils";
 import * as React from "react";
 import { useCallback, useEffect, useRef, useState, useMemo } from "react";
 
@@ -29,7 +29,7 @@ export const ScrollableMessageContainer = React.forwardRef<
   ScrollableMessageContainerProps
 >(({ className, children, ...props }, ref) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const { messages, isStreaming } = useGenui();
+  const { messages, isStreaming } = useTambo();
   const [shouldAutoscroll, setShouldAutoscroll] = useState(true);
   const lastScrollTopRef = useRef(0);
 

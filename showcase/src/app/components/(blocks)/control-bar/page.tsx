@@ -2,7 +2,7 @@
 
 import { ComponentCodePreview } from "@/components/component-code-preview";
 import { InstallationSection } from "@/components/installation-section";
-import { ControlBar } from "@workspace/ui-registry/components/control-bar";
+import { ControlBar } from "@tambo-ai/ui-registry/components/control-bar";
 
 export default function ControlBarPage() {
   return (
@@ -52,7 +52,7 @@ export default function ControlBarPage() {
                 </div>
               </div>
             }
-            code={`import { ControlBar } from "@/components/genui/control-bar";
+            code={`import { ControlBar } from "@/components/tambo/control-bar";
 
 export function ChatInterface() {
   return (
@@ -77,7 +77,7 @@ export function ChatInterface() {
 
       {/* Installation */}
       <section>
-        <InstallationSection cliCommand="npx genui add control-bar" />
+        <InstallationSection cliCommand="npx tambo add control-bar" />
       </section>
 
       {/* Component API */}

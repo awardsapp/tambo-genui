@@ -1,9 +1,9 @@
 ---
 title: Auth.js
-description: Learn how to integrate Genui with Auth.js for user authentication.
+description: Learn how to integrate Tambo with Auth.js for user authentication.
 ---
 
-Auth.js (formerly NextAuth.js) is a complete authentication solution for Next.js applications. This guide demonstrates integration with Genui using Google as the OAuth provider.
+Auth.js (formerly NextAuth.js) is a complete authentication solution for Next.js applications. This guide demonstrates integration with Tambo using Google as the OAuth provider.
 
 <Callout type="info" title="Prerequisites">
   This guide assumes you've already set up Auth.js with Google OAuth in your
@@ -16,7 +16,7 @@ Auth.js (formerly NextAuth.js) is a complete authentication solution for Next.js
 Install the required packages:
 
 ```bash
-npm install next-auth @auth/core @workspace/react
+npm install next-auth @auth/core @tambo-ai/react
 ```
 
 ## Auth.js Configuration
@@ -108,7 +108,7 @@ export default async function RootLayout({
 ```tsx title="app/client-layout.tsx"
 "use client";
 
-import { GenuiProvider } from "@workspace/react";
+import { TamboProvider } from "@tambo-ai/react";
 import { ReactNode } from "react";
 
 interface ClientLayoutProps {
@@ -120,7 +120,7 @@ export default function ClientLayout({
   children,
   userToken,
 }: ClientLayoutProps) {
-  return <GenuiProvider userToken={userToken}>{children}</GenuiProvider>;
+  return <TamboProvider userToken={userToken}>{children}</TamboProvider>;
 }
 ```
 
@@ -155,7 +155,7 @@ export default function RootLayout({
 "use client";
 
 import { useSession } from "next-auth/react";
-import { GenuiProvider } from "@workspace/react";
+import { TamboProvider } from "@tambo-ai/react";
 import { ReactNode } from "react";
 
 interface ClientLayoutProps {
@@ -166,17 +166,17 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
   const { data: session } = useSession();
 
   return (
-    <GenuiProvider userToken={session?.accessToken}>{children}</GenuiProvider>
+    <TamboProvider userToken={session?.accessToken}>{children}</TamboProvider>
   );
 }
 ```
 
 ## Usage
 
-Once configured, you can use Genui components throughout your application:
+Once configured, you can use Tambo components throughout your application:
 
 ```tsx title="app/dashboard/page.tsx"
-import { MessageThreadFull } from "@components/genui/message-thread-full";
+import { MessageThreadFull } from "@components/tambo/message-thread-full";
 
 export default function Dashboard() {
   return (
@@ -204,7 +204,7 @@ export default function Dashboard() {
 
 <Callout type="info" title="GitHub and Other Non-OIDC Providers">
   GitHub issues opaque access tokens (not JWTs). When using GitHub as an Auth.js
-  provider, select the **GitHub** preset in the Genui dashboard OAuth settings.
+  provider, select the **GitHub** preset in the Tambo dashboard OAuth settings.
   This configures a user info endpoint that resolves a stable user identity from
   the opaque token. Other OIDC-compliant providers (Google, Microsoft, Auth0)
   issue JWT tokens and work automatically.

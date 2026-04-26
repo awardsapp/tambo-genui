@@ -8,7 +8,7 @@ export async function GET(request: Request) {
 
   const title =
     searchParams.get("title") ??
-    "genui-ui | A component library for Generative Interfaces";
+    "tambo-ui | A component library for Generative Interfaces";
   const tagline =
     searchParams.get("tagline") ??
     "Build natural language interfaces with React. Use our component library to build your app in a weekend.";
@@ -37,7 +37,7 @@ export async function GET(request: Request) {
           height={48}
           style={{ display: "block" }}
         />
-        <div style={{ fontSize: 28, opacity: 0.9 }}>genui-ui</div>
+        <div style={{ fontSize: 28, opacity: 0.9 }}>tambo-ui</div>
       </div>
       <div
         style={{
@@ -69,7 +69,7 @@ export async function GET(request: Request) {
           opacity: 0.6,
         }}
       >
-        ui.genui.co
+        ui.tambo.co
       </div>
     </div>,
     {

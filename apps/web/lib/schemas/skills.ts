@@ -3,7 +3,7 @@ import {
   SKILL_NAME_PATTERN,
   SKILL_DESCRIPTION_MAX_LENGTH,
   SKILL_INSTRUCTIONS_MAX_LENGTH,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 import { z } from "zod/v3";
 
 /**

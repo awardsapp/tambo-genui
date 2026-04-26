@@ -1,4 +1,4 @@
-import { type ExternalSkillMetadata } from "@workspace-cloud/core";
+import { type ExternalSkillMetadata } from "@tambo-ai-cloud/core";
 import { and, desc, eq, inArray, sql } from "drizzle-orm";
 import { mergeSuperJson } from "../drizzleUtil";
 import * as schema from "../schema";

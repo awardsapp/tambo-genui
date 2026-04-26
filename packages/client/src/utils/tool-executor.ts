@@ -2,15 +2,15 @@
  * Tool Executor
  *
  * Handles automatic execution of client-side tools when the model
- * requests them via `genui.run.awaiting_input` events.
+ * requests them via `tambo.run.awaiting_input` events.
  */
 
-import type { GenuiTool } from "../model/component-metadata";
+import type { TamboTool } from "../model/component-metadata";
 import type {
   ToolResultContent,
   TextContent,
   ResourceContent,
-} from "@workspace/typescript-sdk/resources/threads/threads";
+} from "@tambo-ai/typescript-sdk/resources/threads/threads";
 import type { ToolCallTracker } from "./tool-call-tracker";
 import { createKeyedThrottle, type KeyedThrottle } from "./keyed-throttle";
 
@@ -26,7 +26,7 @@ export interface PendingToolCall {
  * Execute a streamable tool call during streaming with pre-parsed partial args.
  *
  * Called on each TOOL_CALL_ARGS event for tools annotated with
- * `genuiStreamableHint: true`. Enables incremental UI updates while
+ * `tamboStreamableHint: true`. Enables incremental UI updates while
  * the model is still generating arguments.
  *
  * Errors are caught silently — streaming tool execution is non-fatal since
@@ -40,13 +40,13 @@ export async function executeStreamableToolCall(
   toolCallId: string,
   parsedArgs: Record<string, unknown>,
   toolTracker: ToolCallTracker,
-  toolRegistry: Record<string, GenuiTool>,
+  toolRegistry: Record<string, TamboTool>,
 ): Promise<void> {
   const accumulating = toolTracker.getAccumulatingToolCall(toolCallId);
   if (!accumulating) return;
 
   const tool = toolRegistry[accumulating.name];
-  if (!tool?.annotations?.genuiStreamableHint) return;
+  if (!tool?.annotations?.tamboStreamableHint) return;
 
   try {
     await tool.tool(parsedArgs);
@@ -80,7 +80,7 @@ const DEFAULT_STREAMABLE_THROTTLE_MS = 100;
  */
 export function createThrottledStreamableExecutor(
   toolTracker: ToolCallTracker,
-  toolRegistry: Record<string, GenuiTool>,
+  toolRegistry: Record<string, TamboTool>,
   delay = DEFAULT_STREAMABLE_THROTTLE_MS,
 ): KeyedThrottle<Record<string, unknown>> {
   return createKeyedThrottle<Record<string, unknown>>((toolCallId, args) => {
@@ -96,7 +96,7 @@ export function createThrottledStreamableExecutor(
  * @returns ToolResultContent with the execution result or error
  */
 export async function executeClientTool(
-  tool: GenuiTool,
+  tool: TamboTool,
   toolCallId: string,
   args: Record<string, unknown>,
 ): Promise<ToolResultContent> {
@@ -160,12 +160,12 @@ export async function executeClientTool(
  */
 export async function executeAllPendingTools(
   toolCalls: Map<string, PendingToolCall>,
-  registry: Map<string, GenuiTool> | Record<string, GenuiTool>,
+  registry: Map<string, TamboTool> | Record<string, TamboTool>,
 ): Promise<ToolResultContent[]> {
   const results: ToolResultContent[] = [];
 
   // Normalize registry to allow lookup regardless of Map or Record
-  const getTool = (name: string): GenuiTool | undefined => {
+  const getTool = (name: string): TamboTool | undefined => {
     if (registry instanceof Map) {
       return registry.get(name);
     }

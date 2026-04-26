@@ -2,7 +2,7 @@ import {
   ContentPartType,
   MessageRole,
   ThreadMessage,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 import { streamText } from "ai";
 import { AISdkClient } from "./ai-sdk-client";
 

@@ -67,7 +67,7 @@ export function AddToIdeDropdown() {
           </DropdownMenuItem>
           <DropdownMenuItem className="cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
             <Link
-              href={`${process.env.NEXT_PUBLIC_GENUI_DOCS_URL}/genui-mcp-server#tab-vscode`}
+              href={`${process.env.NEXT_PUBLIC_TAMBO_DOCS_URL}/tambo-mcp-server#tab-vscode`}
               className="flex items-center justify-between"
             >
               <span>VS Code</span>
@@ -78,7 +78,7 @@ export function AddToIdeDropdown() {
             className="cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
           >
             <Link
-              href={`${process.env.NEXT_PUBLIC_GENUI_DOCS_URL}/genui-mcp-server#tab-claude`}
+              href={`${process.env.NEXT_PUBLIC_TAMBO_DOCS_URL}/tambo-mcp-server#tab-claude`}
               className="flex items-center justify-between"
             >
               <span>Claude (Desktop)</span>
@@ -89,7 +89,7 @@ export function AddToIdeDropdown() {
             className="cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
           >
             <Link
-              href={`${process.env.NEXT_PUBLIC_GENUI_DOCS_URL}/genui-mcp-server#tab-windsurf`}
+              href={`${process.env.NEXT_PUBLIC_TAMBO_DOCS_URL}/tambo-mcp-server#tab-windsurf`}
               className="flex items-center justify-between"
             >
               <span>Windsurf</span>
@@ -100,7 +100,7 @@ export function AddToIdeDropdown() {
             className="cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
           >
             <Link
-              href={`${process.env.NEXT_PUBLIC_GENUI_DOCS_URL}/genui-mcp-server#tab-zed`}
+              href={`${process.env.NEXT_PUBLIC_TAMBO_DOCS_URL}/tambo-mcp-server#tab-zed`}
               className="flex items-center justify-between"
             >
               <span>Zed</span>

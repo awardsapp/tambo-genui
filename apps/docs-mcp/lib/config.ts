@@ -58,8 +58,8 @@ export interface MCPConfig {
 export function getMCPConfig(): MCPConfig {
   return {
     product: {
-      slug: "genui",
-      name: "genui",
+      slug: "tambo",
+      name: "tambo",
     },
     api: {
       baseUrl: process.env.INKEEP_API_BASE_URL || "https://api.inkeep.com/v1",

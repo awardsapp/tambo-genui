@@ -17,7 +17,7 @@ export const baseOptions: BaseLayoutProps = {
         />
       ),
       text: "Discord",
-      url: "https://genui.co/discord",
+      url: "https://tambo.co/discord",
     },
     {
       type: "icon",
@@ -30,8 +30,8 @@ export const baseOptions: BaseLayoutProps = {
         />
       ),
       text: "Dashboard",
-      url: "https://console.genui.co",
+      url: "https://console.tambo.co",
     },
   ],
-  githubUrl: "https://github.com/genui-ai/genui",
+  githubUrl: "https://github.com/tambo-ai/tambo",
 };

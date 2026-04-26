@@ -8,7 +8,7 @@ describe("SdkVersionMiddleware", () => {
     middleware = new SdkVersionMiddleware();
   });
 
-  it("should set SdkVersion on request when x-genui-react-version header is present", () => {
+  it("should set SdkVersion on request when x-tambo-react-version header is present", () => {
     const request = {
       get: jest.fn().mockReturnValue("1.2.3"),
     } as unknown as Request;
@@ -95,6 +95,6 @@ describe("SdkVersionMiddleware", () => {
 
     middleware.use(request, response, next);
 
-    expect(request.get).toHaveBeenCalledWith("x-genui-react-version");
+    expect(request.get).toHaveBeenCalledWith("x-tambo-react-version");
   });
 });

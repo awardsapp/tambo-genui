@@ -1,10 +1,10 @@
 import {
   InputFields,
   inputFieldsSchema,
-} from "@workspace/ui-registry/components/input-fields";
-import { MessageThreadFull } from "@workspace/ui-registry/components/message-thread-full";
-import type { Suggestion } from "@workspace/react";
-import { useGenui } from "@workspace/react";
+} from "@tambo-ai/ui-registry/components/input-fields";
+import { MessageThreadFull } from "@tambo-ai/ui-registry/components/message-thread-full";
+import type { Suggestion } from "@tambo-ai/react";
+import { useTambo } from "@tambo-ai/react";
 import { useEffect } from "react";
 
 const inputFieldsThreadSuggestions = [
@@ -35,7 +35,7 @@ const inputFieldsThreadSuggestions = [
 ] satisfies Suggestion[];
 
 export const InputFieldsChatInterface = () => {
-  const { registerComponent, currentThreadId } = useGenui();
+  const { registerComponent, currentThreadId } = useTambo();
 
   useEffect(() => {
     registerComponent({

@@ -1,9 +1,9 @@
 import { describe, expect, it, jest } from "@jest/globals";
 import {
-  useGenui,
-  type GenuiThreadMessage,
-  type GenuiToolUseContent,
-} from "@workspace/react";
+  useTambo,
+  type TamboThreadMessage,
+  type TamboToolUseContent,
+} from "@tambo-ai/react";
 import { render } from "@testing-library/react";
 import { ToolcallInfo } from "../index";
 
@@ -12,12 +12,12 @@ import { ToolcallInfo } from "../index";
  * In V1, tool calls are content blocks within messages.
  */
 export function createToolCallMessage(
-  overrides: Partial<GenuiThreadMessage> & {
-    toolUse?: Partial<GenuiToolUseContent>;
+  overrides: Partial<TamboThreadMessage> & {
+    toolUse?: Partial<TamboToolUseContent>;
   } = {},
-): GenuiThreadMessage {
+): TamboThreadMessage {
   const { toolUse, ...messageOverrides } = overrides;
-  const toolUseBlock: GenuiToolUseContent = {
+  const toolUseBlock: TamboToolUseContent = {
     type: "tool_use",
     id: "tool-call-id",
     name: "test-tool",
@@ -38,8 +38,8 @@ export function createToolCallMessage(
  * In V1, tool results are content blocks within user messages.
  */
 export function createToolResponseMessage(
-  content: GenuiThreadMessage["content"],
-): GenuiThreadMessage {
+  content: TamboThreadMessage["content"],
+): TamboThreadMessage {
   return {
     id: "tool-response-id",
     role: "user",
@@ -53,11 +53,11 @@ export function createToolResponseMessage(
         : block,
     ),
     createdAt: new Date().toISOString(),
-  } as GenuiThreadMessage;
+  } as TamboThreadMessage;
 }
 
 describe("formatToolResult in ToolcallInfo", () => {
-  const mockUseGenui = jest.mocked(useGenui);
+  const mockUseTambo = jest.mocked(useTambo);
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -70,7 +70,7 @@ describe("formatToolResult in ToolcallInfo", () => {
         { type: "text", text: "Tool executed successfully" },
       ]);
 
-      mockUseGenui.mockReturnValue({
+      mockUseTambo.mockReturnValue({
         messages: [toolCallMessage, toolResponse],
         isStreaming: false,
         isIdle: true,
@@ -91,7 +91,7 @@ describe("formatToolResult in ToolcallInfo", () => {
         { type: "text", text: '{"status": "success", "count": 42}' },
       ]);
 
-      mockUseGenui.mockReturnValue({
+      mockUseTambo.mockReturnValue({
         messages: [toolCallMessage, toolResponse],
         isStreaming: false,
         isIdle: true,
@@ -120,7 +120,7 @@ describe("formatToolResult in ToolcallInfo", () => {
         },
       ]);
 
-      mockUseGenui.mockReturnValue({
+      mockUseTambo.mockReturnValue({
         messages: [toolCallMessage, toolResponse],
         isStreaming: false,
         isIdle: true,
@@ -147,7 +147,7 @@ describe("formatToolResult in ToolcallInfo", () => {
         },
       ]);
 
-      mockUseGenui.mockReturnValue({
+      mockUseTambo.mockReturnValue({
         messages: [toolCallMessage, toolResponse],
         isStreaming: false,
         isIdle: true,
@@ -175,7 +175,7 @@ describe("formatToolResult in ToolcallInfo", () => {
         },
       ]);
 
-      mockUseGenui.mockReturnValue({
+      mockUseTambo.mockReturnValue({
         messages: [toolCallMessage, toolResponse],
         isStreaming: false,
         isIdle: true,
@@ -205,7 +205,7 @@ describe("formatToolResult in ToolcallInfo", () => {
         },
       ]);
 
-      mockUseGenui.mockReturnValue({
+      mockUseTambo.mockReturnValue({
         messages: [toolCallMessage, toolResponse],
         isStreaming: false,
         isIdle: true,
@@ -226,7 +226,7 @@ describe("formatToolResult in ToolcallInfo", () => {
       const toolCallMessage = createToolCallMessage();
       const toolResponse = createToolResponseMessage([]);
 
-      mockUseGenui.mockReturnValue({
+      mockUseTambo.mockReturnValue({
         messages: [toolCallMessage, toolResponse],
         isStreaming: false,
         isIdle: true,
@@ -250,7 +250,7 @@ describe("formatToolResult in ToolcallInfo", () => {
         },
       ]);
 
-      mockUseGenui.mockReturnValue({
+      mockUseTambo.mockReturnValue({
         messages: [toolCallMessage, toolResponse],
         isStreaming: false,
         isIdle: true,
@@ -268,7 +268,7 @@ describe("formatToolResult in ToolcallInfo", () => {
 
   describe("toolUse prop", () => {
     it("renders using provided toolUse instead of first tool_use from message", () => {
-      const secondToolUse: GenuiToolUseContent = {
+      const secondToolUse: TamboToolUseContent = {
         type: "tool_use",
         id: "tool-call-2",
         name: "second-tool",
@@ -286,7 +286,7 @@ describe("formatToolResult in ToolcallInfo", () => {
         ],
       });
 
-      mockUseGenui.mockReturnValue({
+      mockUseTambo.mockReturnValue({
         messages: [toolCallMessage],
         isStreaming: false,
         isIdle: true,
@@ -302,14 +302,14 @@ describe("formatToolResult in ToolcallInfo", () => {
     });
 
     it("renders when toolUse prop targets a tool_use not first in the message", () => {
-      const targetToolUse: GenuiToolUseContent = {
+      const targetToolUse: TamboToolUseContent = {
         type: "tool_use",
         id: "tool-call-3",
         name: "target-tool",
         input: {},
       };
       // Message with text before the tool_use (thinking model pattern)
-      const message: GenuiThreadMessage = {
+      const message: TamboThreadMessage = {
         id: "msg-1",
         role: "assistant",
         content: [
@@ -319,7 +319,7 @@ describe("formatToolResult in ToolcallInfo", () => {
         createdAt: new Date().toISOString(),
       };
 
-      mockUseGenui.mockReturnValue({
+      mockUseTambo.mockReturnValue({
         messages: [message],
         isStreaming: false,
         isIdle: true,
@@ -335,21 +335,21 @@ describe("formatToolResult in ToolcallInfo", () => {
     });
 
     it("scopes hasToolError by toolUseId", () => {
-      const successToolUse: GenuiToolUseContent = {
+      const successToolUse: TamboToolUseContent = {
         type: "tool_use",
         id: "tool-success",
         name: "good-tool",
         input: {},
         hasCompleted: true,
       };
-      const errorToolUse: GenuiToolUseContent = {
+      const errorToolUse: TamboToolUseContent = {
         type: "tool_use",
         id: "tool-error",
         name: "bad-tool",
         input: {},
         hasCompleted: true,
       };
-      const toolCallMessage: GenuiThreadMessage = {
+      const toolCallMessage: TamboThreadMessage = {
         id: "msg-1",
         role: "assistant",
         content: [successToolUse, errorToolUse],
@@ -359,7 +359,7 @@ describe("formatToolResult in ToolcallInfo", () => {
         { type: "text", text: "OK" },
       ]);
 
-      mockUseGenui.mockReturnValue({
+      mockUseTambo.mockReturnValue({
         messages: [toolCallMessage, toolResponse],
         isStreaming: false,
         isIdle: true,

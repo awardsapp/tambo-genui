@@ -14,7 +14,7 @@ import {
   ApiSecurity,
   ApiTags,
 } from "@nestjs/swagger";
-import { operations } from "@workspace-cloud/db";
+import { operations } from "@tambo-ai-cloud/db";
 import { type Request } from "express";
 import { AppService } from "./app.service";
 import {

@@ -1,16 +1,16 @@
 ---
 title: React SDK Hooks
-description: Complete reference for @workspace/react hooks - thread management, messaging, suggestions, and component state.
+description: Complete reference for @tambo-ai/react hooks - thread management, messaging, suggestions, and component state.
 ---
 
-The `@workspace/react` package provides hooks for building AI-powered applications with explicit thread management and React Query integration.
+The `@tambo-ai/react` package provides hooks for building AI-powered applications with explicit thread management and React Query integration.
 
-## useGenui
+## useTambo
 
 The primary hook for the React SDK. Provides access to thread state, messages, streaming status, and registry functions.
 
 ```tsx
-import { useGenui } from "@workspace/react";
+import { useTambo } from "@tambo-ai/react";
 
 function Chat() {
   const {
@@ -47,7 +47,7 @@ function Chat() {
     // API client
     client,
     dispatch,
-  } = useGenui();
+  } = useTambo();
 }
 ```
 
@@ -58,7 +58,7 @@ function Chat() {
 | Value             | Type                       | Description                                                      |
 | ----------------- | -------------------------- | ---------------------------------------------------------------- |
 | `thread`          | `ThreadState \| undefined` | Current thread state including messages and metadata             |
-| `messages`        | `GenuiThreadMessage[]`     | Array of messages in the current thread with computed properties |
+| `messages`        | `TamboThreadMessage[]`     | Array of messages in the current thread with computed properties |
 | `currentThreadId` | `string`                   | ID of the currently active thread                                |
 
 #### Streaming Status
@@ -74,7 +74,7 @@ function Chat() {
 
 | Value          | Type                                                          | Description                                           |
 | -------------- | ------------------------------------------------------------- | ----------------------------------------------------- |
-| `authState`    | [`GenuiAuthState`](/reference/react-sdk/types#genuiauthstate) | Current authentication state as a discriminated union |
+| `authState`    | [`TamboAuthState`](/reference/react-sdk/types#tamboauthstate) | Current authentication state as a discriminated union |
 | `isIdentified` | `boolean`                                                     | Shorthand for `authState.status === "identified"`     |
 
 #### Run Control
@@ -87,7 +87,7 @@ function Chat() {
 
 | Value              | Type                                                               | Description                                     |
 | ------------------ | ------------------------------------------------------------------ | ----------------------------------------------- |
-| `initThread`       | `(threadId: string, initialThread?: Partial<GenuiThread>) => void` | Initialize a thread with optional initial state |
+| `initThread`       | `(threadId: string, initialThread?: Partial<TamboThread>) => void` | Initialize a thread with optional initial state |
 | `switchThread`     | `(threadId: string) => void`                                       | Switch to a different thread by ID              |
 | `startNewThread`   | `() => string`                                                     | Create a new thread and return its ID           |
 | `updateThreadName` | `(threadId: string, name: string) => Promise<void>`                | Update a thread's display name                  |
@@ -96,20 +96,20 @@ function Chat() {
 
 | Value               | Type                                  | Description                      |
 | ------------------- | ------------------------------------- | -------------------------------- |
-| `registerComponent` | `(component: GenuiComponent) => void` | Register a component dynamically |
-| `registerTool`      | `(tool: GenuiTool) => void`           | Register a single tool           |
-| `registerTools`     | `(tools: GenuiTool[]) => void`        | Register multiple tools          |
+| `registerComponent` | `(component: TamboComponent) => void` | Register a component dynamically |
+| `registerTool`      | `(tool: TamboTool) => void`           | Register a single tool           |
+| `registerTools`     | `(tools: TamboTool[]) => void`        | Register multiple tools          |
 | `componentList`     | `ComponentRegistry`                   | Map of registered components     |
-| `toolRegistry`      | `Map<string, GenuiTool>`              | Map of registered tools          |
+| `toolRegistry`      | `Map<string, TamboTool>`              | Map of registered tools          |
 
 ### Example: Basic Chat
 
 ```tsx
-import { useGenui, useGenuiThreadInput } from "@workspace/react";
+import { useTambo, useTamboThreadInput } from "@tambo-ai/react";
 
 function ChatInterface() {
-  const { messages, isStreaming, startNewThread } = useGenui();
-  const { value, setValue, submit } = useGenuiThreadInput();
+  const { messages, isStreaming, startNewThread } = useTambo();
+  const { value, setValue, submit } = useTamboThreadInput();
 
   return (
     <div>
@@ -133,12 +133,12 @@ function ChatInterface() {
 }
 ```
 
-## useGenuiThreadInput
+## useTamboThreadInput
 
-Provides shared input state management across components. Input state is shared via the `GenuiThreadInputProvider`, allowing features like suggestions to update the input directly.
+Provides shared input state management across components. Input state is shared via the `TamboThreadInputProvider`, allowing features like suggestions to update the input directly.
 
 ```tsx
-import { useGenuiThreadInput } from "@workspace/react";
+import { useTamboThreadInput } from "@tambo-ai/react";
 
 function MessageInput() {
   const {
@@ -155,7 +155,7 @@ function MessageInput() {
     isDisabled,
     isError,
     error,
-  } = useGenuiThreadInput();
+  } = useTamboThreadInput();
 }
 ```
 
@@ -182,7 +182,7 @@ function MessageInput() {
 ```tsx
 function RichInput() {
   const { value, setValue, submit, images, addImage, removeImage, isPending } =
-    useGenuiThreadInput();
+    useTamboThreadInput();
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
@@ -218,15 +218,15 @@ function RichInput() {
 }
 ```
 
-## useGenuiThread
+## useTamboThread
 
 React Query hook to fetch a single thread by ID.
 
 ```tsx
-import { useGenuiThread } from "@workspace/react";
+import { useTamboThread } from "@tambo-ai/react";
 
 function ThreadLoader({ threadId }: { threadId: string }) {
-  const { data, isLoading, isError, error } = useGenuiThread(threadId);
+  const { data, isLoading, isError, error } = useTamboThread(threadId);
 
   if (isLoading) return <Loading />;
   if (isError) return <Error message={error.message} />;
@@ -255,15 +255,15 @@ The query has a `staleTime` of 1000ms by default for real-time data freshness.
   parameter — both conditions must be true for the query to run.
 </Callout>
 
-## useGenuiThreadList
+## useTamboThreadList
 
 React Query hook to list threads for the current user.
 
 ```tsx
-import { useGenuiThreadList } from "@workspace/react";
+import { useTamboThreadList } from "@tambo-ai/react";
 
 function ThreadSidebar() {
-  const { data, isLoading } = useGenuiThreadList();
+  const { data, isLoading } = useTamboThreadList();
 
   if (isLoading) return <Loading />;
 
@@ -299,26 +299,26 @@ Returns a standard React Query `UseQueryResult<ThreadListResponse>`.
 The query has a `staleTime` of 5000ms by default.
 
 <Callout type="info" title="Auth-gating">
-  Like `useGenuiThread`, this hook automatically disables the query until the
+  Like `useTamboThread`, this hook automatically disables the query until the
   user is identified. You can add additional `enabled` logic via `queryOptions`
   — both conditions must be true for the query to run.
 </Callout>
 
 <Callout type="info" title="Automatic userKey merging">
   You don't need to pass `userKey` in `listOptions` — the hook automatically
-  uses the `userKey` from `GenuiProvider`. If you do pass one explicitly, it
+  uses the `userKey` from `TamboProvider`. If you do pass one explicitly, it
   takes precedence over the provider value.
 </Callout>
 
-## useGenuiComponentState
+## useTamboComponentState
 
-Bidirectional state synchronization between component and server. Similar to React's `useState`, but syncs state changes with the Genui server.
+Bidirectional state synchronization between component and server. Similar to React's `useState`, but syncs state changes with the Tambo server.
 
 ```tsx
-import { useGenuiComponentState } from "@workspace/react";
+import { useTamboComponentState } from "@tambo-ai/react";
 
 function Counter() {
-  const [count, setCount, { isPending, error, flush }] = useGenuiComponentState(
+  const [count, setCount, { isPending, error, flush }] = useTamboComponentState(
     "count",
     0,
   );
@@ -363,7 +363,7 @@ Returns a tuple: `[currentState, setState, meta]`
 
 ```tsx
 function EditableCard({ title: initialTitle }: { title: string }) {
-  const [title, setTitle, { isPending }] = useGenuiComponentState(
+  const [title, setTitle, { isPending }] = useTamboComponentState(
     "title",
     initialTitle,
     300, // debounce 300ms
@@ -382,17 +382,17 @@ function EditableCard({ title: initialTitle }: { title: string }) {
 }
 ```
 
-## useGenuiStreamStatus
+## useTamboStreamStatus
 
 Track streaming status for components rendered via `ComponentRenderer`. Provides both overall stream status and per-prop granularity.
 
 **Important**: Props update repeatedly during streaming and may be partial. Use `propStatus.<field>?.isSuccess` before treating a prop as complete.
 
 ```tsx
-import { useGenuiStreamStatus } from "@workspace/react";
+import { useTamboStreamStatus } from "@tambo-ai/react";
 
 function MyComponent(props: MyProps) {
-  const { streamStatus, propStatus } = useGenuiStreamStatus<MyProps>();
+  const { streamStatus, propStatus } = useTamboStreamStatus<MyProps>();
 
   if (streamStatus.isPending) return <Skeleton />;
 
@@ -419,12 +419,12 @@ function MyComponent(props: MyProps) {
   renderer provides the necessary context for tracking streaming state.
 </Callout>
 
-## useGenuiSuggestions
+## useTamboSuggestions
 
 Generate and manage AI-powered message suggestions.
 
 ```tsx
-import { useGenuiSuggestions } from "@workspace/react";
+import { useTamboSuggestions } from "@tambo-ai/react";
 
 function SuggestionChips() {
   const {
@@ -434,7 +434,7 @@ function SuggestionChips() {
     isLoading,
     isGenerating,
     isAccepting,
-  } = useGenuiSuggestions();
+  } = useTamboSuggestions();
 
   return (
     <div>
@@ -459,7 +459,7 @@ function SuggestionChips() {
 ### Options
 
 ```tsx
-const result = useGenuiSuggestions({
+const result = useTamboSuggestions({
   maxSuggestions: 3, // 1-10, default 3
   autoGenerate: true, // auto-generate on mount, default true
   queryOptions: {}, // React Query options
@@ -492,12 +492,12 @@ const result = useGenuiSuggestions({
 | `suggestion`   | `Suggestion` | The suggestion to accept           |
 | `shouldSubmit` | `boolean`    | Submit immediately after accepting |
 
-## useGenuiInteractable
+## useTamboInteractable
 
 Manages the registry of interactable components — components already placed in your UI that the AI can update. Provides functions to add, remove, update, query, and select interactable components.
 
 ```tsx
-import { useGenuiInteractable } from "@workspace/react";
+import { useTamboInteractable } from "@tambo-ai/react";
 
 function InteractableManager() {
   const {
@@ -512,7 +512,7 @@ function InteractableManager() {
     getInteractableComponentState,
     setInteractableSelected,
     clearInteractableSelections,
-  } = useGenuiInteractable();
+  } = useTamboInteractable();
 }
 ```
 
@@ -520,26 +520,26 @@ function InteractableManager() {
 
 | Value                              | Type                                                                           | Description                                     |
 | ---------------------------------- | ------------------------------------------------------------------------------ | ----------------------------------------------- |
-| `interactableComponents`           | `GenuiInteractableComponent[]`                                                 | All registered interactable components          |
-| `addInteractableComponent`         | `(component: Omit<GenuiInteractableComponent, "id" \| "createdAt">) => string` | Register a component, returns its generated ID  |
+| `interactableComponents`           | `TamboInteractableComponent[]`                                                 | All registered interactable components          |
+| `addInteractableComponent`         | `(component: Omit<TamboInteractableComponent, "id" \| "createdAt">) => string` | Register a component, returns its generated ID  |
 | `removeInteractableComponent`      | `(id: string) => void`                                                         | Remove a component by ID                        |
 | `updateInteractableComponentProps` | `(id: string, newProps: Record<string, unknown>) => string`                    | Partially update a component's props            |
-| `getInteractableComponent`         | `(id: string) => GenuiInteractableComponent \| undefined`                      | Get a component by ID                           |
-| `getInteractableComponentsByName`  | `(name: string) => GenuiInteractableComponent[]`                               | Get all components matching a name              |
+| `getInteractableComponent`         | `(id: string) => TamboInteractableComponent \| undefined`                      | Get a component by ID                           |
+| `getInteractableComponentsByName`  | `(name: string) => TamboInteractableComponent[]`                               | Get all components matching a name              |
 | `clearAllInteractableComponents`   | `() => void`                                                                   | Remove all interactable components              |
 | `setInteractableState`             | `(componentId: string, key: string, value: unknown) => void`                   | Set a single state key on a component           |
 | `getInteractableComponentState`    | `(componentId: string) => Record<string, unknown> \| undefined`                | Get a component's state                         |
 | `setInteractableSelected`          | `(componentId: string, isSelected: boolean) => void`                           | Mark a component as selected for AI interaction |
 | `clearInteractableSelections`      | `() => void`                                                                   | Clear all component selections                  |
 
-> Most applications use `withGenuiInteractable()` instead of calling this hook directly. The HOC handles registration and cleanup automatically.
+> Most applications use `withTamboInteractable()` instead of calling this hook directly. The HOC handles registration and cleanup automatically.
 
 ## useCurrentInteractablesSnapshot
 
 Returns a cloned snapshot of all currently registered interactable components. The snapshot is safe to mutate without affecting internal state.
 
 ```tsx
-import { useCurrentInteractablesSnapshot } from "@workspace/react";
+import { useCurrentInteractablesSnapshot } from "@tambo-ai/react";
 
 function InteractablesList() {
   const interactables = useCurrentInteractablesSnapshot();
@@ -554,14 +554,14 @@ function InteractablesList() {
 }
 ```
 
-**Returns:** `GenuiInteractableComponent[]` (shallow-cloned array with cloned props)
+**Returns:** `TamboInteractableComponent[]` (shallow-cloned array with cloned props)
 
-## useGenuiContextAttachment
+## useTamboContextAttachment
 
 Manages context attachments — pieces of context that are automatically included with the next user message and then cleared.
 
 ```tsx
-import { useGenuiContextAttachment } from "@workspace/react";
+import { useTamboContextAttachment } from "@tambo-ai/react";
 
 function FileAttacher() {
   const {
@@ -569,7 +569,7 @@ function FileAttacher() {
     addContextAttachment,
     removeContextAttachment,
     clearContextAttachments,
-  } = useGenuiContextAttachment();
+  } = useTamboContextAttachment();
 
   const attachFile = (fileContent: string, fileName: string) => {
     addContextAttachment({
@@ -599,16 +599,16 @@ function FileAttacher() {
 | `displayName` | `string` | Optional display name for UI rendering          |
 | `type`        | `string` | Optional type for grouping (e.g., `"file"`)     |
 
-## useGenuiContextHelpers
+## useTamboContextHelpers
 
 Accesses the context helpers system for managing dynamic additional context that is included with every message.
 
 ```tsx
 import { useEffect } from "react";
-import { useGenuiContextHelpers } from "@workspace/react";
+import { useTamboContextHelpers } from "@tambo-ai/react";
 
 function ContextManager() {
-  const { addContextHelper, removeContextHelper } = useGenuiContextHelpers();
+  const { addContextHelper, removeContextHelper } = useTamboContextHelpers();
 
   useEffect(() => {
     addContextHelper("appState", () => ({
@@ -630,15 +630,15 @@ function ContextManager() {
 | `addContextHelper`     | `(name: string, helper: ContextHelperFn) => void` | Register or update a context helper by name         |
 | `removeContextHelper`  | `(name: string) => void`                          | Remove a context helper by name                     |
 
-## useGenuiCurrentMessage
+## useTamboCurrentMessage
 
-Returns the current message from the `GenuiMessageProvider` context. Use this inside components rendered via the message pipeline to access the message that triggered the component.
+Returns the current message from the `TamboMessageProvider` context. Use this inside components rendered via the message pipeline to access the message that triggered the component.
 
 ```tsx
-import { useGenuiCurrentMessage } from "@workspace/react";
+import { useTamboCurrentMessage } from "@tambo-ai/react";
 
 function ComponentWithMessage() {
-  const message = useGenuiCurrentMessage();
+  const message = useTamboCurrentMessage();
 
   return (
     <div>
@@ -649,19 +649,19 @@ function ComponentWithMessage() {
 }
 ```
 
-**Returns:** `GenuiThreadMessage` — the current message.
+**Returns:** `TamboThreadMessage` — the current message.
 
-**Throws** if used outside a `GenuiMessageProvider` (i.e., outside the message rendering pipeline).
+**Throws** if used outside a `TamboMessageProvider` (i.e., outside the message rendering pipeline).
 
-## useGenuiCurrentComponent
+## useTamboCurrentComponent
 
-Returns metadata about the current component from the message context. Works for both AI-generated components and interactable components wrapped with `withGenuiInteractable`.
+Returns metadata about the current component from the message context. Works for both AI-generated components and interactable components wrapped with `withTamboInteractable`.
 
 ```tsx
-import { useGenuiCurrentComponent } from "@workspace/react";
+import { useTamboCurrentComponent } from "@tambo-ai/react";
 
 function ComponentInfo() {
-  const component = useGenuiCurrentComponent();
+  const component = useTamboCurrentComponent();
 
   if (!component) return null;
 
@@ -676,24 +676,24 @@ function ComponentInfo() {
 
 ### Return Values
 
-Returns `GenuiCurrentComponent | null` (null if used outside `GenuiMessageProvider`).
+Returns `TamboCurrentComponent | null` (null if used outside `TamboMessageProvider`).
 
 | Property         | Type                      | Description                                                      |
 | ---------------- | ------------------------- | ---------------------------------------------------------------- |
 | `componentName`  | `string \| undefined`     | Component name from the message or interactable metadata         |
 | `props`          | `Record<string, unknown>` | Component props from the message content block                   |
-| `interactableId` | `string \| undefined`     | Interactable ID (only for `withGenuiInteractable` components)    |
-| `description`    | `string \| undefined`     | Description (only for `withGenuiInteractable` components)        |
+| `interactableId` | `string \| undefined`     | Interactable ID (only for `withTamboInteractable` components)    |
+| `description`    | `string \| undefined`     | Description (only for `withTamboInteractable` components)        |
 | `threadId`       | `string \| undefined`     | Thread ID (not available on messages directly, always undefined) |
 
 ## useComponentContent
 
-Returns metadata about the current component instance from the `ComponentContentProvider` context. This is a lower-level hook — `useGenuiStreamStatus` uses it internally, and `useGenuiComponentState` uses a non-throwing variant of the same context.
+Returns metadata about the current component instance from the `ComponentContentProvider` context. This is a lower-level hook — `useTamboStreamStatus` uses it internally, and `useTamboComponentState` uses a non-throwing variant of the same context.
 
-Most applications should use `useGenuiCurrentComponent` instead. Use this hook when you need the component's instance ID, thread ID, or message ID directly.
+Most applications should use `useTamboCurrentComponent` instead. Use this hook when you need the component's instance ID, thread ID, or message ID directly.
 
 ```tsx
-import { useComponentContent } from "@workspace/react";
+import { useComponentContent } from "@tambo-ai/react";
 
 function DebugOverlay() {
   const { componentId, threadId, messageId, componentName } =
@@ -718,15 +718,15 @@ function DebugOverlay() {
 
 **Throws** if used outside a component rendered via `ComponentRenderer`.
 
-## useIsGenuiTokenUpdating
+## useIsTamboTokenUpdating
 
 Returns whether a session token exchange is in progress. Useful for showing loading indicators or disabling UI during authentication token refresh.
 
 ```tsx
-import { useIsGenuiTokenUpdating } from "@workspace/react";
+import { useIsTamboTokenUpdating } from "@tambo-ai/react";
 
 function AuthGuard({ children }: { children: React.ReactNode }) {
-  const isUpdating = useIsGenuiTokenUpdating();
+  const isUpdating = useIsTamboTokenUpdating();
 
   if (isUpdating) return <div>Authenticating...</div>;
 
@@ -736,21 +736,21 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
 
 **Returns:** `boolean` — `true` while the session token is being refreshed.
 
-**Throws** if used outside a `GenuiClientProvider`.
+**Throws** if used outside a `TamboClientProvider`.
 
 ## Re-exported Hooks
 
 The following hooks are re-exported from the base SDK for convenience:
 
-### useGenuiClient
+### useTamboClient
 
-Access the Genui API client directly.
+Access the Tambo API client directly.
 
 ```tsx
-import { useGenuiClient } from "@workspace/react";
+import { useTamboClient } from "@tambo-ai/react";
 
 function ApiExample() {
-  const client = useGenuiClient();
+  const client = useTamboClient();
 
   const fetchData = async () => {
     const threads = await client.beta.threads.list();
@@ -764,18 +764,18 @@ function ApiExample() {
 Manage staged images for message input.
 
 ```tsx
-import { useMessageImages } from "@workspace/react";
+import { useMessageImages } from "@tambo-ai/react";
 
 const { images, addImage, addImages, removeImage, clearImages } =
   useMessageImages();
 ```
 
-### useGenuiVoice
+### useTamboVoice
 
 Record and transcribe speech.
 
 ```tsx
-import { useGenuiVoice } from "@workspace/react";
+import { useTamboVoice } from "@tambo-ai/react";
 
 const {
   startRecording,
@@ -785,5 +785,5 @@ const {
   transcript,
   transcriptionError,
   mediaAccessError,
-} = useGenuiVoice();
+} = useTamboVoice();
 ```

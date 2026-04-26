@@ -9,7 +9,7 @@ import { ProjectTable } from "./project-table";
  * Self-contained wrapper for ProjectTable that handles TRPC data fetching and state management.
  *
  * This component fetches projects directly and renders them in a native table.
- * genui doesn't need to fetch data first - it just calls this component with minimal props.
+ * tambo doesn't need to fetch data first - it just calls this component with minimal props.
  *
  */
 

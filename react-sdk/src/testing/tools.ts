@@ -1,15 +1,15 @@
-import { GenuiComponent, GenuiTool } from "../model/component-metadata";
+import { TamboComponent, TamboTool } from "../model/component-metadata";
 import { isStandardSchema, safeSchemaToJsonSchema } from "../schema";
-import { mapGenuiToolToContextTool } from "../util/registry";
+import { mapTamboToolToContextTool } from "../util/registry";
 
 /**
  * Serializes the registry for testing purposes.
  * Converts Standard Schema validators to JSON Schema format.
- * Uses the same logic as production code via mapGenuiToolToContextTool.
+ * Uses the same logic as production code via mapTamboToolToContextTool.
  * @param mockRegistry - The registry to serialize
  * @returns The serialized registry with JSON Schema representations
  */
-export function serializeRegistry(mockRegistry: GenuiComponent[]) {
+export function serializeRegistry(mockRegistry: TamboComponent[]) {
   return mockRegistry.map(
     ({
       component: _component,
@@ -22,29 +22,29 @@ export function serializeRegistry(mockRegistry: GenuiComponent[]) {
         ? safeSchemaToJsonSchema(propsSchema)
         : propsSchema,
       contextTools: associatedTools?.map((tool) =>
-        mapGenuiToolToContextTool(tool),
+        mapTamboToolToContextTool(tool),
       ),
     }),
   );
 }
 
 interface CreateMockToolOptions {
-  inputSchema: GenuiTool["inputSchema"];
-  outputSchema?: GenuiTool["outputSchema"];
+  inputSchema: TamboTool["inputSchema"];
+  outputSchema?: TamboTool["outputSchema"];
   maxCalls?: number;
 }
 
-// Helper to create a minimal GenuiTool for testing
+// Helper to create a minimal TamboTool for testing
 /**
- * Creates a mock GenuiTool with the given input schema for testing purposes.
+ * Creates a mock TamboTool with the given input schema for testing purposes.
  * Accepts either an inputSchema directly or an options object with inputSchema and outputSchema.
  * @param schemaOrOptions - The input schema or options object
- * @returns A mock GenuiTool instance
+ * @returns A mock TamboTool instance
  * @internal
  */
 export function createMockTool(
-  schemaOrOptions: GenuiTool["inputSchema"] | CreateMockToolOptions,
-): GenuiTool {
+  schemaOrOptions: TamboTool["inputSchema"] | CreateMockToolOptions,
+): TamboTool {
   // Check if options object was passed
   const hasInputSchemaProperty = (
     obj: unknown,

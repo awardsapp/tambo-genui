@@ -1,7 +1,7 @@
 "use client";
 
 import { useRender } from "@base-ui/react/use-render";
-import type { GenuiThreadMessage } from "@workspace/react";
+import type { TamboThreadMessage } from "@tambo-ai/react";
 import * as React from "react";
 import { useThreadContentContext } from "../root/thread-content-context";
 
@@ -12,8 +12,8 @@ import { useThreadContentContext } from "../root/thread-content-context";
  * @returns The filtered messages array
  */
 function filterDisplayMessages(
-  messages: GenuiThreadMessage[],
-): GenuiThreadMessage[] {
+  messages: TamboThreadMessage[],
+): TamboThreadMessage[] {
   return messages.filter((message) => {
     if (message.role === "system") return false;
     if (message.content.length === 0) return false;
@@ -29,7 +29,7 @@ export interface ThreadContentMessagesState extends Record<string, unknown> {
   messageCount: number;
   isEmpty: boolean;
   isGenerating: boolean;
-  filteredMessages: GenuiThreadMessage[];
+  filteredMessages: TamboThreadMessage[];
 }
 
 type ThreadContentMessagesComponentProps = useRender.ComponentProps<

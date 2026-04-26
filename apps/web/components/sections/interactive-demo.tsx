@@ -1,37 +1,37 @@
 "use client";
 
-import { demoComponents } from "@/components/ui/genui/demo-config";
-import { GenuiEmailButton } from "@/components/ui/genui/genui-email-button";
+import { demoComponents } from "@/components/ui/tambo/demo-config";
+import { TamboEmailButton } from "@/components/ui/tambo/tambo-email-button";
 import { env } from "@/lib/env";
-import { MessageThreadFull } from "@workspace/ui-registry/components/message-thread-full";
-import { GenuiProvider } from "@workspace/react";
+import { MessageThreadFull } from "@tambo-ai/ui-registry/components/message-thread-full";
+import { TamboProvider } from "@tambo-ai/react";
 import { useEffect } from "react";
 
 export function InteractiveDemo() {
   useEffect(() => {
-    const isContextKeySet = localStorage.getItem("genui-context-key");
+    const isContextKeySet = localStorage.getItem("tambo-context-key");
     if (!isContextKeySet) {
       const contextKey = new Date().toISOString();
-      localStorage.setItem("genui-context-key", contextKey);
+      localStorage.setItem("tambo-context-key", contextKey);
     }
   }, []);
 
   return (
-    <GenuiProvider
-      apiKey={env.NEXT_PUBLIC_GENUI_API_KEY!}
-      genuiUrl={env.NEXT_PUBLIC_GENUI_API_URL}
+    <TamboProvider
+      apiKey={env.NEXT_PUBLIC_TAMBO_API_KEY!}
+      tamboUrl={env.NEXT_PUBLIC_TAMBO_API_URL}
       components={demoComponents}
     >
-      <div className="genui-theme w-full h-full">
+      <div className="tambo-theme w-full h-full">
         <div className="relative h-full">
           <MessageThreadFull className="shadow-xl max-h-full rounded-lg" />
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <div className="pointer-events-auto">
-              <GenuiEmailButton />
+              <TamboEmailButton />
             </div>
           </div>
         </div>
       </div>
-    </GenuiProvider>
+    </TamboProvider>
   );
 }

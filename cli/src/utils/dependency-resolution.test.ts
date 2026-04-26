@@ -31,7 +31,7 @@ jest.unstable_mockModule("../commands/shared/component-utils.js", () => ({
     projectRoot: string,
     installPath: string,
   ) => {
-    const componentPath = `${projectRoot}/${installPath}/genui/${componentName}.tsx`;
+    const componentPath = `${projectRoot}/${installPath}/tambo/${componentName}.tsx`;
     if (memfsFs.existsSync(componentPath)) {
       return { componentPath, installPath };
     }
@@ -338,7 +338,7 @@ describe("Dependency Resolution", () => {
   describe("expandComponentsWithDependencies", () => {
     it("adds dependencies that are not in original list", async () => {
       vol.fromJSON({
-        "/mock-project/src/components/genui/markdown-components.tsx":
+        "/mock-project/src/components/tambo/markdown-components.tsx":
           "export const Markdown = () => <div />;",
       });
 

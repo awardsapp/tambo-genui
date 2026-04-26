@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { EditWithGenuiButton } from "@/components/ui/genui/edit-with-genui-button";
+import { EditWithTamboButton } from "@/components/ui/tambo/edit-with-tambo-button";
 import { useClipboard } from "@/hooks/use-clipboard";
 import { useToast } from "@/hooks/use-toast";
 import { api } from "@/trpc/react";
 import posthog from "posthog-js";
-import { withGenuiInteractable, type Suggestion } from "@workspace/react";
+import { withTamboInteractable, type Suggestion } from "@tambo-ai/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Copy } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -184,7 +184,7 @@ export function APIKeyList({
         posthog.capture("api_key_generated", { projectId });
 
         // Only show dialog for auto-generated first key
-        if (keyName === "first-genui-key") {
+        if (keyName === "first-tambo-key") {
           setShowKeyDialog(true);
         }
 
@@ -202,7 +202,7 @@ export function APIKeyList({
     [generateApiKey, newKeyName, projectId, toast],
   );
 
-  // When Genui sends createKeyWithName, automatically create the key
+  // When Tambo sends createKeyWithName, automatically create the key
   useEffect(() => {
     if (
       createKeyWithName &&
@@ -214,7 +214,7 @@ export function APIKeyList({
     }
   }, [createKeyWithName, projectId, handleCreateApiKey]);
 
-  // When Genui sends enterCreateMode, open the create form
+  // When Tambo sends enterCreateMode, open the create form
   useEffect(() => {
     if (enterCreateMode) {
       setIsCreating(true);
@@ -231,7 +231,7 @@ export function APIKeyList({
     });
   }, []);
 
-  // When Genui sends deleteKeyWithId, open the delete confirmation dialog
+  // When Tambo sends deleteKeyWithId, open the delete confirmation dialog
   useEffect(() => {
     if (deleteKeyWithId && deleteKeyWithId !== lastDeleteKeyRef.current) {
       lastDeleteKeyRef.current = deleteKeyWithId;
@@ -323,7 +323,7 @@ export function APIKeyList({
           <div className="flex items-center gap-2">
             <h4 className="text-lg font-semibold">
               API Keys
-              <EditWithGenuiButton description="Manage API keys for this project. You can add, delete, and generate new API keys." />
+              <EditWithTamboButton description="Manage API keys for this project. You can add, delete, and generate new API keys." />
             </h4>
           </div>
 
@@ -536,7 +536,7 @@ export function APIKeyList({
   );
 }
 
-export const InteractableAPIKeyList = withGenuiInteractable(APIKeyList, {
+export const InteractableAPIKeyList = withTamboInteractable(APIKeyList, {
   componentName: COMPONENT_NAME,
   description:
     "A component that allows users to manage API keys for their project. Users can view existing API keys, create new keys with custom names, and delete keys they no longer need. Each key is displayed with its creation date and preview, and newly created keys are shown once for copying.",

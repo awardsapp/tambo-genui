@@ -27,9 +27,9 @@ const config: Config = {
     "^@modelcontextprotocol/sdk/client/sse\\.js$":
       "<rootDir>/__mocks__/mcpSseMock.ts",
     "^@/(.*)$": "<rootDir>/$1",
-    "^@workspace-cloud/(.*)$": "<rootDir>/../../packages/$1/src",
-    "^@workspace/react$": "<rootDir>/../../react-sdk/src/index.ts",
-    "^@workspace/react/(.*)$": "<rootDir>/../../react-sdk/src/$1",
+    "^@tambo-ai-cloud/(.*)$": "<rootDir>/../../packages/$1/src",
+    "^@tambo-ai/react$": "<rootDir>/../../react-sdk/src/index.ts",
+    "^@tambo-ai/react/(.*)$": "<rootDir>/../../react-sdk/src/$1",
   },
   setupFilesAfterEnv: ["<rootDir>/test/jest.setup.ts"],
   transform: {

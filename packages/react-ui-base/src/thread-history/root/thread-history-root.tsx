@@ -1,7 +1,7 @@
 "use client";
 
 import { useRender } from "@base-ui/react/use-render";
-import { useGenui, useGenuiThreadList } from "@workspace/react";
+import { useTambo, useTamboThreadList } from "@tambo-ai/react";
 import * as React from "react";
 import {
   ThreadHistoryContext,
@@ -38,8 +38,8 @@ export const ThreadHistoryRoot = React.forwardRef<
   const onThreadChangeRef = React.useRef(onThreadChange);
   onThreadChangeRef.current = onThreadChange;
 
-  const { data, isLoading, error, refetch } = useGenuiThreadList();
-  const { switchThread, startNewThread, currentThreadId } = useGenui();
+  const { data, isLoading, error, refetch } = useTamboThreadList();
+  const { switchThread, startNewThread, currentThreadId } = useTambo();
 
   const threads = React.useMemo(() => data?.threads ?? [], [data?.threads]);
 

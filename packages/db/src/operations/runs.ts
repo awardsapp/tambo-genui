@@ -1,5 +1,5 @@
 import { and, eq, desc } from "drizzle-orm";
-import { MessageRole, V1RunStatus } from "@workspace-cloud/core";
+import { MessageRole, V1RunStatus } from "@tambo-ai-cloud/core";
 import type { HydraDb } from "../types";
 import { threads, runs, messages, type RunRequestParams } from "../schema";
 

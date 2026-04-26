@@ -24,7 +24,7 @@ start_supabase_if_needed() {
   fi
 }
 
-echo "🚀 Genui Development Server Options"
+echo "🚀 Tambo Development Server Options"
 echo ""
 echo "Select what to run:"
 echo "  1) Full dev (everything - showcase + docs + web + api)"
@@ -41,34 +41,34 @@ case $choice in
   1)
     echo "Starting full dev (everything)..."
     start_supabase_if_needed
-    npx turbo dev --filter=@workspace/showcase --filter=@workspace/docs --filter=@workspace-cloud/web --filter=@workspace-cloud/api
+    npx turbo dev --filter=@tambo-ai/showcase --filter=@tambo-ai/docs --filter=@tambo-ai-cloud/web --filter=@tambo-ai-cloud/api
     ;;
   2)
     echo "Starting framework only (showcase + docs)..."
-    npx turbo dev --filter=@workspace/showcase --filter=@workspace/docs
+    npx turbo dev --filter=@tambo-ai/showcase --filter=@tambo-ai/docs
     ;;
   3)
     echo "Starting cloud only (web + api)..."
     start_supabase_if_needed
-    npx turbo dev --filter=@workspace-cloud/web --filter=@workspace-cloud/api
+    npx turbo dev --filter=@tambo-ai-cloud/web --filter=@tambo-ai-cloud/api
     ;;
   4)
     echo "Starting showcase only..."
-    npx turbo dev --filter=@workspace/showcase
+    npx turbo dev --filter=@tambo-ai/showcase
     ;;
   5)
     echo "Starting docs only..."
-    npx turbo dev --filter=@workspace/docs
+    npx turbo dev --filter=@tambo-ai/docs
     ;;
   6)
     echo "Starting web only..."
     start_supabase_if_needed
-    npx turbo dev --filter=@workspace-cloud/web
+    npx turbo dev --filter=@tambo-ai-cloud/web
     ;;
   7)
     echo "Starting API only..."
     start_supabase_if_needed
-    npx turbo dev --filter=@workspace-cloud/api
+    npx turbo dev --filter=@tambo-ai-cloud/api
     ;;
   *)
     echo "Invalid choice. Exiting."

@@ -1,10 +1,10 @@
 "use client";
 
-import type { StagedImage } from "@workspace/react";
+import type { StagedImage } from "@tambo-ai/react";
 import type {
-  GenuiElicitationRequest,
-  GenuiElicitationResponse,
-} from "@workspace/react/mcp";
+  TamboElicitationRequest,
+  TamboElicitationResponse,
+} from "@tambo-ai/react/mcp";
 import * as React from "react";
 import { IS_PASTED_IMAGE } from "./constants";
 
@@ -67,7 +67,7 @@ export interface PromptItem extends SuggestionItem {
  * Minimal editor interface exposed to parent components.
  * Hides TipTap implementation details and exposes only necessary operations.
  */
-export interface GenuiEditor {
+export interface TamboEditor {
   /** Focus the editor at a specific position */
   focus(position?: "start" | "end"): void;
   /** Whether the editor currently has focus */
@@ -89,7 +89,7 @@ export interface GenuiEditor {
   setEditable(editable: boolean): void;
 }
 
-// Re-export StagedImage from @workspace/react
+// Re-export StagedImage from @tambo-ai/react
 export type { StagedImage };
 
 /**
@@ -112,8 +112,8 @@ export interface MessageInputContextValue {
   isPending: boolean;
   /** Any error from the submission */
   error: Error | null;
-  /** Reference to the GenuiEditor instance */
-  editorRef: React.RefObject<GenuiEditor | null>;
+  /** Reference to the TamboEditor instance */
+  editorRef: React.RefObject<TamboEditor | null>;
   /** Error from the submission */
   submitError: string | null;
   /** Set the submission error */
@@ -123,9 +123,9 @@ export interface MessageInputContextValue {
   /** Set the image upload error */
   setImageError: React.Dispatch<React.SetStateAction<string | null>>;
   /** Current elicitation request (read-only) */
-  elicitation: GenuiElicitationRequest | null;
+  elicitation: TamboElicitationRequest | null;
   /** Resolve the elicitation promise (automatically clears state) */
-  resolveElicitation: ((response: GenuiElicitationResponse) => void) | null;
+  resolveElicitation: ((response: TamboElicitationResponse) => void) | null;
   /** Whether the thread is idle */
   isIdle: boolean;
   /** Cancel the current operation */

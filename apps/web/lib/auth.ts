@@ -5,8 +5,8 @@ import {
   isEmailAllowed,
   refreshOidcToken,
   SessionSource,
-} from "@workspace-cloud/core";
-import { getDb, schema } from "@workspace-cloud/db";
+} from "@tambo-ai-cloud/core";
+import { getDb, schema } from "@tambo-ai-cloud/db";
 import { decodeJwt } from "jose";
 import { AuthOptions as NextAuthOptions } from "next-auth";
 import { JWT } from "next-auth/jwt";

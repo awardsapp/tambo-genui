@@ -1,14 +1,14 @@
 import { render, waitFor } from "@testing-library/react";
 import React, { useEffect } from "react";
-import { GenuiMcpTokenProvider } from "../providers/genui-mcp-token-provider";
-import { GenuiRegistryProvider } from "../providers/genui-registry-provider";
-import { GenuiClientContext } from "../providers/genui-client-provider";
+import { TamboMcpTokenProvider } from "../providers/tambo-mcp-token-provider";
+import { TamboRegistryProvider } from "../providers/tambo-registry-provider";
+import { TamboClientContext } from "../providers/tambo-client-provider";
 import { QueryClient } from "@tanstack/react-query";
 import {
-  GenuiMcpProvider,
-  useGenuiMcpServers,
+  TamboMcpProvider,
+  useTamboMcpServers,
   type McpServer,
-} from "./genui-mcp-provider";
+} from "./tambo-mcp-provider";
 
 // Mock the registry to provide a no-op registerTool
 // Do not mock the registry; use the real provider in render
@@ -17,15 +17,15 @@ import {
 
 // Mock the MCP client; use a mutable implementation to avoid TDZ issues
 let createImpl: jest.Mock = jest.fn();
-jest.mock("@workspace/client", () => ({
-  ...jest.requireActual("@workspace/client"),
+jest.mock("@tambo-ai/client", () => ({
+  ...jest.requireActual("@tambo-ai/client"),
   MCPClient: { create: (...args: any[]) => createImpl(...args) },
   MCPTransport: { SSE: "sse", HTTP: "http" },
 }));
 
 // Import after mocks note: jest.mock calls are hoisted, so standard imports are fine
 
-describe("useGenuiMcpServers + GenuiMcpProvider", () => {
+describe("useTamboMcpServers + TamboMcpProvider", () => {
   beforeEach(() => {
     createImpl = jest.fn();
   });
@@ -35,7 +35,7 @@ describe("useGenuiMcpServers + GenuiMcpProvider", () => {
     createImpl.mockResolvedValue(fakeClient);
 
     const Inner: React.FC = () => {
-      const servers = useGenuiMcpServers();
+      const servers = useTamboMcpServers();
       return (
         <div>
           <div data-testid="count">{servers.length}</div>
@@ -45,9 +45,9 @@ describe("useGenuiMcpServers + GenuiMcpProvider", () => {
     };
 
     const { getByTestId } = render(
-      <GenuiClientContext.Provider
+      <TamboClientContext.Provider
         value={{
-          client: { baseURL: "https://api.genui.co" } as any,
+          client: { baseURL: "https://api.tambo.co" } as any,
           queryClient: new QueryClient(),
           isUpdatingToken: false,
           tokenExchangeError: null,
@@ -55,16 +55,16 @@ describe("useGenuiMcpServers + GenuiMcpProvider", () => {
           hasValidToken: false,
         }}
       >
-        <GenuiRegistryProvider
+        <TamboRegistryProvider
           mcpServers={[{ url: "https://one.example" }, "https://two.example"]}
         >
-          <GenuiMcpTokenProvider>
-            <GenuiMcpProvider>
+          <TamboMcpTokenProvider>
+            <TamboMcpProvider>
               <Inner />
-            </GenuiMcpProvider>
-          </GenuiMcpTokenProvider>
-        </GenuiRegistryProvider>
-      </GenuiClientContext.Provider>,
+            </TamboMcpProvider>
+          </TamboMcpTokenProvider>
+        </TamboRegistryProvider>
+      </TamboClientContext.Provider>,
     );
 
     await waitFor(() => {
@@ -81,7 +81,7 @@ describe("useGenuiMcpServers + GenuiMcpProvider", () => {
 
     let latest: McpServer[] = [];
     const Capture: React.FC = () => {
-      const servers = useGenuiMcpServers();
+      const servers = useTamboMcpServers();
       useEffect(() => {
         latest = servers;
       }, [servers]);
@@ -89,9 +89,9 @@ describe("useGenuiMcpServers + GenuiMcpProvider", () => {
     };
 
     render(
-      <GenuiClientContext.Provider
+      <TamboClientContext.Provider
         value={{
-          client: { baseURL: "https://api.genui.co" } as any,
+          client: { baseURL: "https://api.tambo.co" } as any,
           queryClient: new QueryClient(),
           isUpdatingToken: false,
           tokenExchangeError: null,
@@ -99,14 +99,14 @@ describe("useGenuiMcpServers + GenuiMcpProvider", () => {
           hasValidToken: false,
         }}
       >
-        <GenuiRegistryProvider mcpServers={[{ url: "https://ok.example" }]}>
-          <GenuiMcpTokenProvider>
-            <GenuiMcpProvider>
+        <TamboRegistryProvider mcpServers={[{ url: "https://ok.example" }]}>
+          <TamboMcpTokenProvider>
+            <TamboMcpProvider>
               <Capture />
-            </GenuiMcpProvider>
-          </GenuiMcpTokenProvider>
-        </GenuiRegistryProvider>
-      </GenuiClientContext.Provider>,
+            </TamboMcpProvider>
+          </TamboMcpTokenProvider>
+        </TamboRegistryProvider>
+      </TamboClientContext.Provider>,
     );
 
     await waitFor(() => {
@@ -124,7 +124,7 @@ describe("useGenuiMcpServers + GenuiMcpProvider", () => {
 
     let latest: McpServer[] = [];
     const Capture: React.FC = () => {
-      const servers = useGenuiMcpServers();
+      const servers = useTamboMcpServers();
       useEffect(() => {
         latest = servers;
       }, [servers]);
@@ -132,9 +132,9 @@ describe("useGenuiMcpServers + GenuiMcpProvider", () => {
     };
 
     render(
-      <GenuiClientContext.Provider
+      <TamboClientContext.Provider
         value={{
-          client: { baseURL: "https://api.genui.co" } as any,
+          client: { baseURL: "https://api.tambo.co" } as any,
           queryClient: new QueryClient(),
           isUpdatingToken: false,
           tokenExchangeError: null,
@@ -142,14 +142,14 @@ describe("useGenuiMcpServers + GenuiMcpProvider", () => {
           hasValidToken: false,
         }}
       >
-        <GenuiRegistryProvider mcpServers={[{ url: "https://fail.example" }]}>
-          <GenuiMcpTokenProvider>
-            <GenuiMcpProvider>
+        <TamboRegistryProvider mcpServers={[{ url: "https://fail.example" }]}>
+          <TamboMcpTokenProvider>
+            <TamboMcpProvider>
               <Capture />
-            </GenuiMcpProvider>
-          </GenuiMcpTokenProvider>
-        </GenuiRegistryProvider>
-      </GenuiClientContext.Provider>,
+            </TamboMcpProvider>
+          </TamboMcpTokenProvider>
+        </TamboRegistryProvider>
+      </TamboClientContext.Provider>,
     );
 
     await waitFor(() => {

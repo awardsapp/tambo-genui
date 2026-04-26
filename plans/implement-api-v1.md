@@ -1,4 +1,4 @@
-# Implementation Plan: Genui API v1
+# Implementation Plan: Tambo API v1
 
 ## Summary
 
@@ -27,7 +27,7 @@
 
 ## Overview
 
-Implement the Genui API v1 as defined in `plans/api-v1-proposal.md` in the NestJS API server (`apps/api`). This implementation adds new `/v1/` endpoints alongside the existing API without breaking current functionality.
+Implement the Tambo API v1 as defined in `plans/api-v1-proposal.md` in the NestJS API server (`apps/api`). This implementation adds new `/v1/` endpoints alongside the existing API without breaking current functionality.
 
 ## Problem Statement / Motivation
 
@@ -364,7 +364,7 @@ Simple `emitEvent()` helper with `sanitizeEvent()` for security. Events pass thr
 
 1. During streaming, `ToolCallTracker.processEvent()` tracks all tool calls
 2. After streaming completes, `getPendingToolCalls()` returns tools without results (client-side tools)
-3. If pending tools exist, emit `genui.run.awaiting_input` custom event
+3. If pending tools exist, emit `tambo.run.awaiting_input` custom event
 4. On next run with `previousRunId`, `validateToolResults()` ensures ALL pending tools have results (fail-fast, not partial)
 5. Tool result messages are saved within the run transaction before the run starts
 
@@ -389,9 +389,9 @@ Simple `emitEvent()` helper with `sanitizeEvent()` for security. Events pass thr
 
 **Events emitted:**
 
-- `genui.component.start` - On first delta, includes componentId and name
-- `genui.component.props_delta` - RFC 6902 JSON Patch operations with streaming status per property
-- `genui.component.end` - Final props on tool call completion
+- `tambo.component.start` - On first delta, includes componentId and name
+- `tambo.component.props_delta` - RFC 6902 JSON Patch operations with streaming status per property
+- `tambo.component.end` - Final props on tool call completion
 
 **Integration:** Hooked into `ai-sdk-client.ts` `handleStreamingResponse()` for tools matching `show_component_*` pattern.
 

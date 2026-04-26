@@ -1,14 +1,14 @@
-# Feature: @workspace/react-ui-base Package
+# Feature: @tambo-ai/react-ui-base Package
 
 ## Overview
 
-Extract business logic from UI components into reusable hooks, utilities, and unstyled base components in a new `@workspace/react-ui-base` package. This enables users to build custom UIs while leveraging Genui's core functionality. The extraction targets the two largest components (`message-input.tsx` at 1612 lines and `message.tsx` at 1071 lines) while maintaining backwards compatibility.
+Extract business logic from UI components into reusable hooks, utilities, and unstyled base components in a new `@tambo-ai/react-ui-base` package. This enables users to build custom UIs while leveraging Tambo's core functionality. The extraction targets the two largest components (`message-input.tsx` at 1612 lines and `message.tsx` at 1071 lines) while maintaining backwards compatibility.
 
 ## Key Design Decisions
 
-- **Separate package**: `@workspace/react-ui-base` - cleaner dependency boundaries, easier tree-shaking
-- **Peer dependency on react-sdk**: Base hooks integrate with existing `@workspace/react` providers
-- **Genui-specific naming**: Hooks follow `useGenui*` convention for consistency
+- **Separate package**: `@tambo-ai/react-ui-base` - cleaner dependency boundaries, easier tree-shaking
+- **Peer dependency on react-sdk**: Base hooks integrate with existing `@tambo-ai/react` providers
+- **Tambo-specific naming**: Hooks follow `useTambo*` convention for consistency
 - **Incremental extraction**: Start with pure utility functions, then simple hooks, then complex stateful hooks
 - **Internal-first migration**: Original components will use base hooks internally, preserving API backwards compatibility
 - **Composition over replacement**: Each extracted hook handles one concern; components compose multiple hooks
@@ -17,13 +17,13 @@ Extract business logic from UI components into reusable hooks, utilities, and un
 
 Tree-shaking should be treated as a requirement, not just a nice-to-have.
 
-- `@workspace/react-ui-base` should be publishable as side-effect free (`"sideEffects": false` in package.json)
+- `@tambo-ai/react-ui-base` should be publishable as side-effect free (`"sideEffects": false` in package.json)
 - Avoid module-level side effects (no work at import-time):
   - No `window`/`document`/`sessionStorage` access outside of `useEffect` / guarded helper functions
   - No logging, no runtime registration, no global polyfills
 - Keep base hooks UI-agnostic to avoid pulling in UI dependencies (e.g., no `lucide-react` imports or returning JSX elements from hooks)
 - Be careful with `index.ts` barrels: prefer `export { foo } from "./foo"` re-exports over patterns that eagerly import modules
-- Use feature-based subpath exports (e.g., `@workspace/react-ui-base/message-input`, `@workspace/react-ui-base/message`)
+- Use feature-based subpath exports (e.g., `@tambo-ai/react-ui-base/message-input`, `@tambo-ai/react-ui-base/message`)
 
 ## Architecture
 
@@ -31,7 +31,7 @@ Tree-shaking should be treated as a requirement, not just a nice-to-have.
 User Code
     |
     v
-@workspace/react-ui-base (feature-based subpath exports - tree-shakeable)
+@tambo-ai/react-ui-base (feature-based subpath exports - tree-shakeable)
     |
     +-- message-input/
     |     +-- use-message-input-state.ts
@@ -58,13 +58,13 @@ User Code
     |     +-- resource-filters.ts
     |
     +-- scroll/
-          +-- use-genui-auto-scroll.ts
+          +-- use-tambo-auto-scroll.ts
     |
     v
-@workspace/react (providers & core hooks)
+@tambo-ai/react (providers & core hooks)
     |
     v
-@workspace/typescript-sdk (API client)
+@tambo-ai/typescript-sdk (API client)
 ```
 
 ## Usage
@@ -74,35 +74,35 @@ User Code
 import {
   useMessageInputState,
   useKeyboardShortcut,
-} from "@workspace/react-ui-base/message-input";
+} from "@tambo-ai/react-ui-base/message-input";
 import {
   useMessageContent,
   formatToolResult,
-} from "@workspace/react-ui-base/message";
-import { useGenuiAutoScroll } from "@workspace/react-ui-base/scroll";
+} from "@tambo-ai/react-ui-base/message";
+import { useTamboAutoScroll } from "@tambo-ai/react-ui-base/scroll";
 
 // Or from main entry (re-exports all features - less tree-shakeable; depends on bundler)
 import {
   useMessageInputState,
-  useGenuiAutoScroll,
-} from "@workspace/react-ui-base";
+  useTamboAutoScroll,
+} from "@tambo-ai/react-ui-base";
 
 // Core SDK (providers, API hooks)
-import { useGenui, GenuiProvider } from "@workspace/react";
+import { useTambo, TamboProvider } from "@tambo-ai/react";
 ```
 
 ## Component Schema/Interface
 
 ```typescript
 // Auto-scroll hook interface
-interface UseGenuiAutoScrollOptions {
+interface UseTamboAutoScrollOptions {
   /** Tolerance in pixels for "at bottom" detection (default: 8) */
   tolerance?: number;
   /** Disable auto-scroll entirely */
   disabled?: boolean;
 }
 
-interface UseGenuiAutoScrollReturn {
+interface UseTamboAutoScrollReturn {
   /** Ref to attach to scrollable container */
   scrollContainerRef: React.RefObject<HTMLDivElement>;
   /** Whether auto-scroll is active */
@@ -142,7 +142,7 @@ interface MessageInputState {
 
 // Message content hook interface
 interface UseMessageContentOptions {
-  content: GenuiThreadMessage["content"];
+  content: TamboThreadMessage["content"];
   enableMarkdown?: boolean;
 }
 
@@ -154,13 +154,13 @@ interface MessageContentState {
 
 // Tool response hook interface
 interface UseToolResponseOptions {
-  message: GenuiThreadMessage;
-  threadMessages: GenuiThreadMessage[];
+  message: TamboThreadMessage;
+  threadMessages: TamboThreadMessage[];
 }
 
 interface ToolResponseState {
-  toolCallRequest: GenuiAI.ToolCallRequest | undefined;
-  associatedToolResponse: GenuiThreadMessage | null;
+  toolCallRequest: TamboAI.ToolCallRequest | undefined;
+  associatedToolResponse: TamboThreadMessage | null;
   toolStatusMessage: string | null;
   hasToolError: boolean;
 }
@@ -187,7 +187,7 @@ packages/
     package.json
     tsconfig.json
     src/
-      index.ts                     # Main entry: @workspace/react-ui-base
+      index.ts                     # Main entry: @tambo-ai/react-ui-base
 
       message-input/               # Message input feature
         index.ts
@@ -235,15 +235,15 @@ packages/
 
       scroll/                      # Auto-scroll feature
         index.ts
-        use-genui-auto-scroll.ts
-        use-genui-auto-scroll.test.ts
+        use-tambo-auto-scroll.ts
+        use-tambo-auto-scroll.test.ts
 ```
 
 **package.json:**
 
 ```json
 {
-  "name": "@workspace/react-ui-base",
+  "name": "@tambo-ai/react-ui-base",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -257,7 +257,7 @@ packages/
     "./scroll": "./src/scroll/index.ts"
   },
   "peerDependencies": {
-    "@workspace/react": "*",
+    "@tambo-ai/react": "*",
     "react": "^18 || ^19"
   }
 }
@@ -282,9 +282,9 @@ Before creating the base package, refactor existing components to separate "dumb
 
 **Package Infrastructure**:
 
-- [x] `@workspace/react-ui-base` package created with Vite library mode build
+- [x] `@tambo-ai/react-ui-base` package created with Vite library mode build
 - [x] TypeScript declaration generation via vite-plugin-dts
-- [x] Jest test setup with @workspace/react mocking
+- [x] Jest test setup with @tambo-ai/react mocking
 - [x] 52 tests passing (formatReasoningDuration, getToolStatusMessage, getToolCallRequest, keyifyParameters, toolcall-info rendering)
 - [x] Turbo config updated: `test` and `check-types` tasks depend on `^build` for proper dependency ordering
 
@@ -357,7 +357,7 @@ After:
 
 ### Step 2: Create Package Scaffolding
 
-After in-place refactoring proves the separation works, create the `@workspace/react-ui-base` package.
+After in-place refactoring proves the separation works, create the `@tambo-ai/react-ui-base` package.
 
 **Files:**
 
@@ -373,7 +373,7 @@ After in-place refactoring proves the separation works, create the `@workspace/r
 **Key Implementation Details:**
 
 - Create new package in `packages/react-ui-base/`
-- Set up peer dependency on `@workspace/react`
+- Set up peer dependency on `@tambo-ai/react`
 - Configure `"sideEffects": false` for tree-shaking
 - Use feature folders instead of hooks/utils folders
 - No build step initially - export TypeScript directly (like `ui-registry`)
@@ -415,11 +415,11 @@ function convertContentToMarkdown(content):
       if item.type === "text": parts.push(item.text)
       if item.type === "resource":
         encodedUri = encodeURIComponent(item.resource.uri)
-        parts.push(`[${displayName}](genui-resource://${encodedUri})`)
+        parts.push(`[${displayName}](tambo-resource://${encodedUri})`)
     return parts.join(" ")
 
 // draft-persistence.ts
-const STORAGE_KEY = "genui.components.messageInput.draft"
+const STORAGE_KEY = "tambo.components.messageInput.draft"
 
 function getStorageKey(threadId):
   return `${STORAGE_KEY}.${threadId}`
@@ -527,7 +527,7 @@ Extract the MCP resource and prompt merging logic with debouncing.
 ```pseudo
 // use-combined-resources.ts
 function useCombinedResourceList({ externalProvider, search, debounceMs = 200 }):
-  { data: mcpResources } = useGenuiMcpResourceList(search)
+  { data: mcpResources } = useTamboMcpResourceList(search)
   [debouncedSearch] = useDebounce(search, debounceMs)
 
   mcpItems = useMemo(() =>
@@ -566,8 +566,8 @@ Extract the scroll behavior with user override detection.
 
 **Files:**
 
-- `packages/react-ui-base/src/scroll/use-genui-auto-scroll.ts` (NEW)
-- `packages/react-ui-base/src/scroll/use-genui-auto-scroll.test.ts` (NEW)
+- `packages/react-ui-base/src/scroll/use-tambo-auto-scroll.ts` (NEW)
+- `packages/react-ui-base/src/scroll/use-tambo-auto-scroll.test.ts` (NEW)
 
 **Key Implementation Details:**
 
@@ -577,8 +577,8 @@ Extract the scroll behavior with user override detection.
 - Handle both streaming and non-streaming modes
 
 ```pseudo
-// use-genui-auto-scroll.ts
-function useGenuiAutoScroll({ containerRef, dependencies, isStreaming }):
+// use-tambo-auto-scroll.ts
+function useTamboAutoScroll({ containerRef, dependencies, isStreaming }):
   [shouldAutoScroll, setShouldAutoScroll] = useState(true)
   lastScrollTopRef = useRef(0)
 
@@ -710,8 +710,8 @@ Extract thread and suggestion logic.
 ```pseudo
 // use-thread-management.ts
 function useThreadManagement({ onThreadChange }):
-  { switchCurrentThread, startNewThread } = useGenuiThread()
-  { refetch } = useGenuiThreadList()
+  { switchCurrentThread, startNewThread } = useTamboThread()
+  { refetch } = useTamboThreadList()
 
   handleNewThread = useCallback(async () => {
     try:
@@ -750,7 +750,7 @@ function useSuggestionMerge({
   }, [threadMessages?.length, generatedSuggestions, initialSuggestions, maxSuggestions])
 ```
 
-### Step 9: Move Hooks to @workspace/react-ui-base
+### Step 9: Move Hooks to @tambo-ai/react-ui-base
 
 Move the already-separated hooks from component directories into the new package.
 
@@ -761,12 +761,12 @@ Move the already-separated hooks from component directories into the new package
 - Thread hooks → `packages/react-ui-base/src/thread/`
 - Resource hooks/utils → `packages/react-ui-base/src/resources/`
 - Scroll hooks → `packages/react-ui-base/src/scroll/`
-- Update imports in ui-registry components to use `@workspace/react-ui-base`
+- Update imports in ui-registry components to use `@tambo-ai/react-ui-base`
 
 **Key Implementation Details:**
 
 - This is a straightforward move since separation was already done in Step 1
-- Add `@workspace/react-ui-base` as dependency to ui-registry
+- Add `@tambo-ai/react-ui-base` as dependency to ui-registry
 - Keep all existing props and component API unchanged
 - Re-export moved utilities from original locations with deprecation warnings (if needed)
 
@@ -786,7 +786,7 @@ export function useMessageInputState(...) { ... }
 import { useMessageInputState } from "./use-message-input-state";
 
 // After:
-import { useMessageInputState } from "@workspace/react-ui-base";
+import { useMessageInputState } from "@tambo-ai/react-ui-base";
 ```
 
 ### Step 10: Testing and Validation
@@ -846,28 +846,28 @@ Add comprehensive tests for all extracted functionality.
 
 **Step 2 (Package Scaffolding):**
 
-- [x] `@workspace/react-ui-base` package created
+- [x] `@tambo-ai/react-ui-base` package created
 - [x] Vite library mode build configured
 - [x] TypeScript declarations generated via vite-plugin-dts
 - [x] `"sideEffects": false` for tree-shaking
 - [x] Subpath exports: `./message`, `./reasoning-info`, `./toolcall-info`, `./types`, `./use-render`
-- [x] Peer dependencies on `@workspace/react` and `react`
+- [x] Peer dependencies on `@tambo-ai/react` and `react`
 
 **Steps 3-10 (Extraction & Migration):**
 
 - [x] react-ui-base builds without errors: `npm run build -w packages/react-ui-base`
 - [x] All tests pass: `npm test -w packages/react-ui-base` (52 tests)
 - [x] Lint passes: `npm run lint`
-- [x] Subpath imports work: `import { ... } from "@workspace/react-ui-base"`
+- [x] Subpath imports work: `import { ... } from "@tambo-ai/react-ui-base"`
 - [ ] Tree-shaking verified: unused exports not bundled
 - [x] Core utility functions extracted and tested (formatReasoningDuration, getToolStatusMessage, getToolCallRequest, keyifyParameters)
 - [ ] All hooks extracted and tested with renderHook
-- [x] ui-registry `message` component imports from `@workspace/react-ui-base`
-- [ ] ui-registry `message-input` component imports from `@workspace/react-ui-base`
+- [x] ui-registry `message` component imports from `@tambo-ai/react-ui-base`
+- [ ] ui-registry `message-input` component imports from `@tambo-ai/react-ui-base`
 - [x] No changes to component public APIs
 - [x] All existing tests pass without modification
 - [x] Showcase app renders and functions identically
 - [ ] JSDoc comments on all public exports
-- [ ] `useGenuiAutoScroll` hook extracted and tested
+- [ ] `useTamboAutoScroll` hook extracted and tested
 - [x] Formatting utilities are pure functions with no React dependencies
 - [x] Turbo config: `test` and `check-types` depend on `^build`

@@ -2,7 +2,7 @@ import {
   LegacyComponentDecision,
   MessageRole,
   ThreadMessage,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 import { AvailableComponent } from "../model/component-metadata";
 import { buildSuggestionPrompt } from "./suggestion-generator";
 

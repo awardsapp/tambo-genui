@@ -25,7 +25,7 @@ describe("encryptApiKey / decryptApiKey", () => {
   it("round-trips storedString & apiKey (new format)", () => {
     const encoded = encryptApiKey(STORED, API_KEY, SECRET);
 
-    expect(encoded.startsWith("genui_")).toBe(true);
+    expect(encoded.startsWith("tambo_")).toBe(true);
 
     const { storedString, apiKey } = decryptApiKey(encoded, SECRET);
     expect(storedString).toBe(STORED);

@@ -6,7 +6,7 @@ import {
   JSONValue,
   LlmParameterUIType,
   llmProviderConfig,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 import { AnimatePresence } from "framer-motion";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { EditMode, ViewMode } from "./editor-modes";

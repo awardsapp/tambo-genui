@@ -1,6 +1,6 @@
 /// <reference types="@testing-library/jest-dom" />
 import { beforeEach, describe, expect, it, jest } from "@jest/globals";
-import { useGenui, useGenuiThreadList } from "@workspace/react";
+import { useTambo, useTamboThreadList } from "@tambo-ai/react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
@@ -12,11 +12,11 @@ import {
 } from "./thread-history";
 
 describe("ThreadHistory", () => {
-  const mockUseGenui = jest.mocked(useGenui);
-  const mockUseGenuiThreadList = jest.mocked(useGenuiThreadList);
+  const mockUseTambo = jest.mocked(useTambo);
+  const mockUseTamboThreadList = jest.mocked(useTamboThreadList);
 
   beforeEach(() => {
-    mockUseGenui.mockReturnValue({
+    mockUseTambo.mockReturnValue({
       switchThread: jest.fn(),
       startNewThread: jest.fn().mockReturnValue("new-thread-id"),
       currentThreadId: "thread-1",
@@ -25,7 +25,7 @@ describe("ThreadHistory", () => {
       isIdle: true,
     } as never);
 
-    mockUseGenuiThreadList.mockReturnValue({
+    mockUseTamboThreadList.mockReturnValue({
       data: {
         threads: [
           { id: "thread-1", createdAt: new Date().toISOString() },

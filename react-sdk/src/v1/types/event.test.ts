@@ -1,63 +1,63 @@
 import { EventType, type CustomEvent } from "@ag-ui/core";
-import { asGenuiCustomEvent, isGenuiCustomEvent } from "@workspace/client";
+import { asTamboCustomEvent, isTamboCustomEvent } from "@tambo-ai/client";
 
-describe("isGenuiCustomEvent", () => {
-  it("returns true for genui.component.start event", () => {
+describe("isTamboCustomEvent", () => {
+  it("returns true for tambo.component.start event", () => {
     const event = {
       type: EventType.CUSTOM,
-      name: "genui.component.start",
+      name: "tambo.component.start",
       value: { messageId: "msg1", componentId: "comp1", componentName: "Test" },
     };
-    expect(isGenuiCustomEvent(event)).toBe(true);
+    expect(isTamboCustomEvent(event)).toBe(true);
   });
 
-  it("returns true for genui.component.props_delta event", () => {
+  it("returns true for tambo.component.props_delta event", () => {
     const event = {
       type: EventType.CUSTOM,
-      name: "genui.component.props_delta",
+      name: "tambo.component.props_delta",
       value: { componentId: "comp1", operations: [] },
     };
-    expect(isGenuiCustomEvent(event)).toBe(true);
+    expect(isTamboCustomEvent(event)).toBe(true);
   });
 
-  it("returns true for genui.component.state_delta event", () => {
+  it("returns true for tambo.component.state_delta event", () => {
     const event = {
       type: EventType.CUSTOM,
-      name: "genui.component.state_delta",
+      name: "tambo.component.state_delta",
       value: { componentId: "comp1", operations: [] },
     };
-    expect(isGenuiCustomEvent(event)).toBe(true);
+    expect(isTamboCustomEvent(event)).toBe(true);
   });
 
-  it("returns true for genui.component.end event", () => {
+  it("returns true for tambo.component.end event", () => {
     const event = {
       type: EventType.CUSTOM,
-      name: "genui.component.end",
+      name: "tambo.component.end",
       value: { componentId: "comp1" },
     };
-    expect(isGenuiCustomEvent(event)).toBe(true);
+    expect(isTamboCustomEvent(event)).toBe(true);
   });
 
-  it("returns true for genui.run.awaiting_input event", () => {
+  it("returns true for tambo.run.awaiting_input event", () => {
     const event = {
       type: EventType.CUSTOM,
-      name: "genui.run.awaiting_input",
+      name: "tambo.run.awaiting_input",
       value: {
         pendingToolCalls: [
           { toolCallId: "tool1", toolName: "test", arguments: "{}" },
         ],
       },
     };
-    expect(isGenuiCustomEvent(event)).toBe(true);
+    expect(isTamboCustomEvent(event)).toBe(true);
   });
 
-  it("returns true for genui.message.parent event", () => {
+  it("returns true for tambo.message.parent event", () => {
     const event = {
       type: EventType.CUSTOM,
-      name: "genui.message.parent",
+      name: "tambo.message.parent",
       value: { messageId: "msg1", parentMessageId: "parent1" },
     };
-    expect(isGenuiCustomEvent(event)).toBe(true);
+    expect(isTamboCustomEvent(event)).toBe(true);
   });
 
   it("returns false for unknown custom event name", () => {
@@ -66,12 +66,12 @@ describe("isGenuiCustomEvent", () => {
       name: "unknown.event",
       value: {},
     };
-    expect(isGenuiCustomEvent(event)).toBe(false);
+    expect(isTamboCustomEvent(event)).toBe(false);
   });
 
   it("returns false when name is undefined", () => {
     const event: { name?: string } = {};
-    expect(isGenuiCustomEvent(event)).toBe(false);
+    expect(isTamboCustomEvent(event)).toBe(false);
   });
 
   it("returns false when name is not a string", () => {
@@ -80,28 +80,28 @@ describe("isGenuiCustomEvent", () => {
       name: 123,
       value: {},
     };
-    expect(isGenuiCustomEvent(event as unknown as { name?: string })).toBe(
+    expect(isTamboCustomEvent(event as unknown as { name?: string })).toBe(
       false,
     );
   });
 
   it("returns false for empty object", () => {
-    expect(isGenuiCustomEvent({})).toBe(false);
+    expect(isTamboCustomEvent({})).toBe(false);
   });
 });
 
-describe("asGenuiCustomEvent", () => {
-  it("casts genui.message.parent event", () => {
+describe("asTamboCustomEvent", () => {
+  it("casts tambo.message.parent event", () => {
     const event = {
       type: EventType.CUSTOM,
-      name: "genui.message.parent",
+      name: "tambo.message.parent",
       value: { messageId: "msg1", parentMessageId: "parent1" },
       timestamp: 1234,
     } as CustomEvent;
 
-    const result = asGenuiCustomEvent(event);
+    const result = asTamboCustomEvent(event);
     expect(result).toBeDefined();
-    expect(result?.name).toBe("genui.message.parent");
+    expect(result?.name).toBe("tambo.message.parent");
   });
 
   it("returns undefined for unknown event name", () => {
@@ -112,6 +112,6 @@ describe("asGenuiCustomEvent", () => {
       timestamp: 1234,
     } as CustomEvent;
 
-    expect(asGenuiCustomEvent(event)).toBeUndefined();
+    expect(asTamboCustomEvent(event)).toBeUndefined();
   });
 });

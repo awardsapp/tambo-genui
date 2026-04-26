@@ -1,14 +1,14 @@
-// Re-exported from @workspace/client, with React-specific extension for GenuiComponentContent
+// Re-exported from @tambo-ai/client, with React-specific extension for TamboComponentContent
 import type { ReactElement } from "react";
 import type {
-  GenuiComponentContent as BaseGenuiComponentContent,
+  TamboComponentContent as BaseTamboComponentContent,
   TextContent,
-  GenuiToolUseContent,
+  TamboToolUseContent,
   ToolResultContent,
   ResourceContent,
-} from "@workspace/client";
+} from "@tambo-ai/client";
 
-import type { GenuiThreadMessage as BaseGenuiThreadMessage } from "@workspace/client";
+import type { TamboThreadMessage as BaseTamboThreadMessage } from "@tambo-ai/client";
 
 export type {
   TextContent,
@@ -19,20 +19,20 @@ export type {
   MessageListResponse,
   MessageGetResponse,
   ComponentStreamingState,
-  GenuiToolDisplayProps,
-  GenuiToolUseContent,
+  TamboToolDisplayProps,
+  TamboToolUseContent,
   MessageRole,
-  GenuiThreadMessage,
-} from "@workspace/client";
+  TamboThreadMessage,
+} from "@tambo-ai/client";
 
 /**
  * Extended ComponentContent with streaming state and rendered element.
  * Used by the React SDK to track component rendering lifecycle.
  *
- * Extends the base client GenuiComponentContent with the React-specific
+ * Extends the base client TamboComponentContent with the React-specific
  * `renderedComponent` field.
  */
-export interface GenuiComponentContent extends BaseGenuiComponentContent {
+export interface TamboComponentContent extends BaseTamboComponentContent {
   /**
    * The rendered React element for this component.
    * undefined if not yet rendered, null if the component couldn't be found in the registry.
@@ -42,19 +42,19 @@ export interface GenuiComponentContent extends BaseGenuiComponentContent {
 
 /**
  * Union type of all content block types.
- * Uses React-specific GenuiComponentContent which includes renderedComponent.
+ * Uses React-specific TamboComponentContent which includes renderedComponent.
  */
 export type Content =
   | TextContent
-  | GenuiToolUseContent
+  | TamboToolUseContent
   | ToolResultContent
-  | GenuiComponentContent
+  | TamboComponentContent
   | ResourceContent;
 
 /**
  * React-specific thread message type where component content blocks
- * include `renderedComponent`. Returned by `useGenui().messages`.
+ * include `renderedComponent`. Returned by `useTambo().messages`.
  */
-export interface ReactGenuiThreadMessage extends BaseGenuiThreadMessage {
+export interface ReactTamboThreadMessage extends BaseTamboThreadMessage {
   content: Content[];
 }

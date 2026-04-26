@@ -4,7 +4,7 @@ import { join } from "node:path";
 /**
  * Name of directory to store state/config/cache
  */
-const DIR_PREFIX = "genui";
+const DIR_PREFIX = "tambo";
 
 /**
  * Explicit mapping of directory types to XDG environment variables.
@@ -18,7 +18,7 @@ const XDG_ENV_VARS = {
 } as const;
 
 /**
- * Get OS-specific paths for genui state storage.
+ * Get OS-specific paths for tambo state storage.
  * Uses XDG Base Directory Specification on Linux.
  *
  * @returns The directory path for the requested type

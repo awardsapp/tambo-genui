@@ -13,7 +13,7 @@ export type ElicitationRequestedSchema =
 /**
  * Elicitation request from MCP server
  */
-export interface GenuiElicitationRequest {
+export interface TamboElicitationRequest {
   message: string;
   requestedSchema: ElicitationRequestedSchema;
   /** AbortSignal that fires when the server cancels the request (e.g., timeout) */
@@ -33,7 +33,7 @@ type ElicitRequestParamsWithRequestedSchema = Extract<
 /**
  * Elicitation response to be sent back
  */
-export interface GenuiElicitationResponse {
+export interface TamboElicitationResponse {
   action: "accept" | "decline" | "cancel";
   content?: Record<string, unknown>;
   [x: string]: unknown;
@@ -45,9 +45,9 @@ export interface GenuiElicitationResponse {
  */
 export interface ElicitationContextState {
   /** Current elicitation request, or null if none active */
-  elicitation: GenuiElicitationRequest | null;
+  elicitation: TamboElicitationRequest | null;
   /** Function to call when user responds to elicitation (clears state automatically) */
-  resolveElicitation: ((response: GenuiElicitationResponse) => void) | null;
+  resolveElicitation: ((response: TamboElicitationResponse) => void) | null;
 }
 
 /**

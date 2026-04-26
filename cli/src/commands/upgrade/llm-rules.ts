@@ -6,8 +6,8 @@ import path from "path";
 import { handleAgentDocsUpdate } from "../shared/agent-docs.js";
 import type { UpgradeOptions } from "./index.js";
 
-// Exact file that Genui CLI previously created via templates
-const LEGACY_CURSOR_RULE_FILE = ".cursor/rules/genui-ai.mdc";
+// Exact file that Tambo CLI previously created via templates
+const LEGACY_CURSOR_RULE_FILE = ".cursor/rules/tambo-ai.mdc";
 
 function findLegacyCursorRules(): string[] {
   const projectRoot = process.cwd();
@@ -32,7 +32,7 @@ export async function upgradeAgentDocsAndRemoveCursorRules(
 
   if (!options.yes) {
     const message = hasLegacyRules
-      ? "Found legacy genui-ai.mdc cursor rules. Replace with AGENTS.md/CLAUDE.md?"
+      ? "Found legacy tambo-ai.mdc cursor rules. Replace with AGENTS.md/CLAUDE.md?"
       : "Add/update AGENTS.md and CLAUDE.md guidance for LLMs?";
 
     const { proceed } = await inquirer.prompt({

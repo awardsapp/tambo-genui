@@ -169,7 +169,7 @@ export function cn(...inputs: ClassValue[]) {
     options.baseInstallPath !== undefined ||
     (isExplicitPrefix && installPath.includes(LEGACY_COMPONENT_SUBDIR));
 
-  const targetLocation = isLegacyLocation ? "ui" : "genui";
+  const targetLocation = isLegacyLocation ? "ui" : "tambo";
 
   for (const componentName of componentNames) {
     const config: ComponentConfig = JSON.parse(

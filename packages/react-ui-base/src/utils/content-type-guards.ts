@@ -1,4 +1,4 @@
-import type { Content } from "@workspace/react";
+import type { Content } from "@tambo-ai/react";
 
 /**
  * Checks if a content block is a text content block.

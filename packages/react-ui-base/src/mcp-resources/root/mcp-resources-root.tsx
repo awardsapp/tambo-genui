@@ -1,7 +1,7 @@
 "use client";
 
 import { useRender } from "@base-ui/react/use-render";
-import { useGenuiMcpResourceList } from "@workspace/react/mcp";
+import { useTamboMcpResourceList } from "@tambo-ai/react/mcp";
 import * as React from "react";
 import { McpResourcesContext } from "./mcp-resources-context";
 
@@ -41,7 +41,7 @@ export const McpResourcesRoot = React.forwardRef<
   }, [search]);
 
   const { data: resources, isLoading } =
-    useGenuiMcpResourceList(debouncedSearch);
+    useTamboMcpResourceList(debouncedSearch);
 
   const resourceList = React.useMemo(() => resources ?? [], [resources]);
   const hasResources = resourceList.length > 0;

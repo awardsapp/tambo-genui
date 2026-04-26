@@ -4,7 +4,7 @@ import {
   DomainErrorKind,
   InputValidationError,
   NotFoundError,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 import { Request, Response } from "express";
 import { DomainExceptionFilter } from "./domain-exception.filter";
 

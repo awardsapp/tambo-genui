@@ -1,10 +1,10 @@
 import { S3Client } from "@aws-sdk/client-s3";
 import { ConfigService } from "@nestjs/config";
 import { Test, TestingModule } from "@nestjs/testing";
-import * as backend from "@workspace-cloud/backend";
+import * as backend from "@tambo-ai-cloud/backend";
 import { StorageConfigService } from "./storage-config.service";
 
-jest.mock("@workspace-cloud/backend");
+jest.mock("@tambo-ai-cloud/backend");
 
 describe("StorageConfigService", () => {
   let isS3ConfiguredMock: jest.SpyInstance;

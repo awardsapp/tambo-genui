@@ -4,7 +4,7 @@ import React from "react";
 import { SkillsSection } from "./skills-section";
 
 // Mock the Tambo React hooks and EditWithTamboButton
-jest.mock("@workspace/react", () => ({
+jest.mock("@tambo-ai/react", () => ({
   withTamboInteractable: (Component: React.ComponentType) => Component,
 }));
 

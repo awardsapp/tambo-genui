@@ -1,4 +1,4 @@
-import { schema } from "@workspace-cloud/db";
+import { schema } from "@tambo-ai-cloud/db";
 import { SuggestionDto } from "../dto/suggestion.dto";
 
 export function mapSuggestionToDto(

@@ -129,7 +129,7 @@ export function detectFramework(projectRoot?: string): FrameworkConfig | null {
 /**
  * Gets the appropriate environment variable name for the API key
  * based on the detected framework
- * @param baseName The base env var name (e.g., "GENUI_API_KEY")
+ * @param baseName The base env var name (e.g., "TAMBO_API_KEY")
  * @returns The full env var name with appropriate prefix
  */
 export function getEnvVarName(baseName: string): string {
@@ -142,10 +142,10 @@ export function getEnvVarName(baseName: string): string {
 
 /**
  * Gets the API key environment variable name for the current project
- * @returns The env var name (e.g., "NEXT_PUBLIC_GENUI_API_KEY" or "GENUI_API_KEY")
+ * @returns The env var name (e.g., "NEXT_PUBLIC_TAMBO_API_KEY" or "TAMBO_API_KEY")
  */
-export function getGenuiApiKeyEnvVar(): string {
-  return getEnvVarName("GENUI_API_KEY");
+export function getTamboApiKeyEnvVar(): string {
+  return getEnvVarName("TAMBO_API_KEY");
 }
 
 /**

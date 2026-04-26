@@ -1,6 +1,6 @@
 import { mergeProps } from "@base-ui/react/merge-props";
 import { useRender } from "@base-ui/react/use-render";
-import type { GenuiComponentContent } from "@workspace/react";
+import type { TamboComponentContent } from "@tambo-ai/react";
 import * as React from "react";
 import { useMessageRootContext } from "../root/message-root-context";
 
@@ -46,7 +46,7 @@ export const MessageRenderedComponentCanvasButton = React.forwardRef<
 
   const firstRenderedComponent = React.useMemo(() => {
     const componentBlock = message.content.find(
-      (block): block is GenuiComponentContent =>
+      (block): block is TamboComponentContent =>
         block.type === "component" && !!block.renderedComponent,
     );
     return componentBlock?.renderedComponent;
@@ -55,7 +55,7 @@ export const MessageRenderedComponentCanvasButton = React.forwardRef<
   const onShowInCanvas = React.useCallback(() => {
     if (typeof window !== "undefined") {
       window.dispatchEvent(
-        new CustomEvent("genui:showComponent", {
+        new CustomEvent("tambo:showComponent", {
           detail: {
             messageId: message.id,
             component: firstRenderedComponent,

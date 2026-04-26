@@ -1,9 +1,9 @@
-import type { GenuiThreadMessage, GenuiToolUseContent } from "@workspace/react";
+import type { TamboThreadMessage, TamboToolUseContent } from "@tambo-ai/react";
 import { getToolCallRequest } from "./get-tool-call-request";
 
 function createMessage(
-  overrides: Partial<GenuiThreadMessage> = {},
-): GenuiThreadMessage {
+  overrides: Partial<TamboThreadMessage> = {},
+): TamboThreadMessage {
   return {
     id: "test-id",
     role: "assistant",
@@ -15,7 +15,7 @@ function createMessage(
 
 describe("getToolCallRequest", () => {
   it("returns tool_use content block from message", () => {
-    const toolUseBlock: GenuiToolUseContent = {
+    const toolUseBlock: TamboToolUseContent = {
       type: "tool_use",
       id: "tool-1",
       name: "test_tool",
@@ -26,13 +26,13 @@ describe("getToolCallRequest", () => {
   });
 
   it("returns first tool_use block when multiple exist", () => {
-    const firstBlock: GenuiToolUseContent = {
+    const firstBlock: TamboToolUseContent = {
       type: "tool_use",
       id: "tool-1",
       name: "first_tool",
       input: {},
     };
-    const secondBlock: GenuiToolUseContent = {
+    const secondBlock: TamboToolUseContent = {
       type: "tool_use",
       id: "tool-2",
       name: "second_tool",

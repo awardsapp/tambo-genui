@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useGenuiThreadInput } from "@workspace/react";
+import { useTamboThreadInput } from "@tambo-ai/react";
 import { Mic, StopCircle } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import SpeechRecognition, {
@@ -23,7 +23,7 @@ export function SpeechTranscription({
   const [showTranscript, setShowTranscript] = useState(false);
   const [audioDetected, setAudioDetected] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
-  const { setValue, submit, isPending } = useGenuiThreadInput();
+  const { setValue, submit, isPending } = useTamboThreadInput();
 
   const {
     transcript,

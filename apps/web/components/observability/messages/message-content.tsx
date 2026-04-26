@@ -1,8 +1,8 @@
 import {
   ContextAttachmentBadgeList,
   ContextAttachmentBadgeListData,
-} from "@/components/ui/genui/context-attachment-badge";
-import { createMarkdownComponents } from "@workspace/ui-registry/components/message";
+} from "@/components/ui/tambo/context-attachment-badge";
+import { createMarkdownComponents } from "@tambo-ai/ui-registry/components/message";
 import { useClipboard } from "@/hooks/use-clipboard";
 import { getSafeContent } from "@/lib/thread-hooks";
 import { cn } from "@/lib/utils";

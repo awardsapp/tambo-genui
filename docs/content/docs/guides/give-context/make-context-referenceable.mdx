@@ -33,7 +33,7 @@ Resources are perfect when:
 
 ## Prerequisites
 
-- A Genui application with `GenuiRegistryProvider` configured
+- A Tambo application with `TamboRegistryProvider` configured
 - Understanding of React providers
 
 ## Static Resources
@@ -41,7 +41,7 @@ Resources are perfect when:
 The simplest way to register resources is to provide a static array via the `resources` prop. This is useful when you have a fixed set of resources that don't change:
 
 ```tsx
-import { GenuiRegistryProvider, ListResourceItem } from "@workspace/react";
+import { TamboRegistryProvider, ListResourceItem } from "@tambo-ai/react";
 
 const resources: ListResourceItem[] = [
   {
@@ -60,9 +60,9 @@ const resources: ListResourceItem[] = [
 
 export function App() {
   return (
-    <GenuiRegistryProvider resources={resources}>
+    <TamboRegistryProvider resources={resources}>
       <YourApp />
-    </GenuiRegistryProvider>
+    </TamboRegistryProvider>
   );
 }
 ```
@@ -70,7 +70,7 @@ export function App() {
 With static resources, you must also provide a `getResource` function to retrieve the content:
 
 ```tsx
-import { ReadResourceResult } from "@workspace/react";
+import { ReadResourceResult } from "@tambo-ai/react";
 
 const getResource = async (uri: string): Promise<ReadResourceResult> => {
   if (uri === "docs://api-reference") {
@@ -100,9 +100,9 @@ const getResource = async (uri: string): Promise<ReadResourceResult> => {
 
 export function App() {
   return (
-    <GenuiRegistryProvider resources={resources} getResource={getResource}>
+    <TamboRegistryProvider resources={resources} getResource={getResource}>
       <YourApp />
-    </GenuiRegistryProvider>
+    </TamboRegistryProvider>
   );
 }
 ```
@@ -113,10 +113,10 @@ For resources that change based on search queries or other dynamic conditions, p
 
 ```tsx
 import {
-  GenuiRegistryProvider,
+  TamboRegistryProvider,
   ListResourceItem,
   ReadResourceResult,
-} from "@workspace/react";
+} from "@tambo-ai/react";
 
 const listResources = async (search?: string): Promise<ListResourceItem[]> => {
   // Fetch available resources, optionally filtered by search
@@ -157,12 +157,12 @@ const getResource = async (uri: string): Promise<ReadResourceResult> => {
 
 export function App() {
   return (
-    <GenuiRegistryProvider
+    <TamboRegistryProvider
       listResources={listResources}
       getResource={getResource}
     >
       <YourApp />
-    </GenuiRegistryProvider>
+    </TamboRegistryProvider>
   );
 }
 ```
@@ -171,12 +171,12 @@ export function App() {
 
 ## Dynamic Registration
 
-You can register resources dynamically by passing them via the `resources` prop on `GenuiProvider`. Manage the list with React state to add resources based on user actions or application state:
+You can register resources dynamically by passing them via the `resources` prop on `TamboProvider`. Manage the list with React state to add resources based on user actions or application state:
 
 ```tsx
 import { useState } from "react";
-import { GenuiProvider } from "@workspace/react";
-import type { ListResourceItem } from "@workspace/react";
+import { TamboProvider } from "@tambo-ai/react";
+import type { ListResourceItem } from "@tambo-ai/react";
 
 function App() {
   const [resources, setResources] = useState<ListResourceItem[]>([]);
@@ -194,8 +194,8 @@ function App() {
   };
 
   return (
-    <GenuiProvider
-      apiKey={process.env.NEXT_PUBLIC_GENUI_API_KEY!}
+    <TamboProvider
+      apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY!}
       resources={resources}
     >
       <input
@@ -207,7 +207,7 @@ function App() {
         }}
       />
       <Chat />
-    </GenuiProvider>
+    </TamboProvider>
   );
 }
 ```
@@ -275,7 +275,7 @@ const getResource = async (uri: string): Promise<ReadResourceResult> => {
 
 ## Resource URIs and Prefixing
 
-Local resources registered through `GenuiRegistryProvider` are **never prefixed** with a server key. This distinguishes them from MCP resources, which are always prefixed with their server key to prevent URI conflicts.
+Local resources registered through `TamboRegistryProvider` are **never prefixed** with a server key. This distinguishes them from MCP resources, which are always prefixed with their server key to prevent URI conflicts.
 
 ```tsx
 // Local resource URI (no prefix)
@@ -285,11 +285,11 @@ uri: "docs://getting-started";
 uri: "filesystem:file:///path/to/document";
 ```
 
-When using `useGenuiMcpResourceList()`, local resources appear alongside MCP resources in the combined list, with local resources easily identifiable by their unprefixed URIs.
+When using `useTamboMcpResourceList()`, local resources appear alongside MCP resources in the combined list, with local resources easily identifiable by their unprefixed URIs.
 
 ## Validation and Error Handling
 
-Genui validates resource registrations to ensure data integrity:
+Tambo validates resource registrations to ensure data integrity:
 
 - **Resource objects**: Must have `uri`, `name`, and `mimeType` properties
 - **Function pairing**: `listResources` and `getResource` must both be provided or both omitted
@@ -297,16 +297,16 @@ Genui validates resource registrations to ensure data integrity:
 
 ```tsx
 // ✅ Valid - both functions provided
-<GenuiRegistryProvider
+<TamboRegistryProvider
   listResources={listResources}
   getResource={getResource}
 >
 
 // ✅ Valid - neither function provided (static only)
-<GenuiRegistryProvider resources={staticResources}>
+<TamboRegistryProvider resources={staticResources}>
 
 // ❌ Invalid - only one function provided
-<GenuiRegistryProvider listResources={listResources}>
+<TamboRegistryProvider listResources={listResources}>
 // Error: Both listResources and getResource must be provided together
 ```
 
@@ -317,10 +317,10 @@ Local resources integrate seamlessly with existing MCP hooks:
 ### Listing All Resources
 
 ```tsx
-import { useGenuiMcpResourceList } from "@workspace/react";
+import { useTamboMcpResourceList } from "@tambo-ai/react";
 
 function ResourceBrowser() {
-  const { data: resources } = useGenuiMcpResourceList();
+  const { data: resources } = useTamboMcpResourceList();
 
   return (
     <ul>
@@ -338,10 +338,10 @@ function ResourceBrowser() {
 ### Reading a Resource
 
 ```tsx
-import { useGenuiMcpResource } from "@workspace/react";
+import { useTamboMcpResource } from "@tambo-ai/react";
 
 function ResourceViewer({ uri }: { uri: string }) {
-  const { data: resource } = useGenuiMcpResource(uri);
+  const { data: resource } = useTamboMcpResource(uri);
 
   if (!resource) return <div>Loading...</div>;
 
@@ -368,7 +368,7 @@ function ResourceViewer({ uri }: { uri: string }) {
 You can combine static resources with dynamic functions for maximum flexibility:
 
 ```tsx
-import { GenuiRegistryProvider } from "@workspace/react";
+import { TamboRegistryProvider } from "@tambo-ai/react";
 
 // Static resources that are always available
 const staticResources = [
@@ -416,11 +416,11 @@ const getResource = async (uri: string) => {
   };
 };
 
-<GenuiRegistryProvider
+<TamboRegistryProvider
   resources={staticResources}
   listResources={listResources}
   getResource={getResource}
 >
   <App />
-</GenuiRegistryProvider>;
+</TamboRegistryProvider>;
 ```

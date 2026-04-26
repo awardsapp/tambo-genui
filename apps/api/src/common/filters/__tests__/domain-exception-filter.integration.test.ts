@@ -5,7 +5,7 @@ import {
   DomainError,
   InputValidationError,
   NotFoundError,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 import request from "supertest";
 import { DomainExceptionFilter } from "../domain-exception.filter";
 import { SentryExceptionFilter } from "../sentry-exception.filter";

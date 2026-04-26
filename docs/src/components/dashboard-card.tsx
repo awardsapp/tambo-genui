@@ -12,7 +12,7 @@ export const DashboardCardComponent = React.forwardRef<
   DashboardCardProps
 >(({ className, ...props }, ref) => {
   const handleOpenDashboard = () => {
-    window.open("https://console.genui.co", "_blank", "noopener,noreferrer");
+    window.open("https://console.tambo.co", "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -30,7 +30,7 @@ export const DashboardCardComponent = React.forwardRef<
           <div className="flex items-center gap-3">
             <Image
               src="/logo/icon/Octo-Icon.svg"
-              alt="Genui"
+              alt="Tambo"
               width={32}
               height={32}
               className="flex-shrink-0"
@@ -40,7 +40,7 @@ export const DashboardCardComponent = React.forwardRef<
             </h3>
           </div>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            Access your genui dashboard to manage your projects and settings.
+            Access your tambo dashboard to manage your projects and settings.
           </p>
         </div>
 
