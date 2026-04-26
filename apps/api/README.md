@@ -1,6 +1,6 @@
-# Genui API (apps/api)
+# Tambo API (apps/api)
 
-NestJS service powering the Genui Cloud backend (projects, threads, registry sync, OAuth flows, MCP server, schedulers). For deeper rules read `apps/api/AGENTS.md`.
+NestJS service powering the Tambo Cloud backend (projects, threads, registry sync, OAuth flows, MCP server, schedulers). For deeper rules read `apps/api/AGENTS.md`.
 
 ## Quick Start
 
@@ -15,7 +15,7 @@ NestJS service powering the Genui Cloud backend (projects, threads, registry syn
 npm run dev            # watch mode
 npm run build          # compile to dist/
 npm run start:prod     # run compiled build
-npm run lint           # ESLint (@workspace config)
+npm run lint           # ESLint (@tambo-ai config)
 npm run check-types    # tsc --noEmit
 npm test               # Jest unit tests
 npm run test:cov       # Coverage report
@@ -44,7 +44,7 @@ src/
 ```
 
 - Each domain exports `{domain}.module/controller/service.ts` plus colocated `dto/`, `guards/`, and `entities/`.
-- Shared persistence utilities live in `common/services`; everything talks to `@workspace-cloud/db`.
+- Shared persistence utilities live in `common/services`; everything talks to `@tambo-ai-cloud/db`.
 - `src/config.service.ts` is the only place allowed to read `process.env`.
 
 ## Authentication

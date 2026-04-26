@@ -1,6 +1,6 @@
 /**
  * Tests for registry utilities:
- * - getParametersFromToolSchema via mapGenuiToolToContextTool
+ * - getParametersFromToolSchema via mapTamboToolToContextTool
  * - convertPropsToJsonSchema
  * - getComponentFromRegistry
  * - getAvailableComponents
@@ -12,9 +12,9 @@ import * as z4 from "zod/v4";
 import {
   ComponentRegistry,
   RegisteredComponent,
-  GenuiTool,
-  GenuiToolAssociations,
-  GenuiToolRegistry,
+  TamboTool,
+  TamboToolAssociations,
+  TamboToolRegistry,
 } from "../model/component-metadata";
 import { createMockTool } from "../testing/tools";
 import {
@@ -22,10 +22,10 @@ import {
   getAvailableComponents,
   getComponentFromRegistry,
   getUnassociatedTools,
-  mapGenuiToolToContextTool,
+  mapTamboToolToContextTool,
 } from "./registry";
 
-describe("getParametersFromToolSchema (via mapGenuiToolToContextTool)", () => {
+describe("getParametersFromToolSchema (via mapTamboToolToContextTool)", () => {
   describe("inputSchema interface (object schemas)", () => {
     describe("Zod 4 object schemas", () => {
       it("should extract parameters from object schema properties", () => {
@@ -37,7 +37,7 @@ describe("getParametersFromToolSchema (via mapGenuiToolToContextTool)", () => {
           outputSchema: z4.boolean(),
           maxCalls: 10,
         });
-        const result = mapGenuiToolToContextTool(tool);
+        const result = mapTamboToolToContextTool(tool);
         expect(result.maxCalls).toBe(10);
         expect(result.parameters).toHaveLength(2);
 
@@ -67,7 +67,7 @@ describe("getParametersFromToolSchema (via mapGenuiToolToContextTool)", () => {
           }),
           outputSchema: z4.void(),
         });
-        const result = mapGenuiToolToContextTool(tool);
+        const result = mapTamboToolToContextTool(tool);
         expect(result.parameters).toHaveLength(3);
 
         const pointParam = result.parameters.find((p) => p.name === "point");
@@ -96,7 +96,7 @@ describe("getParametersFromToolSchema (via mapGenuiToolToContextTool)", () => {
           }),
           outputSchema: z3.boolean(),
         });
-        const result = mapGenuiToolToContextTool(tool);
+        const result = mapTamboToolToContextTool(tool);
         expect(result.parameters).toHaveLength(2);
 
         const nameParam = result.parameters.find((p) => p.name === "name");
@@ -126,7 +126,7 @@ describe("getParametersFromToolSchema (via mapGenuiToolToContextTool)", () => {
           description: "User data",
         };
         const tool = createMockTool({ inputSchema: schema, outputSchema: {} });
-        const result = mapGenuiToolToContextTool(tool);
+        const result = mapTamboToolToContextTool(tool);
         expect(result.parameters).toHaveLength(2);
 
         const nameParam = result.parameters.find((p) => p.name === "name");
@@ -151,7 +151,7 @@ describe("getParametersFromToolSchema (via mapGenuiToolToContextTool)", () => {
           properties: {},
         };
         const tool = createMockTool({ inputSchema: schema, outputSchema: {} });
-        const result = mapGenuiToolToContextTool(tool);
+        const result = mapTamboToolToContextTool(tool);
         expect(result.parameters).toHaveLength(0);
       });
     });
@@ -165,7 +165,7 @@ describe("getParametersFromToolSchema (via mapGenuiToolToContextTool)", () => {
           age: z4.number(),
         }),
       );
-      const result = mapGenuiToolToContextTool(tool);
+      const result = mapTamboToolToContextTool(tool);
       expect(result.parameters).toHaveLength(2);
 
       const nameParam = result.parameters.find((p) => p.name === "name");
@@ -187,7 +187,7 @@ describe("getParametersFromToolSchema (via mapGenuiToolToContextTool)", () => {
           age: z3.number(),
         }),
       );
-      const result = mapGenuiToolToContextTool(tool);
+      const result = mapTamboToolToContextTool(tool);
       expect(result.parameters).toHaveLength(2);
 
       const nameParam = result.parameters.find((p) => p.name === "name");
@@ -208,7 +208,7 @@ describe("getParametersFromToolSchema (via mapGenuiToolToContextTool)", () => {
         },
       };
       const tool = createMockTool(schema);
-      const result = mapGenuiToolToContextTool(tool);
+      const result = mapTamboToolToContextTool(tool);
       expect(result.parameters).toHaveLength(2);
 
       const nameParam = result.parameters.find((p) => p.name === "name");
@@ -226,17 +226,17 @@ describe("getParametersFromToolSchema (via mapGenuiToolToContextTool)", () => {
 });
 
 describe("registry util: maxCalls", () => {
-  it("mapGenuiToolToContextTool includes maxCalls when present", () => {
+  it("mapTamboToolToContextTool includes maxCalls when present", () => {
     const tool = createMockTool({
       inputSchema: z3.object({ q: z3.string() }),
       maxCalls: 5,
     });
-    const meta = mapGenuiToolToContextTool(tool);
+    const meta = mapTamboToolToContextTool(tool);
     expect(meta.maxCalls).toBe(5);
   });
 
   it("getUnassociatedTools does not drop unassociated tools and preserves maxCalls", () => {
-    const t1: GenuiTool = {
+    const t1: TamboTool = {
       name: "a",
       description: "a",
       tool: () => {},
@@ -252,8 +252,8 @@ describe("registry util: maxCalls", () => {
 });
 
 describe("registry util: annotations", () => {
-  it("mapGenuiToolToContextTool includes annotations when present", () => {
-    const tool: GenuiTool = {
+  it("mapTamboToolToContextTool includes annotations when present", () => {
+    const tool: TamboTool = {
       name: "read-only-tool",
       description: "A tool that can be called with partial args",
       tool: () => {},
@@ -261,24 +261,24 @@ describe("registry util: annotations", () => {
       outputSchema: z3.string(),
       annotations: { readOnlyHint: true },
     };
-    const meta = mapGenuiToolToContextTool(tool);
+    const meta = mapTamboToolToContextTool(tool);
     expect(meta.annotations).toEqual({ readOnlyHint: true });
   });
 
-  it("mapGenuiToolToContextTool does not include annotations when undefined", () => {
-    const tool: GenuiTool = {
+  it("mapTamboToolToContextTool does not include annotations when undefined", () => {
+    const tool: TamboTool = {
       name: "regular-tool",
       description: "A regular tool",
       tool: () => {},
       inputSchema: z3.object({ text: z3.string() }),
       outputSchema: z3.string(),
     };
-    const meta = mapGenuiToolToContextTool(tool);
+    const meta = mapTamboToolToContextTool(tool);
     expect(meta.annotations).toBeUndefined();
   });
 
-  it("mapGenuiToolToContextTool includes annotations with readOnlyHint: false when explicitly set", () => {
-    const tool: GenuiTool = {
+  it("mapTamboToolToContextTool includes annotations with readOnlyHint: false when explicitly set", () => {
+    const tool: TamboTool = {
       name: "explicit-non-read-only-tool",
       description: "A tool explicitly marked as non-read-only",
       tool: () => {},
@@ -286,12 +286,12 @@ describe("registry util: annotations", () => {
       outputSchema: z3.string(),
       annotations: { readOnlyHint: false },
     };
-    const meta = mapGenuiToolToContextTool(tool);
+    const meta = mapTamboToolToContextTool(tool);
     expect(meta.annotations).toEqual({ readOnlyHint: false });
   });
 
   it("getUnassociatedTools preserves annotations", () => {
-    const tool: GenuiTool = {
+    const tool: TamboTool = {
       name: "streaming-tool",
       description: "A streaming tool",
       tool: () => {},
@@ -307,32 +307,32 @@ describe("registry util: annotations", () => {
     });
   });
 
-  it("mapGenuiToolToContextTool includes genuiStreamableHint annotation", () => {
-    const tool: GenuiTool = {
+  it("mapTamboToolToContextTool includes tamboStreamableHint annotation", () => {
+    const tool: TamboTool = {
       name: "streamable-tool",
       description: "A tool safe to call during streaming",
       tool: () => {},
       inputSchema: z3.object({ text: z3.string() }),
       outputSchema: z3.string(),
-      annotations: { genuiStreamableHint: true },
+      annotations: { tamboStreamableHint: true },
     };
-    const meta = mapGenuiToolToContextTool(tool);
-    expect(meta.annotations).toEqual({ genuiStreamableHint: true });
+    const meta = mapTamboToolToContextTool(tool);
+    expect(meta.annotations).toEqual({ tamboStreamableHint: true });
   });
 
-  it("mapGenuiToolToContextTool preserves multiple combined annotations", () => {
-    const tool: GenuiTool = {
+  it("mapTamboToolToContextTool preserves multiple combined annotations", () => {
+    const tool: TamboTool = {
       name: "combined-annotations-tool",
       description: "A tool with multiple annotations",
       tool: () => {},
       inputSchema: z3.object({ text: z3.string() }),
       outputSchema: z3.string(),
-      annotations: { readOnlyHint: true, genuiStreamableHint: true },
+      annotations: { readOnlyHint: true, tamboStreamableHint: true },
     };
-    const meta = mapGenuiToolToContextTool(tool);
+    const meta = mapTamboToolToContextTool(tool);
     expect(meta.annotations).toEqual({
       readOnlyHint: true,
-      genuiStreamableHint: true,
+      tamboStreamableHint: true,
     });
   });
 });
@@ -432,7 +432,7 @@ describe("getComponentFromRegistry", () => {
 
   it("should throw error when component not found", () => {
     expect(() => getComponentFromRegistry("NonExistent", mockRegistry)).toThrow(
-      "Genui tried to use Component NonExistent, but it was not found",
+      "Tambo tried to use Component NonExistent, but it was not found",
     );
   });
 
@@ -440,7 +440,7 @@ describe("getComponentFromRegistry", () => {
     expect(() =>
       getComponentFromRegistry("testcomponent", mockRegistry),
     ).toThrow(
-      "Genui tried to use Component testcomponent, but it was not found",
+      "Tambo tried to use Component testcomponent, but it was not found",
     );
   });
 });
@@ -464,12 +464,12 @@ describe("getAvailableComponents", () => {
   });
   mockTool.name = "testTool";
 
-  const mockToolRegistry: GenuiToolRegistry = {
+  const mockToolRegistry: TamboToolRegistry = {
     testTool: mockTool,
   };
 
   it("should return available components with no tools when no associations", () => {
-    const associations: GenuiToolAssociations = {};
+    const associations: TamboToolAssociations = {};
     const result = getAvailableComponents(
       mockRegistry,
       mockToolRegistry,
@@ -483,7 +483,7 @@ describe("getAvailableComponents", () => {
   });
 
   it("should include associated tools with components", () => {
-    const associations: GenuiToolAssociations = {
+    const associations: TamboToolAssociations = {
       TestComponent: ["testTool"],
     };
     const result = getAvailableComponents(
@@ -498,7 +498,7 @@ describe("getAvailableComponents", () => {
   });
 
   it("should skip tools not found in registry", () => {
-    const associations: GenuiToolAssociations = {
+    const associations: TamboToolAssociations = {
       TestComponent: ["testTool", "nonExistentTool"],
     };
     const result = getAvailableComponents(
@@ -536,14 +536,14 @@ describe("getUnassociatedTools", () => {
   });
   mockTool3.name = "tool3";
 
-  const mockToolRegistry: GenuiToolRegistry = {
+  const mockToolRegistry: TamboToolRegistry = {
     tool1: mockTool1,
     tool2: mockTool2,
     tool3: mockTool3,
   };
 
   it("should return all tools when no associations exist", () => {
-    const associations: GenuiToolAssociations = {};
+    const associations: TamboToolAssociations = {};
     const result = getUnassociatedTools(mockToolRegistry, associations);
 
     expect(result).toHaveLength(3);
@@ -553,7 +553,7 @@ describe("getUnassociatedTools", () => {
   });
 
   it("should exclude tools that are associated with components", () => {
-    const associations: GenuiToolAssociations = {
+    const associations: TamboToolAssociations = {
       ComponentA: ["tool1"],
       ComponentB: ["tool2"],
     };
@@ -564,7 +564,7 @@ describe("getUnassociatedTools", () => {
   });
 
   it("should return empty array when all tools are associated", () => {
-    const associations: GenuiToolAssociations = {
+    const associations: TamboToolAssociations = {
       ComponentA: ["tool1", "tool2", "tool3"],
     };
     const result = getUnassociatedTools(mockToolRegistry, associations);

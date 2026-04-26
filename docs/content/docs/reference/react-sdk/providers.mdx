@@ -1,27 +1,27 @@
 ---
 title: React SDK Providers
-description: Reference for GenuiProvider and other provider components used to configure Genui in your React application.
+description: Reference for TamboProvider and other provider components used to configure Tambo in your React application.
 ---
 
-Provider components configure Genui functionality and make hooks available throughout your component tree.
+Provider components configure Tambo functionality and make hooks available throughout your component tree.
 
-## GenuiProvider
+## TamboProvider
 
-The main provider that wraps your application and provides access to the Genui API. This is the primary way to integrate Genui into your React app.
+The main provider that wraps your application and provides access to the Tambo API. This is the primary way to integrate Tambo into your React app.
 
 ```tsx
-import { GenuiProvider } from "@workspace/react";
+import { TamboProvider } from "@tambo-ai/react";
 
 function App() {
   return (
-    <GenuiProvider
-      apiKey={process.env.NEXT_PUBLIC_GENUI_API_KEY}
+    <TamboProvider
+      apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY}
       userKey={userId}
       components={myComponents}
       tools={myTools}
     >
       <YourApp />
-    </GenuiProvider>
+    </TamboProvider>
   );
 }
 ```
@@ -30,13 +30,13 @@ function App() {
 
 | Prop                        | Type                                             | Required | Description                                                            |
 | --------------------------- | ------------------------------------------------ | -------- | ---------------------------------------------------------------------- |
-| `apiKey`                    | `string`                                         | Yes      | Your Genui API key                                                     |
+| `apiKey`                    | `string`                                         | Yes      | Your Tambo API key                                                     |
 | `userToken`                 | `string`                                         | No\*     | OAuth token for user authentication                                    |
 | `userKey`                   | `string`                                         | No\*     | Unique identifier for the current user                                 |
-| `genuiUrl`                  | `string`                                         | No       | Custom Genui API URL                                                   |
+| `tamboUrl`                  | `string`                                         | No       | Custom Tambo API URL                                                   |
 | `environment`               | `string`                                         | No       | Environment name                                                       |
-| `components`                | `GenuiComponent[]`                               | No       | Components to register                                                 |
-| `tools`                     | `GenuiTool[]`                                    | No       | Tools to register                                                      |
+| `components`                | `TamboComponent[]`                               | No       | Components to register                                                 |
+| `tools`                     | `TamboTool[]`                                    | No       | Tools to register                                                      |
 | `mcpServers`                | `(McpServerInfo \| string)[]`                    | No       | MCP servers to connect                                                 |
 | `contextHelpers`            | `ContextHelpers`                                 | No       | Context helper functions                                               |
 | `onCallUnregisteredTool`    | `(toolName: string) => void`                     | No       | Callback for unregistered tool calls                                   |
@@ -59,7 +59,7 @@ function App() {
 ### Example with All Options
 
 ```tsx
-import { GenuiProvider, defineTool } from "@workspace/react";
+import { TamboProvider, defineTool } from "@tambo-ai/react";
 import { z } from "zod";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
@@ -87,8 +87,8 @@ const tools = [
   }),
 ];
 
-<GenuiProvider
-  apiKey={process.env.NEXT_PUBLIC_GENUI_API_KEY}
+<TamboProvider
+  apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY}
   userKey={session.user.id}
   components={components}
   tools={tools}
@@ -97,32 +97,32 @@ const tools = [
   }}
 >
   <App />
-</GenuiProvider>;
+</TamboProvider>;
 ```
 
 ### Provider Hierarchy
 
-`GenuiProvider` internally composes several providers in this order:
+`TamboProvider` internally composes several providers in this order:
 
-1. `GenuiClientProvider` - API client and authentication
-2. `GenuiRegistryProvider` - Component and tool registration
-3. `GenuiContextHelpersProvider` - Context helper management
-4. `GenuiContextAttachmentProvider` - Context attachment state
-5. `GenuiInteractableProvider` - Interactable component tracking
-6. `GenuiConfigContext` - Configuration (userKey, etc.)
-7. `GenuiStreamProvider` - Streaming state management
-8. `GenuiThreadInputProvider` - Shared input state
+1. `TamboClientProvider` - API client and authentication
+2. `TamboRegistryProvider` - Component and tool registration
+3. `TamboContextHelpersProvider` - Context helper management
+4. `TamboContextAttachmentProvider` - Context attachment state
+5. `TamboInteractableProvider` - Interactable component tracking
+6. `TamboConfigContext` - Configuration (userKey, etc.)
+7. `TamboStreamProvider` - Streaming state management
+8. `TamboThreadInputProvider` - Shared input state
 
-## GenuiStubProvider
+## TamboStubProvider
 
 A stub provider for testing and development that doesn't require API connectivity.
 
 ```tsx
-import { GenuiStubProvider } from "@workspace/react";
+import { TamboStubProvider } from "@tambo-ai/react";
 
 function TestApp() {
   return (
-    <GenuiStubProvider
+    <TamboStubProvider
       thread={{
         messages: [
           {
@@ -142,7 +142,7 @@ function TestApp() {
       components={myComponents}
     >
       <YourComponent />
-    </GenuiStubProvider>
+    </TamboStubProvider>
   );
 }
 ```
@@ -151,10 +151,10 @@ function TestApp() {
 
 | Prop               | Type                                                    | Description                                                       |
 | ------------------ | ------------------------------------------------------- | ----------------------------------------------------------------- |
-| `thread`           | `GenuiThread \| { messages: GenuiThreadMessage[] }`     | Thread data to display                                            |
+| `thread`           | `TamboThread \| { messages: TamboThreadMessage[] }`     | Thread data to display                                            |
 | `threadId`         | `string`                                                | Optional thread ID (defaults to `"stub_thread"`)                  |
-| `components`       | `GenuiComponent[]`                                      | Components to register                                            |
-| `tools`            | `GenuiTool[]`                                           | Tools to register                                                 |
+| `components`       | `TamboComponent[]`                                      | Components to register                                            |
+| `tools`            | `TamboTool[]`                                           | Tools to register                                                 |
 | `userKey`          | `string`                                                | User key for the config context                                   |
 | `inputValue`       | `string`                                                | Initial input value for the thread input (defaults to `""`)       |
 | `isStreaming`      | `boolean`                                               | Simulate streaming state (defaults to `false`)                    |
@@ -164,36 +164,36 @@ function TestApp() {
 | `onSwitchThread`   | `(threadId: string \| null) => void`                    | Override for switchThread                                         |
 | `onInitThread`     | `(threadId: string) => void`                            | Override for initThread                                           |
 
-## GenuiThreadInputProvider
+## TamboThreadInputProvider
 
-Provides shared input state across components. This is included in `GenuiProvider` but can be used standalone for custom setups.
+Provides shared input state across components. This is included in `TamboProvider` but can be used standalone for custom setups.
 
 ```tsx
-import { GenuiThreadInputProvider } from "@workspace/react";
+import { TamboThreadInputProvider } from "@tambo-ai/react";
 
-// Usually not needed directly - included in GenuiProvider
-<GenuiThreadInputProvider>
+// Usually not needed directly - included in TamboProvider
+<TamboThreadInputProvider>
   <InputComponents />
-</GenuiThreadInputProvider>;
+</TamboThreadInputProvider>;
 ```
 
 The shared input state allows features like suggestions to update the input field directly, enabling seamless integration between different UI components.
 
 ## ComponentRenderer
 
-Renders an AI-generated component from the registry based on a `GenuiComponentContent` block. Use this in custom message renderers to display components the AI creates.
+Renders an AI-generated component from the registry based on a `TamboComponentContent` block. Use this in custom message renderers to display components the AI creates.
 
-`ComponentRenderer` looks up the component by name in the registry, parses props (handling partial JSON during streaming), validates props against the component's schema, and wraps the result with `ComponentContentProvider` so hooks like `useGenuiComponentState` and `useGenuiStreamStatus` work inside the rendered component.
+`ComponentRenderer` looks up the component by name in the registry, parses props (handling partial JSON during streaming), validates props against the component's schema, and wraps the result with `ComponentContentProvider` so hooks like `useTamboComponentState` and `useTamboStreamStatus` work inside the rendered component.
 
 ```tsx
-import { ComponentRenderer } from "@workspace/react";
-import type { GenuiThreadMessage } from "@workspace/react";
+import { ComponentRenderer } from "@tambo-ai/react";
+import type { TamboThreadMessage } from "@tambo-ai/react";
 
 function MessageRenderer({
   message,
   threadId,
 }: {
-  message: GenuiThreadMessage;
+  message: TamboThreadMessage;
   threadId: string;
 }) {
   return (
@@ -224,7 +224,7 @@ function MessageRenderer({
 
 | Prop        | Type                                                                        | Required | Description                                            |
 | ----------- | --------------------------------------------------------------------------- | -------- | ------------------------------------------------------ |
-| `content`   | [`GenuiComponentContent`](/reference/react-sdk/types#genuicomponentcontent) | Yes      | The component content block from a message             |
+| `content`   | [`TamboComponentContent`](/reference/react-sdk/types#tambocomponentcontent) | Yes      | The component content block from a message             |
 | `threadId`  | `string`                                                                    | Yes      | Thread ID the component belongs to                     |
 | `messageId` | `string`                                                                    | Yes      | Message ID the component belongs to                    |
 | `fallback`  | `React.ReactNode`                                                           | No       | UI to render if the component is not found in registry |
@@ -234,27 +234,27 @@ function MessageRenderer({
   re-renders during streaming.
 </Callout>
 
-## GenuiMessageProvider
+## TamboMessageProvider
 
-Wraps components to provide message context. This enables hooks like `useGenuiCurrentMessage` and `useGenuiCurrentComponent` to access the message that triggered the component.
+Wraps components to provide message context. This enables hooks like `useTamboCurrentMessage` and `useTamboCurrentComponent` to access the message that triggered the component.
 
 You only need this directly when building a custom message rendering pipeline. The built-in UI components handle this automatically.
 
 ```tsx
-import { GenuiMessageProvider, ComponentRenderer } from "@workspace/react";
-import type { GenuiThreadMessage } from "@workspace/react";
+import { TamboMessageProvider, ComponentRenderer } from "@tambo-ai/react";
+import type { TamboThreadMessage } from "@tambo-ai/react";
 
 function CustomMessageList({
   messages,
   threadId,
 }: {
-  messages: GenuiThreadMessage[];
+  messages: TamboThreadMessage[];
   threadId: string;
 }) {
   return (
     <>
       {messages.map((message) => (
-        <GenuiMessageProvider key={message.id} message={message}>
+        <TamboMessageProvider key={message.id} message={message}>
           {message.content.map((block) => {
             if (block.type === "component") {
               return (
@@ -268,7 +268,7 @@ function CustomMessageList({
             }
             return null;
           })}
-        </GenuiMessageProvider>
+        </TamboMessageProvider>
       ))}
     </>
   );
@@ -279,18 +279,18 @@ function CustomMessageList({
 
 | Prop                   | Type                                                                  | Required | Description                                                                         |
 | ---------------------- | --------------------------------------------------------------------- | -------- | ----------------------------------------------------------------------------------- |
-| `message`              | [`GenuiThreadMessage`](/reference/react-sdk/types#genuithreadmessage) | Yes      | The message to provide as context                                                   |
-| `interactableMetadata` | `InteractableMetadata`                                                | No       | Metadata for interactable components (set automatically by `withGenuiInteractable`) |
+| `message`              | [`TamboThreadMessage`](/reference/react-sdk/types#tambothreadmessage) | Yes      | The message to provide as context                                                   |
+| `interactableMetadata` | `InteractableMetadata`                                                | No       | Metadata for interactable components (set automatically by `withTamboInteractable`) |
 | `children`             | `React.ReactNode`                                                     | Yes      | Components that need access to message context                                      |
 
 ## ComponentContentProvider
 
-Provides component instance metadata (component ID, thread ID, message ID, component name) to child components. This is used internally by `ComponentRenderer` and enables hooks like `useGenuiComponentState`, `useGenuiStreamStatus`, and `useComponentContent`.
+Provides component instance metadata (component ID, thread ID, message ID, component name) to child components. This is used internally by `ComponentRenderer` and enables hooks like `useTamboComponentState`, `useTamboStreamStatus`, and `useComponentContent`.
 
 You typically don't use this directly — `ComponentRenderer` wraps rendered components with it automatically.
 
 ```tsx
-import { ComponentContentProvider } from "@workspace/react";
+import { ComponentContentProvider } from "@tambo-ai/react";
 
 // Only needed for custom rendering pipelines
 <ComponentContentProvider
@@ -317,64 +317,64 @@ import { ComponentContentProvider } from "@workspace/react";
 
 The following providers are re-exported from the base SDK for advanced use cases:
 
-### GenuiClientProvider
+### TamboClientProvider
 
 Provides the API client and authentication context.
 
 ```tsx
-import { GenuiClientProvider } from "@workspace/react";
+import { TamboClientProvider } from "@tambo-ai/react";
 
-<GenuiClientProvider
-  apiKey={process.env.NEXT_PUBLIC_GENUI_API_KEY}
-  genuiUrl="https://api.genui.co"
+<TamboClientProvider
+  apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY}
+  tamboUrl="https://api.tambo.co"
 >
   <App />
-</GenuiClientProvider>;
+</TamboClientProvider>;
 ```
 
-### GenuiRegistryProvider
+### TamboRegistryProvider
 
 Manages component and tool registration.
 
 ```tsx
-import { GenuiRegistryProvider } from "@workspace/react";
+import { TamboRegistryProvider } from "@tambo-ai/react";
 
-<GenuiRegistryProvider
+<TamboRegistryProvider
   components={components}
   tools={tools}
   mcpServers={mcpServers}
 >
   <App />
-</GenuiRegistryProvider>;
+</TamboRegistryProvider>;
 ```
 
-### GenuiContextHelpersProvider
+### TamboContextHelpersProvider
 
 Manages context helpers that provide additional information to the AI.
 
 ```tsx
-import { GenuiContextHelpersProvider } from "@workspace/react";
+import { TamboContextHelpersProvider } from "@tambo-ai/react";
 
-<GenuiContextHelpersProvider
+<TamboContextHelpersProvider
   contextHelpers={{
     currentPage: () => ({ url: window.location.href }),
   }}
 >
   <App />
-</GenuiContextHelpersProvider>;
+</TamboContextHelpersProvider>;
 ```
 
 ## Configuration Hook
 
-### useGenuiConfig
+### useTamboConfig
 
 Access the configuration from the provider.
 
 ```tsx
-import { useGenuiConfig } from "@workspace/react";
+import { useTamboConfig } from "@tambo-ai/react";
 
 function MyComponent() {
-  const { userKey } = useGenuiConfig();
+  const { userKey } = useTamboConfig();
 
   return <div>User: {userKey}</div>;
 }

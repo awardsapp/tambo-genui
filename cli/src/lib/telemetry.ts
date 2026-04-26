@@ -26,7 +26,7 @@ let cliVersion: string | undefined;
 let isEnabled = false;
 
 export function isTelemetryDisabled(): boolean {
-  const env = process.env.GENUI_TELEMETRY_DISABLED;
+  const env = process.env.TAMBO_TELEMETRY_DISABLED;
   return env !== undefined && env !== "0";
 }
 
@@ -64,7 +64,7 @@ export function initTelemetry(version: string): void {
     anonymousId = id;
 
     client = new PostHog(POSTHOG_API_KEY, {
-      host: process.env.GENUI_TELEMETRY_HOST ?? POSTHOG_HOST,
+      host: process.env.TAMBO_TELEMETRY_HOST ?? POSTHOG_HOST,
     });
 
     isEnabled = true;
@@ -124,9 +124,9 @@ export async function shutdownTelemetry(): Promise<void> {
 
 function showNotice(): void {
   process.stderr.write(
-    "\nGenui collects CLI usage data to improve the developer experience.\n" +
-      "To opt out, set GENUI_TELEMETRY_DISABLED=1.\n" +
-      "Learn more: https://docs.genui.co/reference/cli/telemetry" +
+    "\nTambo collects CLI usage data to improve the developer experience.\n" +
+      "To opt out, set TAMBO_TELEMETRY_DISABLED=1.\n" +
+      "Learn more: https://docs.tambo.co/reference/cli/telemetry" +
       "\n\n",
   );
 }

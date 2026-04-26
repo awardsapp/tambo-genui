@@ -2,9 +2,9 @@
 
 import { useDemoControls } from "@/components/demos/demo-controls";
 import { DemoPreview } from "@/components/demos/demo-preview";
-import type { Content, ReactGenuiThreadMessage } from "@workspace/react";
-import { Message } from "@workspace/react-ui-base/message";
-import type { ChatCompletionContentPart } from "@workspace/typescript-sdk/resources/beta/threads/threads";
+import type { Content, ReactTamboThreadMessage } from "@tambo-ai/react";
+import { Message } from "@tambo-ai/react-ui-base/message";
+import type { ChatCompletionContentPart } from "@tambo-ai/typescript-sdk/resources/beta/threads/threads";
 import { Bot, User } from "lucide-react";
 import { useMemo } from "react";
 
@@ -90,7 +90,7 @@ function MessageDemo() {
                   : []),
               ]),
         ],
-      }) satisfies ReactGenuiThreadMessage,
+      }) satisfies ReactTamboThreadMessage,
     [component, loading],
   );
 
@@ -110,8 +110,8 @@ export const messageDemoCode = [
   {
     name: "message-bubble.tsx",
     code: `
-import { Message } from "@workspace/react-ui-base/message";
-import type { GenuiThreadMessage } from "@workspace/react";
+import { Message } from "@tambo-ai/react-ui-base/message";
+import type { TamboThreadMessage } from "@tambo-ai/react";
 import { Bot, User } from "lucide-react";
 
 export function MessageBubble({
@@ -119,7 +119,7 @@ export function MessageBubble({
   role,
   isLoading,
 }: {
-  message: GenuiThreadMessage;
+  message: TamboThreadMessage;
   role: "user" | "assistant";
   isLoading?: boolean;
 }) {
@@ -149,7 +149,7 @@ export function MessageBubble({
   {
     name: "mock-data.ts",
     code: `
-import type { GenuiThreadMessage } from "@workspace/react";
+import type { TamboThreadMessage } from "@tambo-ai/react";
 
 export const userMessage = {
   id: "msg-1",
@@ -157,7 +157,7 @@ export const userMessage = {
   content: [
     { type: "text", text: "What's the weather like in San Francisco?" },
   ],
-} satisfies GenuiThreadMessage;
+} satisfies TamboThreadMessage;
 
 export const assistantMessage = {
   id: "msg-2",
@@ -165,7 +165,7 @@ export const assistantMessage = {
   content: [
     { type: "text", text: "It's currently 72°F and partly cloudy in San Francisco." },
   ],
-} satisfies GenuiThreadMessage;`,
+} satisfies TamboThreadMessage;`,
   },
 ];
 
@@ -174,7 +174,7 @@ function MessageBubble({
   role,
   isLoading = false,
 }: {
-  message: ReactGenuiThreadMessage;
+  message: ReactTamboThreadMessage;
   role: "user" | "assistant";
   isLoading?: boolean;
 }) {

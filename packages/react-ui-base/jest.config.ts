@@ -13,12 +13,12 @@ const config: Config = {
     "^react/jsx-runtime$": "<rootDir>/../../node_modules/react/jsx-runtime",
     "^react/jsx-dev-runtime$":
       "<rootDir>/../../node_modules/react/jsx-dev-runtime",
-    // Mock @workspace/react
-    "^@workspace/react$":
-      "<rootDir>/../ui-registry/__tests__/__mocks__/@workspace-react.ts",
-    // Mock @workspace/react/mcp
-    "^@workspace/react/mcp$":
-      "<rootDir>/../ui-registry/__tests__/__mocks__/@workspace-react-mcp.ts",
+    // Mock @tambo-ai/react
+    "^@tambo-ai/react$":
+      "<rootDir>/../ui-registry/__tests__/__mocks__/@tambo-ai-react.ts",
+    // Mock @tambo-ai/react/mcp
+    "^@tambo-ai/react/mcp$":
+      "<rootDir>/../ui-registry/__tests__/__mocks__/@tambo-ai-react-mcp.ts",
     // ESM import mapping
     "^(\\.{1,2}/.*)\\.js$": "$1",
   },

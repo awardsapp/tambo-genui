@@ -10,17 +10,17 @@ import "./globals.css";
 
 export const metadata = {
   title: {
-    template: "%s | genui-ui",
-    default: "genui-ui | A component library for Generative Interfaces",
+    template: "%s | tambo-ui",
+    default: "tambo-ui | A component library for Generative Interfaces",
   },
   description:
     "Build natural language interfaces with React. Use our component library to build your app in a weekend.",
-  keywords: ["Genui", "Showcase", "Components", "AI", "App Development"],
-  metadataBase: new URL("https://ui.genui.co"),
+  keywords: ["Tambo", "Showcase", "Components", "AI", "App Development"],
+  metadataBase: new URL("https://ui.tambo.co"),
   authors: [
     {
-      name: "genui",
-      url: "https://genui.co",
+      name: "tambo",
+      url: "https://tambo.co",
     },
   ],
   alternates: {
@@ -36,23 +36,23 @@ export const metadata = {
   },
   openGraph: {
     type: "website",
-    url: "https://ui.genui.co",
-    title: "genui-ui | A component library for Generative Interfaces",
+    url: "https://ui.tambo.co",
+    title: "tambo-ui | A component library for Generative Interfaces",
     description:
       "Build natural language interfaces with React. Use our component library to build your app in a weekend.",
-    siteName: "genui-ui",
+    siteName: "tambo-ui",
     images: [
       {
         url: "/og",
         width: 1200,
         height: 630,
-        alt: "genui-ui Open Graph Image",
+        alt: "tambo-ui Open Graph Image",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "genui-ui | A component library for Generative Interfaces",
+    title: "tambo-ui | A component library for Generative Interfaces",
     description:
       "Build natural language interfaces with React. Use our component library to build your app in a weekend.",
     images: ["/og"],

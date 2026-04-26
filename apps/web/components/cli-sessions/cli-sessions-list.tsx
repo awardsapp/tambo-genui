@@ -125,7 +125,7 @@ export function CliSessionsList() {
         <h3 className="text-lg font-medium">No active CLI sessions</h3>
         <p className="text-sm text-muted-foreground mt-1">
           When you authenticate via{" "}
-          <code className="bg-muted px-1 py-0.5 rounded">genui init</code>, your
+          <code className="bg-muted px-1 py-0.5 rounded">tambo init</code>, your
           sessions will appear here.
         </p>
       </div>

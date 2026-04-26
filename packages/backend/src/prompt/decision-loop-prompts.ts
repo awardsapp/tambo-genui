@@ -1,4 +1,4 @@
-import { createPromptTemplate } from "@workspace-cloud/core";
+import { createPromptTemplate } from "@tambo-ai-cloud/core";
 
 export function generateDecisionLoopPrompt(
   customInstructions: string | undefined,
@@ -41,7 +41,7 @@ The value inside '<component_state>' is a JSON object representing the current c
 
 ### Interactable Components
 
-Genui allows developers to place a special type of component on screen for you to help the user interact with. These are called "Interactable Components" within the Genui SDK.
+Tambo allows developers to place a special type of component on screen for you to help the user interact with. These are called "Interactable Components" within the Tambo SDK.
 You can update the props or state values of any of these Interactable Components based on the user's intent.
 Each component has an id, componentName, description of what the Interactable Component is for, current props, current state.
 Additionally, each has an isSelected boolean field which specifies whether the user has explicitly selected the Interactable Component for you to interact with when responding to the next message.

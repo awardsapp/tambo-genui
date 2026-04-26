@@ -8,11 +8,11 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { EditWithGenuiButton } from "@/components/ui/genui/edit-with-genui-button";
+import { EditWithTamboButton } from "@/components/ui/tambo/edit-with-tambo-button";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { api } from "@/trpc/react";
-import { withGenuiInteractable, type Suggestion } from "@workspace/react";
+import { withTamboInteractable, type Suggestion } from "@tambo-ai/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
@@ -112,7 +112,7 @@ export function CustomInstructionsEditor({
   const updateInstructions = api.project.updateProject.useMutation();
   const updateToggle = api.project.updateProject.useMutation();
 
-  // Update the saved value when props change (e.g., after loading or Genui updates)
+  // Update the saved value when props change (e.g., after loading or Tambo updates)
   // Only sync if not currently editing and not just saved to avoid overwriting unsaved changes
   useEffect(() => {
     if (justSavedRef.current) {
@@ -136,7 +136,7 @@ export function CustomInstructionsEditor({
     }
   }, [allowSystemPromptOverrideProp, isEditing]);
 
-  // When Genui sends a new editedValue, enter edit mode automatically
+  // When Tambo sends a new editedValue, enter edit mode automatically
   useEffect(() => {
     if (editedValue) {
       setDisplayValue(editedValue);
@@ -144,7 +144,7 @@ export function CustomInstructionsEditor({
     }
   }, [editedValue]);
 
-  // When Genui sends a new editedAllowSystemPromptOverride, stage it for saving
+  // When Tambo sends a new editedAllowSystemPromptOverride, stage it for saving
   useEffect(() => {
     if (editedAllowSystemPromptOverride !== undefined) {
       setAllowSystemPromptOverride(editedAllowSystemPromptOverride);
@@ -239,7 +239,7 @@ export function CustomInstructionsEditor({
       <CardHeader>
         <CardTitle className="text-lg font-semibold">
           Custom Instructions
-          <EditWithGenuiButton description="Edit custom instructions and system prompt override settings" />
+          <EditWithTamboButton description="Edit custom instructions and system prompt override settings" />
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -275,7 +275,7 @@ export function CustomInstructionsEditor({
               >
                 <CardDescription className="text-sm text-foreground mb-4">
                   These instructions are added to each conversation to guide
-                  genui&apos;s responses.
+                  tambo&apos;s responses.
                 </CardDescription>
                 <Label htmlFor={customInstructionsId}>Instructions</Label>
                 <Textarea
@@ -333,7 +333,7 @@ export function CustomInstructionsEditor({
                 ) : (
                   <CardDescription className="text-sm text-foreground">
                     These instructions are added to each conversation to guide
-                    genui&apos;s responses.
+                    tambo&apos;s responses.
                   </CardDescription>
                 )}
                 <motion.div
@@ -361,7 +361,7 @@ export function CustomInstructionsEditor({
   );
 }
 
-export const InteractableCustomInstructionsEditor = withGenuiInteractable(
+export const InteractableCustomInstructionsEditor = withTamboInteractable(
   CustomInstructionsEditor,
   {
     componentName: COMPONENT_NAME,

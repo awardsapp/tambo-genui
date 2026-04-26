@@ -86,10 +86,10 @@ async function prepareFinalComponentList(
 }
 
 /**
- * Upgrades genui registry components with directory structure migration support
+ * Upgrades tambo registry components with directory structure migration support
  *
  * This function handles the complete upgrade workflow:
- * 1. Discovers installed components in both legacy (ui/) and new (genui/) locations
+ * 1. Discovers installed components in both legacy (ui/) and new (tambo/) locations
  * 2. Detects cross-location dependencies that could cause import issues
  * 3. Offers migration options to resolve inconsistencies
  * 4. Upgrades components to latest registry versions
@@ -127,7 +127,7 @@ export async function upgradeComponents(
       (!legacyDir || !fs.existsSync(legacyDir))
     ) {
       spinner.info(
-        "No genui components directory found. Skipping component upgrades.",
+        "No tambo components directory found. Skipping component upgrades.",
       );
       return true;
     }
@@ -137,7 +137,7 @@ export async function upgradeComponents(
       isExplicitPrefix,
     );
     spinner.succeed(
-      `Found ${installedComponentNames.length} genui components to upgrade`,
+      `Found ${installedComponentNames.length} tambo components to upgrade`,
     );
 
     if (installedComponentNames.length === 0) return true;
@@ -365,7 +365,7 @@ export async function upgradeComponents(
       );
       console.log(
         chalk.gray(
-          `• Run 'npx genui migrate' anytime to move all components to ${COMPONENT_SUBDIR}/`,
+          `• Run 'npx tambo migrate' anytime to move all components to ${COMPONENT_SUBDIR}/`,
         ),
       );
     }

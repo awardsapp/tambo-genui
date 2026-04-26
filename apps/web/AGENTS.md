@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Detailed guidance for Claude Code agents working inside `apps/web`, the Next.js dashboard for Genui Cloud.
+Detailed guidance for Claude Code agents working inside `apps/web`, the Next.js dashboard for Tambo Cloud.
 
 ## Overview
 
@@ -16,7 +16,7 @@ Detailed guidance for Claude Code agents working inside `apps/web`, the Next.js 
 npm run dev          # Next dev server with turbo hot reload
 npm run build        # Production build (SKIP_ENV_VALIDATION=true set in script)
 npm start            # Run compiled build
-npm run lint         # ESLint via @workspace config
+npm run lint         # ESLint via @tambo-ai config
 npm run check-types  # Strict tsc --noEmit
 npm test             # Jest (jsdom) component/unit tests
 npm run test:cov     # Coverage for dashboard components
@@ -33,7 +33,7 @@ apps/web
 ├── components/      # Feature + shared UI (shadcn derivatives live here)
 ├── hooks/           # Client hooks (React Query wrappers, short-lived UI state)
 ├── lib/             # Pure utilities (formatters, environment, analytics helpers)
-├── providers/       # Client-side providers (NextAuth, Genui, theming)
+├── providers/       # Client-side providers (NextAuth, Tambo, theming)
 ├── server/          # Server-only helpers (drizzle queries, tRPC routers, auth guards)
 ├── styles/          # Tailwind + global CSS
 ├── test/            # Jest setup (jest.setup.ts) + testing utils
@@ -52,7 +52,7 @@ apps/web
 
 - **tRPC**: Client entrypoints live in `trpc/react.tsx`; server contexts live in `app/trpc/`. Always define new procedures in the API router and derive hooks via `trpc.<procedure>.useQuery()`.
 - **React Query**: Follow loading-state guidance from `devdocs/LOADING_STATES.md`. Use derived booleans instead of manual `useState` spinners.
-- **Server utilities**: Anything hitting the database (`@workspace-cloud/db`) belongs under `server/`. Never import server modules into client components.
+- **Server utilities**: Anything hitting the database (`@tambo-ai-cloud/db`) belongs under `server/`. Never import server modules into client components.
 - **Forms**: Use `react-hook-form` + Zod resolvers from `@hookform/resolvers`. Define shared schemas under `lib/validations` when forms are reused.
 
 ## Styling & Components
@@ -64,7 +64,7 @@ apps/web
 
 ## Providers
 
-- `providers/genui-provider.tsx` bootstraps the React SDK for dashboard UIs—wrap any AI-interactive pages with it.
+- `providers/tambo-provider.tsx` bootstraps the React SDK for dashboard UIs—wrap any AI-interactive pages with it.
 - `providers/nextauth-provider.tsx` exposes the session client-side; call `useSession()` only through this provider.
 - Keep provider trees minimal. If you need local context, create it near the feature instead of mutating the global provider set.
 
@@ -102,6 +102,6 @@ apps/web
 - Importing server-only utilities into client components (Next.js will throw). If you must share logic, extract a pure helper into `lib/`.
 - Calling APIs directly from client components. Always go through tRPC or server actions so credentials stay on the server.
 - Creating bespoke styling when a shadcn primitive already exists. Extend the design system instead.
-- Forgetting to wrap pages with the required providers (NextAuth, Genui). Missing providers manifest as runtime errors; follow `app/providers.tsx`.
+- Forgetting to wrap pages with the required providers (NextAuth, Tambo). Missing providers manifest as runtime errors; follow `app/providers.tsx`.
 
 Use this guide every time you touch `apps/web` so the dashboard stays consistent with the rest of the monorepo.

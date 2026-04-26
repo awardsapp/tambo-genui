@@ -32,7 +32,7 @@ function HeroPill() {
 
   return (
     <motion.a
-      href="https://github.com/genui-ai/genui"
+      href="https://github.com/tambo-ai/tambo"
       target="_blank"
       rel="noopener noreferrer"
       className="flex w-auto items-center space-x-2 rounded-full bg-[#5C94F7]/10 px-4 py-2 ring-1 ring-[#5C94F7]/20 hover:bg-[#5C94F7]/15 hover:ring-[#5C94F7]/30 transition-all duration-300 group shimmer-animation"
@@ -171,7 +171,7 @@ function HeroIllustration() {
           {shouldUseGif ? (
             <Image
               src="/assets/landing/hero/Octo-5-transparent-lossy.gif"
-              alt="Genui Octopus Animation"
+              alt="Tambo Octopus Animation"
               unoptimized={true}
               className="w-full h-full object-contain"
               width={1000}
@@ -186,7 +186,7 @@ function HeroIllustration() {
               playsInline
               onError={handleVideoError}
               className="w-full h-full object-contain"
-              aria-label="Genui Octopus Animation"
+              aria-label="Tambo Octopus Animation"
             >
               <source
                 src="/assets/landing/hero/Octo-5-animated-vp9-small.webm"
@@ -202,7 +202,7 @@ function HeroIllustration() {
 
 // New command box component
 function HeroCommandBox() {
-  const command = "npm create genui-app";
+  const command = "npm create tambo-app";
   const [copied, copy] = useClipboard(command);
 
   const handleCopy = async () => {

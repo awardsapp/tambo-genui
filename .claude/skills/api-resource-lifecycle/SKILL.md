@@ -7,7 +7,7 @@ metadata:
 
 # API Resource Lifecycle
 
-Patterns for building reliable CRUD operations in Genui Cloud.
+Patterns for building reliable CRUD operations in Tambo Cloud.
 
 ## Gotchas
 

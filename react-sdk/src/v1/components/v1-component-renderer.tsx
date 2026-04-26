@@ -9,23 +9,23 @@
  * is preserved.
  *
  * Wraps the component with ComponentContentProvider so that hooks like
- * useGenuiComponentState can access component context.
+ * useTamboComponentState can access component context.
  */
 
 import { parse } from "partial-json";
 import React, { type FC, useMemo, useContext } from "react";
-import { GenuiRegistryContext } from "../../providers/genui-registry-provider";
+import { TamboRegistryContext } from "../../providers/tambo-registry-provider";
 import { isStandardSchema } from "../../schema";
 import { isPromise } from "../../util/is-promise";
 import { getComponentFromRegistry } from "../../util/registry";
-import type { GenuiComponentContent } from "../types/message";
+import type { TamboComponentContent } from "../types/message";
 import { ComponentContentProvider } from "../utils/component-renderer";
 
 export interface ComponentRendererProps {
   /**
    * The component content block from a message
    */
-  content: GenuiComponentContent;
+  content: TamboComponentContent;
 
   /**
    * The thread ID the component belongs to
@@ -51,7 +51,7 @@ export interface ComponentRendererProps {
  * reconciliation keeps this wrapper mounted (use content.id as key).
  *
  * Wraps the rendered component with ComponentContentProvider so that hooks
- * like useGenuiComponentState can access component context.
+ * like useTamboComponentState can access component context.
  * @returns The rendered component wrapped in ComponentContentProvider, or fallback if not found
  * @example
  * ```tsx
@@ -75,7 +75,7 @@ export const ComponentRenderer: FC<ComponentRendererProps> = ({
   messageId,
   fallback = null,
 }) => {
-  const registry = useContext(GenuiRegistryContext);
+  const registry = useContext(TamboRegistryContext);
 
   // Memoize the rendered element - only recreates when props change
   const element = useMemo(() => {
@@ -142,7 +142,7 @@ export const ComponentRenderer: FC<ComponentRendererProps> = ({
     return <>{fallback}</>;
   }
 
-  // Wrap with provider so hooks like useGenuiComponentState work
+  // Wrap with provider so hooks like useTamboComponentState work
   return (
     <ComponentContentProvider
       componentId={content.id}

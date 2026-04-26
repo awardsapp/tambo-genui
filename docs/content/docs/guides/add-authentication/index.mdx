@@ -1,32 +1,32 @@
 ---
 title: Add User Authentication
-description: This guide helps you integrate user authentication with popular providers so users only access their own Genui threads and messages.
+description: This guide helps you integrate user authentication with popular providers so users only access their own Tambo threads and messages.
 ---
 
-Learn how to enable per-user authentication so users of your application only access Genui threads and messages that belong to them.
+Learn how to enable per-user authentication so users of your application only access Tambo threads and messages that belong to them.
 
-Genui supports authentication through any OAuth 2.0 provider. Choose your authentication provider below to get started with a step-by-step integration guide.
+Tambo supports authentication through any OAuth 2.0 provider. Choose your authentication provider below to get started with a step-by-step integration guide.
 
 ## Available Providers
 
 <Cards>
   <Card href="/guides/add-authentication/nextauth" title="Auth.js">
-    Learn how to integrate Genui with Auth.js using Google OAuth as an example.
+    Learn how to integrate Tambo with Auth.js using Google OAuth as an example.
   </Card>
   <Card href="/guides/add-authentication/auth0" title="Auth0">
-    Step-by-step guide for integrating Genui with Auth0 authentication.
+    Step-by-step guide for integrating Tambo with Auth0 authentication.
   </Card>
   <Card href="/guides/add-authentication/clerk" title="Clerk">
-    Complete example of using Genui with Clerk's authentication system.
+    Complete example of using Tambo with Clerk's authentication system.
   </Card>
   <Card href="/guides/add-authentication/supabase" title="Supabase">
-    Integration guide for Supabase Auth with Genui in Next.js applications.
+    Integration guide for Supabase Auth with Tambo in Next.js applications.
   </Card>
   <Card href="/guides/add-authentication/neon" title="Neon">
-    How to use Genui with Auth.js and Neon PostgreSQL database integration.
+    How to use Tambo with Auth.js and Neon PostgreSQL database integration.
   </Card>
   <Card href="/guides/add-authentication/workos" title="WorkOS">
-    Enterprise-grade authentication with WorkOS and Genui integration.
+    Enterprise-grade authentication with WorkOS and Tambo integration.
   </Card>
   <Card href="/guides/add-authentication/better-auth" title="Better Auth">
     Modern authentication toolkit with built-in support for multiple providers
@@ -40,10 +40,10 @@ All authentication integrations follow the same pattern:
 
 1. **Set up your auth provider** - Configure your OAuth application with the provider
 2. **Get the user token** - Retrieve the JWT token from your auth provider
-3. **Pass token to Genui** - Provide the token to `GenuiProvider` via the `userToken` prop
-4. **Configure verification** - Set up JWT verification in your Genui project settings
+3. **Pass token to Tambo** - Provide the token to `TamboProvider` via the `userToken` prop
+4. **Configure verification** - Set up JWT verification in your Tambo project settings
 
-For a deeper understanding of how Genui authentication works, see the [User Authentication concept](/concepts/user-authentication).
+For a deeper understanding of how Tambo authentication works, see the [User Authentication concept](/concepts/user-authentication).
 
 ## Common Integration Pattern
 
@@ -52,11 +52,11 @@ All provider guides follow this basic structure:
 ```tsx
 "use client";
 
-import { GenuiProvider } from "@workspace/react";
+import { TamboProvider } from "@tambo-ai/react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const userToken = useUserToken(); // Provider-specific hook
-  return <GenuiProvider userToken={userToken}>{children}</GenuiProvider>;
+  return <TamboProvider userToken={userToken}>{children}</TamboProvider>;
 }
 ```
 

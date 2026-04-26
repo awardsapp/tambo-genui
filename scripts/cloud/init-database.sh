@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-# Initialize Genui Database
+# Initialize Tambo Database
 # This script initializes the PostgreSQL database with the required schema.
 # It can run either on the host (using Docker to connect to Postgres)
 # or inside a running Docker container (e.g., the API container).
@@ -9,10 +9,10 @@ set -e
 
 . "$(cd "$(dirname "$0")" && pwd)/_cloud-helpers.sh"
 
-REPO_ROOT_DIR="$(get_repo_root)" || fail "Could not find repo root. Are you running from inside the genui folder?"
+REPO_ROOT_DIR="$(get_repo_root)" || fail "Could not find repo root. Are you running from inside the tambo folder?"
 cd "$REPO_ROOT_DIR"
 
-info "🗄️  Initializing Genui Database..."
+info "🗄️  Initializing Tambo Database..."
 info "📁 Working directory: $(pwd)"
 
 # Detect if running inside a Docker container
@@ -43,7 +43,7 @@ if [ "$IS_IN_DOCKER" = false ]; then
   if ! docker compose --env-file docker.env ps api | grep -q "Up"; then
     fail \
       "❌ API container is not running. Please start the stack first:" \
-      "   ./scripts/cloud/genui-start.sh"
+      "   ./scripts/cloud/tambo-start.sh"
   fi
 
   info "📦 Delegating to api container..."
@@ -63,7 +63,7 @@ if [ -z "$DATABASE_URL" ]; then
 fi
 info "📋 Using container DATABASE_URL: $DATABASE_URL"
 info "📊 Running database migrations inside container..."
-npm -w @workspace-cloud/db run db:migrate
+npm -w @tambo-ai-cloud/db run db:migrate
 
 success \
   "✅ Database initialization completed successfully!" \

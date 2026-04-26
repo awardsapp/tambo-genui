@@ -1,11 +1,11 @@
 "use client";
 
 import { Section } from "@/components/section";
-import { demoComponents } from "@/components/ui/genui/demo-config";
-import { GenuiEmailButton } from "@/components/ui/genui/genui-email-button";
-import { MessageThreadFull } from "@workspace/ui-registry/components/message-thread-full";
+import { demoComponents } from "@/components/ui/tambo/demo-config";
+import { TamboEmailButton } from "@/components/ui/tambo/tambo-email-button";
+import { MessageThreadFull } from "@tambo-ai/ui-registry/components/message-thread-full";
 import { env } from "@/lib/env";
-import { GenuiProvider } from "@workspace/react";
+import { TamboProvider } from "@tambo-ai/react";
 import { clsx } from "clsx";
 import { Easing, motion } from "framer-motion";
 import hljs from "highlight.js/lib/core";
@@ -42,12 +42,12 @@ const fileInfo: Record<
   demo: {
     filename: "localhost:3000",
     icon: <MonitorIcon className="w-4 h-4" />,
-    description: "Live demo component showing the Genui chat interface",
+    description: "Live demo component showing the Tambo chat interface",
   },
   provider: {
     filename: "App.tsx",
     icon: <Code className="w-4 h-4" />,
-    description: "Root component with GenuiProvider setup",
+    description: "Root component with TamboProvider setup",
   },
   props: {
     filename: "EmailProps.ts",
@@ -57,17 +57,17 @@ const fileInfo: Record<
   component: {
     filename: "EmailForm.tsx",
     icon: <FileCode className="w-4 h-4" />,
-    description: "Custom component with Genui state hooks",
+    description: "Custom component with Tambo state hooks",
   },
   register: {
-    filename: "genui.ts",
+    filename: "tambo.ts",
     icon: <PackageIcon className="w-4 h-4" />,
     description: "Configuration to register custom components",
   },
   "getting-started": {
     filename: "GETTING_STARTED.md",
     icon: <FileText className="w-4 h-4" />,
-    description: "Quick start guide for building with Genui",
+    description: "Quick start guide for building with Tambo",
   },
 };
 
@@ -82,22 +82,22 @@ const highlightedLines: Record<Exclude<TabKey, "demo">, number[]> = {
 
 // Code examples for different tabs
 const codeExamples: Record<Exclude<TabKey, "demo">, string> = {
-  provider: `// First we wrap our app in a GenuiProvider
+  provider: `// First we wrap our app in a TamboProvider
 
-import { GenuiProvider } from "@workspace/react";
+import { TamboProvider } from "@tambo-ai/react";
 import { MessageThreadFull } from "@components/ui/message-thread";
-import { genuiComponents } from "./genui";
+import { tamboComponents } from "./tambo";
 
 export default function Chat() {
   return (
-    <GenuiProvider
-      components={genuiComponents}
+    <TamboProvider
+      components={tamboComponents}
     >
         // Second we import the MessageThreadFull component
         // from our component library.
         // you can also roll your own components!
       <MessageThreadFull />
-    </GenuiProvider>
+    </TamboProvider>
   );
 }`,
 
@@ -115,15 +115,15 @@ export const EmailProps = z.object({
 export type EmailProps = z.infer<typeof EmailProps>;
 `,
 
-  component: `// Create a component like normal but with genui-ai for state management
-import { useGenuiComponentState } from "@workspace/react";
+  component: `// Create a component like normal but with tambo-ai for state management
+import { useTamboComponentState } from "@tambo-ai/react";
 import { EmailProps } from "./EmailProps"; // from file before
 
 export function EmailForm(EmailProps: EmailProps) {
-  // Use Genui state hooks to pass the values to the AI
-  const [emailSubject, setEmailSubject] = useGenuiComponentState("emailSubject", subject);
-  const [emailMessage, setEmailMessage] = useGenuiComponentState("emailMessage", message);
-  const [status, setStatus] = useGenuiComponentState("emailStatus", "pending");
+  // Use Tambo state hooks to pass the values to the AI
+  const [emailSubject, setEmailSubject] = useTamboComponentState("emailSubject", subject);
+  const [emailMessage, setEmailMessage] = useTamboComponentState("emailMessage", message);
+  const [status, setStatus] = useTamboComponentState("emailStatus", "pending");
 
   return (
     <form onSubmit={handleSubmit}>
@@ -148,7 +148,7 @@ export function EmailForm(EmailProps: EmailProps) {
 import { EmailForm } from "./EmailForm";
 import { EmailProps } from "./EmailProps";
 
-export const genuiComponents = [
+export const tamboComponents = [
   {
     name: "EmailForm",
     description: "A form to email the team",
@@ -165,7 +165,7 @@ const GettingStartedContent: React.FC = () => {
   return (
     <div className="p-6 max-w-none bg-white">
       <h1 className="text-3xl font-bold mb-6 text-gray-900">
-        Getting Started with Genui
+        Getting Started with Tambo
       </h1>
 
       <div className="space-y-8">
@@ -175,7 +175,7 @@ const GettingStartedContent: React.FC = () => {
             Installation
           </h2>
           <div className="bg-gray-100 rounded-lg p-4 font-mono text-sm">
-            <code className="text-gray-800">npm install @workspace/react</code>
+            <code className="text-gray-800">npm install @tambo-ai/react</code>
           </div>
         </div>
 
@@ -188,7 +188,7 @@ const GettingStartedContent: React.FC = () => {
             Get started quickly with our pre-built template:
           </p>
           <div className="bg-gray-100 rounded-lg p-4 font-mono text-sm">
-            <code className="text-gray-800">npm create genui-app</code>
+            <code className="text-gray-800">npm create tambo-app</code>
           </div>
         </div>
 
@@ -200,7 +200,7 @@ const GettingStartedContent: React.FC = () => {
           <ul className="space-y-2">
             <li>
               <a
-                href="https://docs.genui.co"
+                href="https://docs.tambo.co"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:text-blue-800 underline font-medium"
@@ -210,7 +210,7 @@ const GettingStartedContent: React.FC = () => {
             </li>
             <li>
               <a
-                href="https://ui.genui.co"
+                href="https://ui.tambo.co"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:text-blue-800 underline font-medium"
@@ -282,10 +282,10 @@ export function ComponentLibraryDemo() {
   const [isFormInteractionActive, setIsFormInteractionActive] = useState(false);
 
   useEffect(() => {
-    const isContextKeySet = localStorage.getItem("genui-context-key");
+    const isContextKeySet = localStorage.getItem("tambo-context-key");
     if (!isContextKeySet) {
       const contextKey = new Date().toISOString();
-      localStorage.setItem("genui-context-key", contextKey);
+      localStorage.setItem("tambo-context-key", contextKey);
     }
   }, []);
 
@@ -313,7 +313,7 @@ export function ComponentLibraryDemo() {
         !target.closest("textarea") &&
         !target.closest('[contenteditable="true"]') &&
         !target.closest("form") &&
-        !target.closest("[data-genui-email-button]")
+        !target.closest("[data-tambo-email-button]")
       ) {
         setIsFormInteractionActive(false);
       }
@@ -384,24 +384,24 @@ export function ComponentLibraryDemo() {
                 <div
                   className={`h-full overflow-hidden ${activeTab === "demo" ? "block" : "hidden"}`}
                 >
-                  <GenuiProvider
-                    apiKey={env.NEXT_PUBLIC_GENUI_API_KEY!}
-                    genuiUrl={env.NEXT_PUBLIC_GENUI_API_URL}
+                  <TamboProvider
+                    apiKey={env.NEXT_PUBLIC_TAMBO_API_KEY!}
+                    tamboUrl={env.NEXT_PUBLIC_TAMBO_API_URL}
                     components={demoComponents}
                   >
-                    <div className="genui-theme w-full h-full">
+                    <div className="tambo-theme w-full h-full">
                       <div className="relative h-full">
                         <MessageThreadFull className="shadow-xl max-h-full rounded-lg" />
                         {!isFormInteractionActive && (
                           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                             <div className="pointer-events-auto">
-                              <GenuiEmailButton />
+                              <TamboEmailButton />
                             </div>
                           </div>
                         )}
                       </div>
                     </div>
-                  </GenuiProvider>
+                  </TamboProvider>
                 </div>
 
                 {/* Code tabs content */}

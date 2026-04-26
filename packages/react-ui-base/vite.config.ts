@@ -1,4 +1,4 @@
-import { genuiViteConfig } from "@workspace/vite-config";
+import { tamboViteConfig } from "@tambo-ai/vite-config";
 import react from "@vitejs/plugin-react";
 import { mergeConfig } from "vite";
 
@@ -6,7 +6,7 @@ export default mergeConfig(
   {
     plugins: [react()],
   },
-  genuiViteConfig({
+  tamboViteConfig({
     entry: [
       "./src/index.ts",
       // TODO(lachieh): we shouldn't need to set this as an entrypoint.

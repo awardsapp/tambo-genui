@@ -5,7 +5,7 @@ FROM node:22-alpine AS base
 # promise-retry in the bundled npm on node:22-alpine)
 RUN npx -y npm@11 install -g npm@^11
 
-# Install system dependencies (aligned with @workspace-cloud/api)
+# Install system dependencies (aligned with @tambo-ai-cloud/api)
 RUN apk add --no-cache gcompat dumb-init
 
 # ---- /base ----
@@ -26,7 +26,7 @@ COPY packages ./packages
 COPY apps/web ./apps/web
 COPY scripts ./scripts
 
-RUN npx turbo prune @workspace-cloud/web --docker
+RUN npx turbo prune @tambo-ai-cloud/web --docker
 
 # ---- /installer ----
 
@@ -59,7 +59,7 @@ ARG TURBO_API
 
 # Build the application
 RUN --mount=type=secret,id=TURBO_TOKEN,env=TURBO_TOKEN \
-  npx turbo run build --filter="@workspace-cloud/web"
+  npx turbo run build --filter="@tambo-ai-cloud/web"
 
 # ---- /builder ----
 

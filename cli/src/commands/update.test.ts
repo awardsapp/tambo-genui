@@ -10,7 +10,7 @@ import { fs as memfsFs, vol } from "memfs";
 import { toTreeSync } from "memfs/lib/print";
 import {
   createBasicProject,
-  createProjectWithGenuiSDK,
+  createProjectWithTamboSDK,
   createRegistryFiles,
 } from "../__fixtures__/mock-fs-setup.js";
 
@@ -95,7 +95,7 @@ jest.unstable_mockModule("./add/utils.js", () => ({
       return false;
     }
   },
-  getGenuiComponentInfo: () => ({
+  getTamboComponentInfo: () => ({
     mainComponents: new Set(["message", "form", "graph"]),
     supportComponents: new Set(["markdown-components"]),
     allComponents: new Set(["message", "form", "graph", "markdown-components"]),
@@ -109,7 +109,7 @@ jest.unstable_mockModule("./add/utils.js", () => ({
   ) => {
     const basePath = isExplicitPrefix
       ? `/mock-project/${installPath}`
-      : `/mock-project/${installPath}/genui`;
+      : `/mock-project/${installPath}/tambo`;
     const legacyPath = `/mock-project/${installPath}/ui`;
 
     const components: string[] = [];
@@ -160,8 +160,8 @@ jest.unstable_mockModule("./shared/component-utils.js", () => {
         : null;
     }
 
-    // Check new location (genui/)
-    const newPath = `${projectRoot}/${installPath}/genui/${componentName}.tsx`;
+    // Check new location (tambo/)
+    const newPath = `${projectRoot}/${installPath}/tambo/${componentName}.tsx`;
     if (memfsFs.existsSync(newPath)) {
       return { componentPath: newPath, installPath };
     }
@@ -187,9 +187,9 @@ jest.unstable_mockModule("./shared/component-utils.js", () => {
     // Actually detect inconsistencies based on filesystem
     const inconsistencies: {
       main: string;
-      mainLocation: "ui" | "genui";
+      mainLocation: "ui" | "tambo";
       dependency: string;
-      depLocation: "ui" | "genui";
+      depLocation: "ui" | "tambo";
     }[] = [];
 
     for (const component of verifiedComponents) {
@@ -227,9 +227,9 @@ jest.unstable_mockModule("./shared/component-utils.js", () => {
         if (isMainInLegacy !== isDepInLegacy) {
           inconsistencies.push({
             main: component.name,
-            mainLocation: isMainInLegacy ? "ui" : "genui",
+            mainLocation: isMainInLegacy ? "ui" : "tambo",
             dependency: depName,
-            depLocation: isDepInLegacy ? "ui" : "genui",
+            depLocation: isDepInLegacy ? "ui" : "tambo",
           });
         }
       }
@@ -474,7 +474,7 @@ describe("handleUpdateComponents", () => {
     it("should update all installed components when 'installed' is specified", async () => {
       // Setup: Project with multiple installed components
       vol.fromJSON({
-        ...createProjectWithGenuiSDK(),
+        ...createProjectWithTamboSDK(),
         ...createRegistryFiles(["message", "form"]),
         // Override to have "Updated" content
         "/mock-project/cli/dist/registry/components/message/message.tsx":
@@ -482,9 +482,9 @@ describe("handleUpdateComponents", () => {
         "/mock-project/cli/dist/registry/components/form/form.tsx":
           "export const Form = () => <div>Updated</div>;",
         // Installed components
-        "/mock-project/src/components/genui/message.tsx":
+        "/mock-project/src/components/tambo/message.tsx":
           "export const Message = () => <div>Old</div>;",
-        "/mock-project/src/components/genui/form.tsx":
+        "/mock-project/src/components/tambo/form.tsx":
           "export const Form = () => <div>Old</div>;",
       });
 
@@ -493,13 +493,13 @@ describe("handleUpdateComponents", () => {
 
       // Verify both components were updated
       const messageContent = vol.readFileSync(
-        "/mock-project/src/components/genui/message.tsx",
+        "/mock-project/src/components/tambo/message.tsx",
         "utf-8",
       ) as string;
       expect(messageContent).toContain("Updated");
 
       const formContent = vol.readFileSync(
-        "/mock-project/src/components/genui/form.tsx",
+        "/mock-project/src/components/tambo/form.tsx",
         "utf-8",
       ) as string;
       expect(formContent).toContain("Updated");
@@ -519,18 +519,18 @@ describe("handleUpdateComponents", () => {
 
       // Verify informational message
       const output = logs.join("\n");
-      expect(output).toContain("No genui components are currently installed");
+      expect(output).toContain("No tambo components are currently installed");
     });
 
     it("should list installed components when using 'installed' keyword", async () => {
       // Setup: Project with installed components
       vol.fromJSON({
-        ...createProjectWithGenuiSDK(),
+        ...createProjectWithTamboSDK(),
         ...createRegistryFiles(["message"]),
         // Override to have "Updated" content
         "/mock-project/cli/dist/registry/components/message/message.tsx":
           "export const Message = () => <div>Updated</div>;",
-        "/mock-project/src/components/genui/message.tsx":
+        "/mock-project/src/components/tambo/message.tsx":
           "export const Message = () => <div>Old</div>;",
       });
 
@@ -549,13 +549,13 @@ describe("handleUpdateComponents", () => {
     it("should update a single installed component", async () => {
       // Setup: Project with installed component
       vol.fromJSON({
-        ...createProjectWithGenuiSDK(),
+        ...createProjectWithTamboSDK(),
         ...createRegistryFiles(["message"]),
         // Override to have "Updated" content
         "/mock-project/cli/dist/registry/components/message/message.tsx":
           "export const Message = () => <div>Updated</div>;",
         // Existing component
-        "/mock-project/src/components/genui/message.tsx":
+        "/mock-project/src/components/tambo/message.tsx":
           "export const Message = () => <div>Old</div>;",
       });
 
@@ -564,7 +564,7 @@ describe("handleUpdateComponents", () => {
 
       // Verify component was updated
       const content = vol.readFileSync(
-        "/mock-project/src/components/genui/message.tsx",
+        "/mock-project/src/components/tambo/message.tsx",
         "utf-8",
       ) as string;
       expect(content).toContain("Updated");
@@ -579,7 +579,7 @@ describe("handleUpdateComponents", () => {
     it("should update multiple components", async () => {
       // Setup: Project with multiple installed components
       vol.fromJSON({
-        ...createProjectWithGenuiSDK(),
+        ...createProjectWithTamboSDK(),
         ...createRegistryFiles(["message", "form"]),
         // Override to have "Updated" content
         "/mock-project/cli/dist/registry/components/message/message.tsx":
@@ -587,9 +587,9 @@ describe("handleUpdateComponents", () => {
         "/mock-project/cli/dist/registry/components/form/form.tsx":
           "export const Form = () => <div>Updated</div>;",
         // Existing components
-        "/mock-project/src/components/genui/message.tsx":
+        "/mock-project/src/components/tambo/message.tsx":
           "export const Message = () => <div>Old</div>;",
-        "/mock-project/src/components/genui/form.tsx":
+        "/mock-project/src/components/tambo/form.tsx":
           "export const Form = () => <div>Old</div>;",
       });
 
@@ -598,13 +598,13 @@ describe("handleUpdateComponents", () => {
 
       // Verify both components were updated
       const messageContent = vol.readFileSync(
-        "/mock-project/src/components/genui/message.tsx",
+        "/mock-project/src/components/tambo/message.tsx",
         "utf-8",
       ) as string;
       expect(messageContent).toContain("Updated");
 
       const formContent = vol.readFileSync(
-        "/mock-project/src/components/genui/form.tsx",
+        "/mock-project/src/components/tambo/form.tsx",
         "utf-8",
       ) as string;
       expect(formContent).toContain("Updated");
@@ -622,7 +622,7 @@ describe("handleUpdateComponents", () => {
       vol.fromJSON({
         "/mock-project/package.json": JSON.stringify({
           name: "test-project",
-          dependencies: { "@workspace/react": "^1.0.0" },
+          dependencies: { "@tambo-ai/react": "^1.0.0" },
         }),
         ...createRegistryFiles(["message", "form"]),
         // Override to have "Updated" content
@@ -631,9 +631,9 @@ describe("handleUpdateComponents", () => {
         "/mock-project/cli/dist/registry/components/form/form.tsx":
           "export const Form = () => <div>Updated</div>;",
         // Existing components
-        "/mock-project/src/components/genui/message.tsx":
+        "/mock-project/src/components/tambo/message.tsx":
           "export const Message = () => <div>Old</div>;",
-        "/mock-project/src/components/genui/form.tsx":
+        "/mock-project/src/components/tambo/form.tsx":
           "export const Form = () => <div>Old</div>;",
       });
 
@@ -642,13 +642,13 @@ describe("handleUpdateComponents", () => {
 
       // Verify both components were updated
       const messageContent = vol.readFileSync(
-        "/mock-project/src/components/genui/message.tsx",
+        "/mock-project/src/components/tambo/message.tsx",
         "utf-8",
       ) as string;
       expect(messageContent).toContain("Updated");
 
       const formContent = vol.readFileSync(
-        "/mock-project/src/components/genui/form.tsx",
+        "/mock-project/src/components/tambo/form.tsx",
         "utf-8",
       ) as string;
       expect(formContent).toContain("Updated");
@@ -665,7 +665,7 @@ describe("handleUpdateComponents", () => {
       vol.fromJSON({
         "/mock-project/package.json": JSON.stringify({
           name: "test-project",
-          dependencies: { "@workspace/react": "^1.0.0" },
+          dependencies: { "@tambo-ai/react": "^1.0.0" },
         }),
         ...createRegistryFiles(["message"]),
         // Override message config to require markdown-components
@@ -689,9 +689,9 @@ describe("handleUpdateComponents", () => {
         "/mock-project/cli/dist/registry/components/markdown-components/markdown-components.tsx":
           "export const Markdown = () => <div>Updated</div>;",
         // Installed components
-        "/mock-project/src/components/genui/message.tsx":
+        "/mock-project/src/components/tambo/message.tsx":
           "export const Message = () => <div>Old</div>;",
-        "/mock-project/src/components/genui/markdown-components.tsx":
+        "/mock-project/src/components/tambo/markdown-components.tsx":
           "export const Markdown = () => <div>Old</div>;",
       });
 
@@ -703,7 +703,7 @@ describe("handleUpdateComponents", () => {
         .toMatchInlineSnapshot(`
         "src/
         ├─ components/
-        │  └─ genui/
+        │  └─ tambo/
         │     ├─ markdown-components.tsx
         │     └─ message.tsx
         └─ lib/
@@ -720,7 +720,7 @@ describe("handleUpdateComponents", () => {
       vol.fromJSON({
         "/mock-project/package.json": JSON.stringify({
           name: "test-project",
-          dependencies: { "@workspace/react": "^1.0.0" },
+          dependencies: { "@tambo-ai/react": "^1.0.0" },
         }),
         ...createRegistryFiles(["message"]),
         // Override message config to require markdown-components
@@ -744,7 +744,7 @@ describe("handleUpdateComponents", () => {
         "/mock-project/cli/dist/registry/components/markdown-components/markdown-components.tsx":
           "export const Markdown = () => <div>Updated</div>;",
         // Only message is installed
-        "/mock-project/src/components/genui/message.tsx":
+        "/mock-project/src/components/tambo/message.tsx":
           "export const Message = () => <div>Old</div>;",
       });
 
@@ -756,7 +756,7 @@ describe("handleUpdateComponents", () => {
         .toMatchInlineSnapshot(`
         "src/
         ├─ components/
-        │  └─ genui/
+        │  └─ tambo/
         │     └─ message.tsx
         └─ lib/
            └─ utils.ts"
@@ -770,7 +770,7 @@ describe("handleUpdateComponents", () => {
       vol.fromJSON({
         "/mock-project/package.json": JSON.stringify({
           name: "test-project",
-          dependencies: { "@workspace/react": "^1.0.0" },
+          dependencies: { "@tambo-ai/react": "^1.0.0" },
         }),
         ...createRegistryFiles(["message"]),
         // Override to have "Updated" content
@@ -802,7 +802,7 @@ describe("handleUpdateComponents", () => {
       vol.fromJSON({
         "/mock-project/package.json": JSON.stringify({
           name: "test-project",
-          dependencies: { "@workspace/react": "^1.0.0" },
+          dependencies: { "@tambo-ai/react": "^1.0.0" },
         }),
         ...createRegistryFiles(["message"]),
         // Override message config to require markdown-components
@@ -828,12 +828,12 @@ describe("handleUpdateComponents", () => {
         // Message in legacy location, markdown-components in new location
         "/mock-project/src/components/ui/message.tsx":
           "export const Message = () => <div>Old</div>;",
-        "/mock-project/src/components/genui/markdown-components.tsx":
+        "/mock-project/src/components/tambo/markdown-components.tsx":
           "export const Markdown = () => <div>Old</div>;",
       });
 
       // The mock at the top should now detect the inconsistency
-      // since message is in ui/ and markdown-components is in genui/
+      // since message is in ui/ and markdown-components is in tambo/
       // and message requires markdown-components
 
       // Set inquirer to skip migration
@@ -869,12 +869,12 @@ describe("handleUpdateComponents", () => {
     it("should respect --yes flag and skip confirmation", async () => {
       // Setup
       vol.fromJSON({
-        ...createProjectWithGenuiSDK(),
+        ...createProjectWithTamboSDK(),
         ...createRegistryFiles(["message"]),
         // Override to have "Updated" content
         "/mock-project/cli/dist/registry/components/message/message.tsx":
           "export const Message = () => <div>Updated</div>;",
-        "/mock-project/src/components/genui/message.tsx":
+        "/mock-project/src/components/tambo/message.tsx":
           "export const Message = () => <div>Old</div>;",
       });
 
@@ -886,7 +886,7 @@ describe("handleUpdateComponents", () => {
         .toMatchInlineSnapshot(`
         "src/
         ├─ components/
-        │  └─ genui/
+        │  └─ tambo/
         │     └─ message.tsx
         └─ lib/
            └─ utils.ts"
@@ -902,13 +902,13 @@ describe("handleUpdateComponents", () => {
       vol.fromJSON({
         "/mock-project/package.json": JSON.stringify({
           name: "test-project",
-          dependencies: { "@workspace/react": "^1.0.0" },
+          dependencies: { "@tambo-ai/react": "^1.0.0" },
         }),
         ...createRegistryFiles(["message"]),
         // Override to have "Updated" content
         "/mock-project/cli/dist/registry/components/message/message.tsx":
           "export const Message = () => <div>Updated</div>;",
-        "/mock-project/src/components/genui/message.tsx":
+        "/mock-project/src/components/tambo/message.tsx":
           "export const Message = () => <div>Old</div>;",
       });
 
@@ -920,7 +920,7 @@ describe("handleUpdateComponents", () => {
         .toMatchInlineSnapshot(`
         "src/
         ├─ components/
-        │  └─ genui/
+        │  └─ tambo/
         │     └─ message.tsx
         └─ lib/
            └─ utils.ts"
@@ -935,7 +935,7 @@ describe("handleUpdateComponents", () => {
       vol.fromJSON({
         "/mock-project/package.json": JSON.stringify({
           name: "test-project",
-          dependencies: { "@workspace/react": "^1.0.0" },
+          dependencies: { "@tambo-ai/react": "^1.0.0" },
         }),
         ...createRegistryFiles(["message"]),
         // Override to have "Updated" content
@@ -968,12 +968,12 @@ describe("handleUpdateComponents", () => {
     it("should respect --legacyPeerDeps option", async () => {
       // Setup
       vol.fromJSON({
-        ...createProjectWithGenuiSDK(),
+        ...createProjectWithTamboSDK(),
         ...createRegistryFiles(["message"]),
         // Override to have "Updated" content
         "/mock-project/cli/dist/registry/components/message/message.tsx":
           "export const Message = () => <div>Updated</div>;",
-        "/mock-project/src/components/genui/message.tsx":
+        "/mock-project/src/components/tambo/message.tsx":
           "export const Message = () => <div>Old</div>;",
       });
 
@@ -997,13 +997,13 @@ describe("handleUpdateComponents", () => {
       vol.fromJSON({
         "/mock-project/package.json": JSON.stringify({
           name: "test-project",
-          dependencies: { "@workspace/react": "^1.0.0" },
+          dependencies: { "@tambo-ai/react": "^1.0.0" },
         }),
         ...createRegistryFiles(["message"]),
         // Override to have "Updated" content
         "/mock-project/cli/dist/registry/components/message/message.tsx":
           "export const Message = () => <div>Updated</div>;",
-        "/mock-project/src/components/genui/message.tsx":
+        "/mock-project/src/components/tambo/message.tsx":
           "export const Message = () => <div>Old</div>;",
       });
 
@@ -1019,7 +1019,7 @@ describe("handleUpdateComponents", () => {
 
       // Verify component was not updated
       const content = vol.readFileSync(
-        "/mock-project/src/components/genui/message.tsx",
+        "/mock-project/src/components/tambo/message.tsx",
         "utf-8",
       ) as string;
       expect(content).toContain("Old");
@@ -1030,13 +1030,13 @@ describe("handleUpdateComponents", () => {
       vol.fromJSON({
         "/mock-project/package.json": JSON.stringify({
           name: "test-project",
-          dependencies: { "@workspace/react": "^1.0.0" },
+          dependencies: { "@tambo-ai/react": "^1.0.0" },
         }),
         ...createRegistryFiles(["message"]),
         // Override to have "Updated" content
         "/mock-project/cli/dist/registry/components/message/message.tsx":
           "export const Message = () => <div>Updated</div>;",
-        "/mock-project/src/components/genui/message.tsx":
+        "/mock-project/src/components/tambo/message.tsx":
           "export const Message = () => <div>Old</div>;",
       });
 
@@ -1048,7 +1048,7 @@ describe("handleUpdateComponents", () => {
 
       // Verify component was updated
       const content = vol.readFileSync(
-        "/mock-project/src/components/genui/message.tsx",
+        "/mock-project/src/components/tambo/message.tsx",
         "utf-8",
       ) as string;
       expect(content).toContain("Updated");
@@ -1061,13 +1061,13 @@ describe("handleUpdateComponents", () => {
       vol.fromJSON({
         "/mock-project/package.json": JSON.stringify({
           name: "test-project",
-          dependencies: { "@workspace/react": "^1.0.0" },
+          dependencies: { "@tambo-ai/react": "^1.0.0" },
         }),
         ...createRegistryFiles(["message"]),
         // Override to have "Updated" content
         "/mock-project/cli/dist/registry/components/message/message.tsx":
           "export const Message = () => <div>Updated</div>;",
-        "/mock-project/src/components/genui/message.tsx":
+        "/mock-project/src/components/tambo/message.tsx":
           "export const Message = () => <div>Old</div>;",
       });
 
@@ -1089,7 +1089,7 @@ describe("handleUpdateComponents", () => {
       vol.fromJSON({
         "/mock-project/package.json": JSON.stringify({
           name: "test-project",
-          dependencies: { "@workspace/react": "^1.0.0" },
+          dependencies: { "@tambo-ai/react": "^1.0.0" },
         }),
         ...createRegistryFiles(["message"]),
         // Override to have "Updated" content

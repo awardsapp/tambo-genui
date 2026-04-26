@@ -1,6 +1,6 @@
 # Storage Setup Guide
 
-This guide covers setting up file storage for the Genui API. The API supports S3-compatible storage backends.
+This guide covers setting up file storage for the Tambo API. The API supports S3-compatible storage backends.
 
 ## Overview
 
@@ -81,8 +81,8 @@ npm run dev:api
 Access MinIO Console at http://localhost:9001 (login: minioadmin/minioadmin) and create a bucket, or use the mc CLI:
 
 ```bash
-docker exec genui_minio mc alias set local http://localhost:9000 minioadmin minioadmin
-docker exec genui_minio mc mb local/user-files
+docker exec tambo_minio mc alias set local http://localhost:9000 minioadmin minioadmin
+docker exec tambo_minio mc mb local/user-files
 ```
 
 ### Testing
@@ -241,7 +241,7 @@ cat > /tmp/cors.json << 'EOF'
 EOF
 
 # Apply CORS config
-docker exec genui_minio mc anonymous set-json /tmp/cors.json local/user-files
+docker exec tambo_minio mc anonymous set-json /tmp/cors.json local/user-files
 ```
 
 ### AWS S3

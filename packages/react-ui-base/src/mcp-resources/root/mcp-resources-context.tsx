@@ -1,4 +1,4 @@
-import type { ListResourceEntry } from "@workspace/react/mcp";
+import type { ListResourceEntry } from "@tambo-ai/react/mcp";
 import * as React from "react";
 
 export interface McpResourcesContextValue {

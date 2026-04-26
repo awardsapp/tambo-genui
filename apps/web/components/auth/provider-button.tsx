@@ -83,7 +83,7 @@ export function ProviderButton({
           "transition-all duration-300 ease-out",
           // Default state
           "bg-white border-border text-foreground",
-          // Hover state - genui-landing style with teal glow (only when enabled)
+          // Hover state - tambo-landing style with teal glow (only when enabled)
           "enabled:hover:bg-foreground enabled:hover:text-primary enabled:hover:border-primary",
           "enabled:hover:shadow-[0_0_24px_8px_rgba(127,255,195,0.5)]",
           // Focus state

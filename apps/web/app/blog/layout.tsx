@@ -5,11 +5,11 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | genui blog",
+    template: "%s | tambo blog",
     default: "blog",
   },
   description:
-    "Latest updates, tutorials, and insights about genui - the AI orchestration framework for React frontends.",
+    "Latest updates, tutorials, and insights about tambo - the AI orchestration framework for React frontends.",
 };
 
 interface BlogLayoutProps {

@@ -1,7 +1,7 @@
 "use client";
 
-import { Message } from "@workspace/react-ui-base/message";
-import { MessageInput } from "@workspace/react-ui-base/message-input";
+import { Message } from "@tambo-ai/react-ui-base/message";
+import { MessageInput } from "@tambo-ai/react-ui-base/message-input";
 import type React from "react";
 import { mockMessages } from "./examples-data";
 

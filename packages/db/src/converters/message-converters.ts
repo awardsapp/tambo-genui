@@ -1,4 +1,4 @@
-import { ThreadMessage, validateThreadMessage } from "@workspace-cloud/core";
+import { ThreadMessage, validateThreadMessage } from "@tambo-ai-cloud/core";
 import { type DBMessage } from "../schema";
 
 /**

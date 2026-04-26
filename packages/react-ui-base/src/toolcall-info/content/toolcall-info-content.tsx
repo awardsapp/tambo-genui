@@ -2,7 +2,7 @@
 
 import { mergeProps } from "@base-ui/react/merge-props";
 import { useRender } from "@base-ui/react/use-render";
-import type { GenuiThreadMessage } from "@workspace/react";
+import type { TamboThreadMessage } from "@tambo-ai/react";
 import * as React from "react";
 import { useToolcallInfoContext } from "../root/toolcall-info-context";
 
@@ -12,7 +12,7 @@ export interface ToolcallInfoContentRenderProps extends Record<
 > {
   slot: string;
   /** The message containing the tool call. */
-  message: GenuiThreadMessage;
+  message: TamboThreadMessage;
   /** Whether the content is expanded. */
   isExpanded: boolean;
 }

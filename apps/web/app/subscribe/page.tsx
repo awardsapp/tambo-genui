@@ -1,18 +1,18 @@
 "use client";
 
 import { env } from "@/lib/env";
-import { GenuiProvider } from "@workspace/react";
-import { GenuiSubscribeIntegration } from "./genui-subscribe-integration";
+import { TamboProvider } from "@tambo-ai/react";
+import { TamboSubscribeIntegration } from "./tambo-subscribe-integration";
 
 export default function SubscribePage() {
   return (
-    <GenuiProvider
-      apiKey={env.NEXT_PUBLIC_GENUI_API_KEY!}
-      genuiUrl={env.NEXT_PUBLIC_GENUI_API_URL}
+    <TamboProvider
+      apiKey={env.NEXT_PUBLIC_TAMBO_API_KEY!}
+      tamboUrl={env.NEXT_PUBLIC_TAMBO_API_URL}
     >
       <div className="container mx-auto py-2">
-        <GenuiSubscribeIntegration />
+        <TamboSubscribeIntegration />
       </div>
-    </GenuiProvider>
+    </TamboProvider>
   );
 }

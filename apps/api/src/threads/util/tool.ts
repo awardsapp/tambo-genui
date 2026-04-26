@@ -1,4 +1,4 @@
-import { McpToolRegistry, unprefixToolName } from "@workspace-cloud/backend";
+import { McpToolRegistry, unprefixToolName } from "@tambo-ai-cloud/backend";
 import {
   ActionType,
   ContentPartType,
@@ -7,7 +7,7 @@ import {
   MessageRole,
   ThreadMessage,
   ToolCallRequest,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 import type {
   AudioContent,
   EmbeddedResource,
@@ -196,7 +196,7 @@ function buildToolResponseContent(
  * The key to pass in to `_meta` to identify the parent message ID, must be in the form
  * `<prefix>/<keyname>` as per MCP spec.
  */
-export const MCP_PARENT_MESSAGE_ID_META_KEY = "genui.co/parentMessageId";
+export const MCP_PARENT_MESSAGE_ID_META_KEY = "tambo.co/parentMessageId";
 export async function callSystemTool(
   systemTools: McpToolRegistry,
   toolCallRequest: ToolCallRequest,

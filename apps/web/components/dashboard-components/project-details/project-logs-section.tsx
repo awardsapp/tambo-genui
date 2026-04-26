@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { api } from "@/trpc/react";
 import { Loader2 } from "lucide-react";
-import { LogLevel } from "@workspace-cloud/core";
+import { LogLevel } from "@tambo-ai-cloud/core";
 
 interface ProjectLogsSectionProps {
   projectId: string;

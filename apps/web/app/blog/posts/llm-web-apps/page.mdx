@@ -56,12 +56,12 @@ There is plenty more to explore.
 
 ## Putting It Into Practice
 
-At [Genui](https://github.com/genui-ai/genui) we’re making it simple to integrate this type of natural language control into React apps. We’re packaging up the common patterns of LLM-based web apps so you don’t need to reinvent them.
+At [Tambo](https://github.com/tambo-ai/tambo) we’re making it simple to integrate this type of natural language control into React apps. We’re packaging up the common patterns of LLM-based web apps so you don’t need to reinvent them.
 
 To “tell” the LLM about the UI it can use, specify when to use the component and what props the component expects.
 
 ```typescript
-const components: GenuiComponent[] = [
+const components: TamboComponent[] = [
   {
     name: "WeatherDisplay",
     description: "A display of the weather in a city",
@@ -70,9 +70,9 @@ const components: GenuiComponent[] = [
   }
 ];
 
-<GenuiProvider components={components}>
+<TamboProvider components={components}>
   <App />
-</GenuiProvider>;
+</TamboProvider>;
 ```
 
 Similarly, give the LLM tools:
@@ -80,10 +80,10 @@ Similarly, give the LLM tools:
 ```typescript
 const getWeather = async ({ city }: { city: string }) => {
   const forecast = await weather.getCityForecast(city);
-  return forecast; // return the data, Genui will format it for the user
+  return forecast; // return the data, Tambo will format it for the user
 };
 
-export const tools: GenuiTool[] = [
+export const tools: TamboTool[] = [
   {
     name: "getWeather",
     description: "A tool to get the current weather conditions of a city",
@@ -95,12 +95,12 @@ export const tools: GenuiTool[] = [
   },
 ];
 
-<GenuiProvider tools={tools}>
+<TamboProvider tools={tools}>
   <App />
-</GenuiProvider>;
+</TamboProvider>;
 ```
 
-Then add a `<MessageInput>` component somewhere for users to submit messages, and decide how you want to display responses, including any used components or tool call information. Genui handles everything else.
+Then add a `<MessageInput>` component somewhere for users to submit messages, and decide how you want to display responses, including any used components or tool call information. Tambo handles everything else.
 
 <ImageZoom>
   <img
@@ -112,4 +112,4 @@ Then add a `<MessageInput>` component somewhere for users to submit messages, an
 
 With just those pieces, you can give your application a conversational interface powered by LLMs.
 
-From there, you can go much deeper with Genui: [connect MCP servers](https://docs.genui.co/concepts/model-context-protocol), integrate dynamic [context](https://docs.genui.co/concepts/additional-context), or let Genui [interact with components](https://docs.genui.co/concepts/generative-interfaces/interactable-components) already rendered on the page.
+From there, you can go much deeper with Tambo: [connect MCP servers](https://docs.tambo.co/concepts/model-context-protocol), integrate dynamic [context](https://docs.tambo.co/concepts/additional-context), or let Tambo [interact with components](https://docs.tambo.co/concepts/generative-interfaces/interactable-components) already rendered on the page.

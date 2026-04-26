@@ -1,5 +1,5 @@
 import { ApiProperty, ApiSchema } from "@nestjs/swagger";
-import { GenerationStage } from "@workspace-cloud/core";
+import { GenerationStage } from "@tambo-ai-cloud/core";
 import {
   AvailableComponentDto,
   ComponentContextToolMetadataDto,
@@ -52,7 +52,7 @@ export class AdvanceThreadResponseDto {
   statusMessage?: string;
   @ApiProperty({
     description:
-      "MCP access token to be used as bearer token when talking to the Genui MCP server. Only included when MCP servers are configured for the project.",
+      "MCP access token to be used as bearer token when talking to the Tambo MCP server. Only included when MCP servers are configured for the project.",
     example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
     required: false,
   })

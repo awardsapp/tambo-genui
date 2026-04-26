@@ -1,11 +1,11 @@
 "use client";
 
 import { DemoPreview } from "@/components/demos/demo-preview";
-import { MessageInput } from "@workspace/react-ui-base/message-input";
+import { MessageInput } from "@tambo-ai/react-ui-base/message-input";
 import { ArrowUp, Paperclip, Square } from "lucide-react";
 
 export const messageInputDemoCode = `
-import { MessageInput } from "@workspace/react-ui-base/message-input";
+import { MessageInput } from "@tambo-ai/react-ui-base/message-input";
 import { ArrowUp, Paperclip, Square } from "lucide-react";
 
 export function DemoMessageInput() {

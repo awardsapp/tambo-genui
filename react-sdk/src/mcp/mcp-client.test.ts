@@ -1,4 +1,4 @@
-import { MCPClient, MCPTransport } from "@workspace/client";
+import { MCPClient, MCPTransport } from "@tambo-ai/client";
 
 // Mock the MCP SDK modules
 jest.mock("@modelcontextprotocol/sdk/client/index.js", () => ({
@@ -90,7 +90,7 @@ describe("MCPClient", () => {
       );
       expect(MockedClient).toHaveBeenCalledWith(
         {
-          name: "genui-mcp-client",
+          name: "tambo-mcp-client",
           version: "1.0.0",
         },
         { capabilities: {} },
@@ -383,7 +383,7 @@ describe("MCPClient", () => {
 
       expect(MockedClient).toHaveBeenCalledWith(
         {
-          name: "genui-mcp-client",
+          name: "tambo-mcp-client",
           version: "1.0.0",
         },
         { capabilities: {} },
@@ -408,7 +408,7 @@ describe("MCPClient", () => {
 
       expect(MockedClient).toHaveBeenLastCalledWith(
         {
-          name: "genui-mcp-client",
+          name: "tambo-mcp-client",
           version: "1.0.0",
         },
         {

@@ -2,9 +2,9 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import { z } from "zod";
 import { ComponentRenderer } from "./v1-component-renderer";
-import { GenuiRegistryContext } from "../../providers/genui-registry-provider";
-import type { GenuiRegistryContext as GenuiRegistryContextType } from "../../providers/genui-registry-provider";
-import type { GenuiComponentContent } from "../types/message";
+import { TamboRegistryContext } from "../../providers/tambo-registry-provider";
+import type { TamboRegistryContext as TamboRegistryContextType } from "../../providers/tambo-registry-provider";
+import type { TamboComponentContent } from "../types/message";
 
 // Simple test component
 const TestComponent: React.FC<{ title: string; count?: number }> = ({
@@ -35,8 +35,8 @@ const validatedComponentSchema = z.object({
 
 // Create a mock registry
 function createMockRegistry(
-  componentList: GenuiRegistryContextType["componentList"] = {},
-): GenuiRegistryContextType {
+  componentList: TamboRegistryContextType["componentList"] = {},
+): TamboRegistryContextType {
   return {
     componentList,
     toolRegistry: {},
@@ -69,7 +69,7 @@ describe("ComponentRenderer", () => {
     }
   }
 
-  const baseContent: GenuiComponentContent = {
+  const baseContent: TamboComponentContent = {
     type: "component",
     id: "comp_123",
     name: "TestComponent",
@@ -89,13 +89,13 @@ describe("ComponentRenderer", () => {
     });
 
     render(
-      <GenuiRegistryContext.Provider value={registry}>
+      <TamboRegistryContext.Provider value={registry}>
         <ComponentRenderer
           content={baseContent}
           threadId="thread_123"
           messageId="msg_456"
         />
-      </GenuiRegistryContext.Provider>,
+      </TamboRegistryContext.Provider>,
     );
 
     expect(screen.getByTestId("test-component")).toBeInTheDocument();
@@ -107,14 +107,14 @@ describe("ComponentRenderer", () => {
 
     withMockedConsoleError((consoleErrorSpy) => {
       render(
-        <GenuiRegistryContext.Provider value={registry}>
+        <TamboRegistryContext.Provider value={registry}>
           <ComponentRenderer
             content={baseContent}
             threadId="thread_123"
             messageId="msg_456"
             fallback={<div data-testid="fallback">Not found</div>}
           />
-        </GenuiRegistryContext.Provider>,
+        </TamboRegistryContext.Provider>,
       );
 
       expect(screen.getByTestId("fallback")).toBeInTheDocument();
@@ -135,13 +135,13 @@ describe("ComponentRenderer", () => {
 
     withMockedConsoleError((consoleErrorSpy) => {
       const { container } = render(
-        <GenuiRegistryContext.Provider value={registry}>
+        <TamboRegistryContext.Provider value={registry}>
           <ComponentRenderer
             content={baseContent}
             threadId="thread_123"
             messageId="msg_456"
           />
-        </GenuiRegistryContext.Provider>,
+        </TamboRegistryContext.Provider>,
       );
 
       expect(container.firstChild).toBeNull();
@@ -167,7 +167,7 @@ describe("ComponentRenderer", () => {
       },
     });
 
-    const content: GenuiComponentContent = {
+    const content: TamboComponentContent = {
       type: "component",
       id: "comp_123",
       name: "TestComponent",
@@ -176,13 +176,13 @@ describe("ComponentRenderer", () => {
     };
 
     render(
-      <GenuiRegistryContext.Provider value={registry}>
+      <TamboRegistryContext.Provider value={registry}>
         <ComponentRenderer
           content={content}
           threadId="thread_123"
           messageId="msg_456"
         />
-      </GenuiRegistryContext.Provider>,
+      </TamboRegistryContext.Provider>,
     );
 
     expect(screen.getByTestId("title")).toHaveTextContent("Test");
@@ -200,7 +200,7 @@ describe("ComponentRenderer", () => {
       },
     });
 
-    const content: GenuiComponentContent = {
+    const content: TamboComponentContent = {
       type: "component",
       id: "comp_123",
       name: "TestComponent",
@@ -209,13 +209,13 @@ describe("ComponentRenderer", () => {
     };
 
     render(
-      <GenuiRegistryContext.Provider value={registry}>
+      <TamboRegistryContext.Provider value={registry}>
         <ComponentRenderer
           content={content}
           threadId="thread_123"
           messageId="msg_456"
         />
-      </GenuiRegistryContext.Provider>,
+      </TamboRegistryContext.Provider>,
     );
 
     // Component should render with empty props
@@ -234,7 +234,7 @@ describe("ComponentRenderer", () => {
       },
     });
 
-    const content: GenuiComponentContent = {
+    const content: TamboComponentContent = {
       type: "component",
       id: "comp_123",
       name: "ValidatedComponent",
@@ -243,13 +243,13 @@ describe("ComponentRenderer", () => {
     };
 
     render(
-      <GenuiRegistryContext.Provider value={registry}>
+      <TamboRegistryContext.Provider value={registry}>
         <ComponentRenderer
           content={content}
           threadId="thread_123"
           messageId="msg_456"
         />
-      </GenuiRegistryContext.Provider>,
+      </TamboRegistryContext.Provider>,
     );
 
     expect(screen.getByTestId("name")).toHaveTextContent("Alice");
@@ -270,7 +270,7 @@ describe("ComponentRenderer", () => {
       },
     });
 
-    const content: GenuiComponentContent = {
+    const content: TamboComponentContent = {
       type: "component",
       id: "comp_123",
       name: "ValidatedComponent",
@@ -279,13 +279,13 @@ describe("ComponentRenderer", () => {
     };
 
     render(
-      <GenuiRegistryContext.Provider value={registry}>
+      <TamboRegistryContext.Provider value={registry}>
         <ComponentRenderer
           content={content}
           threadId="thread_123"
           messageId="msg_456"
         />
-      </GenuiRegistryContext.Provider>,
+      </TamboRegistryContext.Provider>,
     );
 
     // Should still render with raw props
@@ -325,13 +325,13 @@ describe("ComponentRenderer", () => {
     });
 
     render(
-      <GenuiRegistryContext.Provider value={registry}>
+      <TamboRegistryContext.Provider value={registry}>
         <ComponentRenderer
           content={baseContent}
           threadId="thread_123"
           messageId="msg_456"
         />
-      </GenuiRegistryContext.Provider>,
+      </TamboRegistryContext.Provider>,
     );
 
     expect(consoleSpy).toHaveBeenCalledWith(
@@ -353,7 +353,7 @@ describe("ComponentRenderer", () => {
     });
 
     // partial-json library handles incomplete JSON gracefully
-    const content: GenuiComponentContent = {
+    const content: TamboComponentContent = {
       type: "component",
       id: "comp_123",
       name: "TestComponent",
@@ -362,22 +362,22 @@ describe("ComponentRenderer", () => {
     };
 
     render(
-      <GenuiRegistryContext.Provider value={registry}>
+      <TamboRegistryContext.Provider value={registry}>
         <ComponentRenderer
           content={content}
           threadId="thread_123"
           messageId="msg_456"
         />
-      </GenuiRegistryContext.Provider>,
+      </TamboRegistryContext.Provider>,
     );
 
     expect(screen.getByTestId("title")).toHaveTextContent("Partial");
   });
 
-  it("provides component context to rendered components via GenuiComponentContentProvider", () => {
+  it("provides component context to rendered components via TamboComponentContentProvider", () => {
     // Create a component that uses the context
     const ContextAwareComponent: React.FC = () => {
-      // We can't directly test the context without importing useGenuiComponentContent
+      // We can't directly test the context without importing useTamboComponentContent
       // but we can verify the component renders which means the provider works
       return <div data-testid="context-aware">Rendered</div>;
     };
@@ -392,7 +392,7 @@ describe("ComponentRenderer", () => {
       },
     });
 
-    const content: GenuiComponentContent = {
+    const content: TamboComponentContent = {
       type: "component",
       id: "comp_789",
       name: "ContextAwareComponent",
@@ -401,13 +401,13 @@ describe("ComponentRenderer", () => {
     };
 
     render(
-      <GenuiRegistryContext.Provider value={registry}>
+      <TamboRegistryContext.Provider value={registry}>
         <ComponentRenderer
           content={content}
           threadId="thread_abc"
           messageId="msg_def"
         />
-      </GenuiRegistryContext.Provider>,
+      </TamboRegistryContext.Provider>,
     );
 
     expect(screen.getByTestId("context-aware")).toBeInTheDocument();

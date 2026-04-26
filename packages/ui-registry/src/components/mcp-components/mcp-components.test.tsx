@@ -4,16 +4,16 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import { McpPromptButton, McpResourceButton } from "./mcp-components";
 import {
-  useGenuiMcpPromptList,
-  useGenuiMcpPrompt,
-  useGenuiMcpResourceList,
-} from "@workspace/react/mcp";
+  useTamboMcpPromptList,
+  useTamboMcpPrompt,
+  useTamboMcpResourceList,
+} from "@tambo-ai/react/mcp";
 
 // Mocks are provided via moduleNameMapper in jest.config.ts
 
-const mockUseGenuiMcpPromptList = jest.mocked(useGenuiMcpPromptList);
-const mockUseGenuiMcpPrompt = jest.mocked(useGenuiMcpPrompt);
-const mockUseGenuiMcpResourceList = jest.mocked(useGenuiMcpResourceList);
+const mockUseTamboMcpPromptList = jest.mocked(useTamboMcpPromptList);
+const mockUseTamboMcpPrompt = jest.mocked(useTamboMcpPrompt);
+const mockUseTamboMcpResourceList = jest.mocked(useTamboMcpResourceList);
 
 describe("McpPromptButton", () => {
   const mockOnInsertText = jest.fn();
@@ -26,14 +26,14 @@ describe("McpPromptButton", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockUseGenuiMcpPromptList.mockReturnValue({
+    mockUseTamboMcpPromptList.mockReturnValue({
       data: defaultPromptList,
       isLoading: false,
-    } as ReturnType<typeof useGenuiMcpPromptList>);
-    mockUseGenuiMcpPrompt.mockReturnValue({
+    } as ReturnType<typeof useTamboMcpPromptList>);
+    mockUseTamboMcpPrompt.mockReturnValue({
       data: undefined,
       error: undefined,
-    } as ReturnType<typeof useGenuiMcpPrompt>);
+    } as ReturnType<typeof useTamboMcpPrompt>);
   });
 
   it("renders the button when prompts are available", () => {
@@ -45,10 +45,10 @@ describe("McpPromptButton", () => {
   });
 
   it("does not render when no prompts are available", () => {
-    mockUseGenuiMcpPromptList.mockReturnValue({
+    mockUseTamboMcpPromptList.mockReturnValue({
       data: [],
       isLoading: false,
-    } as ReturnType<typeof useGenuiMcpPromptList>);
+    } as ReturnType<typeof useTamboMcpPromptList>);
 
     const { container } = render(
       <McpPromptButton value="" onInsertText={mockOnInsertText} />,
@@ -58,10 +58,10 @@ describe("McpPromptButton", () => {
   });
 
   it("does not render when prompts are undefined", () => {
-    mockUseGenuiMcpPromptList.mockReturnValue({
+    mockUseTamboMcpPromptList.mockReturnValue({
       data: undefined,
       isLoading: false,
-    } as ReturnType<typeof useGenuiMcpPromptList>);
+    } as ReturnType<typeof useTamboMcpPromptList>);
 
     const { container } = render(
       <McpPromptButton value="" onInsertText={mockOnInsertText} />,
@@ -83,10 +83,10 @@ describe("McpPromptButton", () => {
         <McpPromptButton value="" onInsertText={mockOnInsertText} />,
       );
 
-      mockUseGenuiMcpPrompt.mockReturnValue({
+      mockUseTamboMcpPrompt.mockReturnValue({
         data: validPromptData,
         error: undefined,
-      } as ReturnType<typeof useGenuiMcpPrompt>);
+      } as ReturnType<typeof useTamboMcpPrompt>);
 
       rerender(<McpPromptButton value="" onInsertText={mockOnInsertText} />);
 
@@ -97,10 +97,10 @@ describe("McpPromptButton", () => {
     it("handles prompt data with missing messages array", () => {
       const invalidPromptData = {};
 
-      mockUseGenuiMcpPrompt.mockReturnValue({
+      mockUseTamboMcpPrompt.mockReturnValue({
         data: invalidPromptData,
         error: undefined,
-      } as ReturnType<typeof useGenuiMcpPrompt>);
+      } as ReturnType<typeof useTamboMcpPrompt>);
 
       render(<McpPromptButton value="" onInsertText={mockOnInsertText} />);
 
@@ -112,10 +112,10 @@ describe("McpPromptButton", () => {
         messages: "not an array",
       };
 
-      mockUseGenuiMcpPrompt.mockReturnValue({
+      mockUseTamboMcpPrompt.mockReturnValue({
         data: invalidPromptData,
         error: undefined,
-      } as ReturnType<typeof useGenuiMcpPrompt>);
+      } as ReturnType<typeof useTamboMcpPrompt>);
 
       render(<McpPromptButton value="" onInsertText={mockOnInsertText} />);
 
@@ -123,10 +123,10 @@ describe("McpPromptButton", () => {
     });
 
     it("handles completely null prompt data", () => {
-      mockUseGenuiMcpPrompt.mockReturnValue({
+      mockUseTamboMcpPrompt.mockReturnValue({
         data: null,
         error: undefined,
-      } as ReturnType<typeof useGenuiMcpPrompt>);
+      } as ReturnType<typeof useTamboMcpPrompt>);
 
       render(<McpPromptButton value="" onInsertText={mockOnInsertText} />);
 
@@ -134,10 +134,10 @@ describe("McpPromptButton", () => {
     });
 
     it("handles undefined prompt data", () => {
-      mockUseGenuiMcpPrompt.mockReturnValue({
+      mockUseTamboMcpPrompt.mockReturnValue({
         data: undefined,
         error: undefined,
-      } as ReturnType<typeof useGenuiMcpPrompt>);
+      } as ReturnType<typeof useTamboMcpPrompt>);
 
       render(<McpPromptButton value="" onInsertText={mockOnInsertText} />);
 
@@ -147,10 +147,10 @@ describe("McpPromptButton", () => {
 
   describe("error handling", () => {
     it("handles fetch errors gracefully", () => {
-      mockUseGenuiMcpPrompt.mockReturnValue({
+      mockUseTamboMcpPrompt.mockReturnValue({
         data: undefined,
         error: new Error("Network error"),
-      } as ReturnType<typeof useGenuiMcpPrompt>);
+      } as ReturnType<typeof useTamboMcpPrompt>);
 
       render(<McpPromptButton value="" onInsertText={mockOnInsertText} />);
 
@@ -176,10 +176,10 @@ describe("McpResourceButton", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockUseGenuiMcpResourceList.mockReturnValue({
+    mockUseTamboMcpResourceList.mockReturnValue({
       data: defaultResourceList,
       isLoading: false,
-    } as ReturnType<typeof useGenuiMcpResourceList>);
+    } as ReturnType<typeof useTamboMcpResourceList>);
   });
 
   it("renders the button when resources are available", () => {
@@ -193,10 +193,10 @@ describe("McpResourceButton", () => {
   });
 
   it("does not render when no resources are available", () => {
-    mockUseGenuiMcpResourceList.mockReturnValue({
+    mockUseTamboMcpResourceList.mockReturnValue({
       data: [],
       isLoading: false,
-    } as ReturnType<typeof useGenuiMcpResourceList>);
+    } as ReturnType<typeof useTamboMcpResourceList>);
 
     const { container } = render(
       <McpResourceButton value="" onInsertResource={mockOnInsertResource} />,
@@ -206,10 +206,10 @@ describe("McpResourceButton", () => {
   });
 
   it("does not render when resources are undefined", () => {
-    mockUseGenuiMcpResourceList.mockReturnValue({
+    mockUseTamboMcpResourceList.mockReturnValue({
       data: undefined,
       isLoading: false,
-    } as ReturnType<typeof useGenuiMcpResourceList>);
+    } as ReturnType<typeof useTamboMcpResourceList>);
 
     const { container } = render(
       <McpResourceButton value="" onInsertResource={mockOnInsertResource} />,

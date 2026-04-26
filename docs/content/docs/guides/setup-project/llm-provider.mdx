@@ -3,11 +3,11 @@ title: Configure LLM Provider
 description: Step-by-step guide to selecting and configuring LLM providers and models
 ---
 
-This guide walks you through configuring LLM providers and models for your Genui project, including provider-specific settings and parameter tuning patterns.
+This guide walks you through configuring LLM providers and models for your Tambo project, including provider-specific settings and parameter tuning patterns.
 
 ## Step 1: Select a Provider
 
-Genui supports multiple LLM providers:
+Tambo supports multiple LLM providers:
 
 - **OpenAI** - GPT-5.2, GPT-5.1, GPT-4.1 models
 - **Anthropic** - Claude Opus 4.5, Claude Sonnet 4.5, Claude Haiku 4.5
@@ -16,7 +16,7 @@ Genui supports multiple LLM providers:
 - **Mistral** - Mistral Large, Magistral Medium
 - **OpenAI-Compatible** - Any provider with OpenAI API compatibility
 
-Navigate to your project's LLM Configuration section in the settings of the Genui dashboard and select your provider from the dropdown.
+Navigate to your project's LLM Configuration section in the settings of the Tambo dashboard and select your provider from the dropdown.
 
 For detailed provider capabilities and comparison, see the [Provider Reference](/reference/llm-providers).
 
@@ -74,7 +74,7 @@ If your provider is not listed explicitly in the LLM Providers dropdown, you are
 
 1. Select **OpenAI Compatible** as your provider
 2. Enter **Custom Model Name** (e.g., `meta-llama/Llama-3-70b-chat-hf`)
-3. Enter **Custom Base URL** without "chat/completions" - Genui will add this automatically. (e.g., `https://api.myai.xyz/v1` becomes `https://api.myai.xyz/v1/chat/completions`)
+3. Enter **Custom Base URL** without "chat/completions" - Tambo will add this automatically. (e.g., `https://api.myai.xyz/v1` becomes `https://api.myai.xyz/v1/chat/completions`)
 4. Add your API key if required
 5. Click **Save**
 

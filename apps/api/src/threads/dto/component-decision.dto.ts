@@ -1,5 +1,5 @@
 import { ApiProperty, ApiSchema } from "@nestjs/swagger";
-import { ComponentDecisionV2, ToolCallRequest } from "@workspace-cloud/core";
+import { ComponentDecisionV2, ToolCallRequest } from "@tambo-ai-cloud/core";
 
 export class ToolParameter {
   parameterName!: string;

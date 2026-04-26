@@ -57,10 +57,10 @@ describe("Agent Docs", () => {
       "utf-8",
     ) as string;
 
-    expect(agentsContent).toContain("Genui AI Framework");
-    expect(agentsContent).toContain("<!-- genui-docs-v1.0 -->");
+    expect(agentsContent).toContain("Tambo AI Framework");
+    expect(agentsContent).toContain("<!-- tambo-docs-v1.0 -->");
     expect(
-      memfsFs.existsSync("/mock-project/src/components/genui/AGENTS.md"),
+      memfsFs.existsSync("/mock-project/src/components/tambo/AGENTS.md"),
     ).toBe(true);
   });
 
@@ -82,7 +82,7 @@ describe("Agent Docs", () => {
     ) as string;
 
     expect(agentsContent).toContain("# Existing agent rules");
-    expect(agentsContent).toContain("Genui AI Framework");
+    expect(agentsContent).toContain("Tambo AI Framework");
     expect(claudeContent).toContain("# Claude content");
   });
 
@@ -99,7 +99,7 @@ describe("Agent Docs", () => {
     ) as string;
 
     expect(claudeContent).toContain("# Claude content");
-    expect(claudeContent).toContain("Genui AI Framework");
+    expect(claudeContent).toContain("Tambo AI Framework");
     expect(memfsFs.existsSync("/mock-project/AGENTS.md")).toBe(false);
   });
 
@@ -116,15 +116,15 @@ describe("Agent Docs", () => {
     ) as string;
 
     expect(agentsContent).toContain("# Agent guidance");
-    expect(agentsContent).toContain("Genui AI Framework");
+    expect(agentsContent).toContain("Tambo AI Framework");
     expect(memfsFs.existsSync("/mock-project/CLAUDE.md")).toBe(false);
   });
 
   it("doesn't duplicate if already present", async () => {
     const initial = `# Agents
 
-<!-- genui-docs-v1.0 -->
-## Genui AI Framework
+<!-- tambo-docs-v1.0 -->
+## Tambo AI Framework
 `;
     vol.fromJSON({
       "/mock-project/AGENTS.md": initial,
@@ -136,7 +136,7 @@ describe("Agent Docs", () => {
       "/mock-project/AGENTS.md",
       "utf-8",
     ) as string;
-    expect(agentsContent.match(/genui-docs-v1\.0/g)?.length).toBe(1);
+    expect(agentsContent.match(/tambo-docs-v1\.0/g)?.length).toBe(1);
   });
 
   it("skips with --skip-agent-docs", async () => {
@@ -146,7 +146,7 @@ describe("Agent Docs", () => {
 
     expect(memfsFs.existsSync("/mock-project/AGENTS.md")).toBe(false);
     expect(
-      memfsFs.existsSync("/mock-project/src/components/genui/AGENTS.md"),
+      memfsFs.existsSync("/mock-project/src/components/tambo/AGENTS.md"),
     ).toBe(false);
   });
 
@@ -161,23 +161,23 @@ describe("Agent Docs", () => {
     });
 
     const componentAgentsPath =
-      "/mock-project/custom/components/genui/AGENTS.md";
+      "/mock-project/custom/components/tambo/AGENTS.md";
     expect(memfsFs.existsSync(componentAgentsPath)).toBe(true);
     const componentContent = memfsFs.readFileSync(
       componentAgentsPath,
       "utf-8",
     ) as string;
-    expect(componentContent).toContain("Genui Components Guidelines");
+    expect(componentContent).toContain("Tambo Components Guidelines");
   });
 
   it("does not overwrite component AGENTS.md if already at current version", async () => {
-    const componentPath = "/mock-project/src/components/genui/AGENTS.md";
+    const componentPath = "/mock-project/src/components/tambo/AGENTS.md";
     vol.fromJSON({
-      [componentPath]: `# Genui Components Guidelines
+      [componentPath]: `# Tambo Components Guidelines
 
-Components in this directory are registered with Genui for AI-driven generative UI.
+Components in this directory are registered with Tambo for AI-driven generative UI.
 
-Read the full documentation at https://docs.genui.co/llms.txt for component creation patterns and best practices.
+Read the full documentation at https://docs.tambo.co/llms.txt for component creation patterns and best practices.
 `,
     });
 
@@ -185,6 +185,6 @@ Read the full documentation at https://docs.genui.co/llms.txt for component crea
 
     const content = memfsFs.readFileSync(componentPath, "utf-8") as string;
     // Should not have changed since it's already up to date
-    expect(content).toContain("Genui Components Guidelines");
+    expect(content).toContain("Tambo Components Guidelines");
   });
 });

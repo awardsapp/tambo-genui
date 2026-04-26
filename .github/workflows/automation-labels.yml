@@ -50,7 +50,7 @@ jobs:
         env:
           AUTHOR_LOGIN: "${{ github.event.sender.login }}"
           AUTHOR_TYPE: "${{ github.event.sender.type }}"
-          GENUI_TEAM_MEMBERS: |- # json
+          TAMBO_TEAM_MEMBERS: |- # json
             [
               "alecf",
               "akhileshrangani4",
@@ -66,7 +66,7 @@ jobs:
         run: | # shell
           AUTHOR="external"
 
-          if jq -e ". | index(\"${AUTHOR_LOGIN}\")" <<< "${GENUI_TEAM_MEMBERS}" > /dev/null; then
+          if jq -e ". | index(\"${AUTHOR_LOGIN}\")" <<< "${TAMBO_TEAM_MEMBERS}" > /dev/null; then
             AUTHOR="tambo-team"
           elif jq -e ". | index(\"${AUTHOR_LOGIN}\")" <<< "${KNOWN_AI_ACTORS}" > /dev/null; then
             AUTHOR="ai"
@@ -262,7 +262,7 @@ jobs:
           message: |
             This PR will update the repository labels in the `.github/labels.yml`:
 
-            https://github.com/awardsapp/tambo-genui/pull/${{ github.event.pull_request.number }}/changes#diff-${{ github.event.pull_request.head.sha }}
+            https://github.com/tambo-ai/tambo/pull/${{ github.event.pull_request.number }}/changes#diff-${{ github.event.pull_request.head.sha }}
 
       - name: Delete Comment on PR if no label updates
         if: github.event_name == 'pull_request_target' && !contains(fromJson(needs.meta.outputs.areas || '[]'), 'labels')

@@ -1,7 +1,7 @@
 ---
 name: building-settings-ui
 description: >-
-  Use this skill when adding or modifying settings UI in Genui Cloud. Covers where a new settings
+  Use this skill when adding or modifying settings UI in Tambo Cloud. Covers where a new settings
   section belongs (Agent tab vs Settings tab), and the component patterns used across both pages
   (card layout, toasts, confirmation dialogs, destructive styling, save behavior conventions).
   Triggers on "add a new settings section", "where should X go?", "settings UI", "settings page",
@@ -14,7 +14,7 @@ metadata:
 
 # Building Settings UI
 
-Guide for placing and styling settings sections in the Genui Cloud dashboard. Covers two concerns: where a feature belongs (which tab/page), and how to build the UI component to match existing patterns.
+Guide for placing and styling settings sections in the Tambo Cloud dashboard. Covers two concerns: where a feature belongs (which tab/page), and how to build the UI component to match existing patterns.
 
 ## Architecture
 

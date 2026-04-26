@@ -349,7 +349,7 @@ describe("v1-client-tools", () => {
         createAwaitingInputEvent(pendingToolCalls);
 
       expect(event.type).toBe(EventType.CUSTOM);
-      expect(event.name).toBe("genui.run.awaiting_input");
+      expect(event.name).toBe("tambo.run.awaiting_input");
       expect(event.value).toEqual({
         pendingToolCalls: [
           {

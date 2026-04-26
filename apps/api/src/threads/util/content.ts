@@ -2,7 +2,7 @@ import {
   ChatCompletionContentPart,
   ChatCompletionContentPartComponent,
   ContentPartType,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 import { ChatCompletionContentPartDto } from "../dto/message.dto";
 
 /**

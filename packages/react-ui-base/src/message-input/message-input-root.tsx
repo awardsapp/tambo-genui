@@ -3,23 +3,23 @@
 import { mergeProps } from "@base-ui/react/merge-props";
 import { useRender } from "@base-ui/react/use-render";
 import {
-  useIsGenuiTokenUpdating,
-  useGenui,
-  useGenuiThreadInput,
-} from "@workspace/react";
+  useIsTamboTokenUpdating,
+  useTambo,
+  useTamboThreadInput,
+} from "@tambo-ai/react";
 import {
-  useGenuiElicitationContext,
-  type GenuiElicitationResponse,
-} from "@workspace/react/mcp";
+  useTamboElicitationContext,
+  type TamboElicitationResponse,
+} from "@tambo-ai/react/mcp";
 import * as React from "react";
 import { MAX_IMAGES } from "./constants";
 import {
   MessageInputContext,
   type MessageInputContextValue,
-  type GenuiEditor,
+  type TamboEditor,
 } from "./message-input-context";
 
-const STORAGE_KEY = "genui.components.messageInput.draft";
+const STORAGE_KEY = "tambo.components.messageInput.draft";
 
 const getStorageKey = (key: string) => `${STORAGE_KEY}.${key}`;
 
@@ -59,8 +59,8 @@ type MessageInputRootComponentProps = useRender.ComponentProps<
 >;
 
 export interface MessageInputRootProps extends MessageInputRootComponentProps {
-  /** Optional ref to forward to the GenuiEditor instance */
-  inputRef?: React.RefObject<GenuiEditor | null>;
+  /** Optional ref to forward to the TamboEditor instance */
+  inputRef?: React.RefObject<TamboEditor | null>;
 }
 
 /**
@@ -80,18 +80,18 @@ export const MessageInputRoot = React.forwardRef<
     addImages,
     addImage,
     removeImage,
-  } = useGenuiThreadInput();
-  const { cancelRun: cancel, currentThreadId, isIdle } = useGenui();
+  } = useTamboThreadInput();
+  const { cancelRun: cancel, currentThreadId, isIdle } = useTambo();
   const [submitError, setSubmitError] = React.useState<string | null>(null);
   const [imageError, setImageError] = React.useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [isDragging, setIsDragging] = React.useState(false);
-  const editorRef = React.useRef<GenuiEditor | null>(null);
+  const editorRef = React.useRef<TamboEditor | null>(null);
   const dragCounter = React.useRef(0);
-  const isUpdatingToken = useIsGenuiTokenUpdating();
+  const isUpdatingToken = useIsTamboTokenUpdating();
 
   // Use elicitation context (optional)
-  const { elicitation, resolveElicitation } = useGenuiElicitationContext();
+  const { elicitation, resolveElicitation } = useTamboElicitationContext();
 
   // Reset local submit state when switching threads so the new thread
   // isn't blocked by an in-flight submit from the previous thread.
@@ -231,7 +231,7 @@ export const MessageInputRoot = React.forwardRef<
   );
 
   const handleElicitationResponse = React.useCallback(
-    (response: GenuiElicitationResponse) => {
+    (response: TamboElicitationResponse) => {
       // Calling resolveElicitation automatically clears the elicitation state
       if (resolveElicitation) {
         resolveElicitation(response);

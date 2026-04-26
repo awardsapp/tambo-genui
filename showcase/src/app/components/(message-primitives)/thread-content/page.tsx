@@ -5,10 +5,10 @@ import { InstallationSection } from "@/components/installation-section";
 import {
   ThreadContent,
   ThreadContentMessages,
-} from "@workspace/ui-registry/components/thread-content";
-import { GenuiStubProvider, GenuiThread } from "@workspace/react";
+} from "@tambo-ai/ui-registry/components/thread-content";
+import { TamboStubProvider, TamboThread } from "@tambo-ai/react";
 
-const mockThread: GenuiThread = {
+const mockThread: TamboThread = {
   id: "1",
   name: "Mock Thread",
   messages: [
@@ -50,7 +50,7 @@ const mockThread: GenuiThread = {
   lastRunCancelled: false,
 };
 
-const emptyThread: GenuiThread = {
+const emptyThread: TamboThread = {
   id: "2",
   messages: [],
   status: "idle",
@@ -68,7 +68,7 @@ export default function ThreadContentPage() {
         </h1>
         <p className="text-lg text-muted-foreground">
           A primitive component that displays the main content area of a
-          conversation thread. Automatically connects to the Genui context to
+          conversation thread. Automatically connects to the Tambo context to
           render messages with customizable styling variants.
         </p>
       </header>
@@ -80,16 +80,16 @@ export default function ThreadContentPage() {
           <ComponentCodePreview
             title="Default Variant"
             component={
-              <GenuiStubProvider thread={mockThread}>
+              <TamboStubProvider thread={mockThread}>
                 <ThreadContent variant="default">
                   <ThreadContentMessages />
                 </ThreadContent>
-              </GenuiStubProvider>
+              </TamboStubProvider>
             }
             code={`import {
   ThreadContent,
   ThreadContentMessages,
-} from "@/components/genui/thread-content";
+} from "@/components/tambo/thread-content";
 
 export function ChatDemo() {
   return (
@@ -104,16 +104,16 @@ export function ChatDemo() {
           <ComponentCodePreview
             title="Solid Variant"
             component={
-              <GenuiStubProvider thread={mockThread}>
+              <TamboStubProvider thread={mockThread}>
                 <ThreadContent variant="solid">
                   <ThreadContentMessages />
                 </ThreadContent>
-              </GenuiStubProvider>
+              </TamboStubProvider>
             }
             code={`import {
   ThreadContent,
   ThreadContentMessages,
-} from "@/components/genui/thread-content";
+} from "@/components/tambo/thread-content";
 
 export function ChatDemo() {
   return (
@@ -128,16 +128,16 @@ export function ChatDemo() {
           <ComponentCodePreview
             title="Empty Thread (No Messages)"
             component={
-              <GenuiStubProvider thread={emptyThread}>
+              <TamboStubProvider thread={emptyThread}>
                 <ThreadContent>
                   <ThreadContentMessages />
                 </ThreadContent>
-              </GenuiStubProvider>
+              </TamboStubProvider>
             }
             code={`import {
   ThreadContent,
   ThreadContentMessages,
-} from "@/components/genui/thread-content";
+} from "@/components/tambo/thread-content";
 
 export function EmptyThread() {
   return (
@@ -153,7 +153,7 @@ export function EmptyThread() {
       </section>
 
       <section>
-        <InstallationSection cliCommand="npx genui add thread-content" />
+        <InstallationSection cliCommand="npx tambo add thread-content" />
       </section>
 
       <section className="space-y-6">
@@ -220,7 +220,7 @@ export function EmptyThread() {
             <ul>
               <li>
                 <strong>Automatic Context Integration:</strong> Connects to
-                Genui thread context to display messages
+                Tambo thread context to display messages
               </li>
               <li>
                 <strong>Loading State Handling:</strong> Shows loading

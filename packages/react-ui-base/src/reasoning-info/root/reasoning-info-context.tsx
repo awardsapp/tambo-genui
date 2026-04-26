@@ -1,4 +1,4 @@
-import type { GenuiThreadMessage } from "@workspace/react";
+import type { TamboThreadMessage } from "@tambo-ai/react";
 import * as React from "react";
 
 interface ReasoningInfoRootContextValue {
@@ -6,7 +6,7 @@ interface ReasoningInfoRootContextValue {
   setIsExpanded: (expanded: boolean) => void;
   detailsId: string;
   isLoading: boolean | undefined;
-  message: GenuiThreadMessage;
+  message: TamboThreadMessage;
   reasoning: string[];
   reasoningDurationMS: number | undefined;
   statusText: string;

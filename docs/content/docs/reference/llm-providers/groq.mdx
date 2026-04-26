@@ -45,7 +45,7 @@ Meta's Llama 4 Scout model (17Bx16E) is ideal for summarization, reasoning, and 
 
 **Notes:**
 
-Not yet validated on common Genui tasks. This model is newly released as of November 2025. Use with caution and test in your specific context.
+Not yet validated on common Tambo tasks. This model is newly released as of November 2025. Use with caution and test in your specific context.
 
 #### llama-4-maverick-17b-128e-instruct
 
@@ -70,7 +70,7 @@ Meta's Llama 4 Maverick model (17Bx128E) is optimized for multilingual and multi
 
 **Notes:**
 
-Not yet validated on common Genui tasks. This model is newly released as of November 2025 with enhanced multimodal capabilities. Use with caution and test in your specific context.
+Not yet validated on common Tambo tasks. This model is newly released as of November 2025 with enhanced multimodal capabilities. Use with caution and test in your specific context.
 
 ### Llama 3.3 Family
 
@@ -97,7 +97,7 @@ Llama 3.3 70B Versatile is Meta's powerful multilingual model with 70B parameter
 
 **Notes:**
 
-Not yet validated on common Genui tasks. With 70B parameters, this model offers strong capabilities but may have higher latency than smaller variants.
+Not yet validated on common Tambo tasks. With 70B parameters, this model offers strong capabilities but may have higher latency than smaller variants.
 
 ### Llama 3.1 Family
 
@@ -125,7 +125,7 @@ Llama 3.1 8B on Groq delivers fast, high-quality responses for real-time tasks. 
 
 **Notes:**
 
-This model has been tested with Genui component generation tasks and shows issues with JSON escaping in component attributes and component tag syntax. While it's the most cost-effective option in Groq's lineup, it will require careful validation and potentially post-processing for component generation use cases. See below for details.
+This model has been tested with Tambo component generation tasks and shows issues with JSON escaping in component attributes and component tag syntax. While it's the most cost-effective option in Groq's lineup, it will require careful validation and potentially post-processing for component generation use cases. See below for details.
 
 **Known Shortcomings:**
 
@@ -187,13 +187,13 @@ Groq's specialized hardware delivers exceptional inference speeds (400-460+ toke
 - **Start with [Llama 3.1 8B](#llama-3-1-8b-instant)** for cost-effective testing and simple tasks
 - **Use [Llama 3.3 70B](#llama-3-3-70b-versatile)** when you need stronger reasoning or complex understanding
 - **Try [Llama 4 models](#llama-4-family)** for specialized tasks ([Scout](#llama-4-scout-17b-16e-instruct) for code, [Maverick](#llama-4-maverick-17b-128e-instruct) for multilingual)
-- **Test thoroughly** since all models are currently [untested with Genui](#known-behaviors)
+- **Test thoroughly** since all models are currently [untested with Tambo](#known-behaviors)
 - **Monitor costs** and performance to find the right balance for your use case
 
 ## Known Behaviors
 
 <Callout type="warning" title="Untested Models">
-  All Groq Llama models are currently **Untested** in Genui. They are newly
+  All Groq Llama models are currently **Untested** in Tambo. They are newly
   released or recently added. Test them in your specific context before
   production deployment. See the [Labels](/reference/llm-providers/labels) page
   for more information about model status labels.

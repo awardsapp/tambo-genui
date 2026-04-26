@@ -4,15 +4,15 @@ import { defineConfig } from "vite";
 import { externalizeDeps } from "vite-plugin-externalize-deps";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { Options, resolveOptions } from "./options";
-import { genuiDtsPlugin } from "./plugins/genuiDtsPlugin";
+import { tamboDtsPlugin } from "./plugins/tamboDtsPlugin";
 
 /**
  * Takes care of common Vite build configuration like preserving directives, externalizing dependencies, and generating
- * esm/cjs builds, as well as type declarations for Genui packages.
+ * esm/cjs builds, as well as type declarations for Tambo packages.
  * @param options Options for configuring the Vite build
  * @returns Valid Vite UserConfig
  */
-export const genuiViteConfig = (options: Options): UserConfig => {
+export const tamboViteConfig = (options: Options): UserConfig => {
   const resolvedOptions = resolveOptions(options);
   const { entry, externalDeps, bundledDeps, tsconfigPath, enableCjs, outDir } =
     resolvedOptions;
@@ -28,7 +28,7 @@ export const genuiViteConfig = (options: Options): UserConfig => {
       tsconfigPaths({
         projects: tsconfigPath ? [tsconfigPath] : undefined,
       }),
-      genuiDtsPlugin(resolvedOptions),
+      tamboDtsPlugin(resolvedOptions),
     ],
     build: {
       outDir,

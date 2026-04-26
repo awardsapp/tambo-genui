@@ -1,14 +1,14 @@
 ---
 title: React SDK Reference
-description: Complete API reference for @workspace/react - hooks, types, utilities, and providers for building AI-powered React applications.
+description: Complete API reference for @tambo-ai/react - hooks, types, utilities, and providers for building AI-powered React applications.
 ---
 
-The `@workspace/react` package is Genui's official React SDK for building AI-powered generative UI applications. This reference documents all public APIs including hooks, types, utilities, and provider components.
+The `@tambo-ai/react` package is Tambo's official React SDK for building AI-powered generative UI applications. This reference documents all public APIs including hooks, types, utilities, and provider components.
 
 ## Installation
 
 ```bash
-npm install @workspace/react
+npm install @tambo-ai/react
 ```
 
 ## Quick Links
@@ -16,7 +16,7 @@ npm install @workspace/react
 - [Hooks](/reference/react-sdk/hooks) - React hooks for thread management, component state, streaming, and more
 - [Types](/reference/react-sdk/types) - TypeScript interfaces and types for type-safe development
 - [Utilities](/reference/react-sdk/utilities) - Helper functions like `defineTool()` and `withInteractable()`
-- [Providers](/reference/react-sdk/providers) - Provider components for configuring Genui in your app
+- [Providers](/reference/react-sdk/providers) - Provider components for configuring Tambo in your app
 - [MCP](/reference/react-sdk/mcp) - Model Context Protocol hooks and types
 
 ## Overview
@@ -24,12 +24,12 @@ npm install @workspace/react
 The SDK is organized around a provider hierarchy that manages AI state and configuration:
 
 ```tsx
-import { GenuiProvider } from "@workspace/react";
+import { TamboProvider } from "@tambo-ai/react";
 
 function App() {
   return (
-    <GenuiProvider
-      apiKey={process.env.GENUI_API_KEY}
+    <TamboProvider
+      apiKey={process.env.TAMBO_API_KEY}
       components={
         [
           /* your components */
@@ -42,23 +42,23 @@ function App() {
       }
     >
       <YourApp />
-    </GenuiProvider>
+    </TamboProvider>
   );
 }
 ```
 
-Inside the provider, use hooks to access Genui functionality:
+Inside the provider, use hooks to access Tambo functionality:
 
 ```tsx
 import {
-  useGenui,
-  useGenuiThread,
-  useGenuiStreamStatus,
-} from "@workspace/react";
+  useTambo,
+  useTamboThread,
+  useTamboStreamStatus,
+} from "@tambo-ai/react";
 
 function Chat() {
-  const { sendThreadMessage, thread } = useGenuiThread();
-  const { streamStatus } = useGenuiStreamStatus();
+  const { sendThreadMessage, thread } = useTamboThread();
+  const { streamStatus } = useTamboStreamStatus();
   // Build your UI
 }
 ```
@@ -68,7 +68,7 @@ function Chat() {
 For Model Context Protocol integrations, import from the `/mcp` subpath:
 
 ```tsx
-import { GenuiMcpProvider, useGenuiMcpServers } from "@workspace/react/mcp";
+import { TamboMcpProvider, useTamboMcpServers } from "@tambo-ai/react/mcp";
 ```
 
 MCP requires additional peer dependencies. See the [MCP reference](/reference/react-sdk/mcp) for setup instructions.

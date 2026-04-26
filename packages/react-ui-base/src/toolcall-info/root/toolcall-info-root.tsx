@@ -1,8 +1,8 @@
 "use client";
 
 import { useRender } from "@base-ui/react/use-render";
-import type { GenuiThreadMessage, GenuiToolUseContent } from "@workspace/react";
-import { useGenui } from "@workspace/react";
+import type { TamboThreadMessage, TamboToolUseContent } from "@tambo-ai/react";
+import { useTambo } from "@tambo-ai/react";
 import * as React from "react";
 import { useOptionalMessageRootContext } from "../../message/root/message-root-context";
 import { getToolCallRequest } from "./get-tool-call-request";
@@ -32,15 +32,15 @@ export type ToolcallInfoRootProps = Omit<
   /** Whether the tool call is in a loading state. */
   isLoading?: boolean;
   /**
-   * The full Genui thread message object.
+   * The full Tambo thread message object.
    * If not provided, will be read from the parent Message.Root context.
    */
-  message?: GenuiThreadMessage;
+  message?: TamboThreadMessage;
   /**
    * Specific tool_use block to display.
    * If not provided, the first tool_use block from the message is used.
    */
-  toolUse?: GenuiToolUseContent;
+  toolUse?: TamboToolUseContent;
 };
 
 /**
@@ -71,7 +71,7 @@ export const ToolcallInfoRoot = React.forwardRef<
       );
     }
     const [isExpanded, setIsExpanded] = React.useState(defaultExpanded);
-    const { messages } = useGenui();
+    const { messages } = useTambo();
     const detailsId = React.useId();
 
     // In V1, tool results are content blocks (type "tool_result") within messages,
@@ -80,7 +80,7 @@ export const ToolcallInfoRoot = React.forwardRef<
     const associatedToolResponse = React.useMemo(() => {
       if (!messages.length) return null;
       const currentMessageIndex = messages.findIndex(
-        (m: GenuiThreadMessage) => m.id === message.id,
+        (m: TamboThreadMessage) => m.id === message.id,
       );
       if (currentMessageIndex === -1) return null;
       for (let i = currentMessageIndex + 1; i < messages.length; i++) {

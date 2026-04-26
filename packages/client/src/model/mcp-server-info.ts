@@ -11,12 +11,12 @@ export enum MCPTransport {
 /**
  * User-provided configuration for an MCP server.
  *
- * This is the type accepted by `GenuiProvider` / `GenuiRegistryProvider` in
+ * This is the type accepted by `TamboProvider` / `TamboRegistryProvider` in
  * the `mcpServers` prop.
  *
  * The `handlers` field is typed as `Partial<MCPHandlers>` (with
  * `elicitation` / `sampling` callbacks). The `@modelcontextprotocol/sdk` is
- * included automatically with `@workspace/react`. See the React SDK README for
+ * included automatically with `@tambo-ai/react`. See the React SDK README for
  * any additional optional peer dependencies needed for MCP features.
  */
 export interface McpServerInfo {

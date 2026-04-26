@@ -1,11 +1,11 @@
 ---
 title: Migrating to the React SDK 1.0
-description: Step-by-step guide for migrating from @workspace/react (pre-1.0.0) to @workspace/react 1.0.
+description: Step-by-step guide for migrating from @tambo-ai/react (pre-1.0.0) to @tambo-ai/react 1.0.
 ---
 
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
-This guide walks you through migrating from `@workspace/react` version 0.x to version 1.0. Follow the steps in order — each one builds on the previous.
+This guide walks you through migrating from `@tambo-ai/react` version 0.x to version 1.0. Follow the steps in order — each one builds on the previous.
 
 ## Overview of changes
 
@@ -19,23 +19,23 @@ The current SDK is a redesign focused on explicit control and composability. The
 
 ## Step 1: Update package version
 
-Upgrade `@workspace/react` from version 0.x to version 1.0:
+Upgrade `@tambo-ai/react` from version 0.x to version 1.0:
 
 ```bash
-npm install @workspace/react@latest
+npm install @tambo-ai/react@latest
 ```
 
-Your imports stay the same — both versions use `@workspace/react`:
+Your imports stay the same — both versions use `@tambo-ai/react`:
 
 ```tsx
 import {
-  GenuiProvider,
-  useGenui,
-  useGenuiThreadInput,
-  useGenuiComponentState,
-  useGenuiStreamStatus,
-  useGenuiThreadList,
-} from "@workspace/react";
+  TamboProvider,
+  useTambo,
+  useTamboThreadInput,
+  useTamboComponentState,
+  useTamboStreamStatus,
+  useTamboThreadList,
+} from "@tambo-ai/react";
 ```
 
 Some shared utilities are available from the main package:
@@ -43,21 +43,21 @@ Some shared utilities are available from the main package:
 ```tsx
 import {
   defineTool,
-  useGenuiClient,
-  useGenuiVoice,
+  useTamboClient,
+  useTamboVoice,
   useMessageImages,
   currentPageContextHelper,
   currentTimeContextHelper,
-} from "@workspace/react";
+} from "@tambo-ai/react";
 ```
 
 ## Step 2: Update the provider
 
-The `GenuiProvider` API is mostly the same, but `contextKey` is replaced by `userKey`:
+The `TamboProvider` API is mostly the same, but `contextKey` is replaced by `userKey`:
 
 ```tsx title="Before"
-<GenuiProvider
-  apiKey={process.env.NEXT_PUBLIC_GENUI_API_KEY!}
+<TamboProvider
+  apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY!}
   contextKey="my-chat-context"
   userToken={oauthToken}
   components={components}
@@ -68,12 +68,12 @@ The `GenuiProvider` API is mostly the same, but `contextKey` is replaced by `use
   initialMessages={[{ role: "assistant", content: "Hello!" }]}
 >
   <App />
-</GenuiProvider>
+</TamboProvider>
 ```
 
 ```tsx title="After"
-<GenuiProvider
-  apiKey={process.env.NEXT_PUBLIC_GENUI_API_KEY!}
+<TamboProvider
+  apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY!}
   userKey={userId}
   components={components}
   tools={tools}
@@ -84,7 +84,7 @@ The `GenuiProvider` API is mostly the same, but `contextKey` is replaced by `use
   autoGenerateNameThreshold={3}
 >
   <App />
-</GenuiProvider>
+</TamboProvider>
 ```
 
 ### What changed
@@ -104,11 +104,11 @@ The `GenuiProvider` API is mostly the same, but `contextKey` is replaced by `use
 
 ## Step 3: Update the main hook
 
-The `useGenui()` return shape is different:
+The `useTambo()` return shape is different:
 
 ```tsx title="Before"
 function Chat() {
-  const { thread, messages, generationStage, isStreaming } = useGenui();
+  const { thread, messages, generationStage, isStreaming } = useTambo();
 
   const isIdle =
     generationStage === GenerationStage.IDLE ||
@@ -137,7 +137,7 @@ function Chat() {
     startNewThread,
     switchThread,
     cancelRun,
-  } = useGenui();
+  } = useTambo();
 
   return (
     <div>
@@ -161,7 +161,7 @@ function Chat() {
 | _n/a_                    | `cancelRun()`                       | New — cancels the active run                                                          |
 | _n/a_                    | `startNewThread()`                  | New — creates a new thread and returns its ID                                         |
 | _n/a_                    | `switchThread(id)`                  | New — switches to an existing thread                                                  |
-| `sendThreadMessage()`    | _removed_                           | Use `useGenuiThreadInput().submit()` instead                                          |
+| `sendThreadMessage()`    | _removed_                           | Use `useTamboThreadInput().submit()` instead                                          |
 
 ## Step 4: Update thread input
 
@@ -169,7 +169,7 @@ The thread input hook works similarly, but `submit()` now returns the thread ID:
 
 ```tsx title="Before"
 function ChatInput() {
-  const { value, setValue, submit, isPending } = useGenuiThreadInput();
+  const { value, setValue, submit, isPending } = useTamboThreadInput();
 
   const handleSubmit = async () => {
     await submit();
@@ -188,7 +188,7 @@ function ChatInput() {
 
 ```tsx title="After"
 function ChatInput() {
-  const { value, setValue, submit, isPending } = useGenuiThreadInput();
+  const { value, setValue, submit, isPending } = useTamboThreadInput();
 
   const handleSubmit = async () => {
     const { threadId } = await submit();
@@ -214,7 +214,7 @@ The image handling API (`addImage`, `removeImage`, `clearImages`, `images`) is u
 This is the biggest conceptual change. In version 0.x, messages had a simple structure — each message contained an array of `{ type: "text", text: string }` content blocks. Version 1.0 uses rich content blocks:
 
 ```tsx title="Before"
-function Message({ message }: { message: GenuiThreadMessage }) {
+function Message({ message }: { message: TamboThreadMessage }) {
   return (
     <div>
       {message.content.map((block, i) => (
@@ -226,13 +226,13 @@ function Message({ message }: { message: GenuiThreadMessage }) {
 ```
 
 ```tsx title="After"
-import { ComponentRenderer, type GenuiThreadMessage } from "@workspace/react";
+import { ComponentRenderer, type TamboThreadMessage } from "@tambo-ai/react";
 
 function Message({
   message,
   threadId,
 }: {
-  message: GenuiThreadMessage;
+  message: TamboThreadMessage;
   threadId: string;
 }) {
   return (
@@ -284,12 +284,12 @@ function Message({
 | ------------- | ------------------------------------------------------------------------------------------------------------------ |
 | `text`        | Plain text content. Has a `text` field.                                                                            |
 | `component`   | An AI-generated component. Use `ComponentRenderer` to render it, or access `block.renderedComponent` directly.     |
-| `tool_use`    | A tool call. Includes `name`, `input` (cleaned of internal `_genui_*` props), `hasCompleted`, and `statusMessage`. |
+| `tool_use`    | A tool call. Includes `name`, `input` (cleaned of internal `_tambo_*` props), `hasCompleted`, and `statusMessage`. |
 | `tool_result` | The result of a tool call. Usually you don't render these directly.                                                |
 | `resource`    | An attached resource (e.g., an image).                                                                             |
 
 <Callout type="info" title="Rendered Components on Content Blocks">
-  For convenience, `useGenui()` pre-renders component content blocks and
+  For convenience, `useTambo()` pre-renders component content blocks and
   attaches the result as `block.renderedComponent`. You can use this directly
   instead of `ComponentRenderer` if you prefer:
 
@@ -304,50 +304,50 @@ case "component":
 
 ## Step 6: Update component state
 
-The `useGenuiComponentState` API is the same tuple pattern, but with an added `flush` function:
+The `useTamboComponentState` API is the same tuple pattern, but with an added `flush` function:
 
 ```tsx title="Before"
-const [state, setState, { isPending }] = useGenuiComponentState(
+const [state, setState, { isPending }] = useTamboComponentState(
   "myStateKey",
   initialValue,
 );
 ```
 
 ```tsx title="After"
-const [state, setState, { isPending, error, flush }] = useGenuiComponentState(
+const [state, setState, { isPending, error, flush }] = useTamboComponentState(
   "myStateKey",
   initialValue,
   500, // optional debounce in ms
 );
 ```
 
-`useGenuiComponentState` only works inside components rendered via `ComponentRenderer` — the renderer provides the necessary context.
+`useTamboComponentState` only works inside components rendered via `ComponentRenderer` — the renderer provides the necessary context.
 
 ## Step 7: Update stream status
 
-The `useGenuiStreamStatus` return shape now includes additional flags:
+The `useTamboStreamStatus` return shape now includes additional flags:
 
 ```tsx title="Before"
-const { isPending, isStreaming, propStatus } = useGenuiStreamStatus();
+const { isPending, isStreaming, propStatus } = useTamboStreamStatus();
 ```
 
 ```tsx title="After"
 const { isPending, isStreaming, isSuccess, isError, propStatus } =
-  useGenuiStreamStatus();
+  useTamboStreamStatus();
 ```
 
 Like component state, this hook only works inside components rendered via `ComponentRenderer`.
 
 ## Step 8: Update thread list
 
-The `useGenuiThreadList` return value structure has changed:
+The `useTamboThreadList` return value structure has changed:
 
 ```tsx title="Before"
-const { data: threads, isLoading } = useGenuiThreadList();
+const { data: threads, isLoading } = useTamboThreadList();
 ```
 
 ```tsx title="After"
-const { data, isLoading } = useGenuiThreadList();
+const { data, isLoading } = useTamboThreadList();
 // data.threads - array of threads
 // data.hasMore - whether more pages exist
 // data.nextCursor - cursor for next page
@@ -357,15 +357,15 @@ Thread listing is now scoped to the `userKey` from the provider, instead of `con
 
 ## Step 9: Update suggestions
 
-The `useGenuiSuggestions` hook now includes additional control functions:
+The `useTamboSuggestions` hook now includes additional control functions:
 
 ```tsx title="Before"
-const { suggestions, isLoading } = useGenuiSuggestions();
+const { suggestions, isLoading } = useTamboSuggestions();
 ```
 
 ```tsx title="After"
 const { suggestions, accept, generate, isLoading, isGenerating, isAccepting } =
-  useGenuiSuggestions({
+  useTamboSuggestions({
     maxSuggestions: 3,
     autoGenerate: true,
   });
@@ -375,20 +375,20 @@ The current SDK adds `accept()` for directly accepting a suggestion into the inp
 
 ## Step 10: Update testing
 
-The `GenuiStubProvider` API is more explicit about what state it provides:
+The `TamboStubProvider` API is more explicit about what state it provides:
 
 ```tsx title="Before (0.x)"
-import { GenuiStubProvider } from "@workspace/react";
+import { TamboStubProvider } from "@tambo-ai/react";
 
-<GenuiStubProvider>
+<TamboStubProvider>
   <ComponentUnderTest />
-</GenuiStubProvider>;
+</TamboStubProvider>;
 ```
 
 ```tsx title="After (1.0)"
-import { GenuiStubProvider } from "@workspace/react";
+import { TamboStubProvider } from "@tambo-ai/react";
 
-<GenuiStubProvider
+<TamboStubProvider
   thread={mockThread}
   threadId="test_thread"
   components={components}
@@ -397,10 +397,10 @@ import { GenuiStubProvider } from "@workspace/react";
   onSubmit={async () => "thread_123"}
 >
   <ComponentUnderTest />
-</GenuiStubProvider>;
+</TamboStubProvider>;
 ```
 
-`GenuiStubProvider` provides all contexts without making API calls, and requires explicit props for all state.
+`TamboStubProvider` provides all contexts without making API calls, and requires explicit props for all state.
 
 ## Step 11: Update interactable components
 
@@ -409,23 +409,23 @@ The interactable HOC was renamed in version 1.0:
 ```tsx title="Before (0.x)"
 import {
   withInteractable,
-  useGenuiInteractable,
+  useTamboInteractable,
   useCurrentInteractablesSnapshot,
-} from "@workspace/react";
+} from "@tambo-ai/react";
 ```
 
 ```tsx title="After (1.0)"
 import {
-  withGenuiInteractable,
-  useGenuiInteractable,
+  withTamboInteractable,
+  useTamboInteractable,
   useCurrentInteractablesSnapshot,
-} from "@workspace/react";
+} from "@tambo-ai/react";
 ```
 
-The HOC was renamed from `withInteractable` to `withGenuiInteractable` for consistency with the SDK naming convention. Usage is otherwise unchanged:
+The HOC was renamed from `withInteractable` to `withTamboInteractable` for consistency with the SDK naming convention. Usage is otherwise unchanged:
 
 ```tsx
-const InteractableNote = withGenuiInteractable(Note, {
+const InteractableNote = withTamboInteractable(Note, {
   componentName: "Note",
   description: "An editable note",
   propsSchema: noteSchema,
@@ -436,28 +436,28 @@ const InteractableNote = withGenuiInteractable(Note, {
 
 ### Context attachments
 
-The `GenuiContextAttachmentProvider` is included in the provider hierarchy, and the `useGenuiContextAttachment` hook is available from the main package:
+The `TamboContextAttachmentProvider` is included in the provider hierarchy, and the `useTamboContextAttachment` hook is available from the main package:
 
 ```tsx
-import { useGenuiContextAttachment } from "@workspace/react";
+import { useTamboContextAttachment } from "@tambo-ai/react";
 ```
 
 ## Quick reference: API name mapping
 
 | Pre-1.0.0                         | 1.0                                   |
 | --------------------------------- | ------------------------------------- |
-| `GenuiProvider`                   | `GenuiProvider`                       |
-| `GenuiStubProvider`               | `GenuiStubProvider`                   |
-| `useGenui()`                      | `useGenui()`                          |
-| `useGenuiThreadInput()`           | `useGenuiThreadInput()`               |
-| `useGenuiComponentState()`        | `useGenuiComponentState()`            |
-| `useGenuiStreamStatus()`          | `useGenuiStreamStatus()`              |
-| `useGenuiThreadList()`            | `useGenuiThreadList()`                |
-| `useGenuiSuggestions()`           | `useGenuiSuggestions()`               |
-| `GenuiThreadMessage`              | `GenuiThreadMessage`                  |
+| `TamboProvider`                   | `TamboProvider`                       |
+| `TamboStubProvider`               | `TamboStubProvider`                   |
+| `useTambo()`                      | `useTambo()`                          |
+| `useTamboThreadInput()`           | `useTamboThreadInput()`               |
+| `useTamboComponentState()`        | `useTamboComponentState()`            |
+| `useTamboStreamStatus()`          | `useTamboStreamStatus()`              |
+| `useTamboThreadList()`            | `useTamboThreadList()`                |
+| `useTamboSuggestions()`           | `useTamboSuggestions()`               |
+| `TamboThreadMessage`              | `TamboThreadMessage`                  |
 | `GenerationStage`                 | `streamingState.status` (`RunStatus`) |
-| `withInteractable`                | `withGenuiInteractable`               |
-| `useGenuiInteractable`            | `useGenuiInteractable`                |
+| `withInteractable`                | `withTamboInteractable`               |
+| `useTamboInteractable`            | `useTamboInteractable`                |
 | `useCurrentInteractablesSnapshot` | `useCurrentInteractablesSnapshot`     |
 | _n/a_                             | `ComponentRenderer`                   |
 | _n/a_                             | `cancelRun()`                         |
@@ -528,7 +528,7 @@ const fetchUserTool = {
 The `defineTool` helper provides full type inference from your schemas:
 
 ```typescript
-import { defineTool } from "@workspace/react";
+import { defineTool } from "@tambo-ai/react";
 import { z } from "zod";
 
 const fetchUserTool = defineTool({
@@ -556,7 +556,7 @@ const fetchUserTool = defineTool({
 
 ```typescript
 import { z } from "zod";
-import { useGenui } from "@workspace/react";
+import { useTambo } from "@tambo-ai/react";
 
 const weatherSchema = z
   .function()
@@ -564,7 +564,7 @@ const weatherSchema = z
   .returns(z.object({ temperature: z.number(), unit: z.string() }));
 
 function WeatherApp() {
-  const { registerTool } = useGenui();
+  const { registerTool } = useTambo();
 
   useEffect(() => {
     registerTool({
@@ -583,7 +583,7 @@ function WeatherApp() {
 
 ```typescript
 import { z } from "zod";
-import { useGenui, defineTool } from "@workspace/react";
+import { useTambo, defineTool } from "@tambo-ai/react";
 
 const getWeatherTool = defineTool({
   name: "getWeather",
@@ -602,7 +602,7 @@ const getWeatherTool = defineTool({
 });
 
 function WeatherApp() {
-  const { registerTool } = useGenui();
+  const { registerTool } = useTambo();
 
   useEffect(() => {
     registerTool(getWeatherTool);

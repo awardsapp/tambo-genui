@@ -15,7 +15,7 @@ const config = {
     if (dev) {
       config.resolve.conditionNames = mergeConditions(
         config.resolve.conditionNames,
-        "@workspace/source",
+        "@tambo-ai/source",
       );
     }
     return config;

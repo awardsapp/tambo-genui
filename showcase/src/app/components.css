@@ -2,5 +2,5 @@
 @source "../**/*.{ts,tsx}";
 
 /* Styles for ui components are imported directly from the ui-registry package */
-@import "@workspace/ui-registry/styles.css";
-@import "@workspace/ui-registry/styles/globals-v4.css";
+@import "@tambo-ai/ui-registry/styles.css";
+@import "@tambo-ai/ui-registry/styles/globals-v4.css";

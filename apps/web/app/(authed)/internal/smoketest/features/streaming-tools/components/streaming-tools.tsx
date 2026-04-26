@@ -3,13 +3,13 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { useGenui } from "@workspace/react";
+import { useTambo } from "@tambo-ai/react";
 import React from "react";
 import { StreamingStory } from "../components/streaming-story";
 import { getWriteStoryTool } from "../tools/writeStory";
 
 export function StreamingTools() {
-  const { registerTool } = useGenui();
+  const { registerTool } = useTambo();
   const [{ calls, text }, dispatch] = React.useReducer(
     (
       state: { calls: number; text: string },

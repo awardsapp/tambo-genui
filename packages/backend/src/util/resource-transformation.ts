@@ -13,7 +13,7 @@ import {
   ResourceFetcher,
   ResourceFetchResult,
   ThreadMessage,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 import { FilePart, ImagePart, TextPart } from "ai";
 
 /**

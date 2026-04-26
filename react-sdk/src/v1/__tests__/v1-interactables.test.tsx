@@ -1,15 +1,15 @@
 import { act, render, renderHook, screen } from "@testing-library/react";
 import React from "react";
 import { z } from "zod/v3";
-import { withGenuiInteractable } from "../../hoc/with-genui-interactable";
-import { useGenuiInteractable } from "../../providers/genui-interactable-provider";
-import { useGenuiContextHelpers } from "../../providers/genui-context-helpers-provider";
+import { withTamboInteractable } from "../../hoc/with-tambo-interactable";
+import { useTamboInteractable } from "../../providers/tambo-interactable-provider";
+import { useTamboContextHelpers } from "../../providers/tambo-context-helpers-provider";
 import {
-  GenuiRegistryContext,
-  type GenuiRegistryContext as GenuiRegistryContextType,
-} from "../../providers/genui-registry-provider";
-import { GenuiContextHelpersProvider } from "../../providers/genui-context-helpers-provider";
-import { GenuiInteractableProvider } from "../../providers/genui-interactable-provider";
+  TamboRegistryContext,
+  type TamboRegistryContext as TamboRegistryContextType,
+} from "../../providers/tambo-registry-provider";
+import { TamboContextHelpersProvider } from "../../providers/tambo-context-helpers-provider";
+import { TamboInteractableProvider } from "../../providers/tambo-interactable-provider";
 
 // Minimal registry mock that captures registered tools
 function createMockRegistry() {
@@ -39,14 +39,14 @@ function createMockRegistry() {
       registerResource: jest.fn(),
       registerResources: jest.fn(),
       registerResourceSource: jest.fn(),
-    } as unknown as GenuiRegistryContextType,
+    } as unknown as TamboRegistryContextType,
     getRegisteredToolNames: () => Object.keys(toolRegistry),
   };
 }
 
 /**
  * Wrapper that provides the minimal provider tree for interactables:
- * GenuiRegistryContext > GenuiContextHelpersProvider > GenuiInteractableProvider
+ * TamboRegistryContext > TamboContextHelpersProvider > TamboInteractableProvider
  * @returns The wrapper component.
  */
 function V1InteractableWrapper({
@@ -54,14 +54,14 @@ function V1InteractableWrapper({
   registry,
 }: {
   children: React.ReactNode;
-  registry: GenuiRegistryContextType;
+  registry: TamboRegistryContextType;
 }) {
   return (
-    <GenuiRegistryContext.Provider value={registry}>
-      <GenuiContextHelpersProvider>
-        <GenuiInteractableProvider>{children}</GenuiInteractableProvider>
-      </GenuiContextHelpersProvider>
-    </GenuiRegistryContext.Provider>
+    <TamboRegistryContext.Provider value={registry}>
+      <TamboContextHelpersProvider>
+        <TamboInteractableProvider>{children}</TamboInteractableProvider>
+      </TamboContextHelpersProvider>
+    </TamboRegistryContext.Provider>
   );
 }
 
@@ -69,7 +69,7 @@ describe("V1 Interactables Integration", () => {
   it("registers update_component_props and update_component_state tools when an interactable is added", () => {
     const mockRegistry = createMockRegistry();
 
-    const { result } = renderHook(() => useGenuiInteractable(), {
+    const { result } = renderHook(() => useTamboInteractable(), {
       wrapper: ({ children }) => (
         <V1InteractableWrapper registry={mockRegistry.value}>
           {children}
@@ -101,8 +101,8 @@ describe("V1 Interactables Integration", () => {
 
     const { result } = renderHook(
       () => ({
-        interactable: useGenuiInteractable(),
-        helpers: useGenuiContextHelpers(),
+        interactable: useTamboInteractable(),
+        helpers: useTamboContextHelpers(),
       }),
       {
         wrapper: ({ children }) => (
@@ -135,7 +135,7 @@ describe("V1 Interactables Integration", () => {
     expect(interactablesContext?.context).toBeDefined();
   });
 
-  it("renders an interactable component via withGenuiInteractable HOC", () => {
+  it("renders an interactable component via withTamboInteractable HOC", () => {
     const mockRegistry = createMockRegistry();
 
     interface CardProps {
@@ -146,7 +146,7 @@ describe("V1 Interactables Integration", () => {
       <div data-testid="card-title">{title}</div>
     );
 
-    const InteractableCard = withGenuiInteractable(Card, {
+    const InteractableCard = withTamboInteractable(Card, {
       componentName: "Card",
       description: "A card component",
       propsSchema: z.object({ title: z.string() }),
@@ -172,7 +172,7 @@ describe("V1 Interactables Integration", () => {
       <div data-testid="count">{count}</div>
     );
 
-    const InteractableCounter = withGenuiInteractable(Counter, {
+    const InteractableCounter = withTamboInteractable(Counter, {
       componentName: "Counter",
       description: "A counter",
       propsSchema: z.object({ count: z.number() }),
@@ -181,7 +181,7 @@ describe("V1 Interactables Integration", () => {
     // Inner component that triggers prop updates
     function TestHarness() {
       const { interactableComponents, updateInteractableComponentProps } =
-        useGenuiInteractable();
+        useTamboInteractable();
       const component = interactableComponents[0];
 
       return (

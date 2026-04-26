@@ -121,11 +121,11 @@ gh release view <tagName> --json tagName,name,publishedAt,url,body
 
 Group releases by package/component based on tag prefix (examples in this repo):
 
-- `react-v*` → `@workspace/react`
+- `react-v*` → `@tambo-ai/react`
 - `tambo-v*` → `tambo` CLI
-- `docs-v*` → `@workspace/docs`
-- `showcase-v*` → `@workspace/showcase`
-- `api-v*` / `web-v*` → Genui Cloud apps
+- `docs-v*` → `@tambo-ai/docs`
+- `showcase-v*` → `@tambo-ai/showcase`
+- `api-v*` / `web-v*` → Tambo Cloud apps
 
 ## No-op when
 

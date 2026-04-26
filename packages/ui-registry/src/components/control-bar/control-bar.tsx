@@ -1,7 +1,7 @@
 "use client";
 
-import { useThreadContentContext } from "@workspace/react-ui-base/thread-content";
-import type { messageVariants } from "@workspace/ui-registry/components/message";
+import { useThreadContentContext } from "@tambo-ai/react-ui-base/thread-content";
+import type { messageVariants } from "@tambo-ai/ui-registry/components/message";
 import {
   MessageInput,
   MessageInputError,
@@ -12,13 +12,13 @@ import {
   MessageInputSubmitButton,
   MessageInputTextarea,
   MessageInputToolbar,
-} from "@workspace/ui-registry/components/message-input";
-import { ScrollableMessageContainer } from "@workspace/ui-registry/components/scrollable-message-container";
+} from "@tambo-ai/ui-registry/components/message-input";
+import { ScrollableMessageContainer } from "@tambo-ai/ui-registry/components/scrollable-message-container";
 import {
   ThreadContent,
   ThreadContentMessages,
-} from "@workspace/ui-registry/components/thread-content";
-import { cn } from "@workspace/ui-registry/utils";
+} from "@tambo-ai/ui-registry/components/thread-content";
+import { cn } from "@tambo-ai/ui-registry/utils";
 import type { VariantProps } from "class-variance-authority";
 import { Dialog } from "radix-ui";
 import * as React from "react";
@@ -38,7 +38,7 @@ export interface ControlBarProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Controls the visual styling of messages in the thread.
    * Possible values include: "default", "compact", etc.
-   * These values are defined in messageVariants from "@workspace/ui-registry/components/message".
+   * These values are defined in messageVariants from "@tambo-ai/ui-registry/components/message".
    * @example variant="compact"
    */
   variant?: VariantProps<typeof messageVariants>["variant"];

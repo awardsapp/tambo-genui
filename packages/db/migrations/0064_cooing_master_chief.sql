@@ -1,1 +1,1 @@
-ALTER TABLE "genui_users" ADD CONSTRAINT "chk_genui_users_legal_consistency" CHECK ((NOT "genui_users"."legal_accepted") OR ("genui_users"."legal_accepted_at" IS NOT NULL AND "genui_users"."legal_version" IS NOT NULL));
+ALTER TABLE "tambo_users" ADD CONSTRAINT "chk_tambo_users_legal_consistency" CHECK ((NOT "tambo_users"."legal_accepted") OR ("tambo_users"."legal_accepted_at" IS NOT NULL AND "tambo_users"."legal_version" IS NOT NULL));

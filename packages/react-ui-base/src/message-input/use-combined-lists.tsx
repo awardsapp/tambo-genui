@@ -1,11 +1,11 @@
 "use client";
 
 import {
-  useGenuiMcpPromptList,
-  useGenuiMcpResourceList,
+  useTamboMcpPromptList,
+  useTamboMcpResourceList,
   type ListPromptEntry,
   type ListResourceEntry,
-} from "@workspace/react/mcp";
+} from "@tambo-ai/react/mcp";
 import * as React from "react";
 import type {
   PromptItem,
@@ -93,7 +93,7 @@ export function useCombinedResourceList(
   search: string,
   options?: ResourceFormatOptions,
 ): ResourceItem[] {
-  const { data: mcpResources } = useGenuiMcpResourceList(search);
+  const { data: mcpResources } = useTamboMcpResourceList(search);
   const debouncedSearch = useDebouncedValue(
     search,
     EXTERNAL_SEARCH_DEBOUNCE_MS,
@@ -175,7 +175,7 @@ export function useCombinedPromptList(
   options?: PromptFormatOptions,
 ): PromptItem[] {
   // Pass search to MCP hook for filtering
-  const { data: mcpPrompts } = useGenuiMcpPromptList(search);
+  const { data: mcpPrompts } = useTamboMcpPromptList(search);
   const debouncedSearch = useDebouncedValue(
     search,
     EXTERNAL_SEARCH_DEBOUNCE_MS,
@@ -188,7 +188,7 @@ export function useCombinedPromptList(
         id: `mcp-prompt:${entry.prompt.name}`,
         name: entry.prompt.name,
         icon: options?.createMcpIcon?.(),
-        text: "", // Text will be fetched when selected via useGenuiMcpPrompt
+        text: "", // Text will be fetched when selected via useTamboMcpPrompt
       })),
     [mcpPrompts, options],
   );

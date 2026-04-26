@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import {
   AGENT_PROVIDER_REGISTRY,
   AgentProviderType,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 import { motion } from "framer-motion";
 import { useId } from "react";
 import { HeadersEditor, type HeaderKV } from "./headers-editor";
@@ -93,7 +93,7 @@ export function AgentSettings({
         <Input
           id={agentNameId}
           type="text"
-          placeholder="e.g., genui-agent"
+          placeholder="e.g., tambo-agent"
           value={agentName}
           onChange={(e) => {
             setAgentName(e.target.value);

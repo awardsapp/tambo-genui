@@ -46,7 +46,7 @@ export function MCP() {
                   aria-label="MCP client-side demo"
                 >
                   <source
-                    src="/demos/genui-mcp-client-side.mp4#t=0.1"
+                    src="/demos/tambo-mcp-client-side.mp4#t=0.1"
                     type="video/mp4"
                   />
                   Your browser does not support the video tag.
@@ -56,7 +56,7 @@ export function MCP() {
             <div className="flex flex-col items-center">
               <Button asChild variant="outline" size="lg" className="text-base">
                 <a
-                  href="https://docs.genui.co/concepts/model-context-protocol"
+                  href="https://docs.tambo.co/concepts/model-context-protocol"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@workspace/ui-registry/utils";
+import { cn } from "@tambo-ai/ui-registry/utils";
 import DOMPurify from "dompurify";
 import hljs from "highlight.js";
 import "highlight.js/styles/github.css";
@@ -246,14 +246,14 @@ export const createMarkdownComponents = (): Record<
 
   /**
    * Anchor component for links
-   * Detects genui-resource:// URIs and renders them as ResourceMention components.
+   * Detects tambo-resource:// URIs and renders them as ResourceMention components.
    * Regular links open in new tab with security attributes.
    */
   a: ({ href, children }) => {
-    // Check if href uses genui-resource:// protocol to signal it's a resource
-    if (href?.startsWith("genui-resource://")) {
-      // Extract encoded URI (everything after genui-resource://)
-      const encodedUri = href.slice("genui-resource://".length);
+    // Check if href uses tambo-resource:// protocol to signal it's a resource
+    if (href?.startsWith("tambo-resource://")) {
+      // Extract encoded URI (everything after tambo-resource://)
+      const encodedUri = href.slice("tambo-resource://".length);
       // Decode the URI
       let uri: string;
       try {

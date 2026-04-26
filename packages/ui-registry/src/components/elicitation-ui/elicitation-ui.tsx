@@ -1,15 +1,15 @@
 "use client";
 
-import { Elicitation as ElicitationBase } from "@workspace/react-ui-base/elicitation";
+import { Elicitation as ElicitationBase } from "@tambo-ai/react-ui-base/elicitation";
 import type {
   ElicitationField,
   ElicitationFieldsState,
-} from "@workspace/react-ui-base/elicitation";
+} from "@tambo-ai/react-ui-base/elicitation";
 import type {
-  GenuiElicitationRequest,
-  GenuiElicitationResponse,
-} from "@workspace/react/mcp";
-import { cn } from "@workspace/ui-registry/utils";
+  TamboElicitationRequest,
+  TamboElicitationResponse,
+} from "@tambo-ai/react/mcp";
+import { cn } from "@tambo-ai/ui-registry/utils";
 import { cva } from "class-variance-authority";
 import * as React from "react";
 
@@ -248,8 +248,8 @@ const ElicitationFieldRow = ({ field }: { field: ElicitationField }) => {
  * Props for the ElicitationUI component.
  */
 export interface ElicitationUIProps {
-  request: GenuiElicitationRequest;
-  onResponse: (response: GenuiElicitationResponse) => void;
+  request: TamboElicitationRequest;
+  onResponse: (response: TamboElicitationResponse) => void;
   className?: string;
 }
 

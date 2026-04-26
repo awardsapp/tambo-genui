@@ -1,17 +1,17 @@
 /// <reference types="@testing-library/jest-dom" />
 import { beforeEach, describe, expect, it, jest } from "@jest/globals";
-import { useGenui } from "@workspace/react";
+import { useTambo } from "@tambo-ai/react";
 import { render } from "@testing-library/react";
 import React from "react";
 import { ScrollableMessageContainer } from "./scrollable-message-container";
 
-// @workspace/react is mocked via moduleNameMapper in jest.config.ts
+// @tambo-ai/react is mocked via moduleNameMapper in jest.config.ts
 
 describe("ScrollableMessageContainer", () => {
-  const mockUseGenui = jest.mocked(useGenui);
+  const mockUseTambo = jest.mocked(useTambo);
 
   beforeEach(() => {
-    mockUseGenui.mockReturnValue({
+    mockUseTambo.mockReturnValue({
       messages: [],
       isStreaming: false,
       isIdle: true,

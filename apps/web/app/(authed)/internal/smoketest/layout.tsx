@@ -6,8 +6,8 @@ import { CSSProperties } from "react";
 import { ClientLayout } from "./components/client-layout";
 
 export const metadata: Metadata = {
-  title: "Genui Smoketest",
-  description: "Genui Smoketest",
+  title: "Tambo Smoketest",
+  description: "Tambo Smoketest",
 };
 
 export default async function Layout({

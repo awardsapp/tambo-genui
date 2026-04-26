@@ -25,7 +25,7 @@ const finalCtaContent = {
     {
       text: "Components",
       icon: "Package",
-      link: "https://ui.genui.co",
+      link: "https://ui.tambo.co",
     },
   ],
 };

@@ -127,7 +127,7 @@ your-next-app/
 The CLI will automatically create/update your `.env.local` file with:
 
 ```env
-NEXT_PUBLIC_GENUI_API_KEY=your-api-key
+NEXT_PUBLIC_TAMBO_API_KEY=your-api-key
 ```
 
 ## CI/CD, AI Agents, and Non-Interactive Mode
@@ -146,7 +146,7 @@ The CLI automatically detects non-interactive environments (CI/CD, AI coding ass
 
 ```bash
 # Initialize with direct API key
-npx tambo init --api-key="$GENUI_API_KEY"
+npx tambo init --api-key="$TAMBO_API_KEY"
 
 # Create new project (opens browser for auth, polls until complete)
 npx tambo init --project-name=myapp
@@ -159,7 +159,7 @@ npx tambo add form graph --yes --prefix=src/components/tambo
 
 ```yaml
 - name: Initialize Tambo
-  run: npx tambo init --api-key="${{ secrets.GENUI_API_KEY }}"
+  run: npx tambo init --api-key="${{ secrets.TAMBO_API_KEY }}"
 
 - name: Add components
   run: npx tambo add message-thread-full --yes
@@ -177,14 +177,14 @@ If you just want to add Tambo to specific pages or components, this is the quick
 // In a specific page file (e.g., app/ai-chat/page.tsx)
 "use client"; // Important! TamboProvider is a client component
 
-import { TamboProvider } from "@workspace/react";
+import { TamboProvider } from "@tambo-ai/react";
 import { components } from "../../lib/tambo"; // Import components
 import { MessageThreadFull } from "@/components/tambo/message-thread-full";
 
 export default function AIChat() {
   return (
     <TamboProvider
-      apiKey={process.env.NEXT_PUBLIC_GENUI_API_KEY ?? ""}
+      apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY ?? ""}
       components={components}
     >
       <MessageThreadFull />
@@ -201,7 +201,7 @@ This approach provides better context sharing between components and is recommen
 // In your layout file (e.g., app/layout.tsx)
 "use client"; // Important! TamboProvider is a client component
 
-import { TamboProvider } from "@workspace/react";
+import { TamboProvider } from "@tambo-ai/react";
 import { components } from "../lib/tambo"; // Import components
 
 export default function RootLayout({ children }) {
@@ -209,7 +209,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <TamboProvider
-          apiKey={process.env.NEXT_PUBLIC_GENUI_API_KEY ?? ""}
+          apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY ?? ""}
           components={components}
         >
           {children}
@@ -226,7 +226,7 @@ export default function RootLayout({ children }) {
 
 For detailed documentation and examples, visit [docs.tambo.co](https://docs.tambo.co)
 
-For more information about all available components and installation options, check out the [tambo ui showcase](https://github.com/awardsapp/tambo-genui/tree/main/showcase).
+For more information about all available components and installation options, check out the [tambo ui showcase](https://github.com/tambo-ai/tambo/tree/main/showcase).
 
 ## Development Status
 
@@ -243,13 +243,13 @@ See demos of the components in action:
 
 ## License
 
-MIT License - see the [LICENSE](https://github.com/awardsapp/tambo-genui/blob/main/LICENSE) file for details.
+MIT License - see the [LICENSE](https://github.com/tambo-ai/tambo/blob/main/LICENSE) file for details.
 
 ## Join the Community
 
 We're building tools for the future of user interfaces. Your contributions matter.
 
-**[Star this repo](https://github.com/awardsapp/tambo-genui)** to support our work.
+**[Star this repo](https://github.com/tambo-ai/tambo)** to support our work.
 
 **[Join our Discord](https://discord.gg/dJNvPEHth6)** to connect with other developers.
 

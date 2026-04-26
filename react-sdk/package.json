@@ -1,26 +1,26 @@
 {
-  "name": "@workspace/react",
+  "name": "@tambo-ai/react",
   "version": "1.2.6",
   "description": "React client package for Tambo AI",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/awardsapp/tambo-genui.git",
+    "url": "https://github.com/tambo-ai/tambo.git",
     "directory": "react-sdk"
   },
-  "homepage": "https://genui.co",
+  "homepage": "https://tambo.co",
   "main": "./dist/index.js",
   "module": "./esm/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "@workspace/source": "./src/index.ts",
+      "@tambo-ai/source": "./src/index.ts",
       "import": "./esm/index.js",
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
     "./mcp": {
-      "@workspace/source": "./src/mcp/index.ts",
+      "@tambo-ai/source": "./src/mcp/index.ts",
       "import": "./esm/mcp/index.js",
       "require": "./dist/mcp/index.js",
       "types": "./dist/mcp/index.d.ts"
@@ -77,22 +77,22 @@
   },
   "dependencies": {
     "@ag-ui/core": "^0.0.44",
+    "@tambo-ai/client": "0.1.0",
     "@modelcontextprotocol/sdk": "^1.27.1",
+    "@tambo-ai/typescript-sdk": "^0.95.0",
     "@tanstack/react-query": "^5.90.16",
     "fast-equals": "^6.0.0",
     "partial-json": "^0.1.7",
     "react-fast-compare": "^3.2.2",
     "react-media-recorder": "^1.7.2",
     "ts-node": "^10.9.2",
-    "use-debounce": "^10.0.6",
-    "@tambo-ai/typescript-sdk": "^0.95.0",
-    "@workspace/client": "*"
+    "use-debounce": "^10.0.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
     "@modelcontextprotocol/sdk": "^1.27.1",
-    "@workspace/eslint-config": "*",
-    "@workspace/typescript-config": "*",
+    "@tambo-ai/eslint-config": "*",
+    "@tambo-ai/typescript-config": "*",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@types/jest": "^30.0.0",

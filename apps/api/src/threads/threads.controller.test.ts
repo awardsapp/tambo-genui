@@ -8,7 +8,7 @@ jest.mock("../common/utils/extract-context-info");
 
 import { BadRequestException } from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
-import { ContentPartType, MessageRole } from "@workspace-cloud/core";
+import { ContentPartType, MessageRole } from "@tambo-ai-cloud/core";
 import { Request, Response } from "express";
 import { extractContextInfo } from "../common/utils/extract-context-info";
 import { ApiKeyGuard } from "../projects/guards/apikey.guard";
@@ -37,7 +37,7 @@ const expectEndpointDeprecatedProblem = (
 
   expect(endpointDeprecatedError.getStatus()).toBe(410);
   expect(endpointDeprecatedError.getResponse()).toEqual({
-    type: "https://docs.genui.co/reference/problems/endpoint-deprecated",
+    type: "https://docs.tambo.co/reference/problems/endpoint-deprecated",
     status: 410,
     title: "Endpoint Deprecated",
     detail,

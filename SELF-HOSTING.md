@@ -1,12 +1,12 @@
 # Self-Hosting Guide
 
-This guide is for deploying and self-hosting Genui.
+This guide is for deploying and self-hosting Tambo.
 
 > **Looking to contribute?** See [CONTRIBUTING.md](./CONTRIBUTING.md) for local development setup.
 
 ## Overview
 
-Genui consists of three services:
+Tambo consists of three services:
 
 | Service        | Technology    | Host Port | Description                  |
 | -------------- | ------------- | --------- | ---------------------------- |
@@ -24,14 +24,14 @@ Genui consists of three services:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/genui-ai/genui.git
-cd genui
+git clone https://github.com/tambo-ai/tambo.git
+cd tambo
 ```
 
 ### 2. Set Up Environment
 
 ```bash
-./scripts/cloud/genui-setup.sh
+./scripts/cloud/tambo-setup.sh
 ```
 
 This creates `docker.env` from `docker.env.example`.
@@ -54,7 +54,7 @@ FALLBACK_OPENAI_API_KEY=your-openai-api-key
 ### 4. Start Services
 
 ```bash
-./scripts/cloud/genui-start.sh
+./scripts/cloud/tambo-start.sh
 ```
 
 ### 5. Initialize Database
@@ -72,12 +72,12 @@ FALLBACK_OPENAI_API_KEY=your-openai-api-key
 
 For detailed configuration, production deployment, and operations guides, see the docs site:
 
-- [Self-Hosting Overview](https://genui.co/docs/guides/self-hosting) — Architecture, auth model, and security considerations
-- [Quickstart](https://genui.co/docs/guides/self-hosting/quickstart) — Step-by-step first deployment
-- [Authentication](https://genui.co/docs/guides/self-hosting/authentication) — OAuth and email login setup
-- [Docker Compose](https://genui.co/docs/guides/self-hosting/docker-compose) — Production deployment and building images
-- [Kubernetes](https://genui.co/docs/guides/self-hosting/kubernetes) — K8s manifests for all three services
-- [Operations](https://genui.co/docs/guides/self-hosting/operations) — Backup, restore, upgrade, and monitoring
-- [Environment Variables](https://genui.co/docs/guides/self-hosting/environment-variables) — Full reference for all configuration options
-- [Scripts](https://genui.co/docs/guides/self-hosting/scripts) — All helper scripts and npm aliases
-- [Troubleshooting](https://genui.co/docs/guides/self-hosting/troubleshooting) — Common issues and fixes
+- [Self-Hosting Overview](https://tambo.co/docs/guides/self-hosting) — Architecture, auth model, and security considerations
+- [Quickstart](https://tambo.co/docs/guides/self-hosting/quickstart) — Step-by-step first deployment
+- [Authentication](https://tambo.co/docs/guides/self-hosting/authentication) — OAuth and email login setup
+- [Docker Compose](https://tambo.co/docs/guides/self-hosting/docker-compose) — Production deployment and building images
+- [Kubernetes](https://tambo.co/docs/guides/self-hosting/kubernetes) — K8s manifests for all three services
+- [Operations](https://tambo.co/docs/guides/self-hosting/operations) — Backup, restore, upgrade, and monitoring
+- [Environment Variables](https://tambo.co/docs/guides/self-hosting/environment-variables) — Full reference for all configuration options
+- [Scripts](https://tambo.co/docs/guides/self-hosting/scripts) — All helper scripts and npm aliases
+- [Troubleshooting](https://tambo.co/docs/guides/self-hosting/troubleshooting) — Common issues and fixes

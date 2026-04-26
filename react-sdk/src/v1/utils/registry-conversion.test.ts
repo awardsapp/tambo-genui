@@ -1,14 +1,14 @@
 import { z } from "zod";
 import type {
   RegisteredComponent,
-  GenuiTool,
+  TamboTool,
 } from "../../model/component-metadata";
 import {
   toAvailableComponent,
   toAvailableComponents,
   toAvailableTool,
   toAvailableTools,
-} from "@workspace/client";
+} from "@tambo-ai/client";
 
 describe("registry-conversion", () => {
   describe("toAvailableComponent", () => {
@@ -148,7 +148,7 @@ describe("registry-conversion", () => {
 
   describe("toAvailableTool", () => {
     it("converts a tool with inputSchema", () => {
-      const tool: GenuiTool = {
+      const tool: TamboTool = {
         name: "get_weather",
         description: "Gets weather for a city",
         tool: async () => ({ temp: 72 }),
@@ -167,7 +167,7 @@ describe("registry-conversion", () => {
     });
 
     it("includes maxCalls when set", () => {
-      const tool: GenuiTool = {
+      const tool: TamboTool = {
         name: "limited_tool",
         description: "Tool with call limit",
         tool: async () => ({}),
@@ -182,7 +182,7 @@ describe("registry-conversion", () => {
     });
 
     it("omits maxCalls when not set", () => {
-      const tool: GenuiTool = {
+      const tool: TamboTool = {
         name: "unlimited_tool",
         description: "Tool without call limit",
         tool: async () => ({}),
@@ -200,7 +200,7 @@ describe("registry-conversion", () => {
         name: "bad_tool",
         description: "Missing schema",
         tool: async () => ({}),
-      } as unknown as GenuiTool;
+      } as unknown as TamboTool;
 
       expect(() => toAvailableTool(tool)).toThrow(
         'Tool "bad_tool" missing inputSchema or toolSchema',
@@ -210,7 +210,7 @@ describe("registry-conversion", () => {
 
   describe("toAvailableTools", () => {
     it("converts a Record of tools", () => {
-      const tools: Record<string, GenuiTool> = {
+      const tools: Record<string, TamboTool> = {
         search: {
           name: "search",
           description: "Search the web",
@@ -235,7 +235,7 @@ describe("registry-conversion", () => {
     });
 
     it("converts a Map of tools", () => {
-      const tools = new Map<string, GenuiTool>([
+      const tools = new Map<string, TamboTool>([
         [
           "fetch",
           {
@@ -257,7 +257,7 @@ describe("registry-conversion", () => {
     it("skips invalid tools and logs warning", () => {
       const warnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
 
-      const tools: Record<string, GenuiTool> = {
+      const tools: Record<string, TamboTool> = {
         valid: {
           name: "valid",
           description: "Valid tool",
@@ -269,7 +269,7 @@ describe("registry-conversion", () => {
           name: "invalid",
           description: "Missing schema",
           tool: async () => null,
-        } as unknown as GenuiTool,
+        } as unknown as TamboTool,
       };
 
       const result = toAvailableTools(tools);

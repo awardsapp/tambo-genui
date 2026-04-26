@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 
 export const SdkVersion: unique symbol = Symbol("sdkVersion");
 
-const SDK_VERSION_HEADER_NAME = "x-genui-react-version";
+const SDK_VERSION_HEADER_NAME = "x-tambo-react-version";
 const SDK_VERSION_MAX_LENGTH = 64;
 const SDK_VERSION_PATTERN = /^[0-9]+\.[0-9]+\.[0-9]+(?:[-+].+)?$/;
 

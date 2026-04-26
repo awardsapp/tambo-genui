@@ -45,7 +45,7 @@ Check the "Ports" panel in VS Code/Cursor to see actual mappings.
 Servers don't start automatically. Run them manually when needed:
 
 ```bash
-# Genui Cloud (web + API)
+# Tambo Cloud (web + API)
 npm run dev:cloud
 
 # React SDK (showcase + docs)

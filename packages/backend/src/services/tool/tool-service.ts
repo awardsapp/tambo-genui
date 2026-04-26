@@ -3,7 +3,7 @@ import {
   strictifyJSONSchemaProperties,
   strictifyJSONSchemaProperty,
   UI_TOOLNAME_PREFIX,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 import { JSONSchema7 } from "json-schema";
 import OpenAI from "openai";
 import {
@@ -12,27 +12,27 @@ import {
 } from "../../model/component-metadata";
 import { ToolRegistry } from "../../systemTools";
 
-export interface GenuiToolParameters {
-  _genui_statusMessage: string;
-  _genui_completionStatusMessage: string;
+export interface TamboToolParameters {
+  _tambo_statusMessage: string;
+  _tambo_completionStatusMessage: string;
 }
 
 // Standard parameters to be added to all tools
 export const standardToolParameters: FunctionParameters = {
   type: "object",
   properties: {
-    _genui_statusMessage: {
+    _tambo_statusMessage: {
       type: "string",
       description:
         "A message that will be displayed to the user to explain in a few words what the tool doing, starting with a verb. For example, 'looking for <something>' or 'creating <something>'.",
     },
-    _genui_completionStatusMessage: {
+    _tambo_completionStatusMessage: {
       type: "string",
       description:
         "A message that will be displayed to the user to explain in a few words what the tool has done, to replace the statusMessage when the tool has completed its task. For example, 'looked for <something>' or 'created <something>'",
     },
   },
-  required: ["_genui_statusMessage", "_genui_completionStatusMessage"],
+  required: ["_tambo_statusMessage", "_tambo_completionStatusMessage"],
   additionalProperties: false,
 };
 

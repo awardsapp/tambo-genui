@@ -1,5 +1,5 @@
 {
-  "name": "@workspace/ui-registry",
+  "name": "@tambo-ai/ui-registry",
   "version": "0.0.0",
   "private": true,
   "license": "Apache-2.0",
@@ -38,15 +38,16 @@
     "verify-exports": "npx tsx scripts/verify-exports.ts"
   },
   "peerDependencies": {
-    "@workspace/react": "*",
+    "@tambo-ai/react": "*",
     "react": "^18.0.0 || ^19.0.0",
     "react-dom": "^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
-    "@workspace/eslint-config": "*",
-    "@workspace/react": "*",
-    "@workspace/react-ui-base": "*",
-    "@workspace/typescript-config": "*",
+    "@tambo-ai/eslint-config": "*",
+    "@tambo-ai/react": "*",
+    "@tambo-ai/react-ui-base": "*",
+    "@tambo-ai/typescript-config": "*",
+    "@tambo-ai/typescript-sdk": "^0.95.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.2",
     "@types/jest": "^30.0.0",
@@ -67,7 +68,6 @@
     "tailwindcss": "^4.1.18",
     "tailwindcss-animate": "^1.0.7",
     "ts-jest": "^29.4.9",
-    "typescript": "^5.9.3",
-    "@tambo-ai/typescript-sdk": "^0.95.0"
+    "typescript": "^5.9.3"
   }
 }

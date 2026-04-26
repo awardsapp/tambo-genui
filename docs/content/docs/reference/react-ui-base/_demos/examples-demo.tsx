@@ -19,11 +19,11 @@ export const examplesDemoCode = [
   {
     name: "chat-minimal.tsx",
     code: `
-import { Message } from "@workspace/react-ui-base/message";
-import { MessageInput } from "@workspace/react-ui-base/message-input";
-import type { GenuiThreadMessage } from "@workspace/react";
+import { Message } from "@tambo-ai/react-ui-base/message";
+import { MessageInput } from "@tambo-ai/react-ui-base/message-input";
+import type { TamboThreadMessage } from "@tambo-ai/react";
 
-const messages: GenuiThreadMessage[] = [
+const messages: TamboThreadMessage[] = [
   { id: "1", role: "user", content: [{ type: "text", text: "What's the weather in Tokyo?" }] },
   { id: "2", role: "assistant", content: [{ type: "text", text: "It's 18°C and clear!" }] },
 ];
@@ -68,12 +68,12 @@ export function MinimalChat() {
   {
     name: "chat-terminal.tsx",
     code: `
-import { Message } from "@workspace/react-ui-base/message";
-import { MessageInput } from "@workspace/react-ui-base/message-input";
-import type { GenuiThreadMessage } from "@workspace/react";
+import { Message } from "@tambo-ai/react-ui-base/message";
+import { MessageInput } from "@tambo-ai/react-ui-base/message-input";
+import type { TamboThreadMessage } from "@tambo-ai/react";
 import type React from "react";
 
-const messages: GenuiThreadMessage[] = [
+const messages: TamboThreadMessage[] = [
   { id: "1", role: "user", content: [{ type: "text", text: "What's the weather in Tokyo?" }] },
   { id: "2", role: "assistant", content: [{ type: "text", text: "It's 18°C and clear!" }] },
 ];
@@ -132,12 +132,12 @@ export function TerminalChat() {
   {
     name: "chat-glass.tsx",
     code: `
-import { Message } from "@workspace/react-ui-base/message";
-import { MessageInput } from "@workspace/react-ui-base/message-input";
-import type { GenuiThreadMessage } from "@workspace/react";
+import { Message } from "@tambo-ai/react-ui-base/message";
+import { MessageInput } from "@tambo-ai/react-ui-base/message-input";
+import type { TamboThreadMessage } from "@tambo-ai/react";
 import type React from "react";
 
-const messages: GenuiThreadMessage[] = [
+const messages: TamboThreadMessage[] = [
   { id: "1", role: "user", content: [{ type: "text", text: "What's the weather in Tokyo?" }] },
   { id: "2", role: "assistant", content: [{ type: "text", text: "It's 18°C and clear!" }] },
 ];

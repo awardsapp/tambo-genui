@@ -114,7 +114,6 @@ services:
       SENTRY_DSN: ${SENTRY_DSN:-}
       POSTHOG_API_KEY: ${POSTHOG_API_KEY:-}
       POSTHOG_HOST: ${POSTHOG_HOST:-}
-      GENUI_TELEMETRY_DISABLED: "true"
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/health"]
       interval: 15s
@@ -142,8 +141,8 @@ services:
       PORT: "3000"
       NODE_ENV: production
       # Browser-side: must use public HTTPS URL (sent in HTML to client)
-      NEXT_PUBLIC_GENUI_API_URL: ${NEXT_PUBLIC_GENUI_API_URL:-https://tambo-api.awardsapp.ai}
-      NEXT_PUBLIC_GENUI_API_KEY: ${NEXT_PUBLIC_GENUI_API_KEY:-}
+      NEXT_PUBLIC_TAMBO_API_URL: ${NEXT_PUBLIC_TAMBO_API_URL:-https://tambo-api.awardsapp.ai}
+      NEXT_PUBLIC_TAMBO_API_KEY: ${NEXT_PUBLIC_TAMBO_API_KEY:-}
       NEXT_PUBLIC_POSTHOG_HOST: ${NEXT_PUBLIC_POSTHOG_HOST:-}
       NEXT_PUBLIC_POSTHOG_KEY: ${NEXT_PUBLIC_POSTHOG_KEY:-}
       DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-genui}
@@ -167,9 +166,10 @@ services:
       NEXT_PUBLIC_SENTRY_DSN: ${NEXT_PUBLIC_SENTRY_DSN:-}
       NEXT_PUBLIC_SENTRY_ORG: ${NEXT_PUBLIC_SENTRY_ORG:-}
       NEXT_PUBLIC_SENTRY_PROJECT: ${NEXT_PUBLIC_SENTRY_PROJECT:-}
-      GENUI_TELEMETRY_DISABLED: "true"
-      GENUI_WHITELABEL_ORG_NAME: ${GENUI_WHITELABEL_ORG_NAME:-AwardsApp}
-      GENUI_WHITELABEL_ORG_LOGO: ${GENUI_WHITELABEL_ORG_LOGO:-}
+      TAMBO_WHITELABEL_ORG_NAME: ${TAMBO_WHITELABEL_ORG_NAME:-AwardsApp}
+      NEXT_PUBLIC_TAMBO_WHITELABEL_ORG_NAME: ${NEXT_PUBLIC_TAMBO_WHITELABEL_ORG_NAME:-AwardsApp}
+      TAMBO_WHITELABEL_ORG_LOGO: ${TAMBO_WHITELABEL_ORG_LOGO:-}
+      NEXT_PUBLIC_TAMBO_WHITELABEL_ORG_LOGO: ${NEXT_PUBLIC_TAMBO_WHITELABEL_ORG_LOGO:-}
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/api/health"]
       interval: 15s

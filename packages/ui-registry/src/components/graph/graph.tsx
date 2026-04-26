@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@workspace/ui-registry/utils";
+import { cn } from "@tambo-ai/ui-registry/utils";
 import { cva } from "class-variance-authority";
 import * as React from "react";
 import * as RechartsCore from "recharts";

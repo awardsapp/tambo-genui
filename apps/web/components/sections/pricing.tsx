@@ -94,26 +94,26 @@ const pricingData: PricingTier[] = [
       {
         text: (
           <>
-            <code>@workspace/react</code> package
+            <code>@tambo-ai/react</code> package
           </>
         ),
-        link: "https://github.com/genui-ai/genui/tree/main/react-sdk",
+        link: "https://github.com/tambo-ai/tambo/tree/main/react-sdk",
       },
       {
         text: (
           <>
-            <code>@workspace/ui</code> component library
+            <code>@tambo-ai/ui</code> component library
           </>
         ),
-        link: "https://ui.genui.co/",
+        link: "https://ui.tambo.co/",
       },
       {
         text: (
           <>
-            <code>genui-cloud</code>
+            <code>tambo-cloud</code>
           </>
         ),
-        link: "https://github.com/genui-ai/genui",
+        link: "https://github.com/tambo-ai/tambo",
       },
     ],
     cta: (
@@ -189,7 +189,7 @@ function PricingTier({
   const handleClick = () => {
     if (tier.isOpenSource) {
       window.open(
-        "https://github.com/genui-ai/genui",
+        "https://github.com/tambo-ai/tambo",
         "_blank",
         "noopener,noreferrer",
       );

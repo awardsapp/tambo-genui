@@ -27,7 +27,7 @@ import {
   MessageRole,
   ThreadMessage,
   ToolCallRequest,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 import OpenAI from "openai";
 import { aguiContentToString } from "../agui/content-to-string";
 import { EventHandlerParams, runStreamingAgent } from "./async-adapters";
@@ -194,7 +194,7 @@ export class AgentClient {
         yield {
           type: AgentResponseType.COMPLETE,
           message: {
-            id: "genui-assistant-complete",
+            id: "tambo-assistant-complete",
             content: "",
             role: "assistant",
           },

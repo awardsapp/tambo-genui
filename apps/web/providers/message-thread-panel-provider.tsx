@@ -1,13 +1,13 @@
 "use client";
 
-import type { GenuiEditor } from "@workspace/ui-registry/components/message-input";
+import type { TamboEditor } from "@tambo-ai/ui-registry/components/message-input";
 import * as React from "react";
 
 interface MessageThreadPanelContextType {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   togglePanel: () => void;
-  editorRef: React.MutableRefObject<GenuiEditor | null>;
+  editorRef: React.MutableRefObject<TamboEditor | null>;
 }
 
 const MessageThreadPanelContext =
@@ -19,7 +19,7 @@ export function MessageThreadPanelProvider({
   children: React.ReactNode;
 }) {
   const [isOpen, setIsOpen] = React.useState(false);
-  const editorRef = React.useRef<GenuiEditor | null>(null);
+  const editorRef = React.useRef<TamboEditor | null>(null);
 
   const togglePanel = React.useCallback(() => {
     setIsOpen((prev) => !prev);

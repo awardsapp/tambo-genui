@@ -82,8 +82,8 @@ get_repo_root() {
 
   while [ "$search_dir" != "/" ]; do
     if [ -f "$search_dir/package.json" ]; then
-      # simple check for `"name"` and `"@workspace/repo"` on the same line
-      if grep -Eq '"name".*"@workspace/repo"' "$search_dir/package.json"; then
+      # simple check for `"name"` and `"@tambo-ai/repo"` on the same line
+      if grep -Eq '"name".*"@tambo-ai/repo"' "$search_dir/package.json"; then
         printf '%s\n' "$search_dir"
         return 0
       fi
@@ -91,7 +91,7 @@ get_repo_root() {
     search_dir="$(dirname "$search_dir")"
   done
 
-  printf '%s\n' "Could not find project root (no package.json with name @workspace/repo found above $start_dir)" >&2
-  printf '%s\n' "Is this script inside the Genui project folder?" >&2
+  printf '%s\n' "Could not find project root (no package.json with name @tambo-ai/repo found above $start_dir)" >&2
+  printf '%s\n' "Is this script inside the Tambo project folder?" >&2
   return 1
 }

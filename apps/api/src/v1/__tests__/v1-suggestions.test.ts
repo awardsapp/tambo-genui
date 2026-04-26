@@ -1,11 +1,11 @@
 import { NotFoundException } from "@nestjs/common";
 import { V1Service } from "../v1.service";
 import { ThreadsService } from "../../threads/threads.service";
-import type { HydraDatabase } from "@workspace-cloud/db";
-import { operations } from "@workspace-cloud/db";
+import type { HydraDatabase } from "@tambo-ai-cloud/db";
+import { operations } from "@tambo-ai-cloud/db";
 
 // Mock the database operations
-jest.mock("@workspace-cloud/db", () => ({
+jest.mock("@tambo-ai-cloud/db", () => ({
   operations: {
     getMessageByIdInThread: jest.fn(),
     getThreadForProjectId: jest.fn(),
@@ -37,7 +37,7 @@ describe("V1Service - Suggestions", () => {
   beforeEach(() => {
     mockDb = {} as jest.Mocked<HydraDatabase>;
     mockThreadsService = {
-      createGenuiBackendForThread: jest.fn(),
+      createTamboBackendForThread: jest.fn(),
     } as unknown as jest.Mocked<ThreadsService>;
 
     service = new V1Service(mockDb, mockThreadsService);
@@ -327,7 +327,7 @@ describe("V1Service - Suggestions", () => {
           error as { getResponse?: () => unknown }
         ).getResponse?.();
         expect(response).toMatchObject({
-          type: "urn:genui:error:invalid_cursor",
+          type: "urn:tambo:error:invalid_cursor",
           detail: "Cursor does not belong to this message",
         });
       }
@@ -414,7 +414,7 @@ describe("V1Service - Suggestions", () => {
     });
 
     it("returns empty list when no suggestions are generated", async () => {
-      const mockGenuiBackend = {
+      const mockTamboBackend = {
         generateSuggestions: jest.fn().mockResolvedValue({
           suggestions: [],
         }),
@@ -432,9 +432,9 @@ describe("V1Service - Suggestions", () => {
       (operations.deleteSuggestionsForMessage as jest.Mock).mockResolvedValue(
         0,
       );
-      mockThreadsService.createGenuiBackendForThread.mockResolvedValue(
-        mockGenuiBackend as unknown as ReturnType<
-          ThreadsService["createGenuiBackendForThread"]
+      mockThreadsService.createTamboBackendForThread.mockResolvedValue(
+        mockTamboBackend as unknown as ReturnType<
+          ThreadsService["createTamboBackendForThread"]
         >,
       );
 
@@ -453,7 +453,7 @@ describe("V1Service - Suggestions", () => {
     });
 
     it("handles undefined suggestions in response gracefully", async () => {
-      const mockGenuiBackend = {
+      const mockTamboBackend = {
         generateSuggestions: jest.fn().mockResolvedValue({
           // suggestions field is undefined
         }),
@@ -471,9 +471,9 @@ describe("V1Service - Suggestions", () => {
       (operations.deleteSuggestionsForMessage as jest.Mock).mockResolvedValue(
         0,
       );
-      mockThreadsService.createGenuiBackendForThread.mockResolvedValue(
-        mockGenuiBackend as unknown as ReturnType<
-          ThreadsService["createGenuiBackendForThread"]
+      mockThreadsService.createTamboBackendForThread.mockResolvedValue(
+        mockTamboBackend as unknown as ReturnType<
+          ThreadsService["createTamboBackendForThread"]
         >,
       );
 
@@ -505,7 +505,7 @@ describe("V1Service - Suggestions", () => {
         updatedAt: new Date("2024-01-15T12:00:00Z"),
       };
 
-      const mockGenuiBackend = {
+      const mockTamboBackend = {
         generateSuggestions: jest.fn().mockResolvedValue({
           suggestions: [mockGeneratedSuggestion],
         }),
@@ -523,9 +523,9 @@ describe("V1Service - Suggestions", () => {
       (operations.deleteSuggestionsForMessage as jest.Mock).mockResolvedValue(
         0,
       );
-      mockThreadsService.createGenuiBackendForThread.mockResolvedValue(
-        mockGenuiBackend as unknown as ReturnType<
-          ThreadsService["createGenuiBackendForThread"]
+      mockThreadsService.createTamboBackendForThread.mockResolvedValue(
+        mockTamboBackend as unknown as ReturnType<
+          ThreadsService["createTamboBackendForThread"]
         >,
       );
       (operations.createSuggestions as jest.Mock).mockResolvedValue([
@@ -542,7 +542,7 @@ describe("V1Service - Suggestions", () => {
         },
       );
 
-      expect(mockGenuiBackend.generateSuggestions).toHaveBeenCalledWith(
+      expect(mockTamboBackend.generateSuggestions).toHaveBeenCalledWith(
         expect.any(Array),
         5,
         expect.any(Array),
@@ -564,7 +564,7 @@ describe("V1Service - Suggestions", () => {
     });
 
     it("uses default maxSuggestions when not provided", async () => {
-      const mockGenuiBackend = {
+      const mockTamboBackend = {
         generateSuggestions: jest.fn().mockResolvedValue({
           suggestions: [],
         }),
@@ -582,9 +582,9 @@ describe("V1Service - Suggestions", () => {
       (operations.deleteSuggestionsForMessage as jest.Mock).mockResolvedValue(
         0,
       );
-      mockThreadsService.createGenuiBackendForThread.mockResolvedValue(
-        mockGenuiBackend as unknown as ReturnType<
-          ThreadsService["createGenuiBackendForThread"]
+      mockThreadsService.createTamboBackendForThread.mockResolvedValue(
+        mockTamboBackend as unknown as ReturnType<
+          ThreadsService["createTamboBackendForThread"]
         >,
       );
 
@@ -597,7 +597,7 @@ describe("V1Service - Suggestions", () => {
       );
 
       // Default maxSuggestions is 3
-      expect(mockGenuiBackend.generateSuggestions).toHaveBeenCalledWith(
+      expect(mockTamboBackend.generateSuggestions).toHaveBeenCalledWith(
         expect.any(Array),
         3,
         expect.any(Array),
@@ -607,7 +607,7 @@ describe("V1Service - Suggestions", () => {
     });
 
     it("converts V1 available components to internal format", async () => {
-      const mockGenuiBackend = {
+      const mockTamboBackend = {
         generateSuggestions: jest.fn().mockResolvedValue({
           suggestions: [],
         }),
@@ -625,9 +625,9 @@ describe("V1Service - Suggestions", () => {
       (operations.deleteSuggestionsForMessage as jest.Mock).mockResolvedValue(
         0,
       );
-      mockThreadsService.createGenuiBackendForThread.mockResolvedValue(
-        mockGenuiBackend as unknown as ReturnType<
-          ThreadsService["createGenuiBackendForThread"]
+      mockThreadsService.createTamboBackendForThread.mockResolvedValue(
+        mockTamboBackend as unknown as ReturnType<
+          ThreadsService["createTamboBackendForThread"]
         >,
       );
 
@@ -650,7 +650,7 @@ describe("V1Service - Suggestions", () => {
         },
       );
 
-      expect(mockGenuiBackend.generateSuggestions).toHaveBeenCalledWith(
+      expect(mockTamboBackend.generateSuggestions).toHaveBeenCalledWith(
         expect.any(Array),
         3,
         [
@@ -680,7 +680,7 @@ describe("V1Service - Suggestions", () => {
         },
       ];
 
-      const mockGenuiBackend = {
+      const mockTamboBackend = {
         generateSuggestions: jest.fn().mockResolvedValue({
           suggestions: [],
         }),
@@ -698,9 +698,9 @@ describe("V1Service - Suggestions", () => {
       (operations.deleteSuggestionsForMessage as jest.Mock).mockResolvedValue(
         0,
       );
-      mockThreadsService.createGenuiBackendForThread.mockResolvedValue(
-        mockGenuiBackend as unknown as ReturnType<
-          ThreadsService["createGenuiBackendForThread"]
+      mockThreadsService.createTamboBackendForThread.mockResolvedValue(
+        mockTamboBackend as unknown as ReturnType<
+          ThreadsService["createTamboBackendForThread"]
         >,
       );
 
@@ -718,7 +718,7 @@ describe("V1Service - Suggestions", () => {
         threadId,
       );
       // Verify generateSuggestions is called with an array (messages are converted via dbMessageToThreadMessage)
-      expect(mockGenuiBackend.generateSuggestions).toHaveBeenCalledWith(
+      expect(mockTamboBackend.generateSuggestions).toHaveBeenCalledWith(
         expect.any(Array),
         3,
         [],
@@ -742,7 +742,7 @@ describe("V1Service - Suggestions", () => {
         updatedAt: new Date("2024-01-15T12:00:00Z"),
       }));
 
-      const mockGenuiBackend = {
+      const mockTamboBackend = {
         generateSuggestions: jest.fn().mockResolvedValue({
           suggestions: mockGeneratedSuggestions,
         }),
@@ -760,9 +760,9 @@ describe("V1Service - Suggestions", () => {
       (operations.deleteSuggestionsForMessage as jest.Mock).mockResolvedValue(
         0,
       );
-      mockThreadsService.createGenuiBackendForThread.mockResolvedValue(
-        mockGenuiBackend as unknown as ReturnType<
-          ThreadsService["createGenuiBackendForThread"]
+      mockThreadsService.createTamboBackendForThread.mockResolvedValue(
+        mockTamboBackend as unknown as ReturnType<
+          ThreadsService["createTamboBackendForThread"]
         >,
       );
       (operations.createSuggestions as jest.Mock).mockResolvedValue(
@@ -793,8 +793,8 @@ describe("V1Service - Suggestions", () => {
       ]);
     });
 
-    it("passes userKey to createGenuiBackendForThread", async () => {
-      const mockGenuiBackend = {
+    it("passes userKey to createTamboBackendForThread", async () => {
+      const mockTamboBackend = {
         generateSuggestions: jest.fn().mockResolvedValue({
           suggestions: [],
         }),
@@ -812,9 +812,9 @@ describe("V1Service - Suggestions", () => {
       (operations.deleteSuggestionsForMessage as jest.Mock).mockResolvedValue(
         0,
       );
-      mockThreadsService.createGenuiBackendForThread.mockResolvedValue(
-        mockGenuiBackend as unknown as ReturnType<
-          ThreadsService["createGenuiBackendForThread"]
+      mockThreadsService.createTamboBackendForThread.mockResolvedValue(
+        mockTamboBackend as unknown as ReturnType<
+          ThreadsService["createTamboBackendForThread"]
         >,
       );
 
@@ -827,7 +827,7 @@ describe("V1Service - Suggestions", () => {
       );
 
       expect(
-        mockThreadsService.createGenuiBackendForThread,
+        mockThreadsService.createTamboBackendForThread,
       ).toHaveBeenCalledWith(threadId, userKey);
     });
 
@@ -845,7 +845,7 @@ describe("V1Service - Suggestions", () => {
         updatedAt: new Date("2024-01-15T12:00:00Z"),
       };
 
-      const mockGenuiBackend = {
+      const mockTamboBackend = {
         generateSuggestions: jest.fn().mockResolvedValue({
           suggestions: [mockGeneratedSuggestion],
         }),
@@ -863,9 +863,9 @@ describe("V1Service - Suggestions", () => {
       (operations.deleteSuggestionsForMessage as jest.Mock).mockResolvedValue(
         2,
       ); // 2 existing suggestions deleted
-      mockThreadsService.createGenuiBackendForThread.mockResolvedValue(
-        mockGenuiBackend as unknown as ReturnType<
-          ThreadsService["createGenuiBackendForThread"]
+      mockThreadsService.createTamboBackendForThread.mockResolvedValue(
+        mockTamboBackend as unknown as ReturnType<
+          ThreadsService["createTamboBackendForThread"]
         >,
       );
       (operations.createSuggestions as jest.Mock).mockResolvedValue([
@@ -904,7 +904,7 @@ describe("V1Service - Suggestions", () => {
         content: [{ type: "text", text: `Message ${i + 1}` }],
       }));
 
-      const mockGenuiBackend = {
+      const mockTamboBackend = {
         generateSuggestions: jest.fn().mockResolvedValue({
           suggestions: [],
         }),
@@ -922,9 +922,9 @@ describe("V1Service - Suggestions", () => {
       (operations.deleteSuggestionsForMessage as jest.Mock).mockResolvedValue(
         0,
       );
-      mockThreadsService.createGenuiBackendForThread.mockResolvedValue(
-        mockGenuiBackend as unknown as ReturnType<
-          ThreadsService["createGenuiBackendForThread"]
+      mockThreadsService.createTamboBackendForThread.mockResolvedValue(
+        mockTamboBackend as unknown as ReturnType<
+          ThreadsService["createTamboBackendForThread"]
         >,
       );
 
@@ -937,11 +937,11 @@ describe("V1Service - Suggestions", () => {
       );
 
       // Verify generateSuggestions was called
-      expect(mockGenuiBackend.generateSuggestions).toHaveBeenCalled();
+      expect(mockTamboBackend.generateSuggestions).toHaveBeenCalled();
 
       // The first argument should be an array of messages
       const passedMessages =
-        mockGenuiBackend.generateSuggestions.mock.calls[0][0];
+        mockTamboBackend.generateSuggestions.mock.calls[0][0];
 
       // Verify the array has exactly 5 elements (limited from 10)
       // Note: dbMessageToThreadMessage is mocked to return the message as-is

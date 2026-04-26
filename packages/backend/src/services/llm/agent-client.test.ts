@@ -16,14 +16,14 @@ import {
   MessageRole,
   ThreadMessage,
   ToolCallRequest,
-} from "@workspace-cloud/core";
-import { createMockThreadMessage } from "@workspace-cloud/testing";
+} from "@tambo-ai-cloud/core";
+import { createMockThreadMessage } from "@tambo-ai-cloud/testing";
 import OpenAI from "openai";
 import { AgentClient, AgentResponse } from "./agent-client";
 
 import { RunAgentResult } from "@ag-ui/client";
 import { MastraAgent } from "@ag-ui/mastra";
-import { AsyncQueue } from "@workspace-cloud/core";
+import { AsyncQueue } from "@tambo-ai-cloud/core";
 import { EventHandlerParams, runStreamingAgent } from "./async-adapters";
 import { CompleteParams } from "./llm-client";
 const mockRunStreamingAgent = jest.mocked(runStreamingAgent);

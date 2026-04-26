@@ -23,7 +23,7 @@ jest.unstable_mockModule("../lib/token-storage.js", () => ({
   clearToken: () => {
     mockClearTokenCalled = true;
   },
-  getTokenStoragePath: () => "/mock/.genui/token.json",
+  getTokenStoragePath: () => "/mock/.tambo/token.json",
 }));
 
 // Mock api-client module
@@ -65,8 +65,8 @@ jest.unstable_mockModule("../lib/api-client.js", () => ({
     }
   },
   verifySession: async () => mockVerifySessionResult,
-  // Note: This is the tRPC API (apps/web), not the NestJS API (api.genui.co)
-  getConsoleBaseUrl: () => "https://console.genui.co",
+  // Note: This is the tRPC API (apps/web), not the NestJS API (api.tambo.co)
+  getConsoleBaseUrl: () => "https://console.tambo.co",
   isAuthError: (error: unknown) => {
     if (error instanceof Error && error.message === "UNAUTHORIZED") return true;
     return false;

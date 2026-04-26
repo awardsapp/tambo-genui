@@ -7,7 +7,7 @@ import {
   COMPONENT_SUBDIR,
   LEGACY_COMPONENT_SUBDIR,
 } from "../constants/paths.js";
-import { getGenuiComponentInfo } from "./add/utils.js";
+import { getTamboComponentInfo } from "./add/utils.js";
 import { getInstallationPath } from "./init.js";
 import {
   getComponentDirectoryPath,
@@ -21,38 +21,38 @@ interface MigrateOptions {
 }
 
 /**
- * Updates import paths in a file between ui/ and genui/ locations
- * Also transforms @workspace/ui-registry/* imports to user project paths
+ * Updates import paths in a file between ui/ and tambo/ locations
+ * Also transforms @tambo-ai/ui-registry/* imports to user project paths
  * @param content File content to update
- * @param targetLocation Target location: 'genui' (default) or 'ui'
+ * @param targetLocation Target location: 'tambo' (default) or 'ui'
  */
 export function updateImportPaths(
   content: string,
-  targetLocation: "genui" | "ui" = "genui",
+  targetLocation: "tambo" | "ui" = "tambo",
 ): string {
   let result = content;
 
-  // Transform @workspace/ui-registry imports to user project paths
+  // Transform @tambo-ai/ui-registry imports to user project paths
   // These are the imports used in the centralized ui-registry package
   const componentSubdir =
-    targetLocation === "genui" ? COMPONENT_SUBDIR : LEGACY_COMPONENT_SUBDIR;
+    targetLocation === "tambo" ? COMPONENT_SUBDIR : LEGACY_COMPONENT_SUBDIR;
 
-  // @workspace/ui-registry/utils -> @/lib/utils
-  result = result.replace(/@workspace\/ui-registry\/utils/g, "@/lib/utils");
+  // @tambo-ai/ui-registry/utils -> @/lib/utils
+  result = result.replace(/@tambo-ai\/ui-registry\/utils/g, "@/lib/utils");
 
-  // @workspace/ui-registry/lib/* -> @/lib/*
-  result = result.replace(/@workspace\/ui-registry\/lib\//g, "@/lib/");
+  // @tambo-ai/ui-registry/lib/* -> @/lib/*
+  result = result.replace(/@tambo-ai\/ui-registry\/lib\//g, "@/lib/");
 
-  // @workspace/ui-registry/components/* -> @/components/genui/* (or ui/)
+  // @tambo-ai/ui-registry/components/* -> @/components/tambo/* (or ui/)
   result = result.replace(
-    /@workspace\/ui-registry\/components\//g,
+    /@tambo-ai\/ui-registry\/components\//g,
     `@/components/${componentSubdir}/`,
   );
 
-  // @workspace/ui-registry/base/* -> @/components/genui/base/* (or ui/base/)
+  // @tambo-ai/ui-registry/base/* -> @/components/tambo/base/* (or ui/base/)
   // Base components are headless primitives that styled components depend on
   result = result.replace(
-    /@workspace\/ui-registry\/base\//g,
+    /@tambo-ai\/ui-registry\/base\//g,
     `@/components/${componentSubdir}/base/`,
   );
 
@@ -63,8 +63,8 @@ export function updateImportPaths(
     `from "@/components/${componentSubdir}/base/`,
   );
 
-  // Also handle legacy @/components/ui/ -> @/components/genui/ transformations
-  if (targetLocation === "genui") {
+  // Also handle legacy @/components/ui/ -> @/components/tambo/ transformations
+  if (targetLocation === "tambo") {
     result = result.replace(
       /@\/components\/ui\//g,
       `@/components/${COMPONENT_SUBDIR}/`,
@@ -108,19 +108,19 @@ export async function handleMigrate(options: MigrateOptions = {}) {
     }
 
     // Get detailed component information
-    const { mainComponents, supportComponents } = getGenuiComponentInfo();
+    const { mainComponents, supportComponents } = getTamboComponentInfo();
 
     // Categorize components
-    const mainGenuiComponents: string[] = [];
-    const supportGenuiComponents: string[] = [];
+    const mainTamboComponents: string[] = [];
+    const supportTamboComponents: string[] = [];
     const customComponents: string[] = [];
 
     componentFiles.forEach((file) => {
       const componentName = file.replace(".tsx", "");
       if (mainComponents.has(componentName)) {
-        mainGenuiComponents.push(file);
+        mainTamboComponents.push(file);
       } else if (supportComponents.has(componentName)) {
-        supportGenuiComponents.push(file);
+        supportTamboComponents.push(file);
       } else {
         customComponents.push(file);
       }
@@ -131,20 +131,20 @@ export async function handleMigrate(options: MigrateOptions = {}) {
       chalk.blue(`\nFound ${componentFiles.length} components to migrate:`),
     );
 
-    if (mainGenuiComponents.length > 0) {
+    if (mainTamboComponents.length > 0) {
       console.log(
-        chalk.green(`  Genui components (${mainGenuiComponents.length}):`),
+        chalk.green(`  Tambo components (${mainTamboComponents.length}):`),
       );
-      mainGenuiComponents.forEach((file) => console.log(`    - ${file}`));
+      mainTamboComponents.forEach((file) => console.log(`    - ${file}`));
     }
 
-    if (supportGenuiComponents.length > 0) {
+    if (supportTamboComponents.length > 0) {
       console.log(
         chalk.cyan(
-          `  Genui support components (${supportGenuiComponents.length}):`,
+          `  Tambo support components (${supportTamboComponents.length}):`,
         ),
       );
-      supportGenuiComponents.forEach((file) => console.log(`    - ${file}`));
+      supportTamboComponents.forEach((file) => console.log(`    - ${file}`));
     }
 
     if (customComponents.length > 0) {
@@ -186,8 +186,8 @@ export async function handleMigrate(options: MigrateOptions = {}) {
       }
     }
 
-    // Calculate Genui files count early
-    const genuiFiles = [...mainGenuiComponents, ...supportGenuiComponents];
+    // Calculate Tambo files count early
+    const tamboFiles = [...mainTamboComponents, ...supportTamboComponents];
 
     // Update dry-run
     if (options.dryRun) {
@@ -195,7 +195,7 @@ export async function handleMigrate(options: MigrateOptions = {}) {
       console.log(chalk.gray("Would perform the following actions:\n"));
       console.log(chalk.gray(`1. Create directory: ${newPath}`));
       console.log(
-        chalk.gray(`2. Move ${genuiFiles.length} Genui component files`),
+        chalk.gray(`2. Move ${tamboFiles.length} Tambo component files`),
       );
       if (customComponents.length > 0) {
         console.log(
@@ -214,7 +214,7 @@ export async function handleMigrate(options: MigrateOptions = {}) {
         {
           type: "confirm",
           name: "confirm",
-          message: `Migrate ${genuiFiles.length} Genui components from ${LEGACY_COMPONENT_SUBDIR}/ to ${COMPONENT_SUBDIR}/?`,
+          message: `Migrate ${tamboFiles.length} Tambo components from ${LEGACY_COMPONENT_SUBDIR}/ to ${COMPONENT_SUBDIR}/?`,
           default: true,
         },
         chalk.yellow("Use --yes flag to auto-proceed with migration."),
@@ -236,7 +236,7 @@ export async function handleMigrate(options: MigrateOptions = {}) {
       const errors: string[] = [];
 
       // Move files and update imports
-      for (const file of genuiFiles) {
+      for (const file of tamboFiles) {
         try {
           const { name: componentName } = path.parse(file);
           const oldFile = getComponentFilePath(legacyPath, componentName);
@@ -244,7 +244,7 @@ export async function handleMigrate(options: MigrateOptions = {}) {
 
           // Read content and update import paths
           const content = fs.readFileSync(oldFile, "utf-8");
-          const updatedContent = updateImportPaths(content, "genui");
+          const updatedContent = updateImportPaths(content, "tambo");
 
           // Write to new location
           fs.writeFileSync(newFile, updatedContent);
@@ -277,7 +277,7 @@ export async function handleMigrate(options: MigrateOptions = {}) {
 
       console.log(
         chalk.green(
-          `\n✨ Successfully migrated ${successCount} Genui components to ${COMPONENT_SUBDIR}/`,
+          `\n✨ Successfully migrated ${successCount} Tambo components to ${COMPONENT_SUBDIR}/`,
         ),
       );
 
@@ -295,12 +295,12 @@ export async function handleMigrate(options: MigrateOptions = {}) {
       console.log(chalk.gray("1. Update your imports in non-component files:"));
       console.log(
         chalk.gray(
-          `   From: @/components/${LEGACY_COMPONENT_SUBDIR}/genui-component-name`,
+          `   From: @/components/${LEGACY_COMPONENT_SUBDIR}/tambo-component-name`,
         ),
       );
       console.log(
         chalk.gray(
-          `   To:   @/components/${COMPONENT_SUBDIR}/genui-component-name`,
+          `   To:   @/components/${COMPONENT_SUBDIR}/tambo-component-name`,
         ),
       );
       console.log(
@@ -310,7 +310,7 @@ export async function handleMigrate(options: MigrateOptions = {}) {
       );
       console.log(
         chalk.gray(
-          "\n3. Update your genui.ts file if you have custom components registered",
+          "\n3. Update your tambo.ts file if you have custom components registered",
         ),
       );
       console.log(chalk.gray("\n4. Restart your development server"));

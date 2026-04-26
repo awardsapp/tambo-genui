@@ -1,12 +1,12 @@
-# genui ui
+# tambo ui
 
-A component library for genui ai.
+A component library for tambo ai.
 
 [![Next.js](https://img.shields.io/badge/Next.js-15.1.7-black)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19.0.0-blue)](https://reactjs.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4.17-38B2AC)](https://tailwindcss.com/)
 
-A react component library for [genui ai](https://genui.co).
+A react component library for [tambo ai](https://tambo.co).
 
 ## Components
 
@@ -56,7 +56,7 @@ More components `coming soon`!
 
 ```bash
 # Install the full package
-npx genui full-send
+npx tambo full-send
 ```
 
 ### Installing Main Components
@@ -65,9 +65,9 @@ Install the core components one by one:
 
 ```bash
 # Message Thread Components
-npx genui add MessageThread@latest
-npx genui add MessageThreadCollapsible@latest
-npx genui add MessageThreadPanel@latest
+npx tambo add MessageThread@latest
+npx tambo add MessageThreadCollapsible@latest
+npx tambo add MessageThreadPanel@latest
 ```
 
 ### Installing Sub-Components
@@ -76,30 +76,30 @@ For more granular control, install individual sub-components:
 
 ```bash
 # Thread Components
-npx genui add ThreadContent@latest
-npx genui add ThreadList@latest
-npx genui add ThreadHistory@latest
+npx tambo add ThreadContent@latest
+npx tambo add ThreadList@latest
+npx tambo add ThreadHistory@latest
 
 # Form Components
-npx genui add Form@latest
-npx genui add InputFields@latest
+npx tambo add Form@latest
+npx tambo add InputFields@latest
 ```
 
-For more detailed information about the CLI and its available commands, see the [genui CLI documentation](https://github.com/genui-ai/genui/tree/main/cli).
+For more detailed information about the CLI and its available commands, see the [tambo CLI documentation](https://github.com/tambo-ai/tambo/tree/main/cli).
 
 See demos of the components in action:
 
---> [here](https://ui.genui.co) <--
+--> [here](https://ui.tambo.co) <--
 
 ## License
 
-MIT License - see the [LICENSE](https://github.com/genui-ai/genui/blob/main/LICENSE) file for details.
+MIT License - see the [LICENSE](https://github.com/tambo-ai/tambo/blob/main/LICENSE) file for details.
 
 ## Join the Community
 
 We're building tools for the future of user interfaces. Your contributions matter.
 
-**[Star this repo](https://github.com/genui-ai/genui)** to support our work.
+**[Star this repo](https://github.com/tambo-ai/tambo)** to support our work.
 
 **[Join our Discord](https://discord.gg/dJNvPEHth6)** to connect with other developers.
 

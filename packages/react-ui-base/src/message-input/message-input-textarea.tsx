@@ -10,7 +10,7 @@ import {
   type ResourceItem,
   type ResourceProvider,
   type StagedImage,
-  type GenuiEditor,
+  type TamboEditor,
 } from "./message-input-context";
 import {
   useCombinedPromptList,
@@ -37,7 +37,7 @@ export interface MessageInputTextareaState extends Record<string, unknown> {
   /** Placeholder text */
   placeholder: string;
   /** Reference to the editor */
-  editorRef: React.RefObject<GenuiEditor | null>;
+  editorRef: React.RefObject<TamboEditor | null>;
   /** Add a single image to the staged list */
   addImage: (file: File) => Promise<void>;
   /** Currently staged images */

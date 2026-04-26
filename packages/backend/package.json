@@ -1,5 +1,5 @@
 {
-  "name": "@workspace-cloud/backend",
+  "name": "@tambo-ai-cloud/backend",
   "version": "0.0.6",
   "description": "Supporting package for running the Tambo AI service",
   "type": "module",
@@ -42,7 +42,7 @@
     "@aws-sdk/s3-request-presigner": "^3.700.0",
     "@mastra/client-js": "^1.1.0",
     "@mastra/core": "^1.1.0",
-    "@workspace-cloud/core": "*",
+    "@tambo-ai-cloud/core": "*",
     "ai": "^6.0.138",
     "ajv": "^8.18.0",
     "fast-json-patch": "^3.1.1",
@@ -57,8 +57,8 @@
     "zod-to-json-schema": "^3.25.1"
   },
   "devDependencies": {
-    "@workspace/eslint-config": "*",
-    "@workspace/typescript-config": "*",
+    "@tambo-ai/eslint-config": "*",
+    "@tambo-ai/typescript-config": "*",
     "@types/jest": "^30.0.0",
     "@types/json-schema": "^7.0.15",
     "@types/mime-types": "^3.0.1",

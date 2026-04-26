@@ -25,10 +25,10 @@ export default function HeaderBar() {
         <div className="flex w-full items-center">
           {/* Left section - Logo */}
           <div className="flex-1 flex justify-start">
-            <Link href="/" aria-label="Genui">
+            <Link href="/" aria-label="Tambo">
               <Image
-                src="/logo/lockup/Genui-Lockup.svg"
-                alt="Genui Lockup"
+                src="/logo/lockup/Tambo-Lockup.svg"
+                alt="Tambo Lockup"
                 width={100}
                 height={26}
                 className="h-7 w-auto"
@@ -47,13 +47,13 @@ export default function HeaderBar() {
           <div className="flex-1 flex justify-end">
             <nav className="flex items-center gap-2 text-sm">
               <Link
-                href="https://genui.co/discord"
+                href="https://tambo.co/discord"
                 className="inline-flex items-center justify-center rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
               >
                 Discord
               </Link>
               <Link
-                href="https://genui.co/gh"
+                href="https://tambo.co/gh"
                 className="inline-flex items-center justify-center rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
               >
                 GitHub{" "}
@@ -62,7 +62,7 @@ export default function HeaderBar() {
                 </span>
               </Link>
               <Link
-                href="https://console.genui.co"
+                href="https://console.tambo.co"
                 className="inline-flex items-center justify-center rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
               >
                 Dashboard

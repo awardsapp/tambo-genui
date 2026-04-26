@@ -17,7 +17,7 @@ jest.unstable_mockModule("fs", () => ({
 
 // Mock the utils module to provide test registry data
 jest.unstable_mockModule("../add/utils.js", () => ({
-  getGenuiComponentInfo: () => ({
+  getTamboComponentInfo: () => ({
     mainComponents: new Set(["message", "form", "graph"]),
     supportComponents: new Set(["markdown-components"]),
     allComponents: new Set(["message", "form", "graph", "markdown-components"]),
@@ -118,8 +118,8 @@ describe("handleListComponents", () => {
     });
   });
 
-  describe("new location (genui/) components", () => {
-    it("should list components in the new genui/ directory", async () => {
+  describe("new location (tambo/) components", () => {
+    it("should list components in the new tambo/ directory", async () => {
       // Setup: Project with components in new location and matching registry
       const structure = createBasicProjectStructure({
         hasPackageJson: true,
@@ -137,14 +137,14 @@ describe("handleListComponents", () => {
       // Verify output
       const output = logs.join("\n");
       expect(output).toContain("Installed components:");
-      expect(output).toContain("In genui/:");
+      expect(output).toContain("In tambo/:");
       expect(output).toContain("message");
       expect(output).toContain("form");
       expect(output).toContain("Total: 2 component(s)");
     });
 
-    it("should categorize Genui components correctly", async () => {
-      // Setup: Project with main Genui component
+    it("should categorize Tambo components correctly", async () => {
+      // Setup: Project with main Tambo component
       const structure = createBasicProjectStructure({
         hasPackageJson: true,
         newComponents: ["message"],
@@ -159,9 +159,9 @@ describe("handleListComponents", () => {
 
       // Verify categorization
       const output = logs.join("\n");
-      expect(output).toContain("Genui components:");
+      expect(output).toContain("Tambo components:");
       expect(output).toContain("message");
-      expect(output).toContain("(1 from Genui, 0 custom)");
+      expect(output).toContain("(1 from Tambo, 0 custom)");
     });
 
     it("should categorize support components correctly", async () => {
@@ -184,15 +184,15 @@ describe("handleListComponents", () => {
 
       // Verify support component categorization
       const output = logs.join("\n");
-      expect(output).toContain("Genui components:");
+      expect(output).toContain("Tambo components:");
       expect(output).toContain("message");
-      expect(output).toContain("Genui support components:");
+      expect(output).toContain("Tambo support components:");
       expect(output).toContain("markdown-components");
-      expect(output).toContain("(2 from Genui, 0 custom)");
+      expect(output).toContain("(2 from Tambo, 0 custom)");
     });
 
     it("should identify custom components", async () => {
-      // Setup: Mix of Genui and custom components
+      // Setup: Mix of Tambo and custom components
       const structure = createBasicProjectStructure({
         hasPackageJson: true,
         newComponents: ["message", "custom-widget"],
@@ -207,11 +207,11 @@ describe("handleListComponents", () => {
 
       // Verify custom component identification
       const output = logs.join("\n");
-      expect(output).toContain("Genui components:");
+      expect(output).toContain("Tambo components:");
       expect(output).toContain("message");
       expect(output).toContain("Custom components:");
       expect(output).toContain("custom-widget");
-      expect(output).toContain("(1 from Genui, 1 custom)");
+      expect(output).toContain("(1 from Tambo, 1 custom)");
     });
   });
 
@@ -238,8 +238,8 @@ describe("handleListComponents", () => {
       expect(output).toContain("form");
     });
 
-    it("should show migration instructions for legacy Genui components", async () => {
-      // Setup: Genui components in legacy location
+    it("should show migration instructions for legacy Tambo components", async () => {
+      // Setup: Tambo components in legacy location
       const structure = createBasicProjectStructure({
         hasPackageJson: true,
         legacyComponents: ["message"],
@@ -255,8 +255,8 @@ describe("handleListComponents", () => {
       // Verify migration instructions
       const output = logs.join("\n");
       expect(output).toContain("To migrate to the new directory structure:");
-      expect(output).toContain("Move all files from ui/ to genui/");
-      expect(output).toContain("npx genui migrate");
+      expect(output).toContain("Move all files from ui/ to tambo/");
+      expect(output).toContain("npx tambo migrate");
     });
 
     it("should not show migration instructions for custom components only", async () => {
@@ -299,7 +299,7 @@ describe("handleListComponents", () => {
 
       // Verify both locations are shown
       const output = logs.join("\n");
-      expect(output).toContain("In genui/:");
+      expect(output).toContain("In tambo/:");
       expect(output).toContain("In ui/ (legacy location):");
       expect(output).toContain("message");
       expect(output).toContain("form");
@@ -323,7 +323,7 @@ describe("handleListComponents", () => {
 
       // Verify output shows both locations
       const output = logs.join("\n");
-      expect(output).toContain("In genui/:");
+      expect(output).toContain("In tambo/:");
       expect(output).toContain("In ui/ (legacy location):");
       expect(output).toContain("message");
     });
@@ -331,7 +331,7 @@ describe("handleListComponents", () => {
 
   describe("with explicit prefix", () => {
     it("should use explicit prefix when provided", async () => {
-      // Setup: Components at explicit path (not in genui/ subdirectory)
+      // Setup: Components at explicit path (not in tambo/ subdirectory)
       const structure: Record<string, string> = {
         "/mock-project/package.json": JSON.stringify({
           name: "test-project",
@@ -360,7 +360,7 @@ describe("handleListComponents", () => {
 
   describe("summary statistics", () => {
     it("should show correct totals for mixed component types", async () => {
-      // Setup: Mix of Genui main, support, and custom components
+      // Setup: Mix of Tambo main, support, and custom components
       const structure = createBasicProjectStructure({
         hasPackageJson: true,
         newComponents: ["message", "markdown-components", "custom-widget"],
@@ -380,7 +380,7 @@ describe("handleListComponents", () => {
       // Verify summary
       const output = logs.join("\n");
       expect(output).toContain("Total: 3 component(s)");
-      expect(output).toContain("(2 from Genui, 1 custom)");
+      expect(output).toContain("(2 from Tambo, 1 custom)");
     });
   });
 });

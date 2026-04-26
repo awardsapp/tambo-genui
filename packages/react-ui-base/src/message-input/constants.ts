@@ -8,5 +8,5 @@ export const MAX_IMAGES = 10;
  * Uses a unique well-known symbol to detect if an image was pasted vs uploaded.
  */
 export const IS_PASTED_IMAGE: unique symbol = Symbol.for(
-  "genui-is-pasted-image",
+  "tambo-is-pasted-image",
 ) as typeof IS_PASTED_IMAGE;

@@ -3,7 +3,7 @@
 import type {
   ReactTamboThreadMessage,
   TamboToolUseContent,
-} from "@workspace/react";
+} from "@tambo-ai/react";
 import {
   Message as MessageBase,
   type MessageContentProps as MessageBaseContentProps,
@@ -11,16 +11,16 @@ import {
   type MessageRenderedComponentProps as MessageBaseRenderedComponentProps,
   type MessageLoadingIndicatorProps,
   type MessageRootProps,
-} from "@workspace/react-ui-base/message";
+} from "@tambo-ai/react-ui-base/message";
 import {
   ReasoningInfo as ReasoningInfoBase,
   type ReasoningInfoRootProps,
-} from "@workspace/react-ui-base/reasoning-info";
+} from "@tambo-ai/react-ui-base/reasoning-info";
 import {
   ToolcallInfo as ToolcallInfoBase,
   type ToolcallInfoRootProps as ToolcallInfoBaseRootProps,
-} from "@workspace/react-ui-base/toolcall-info";
-import { cn } from "@workspace/ui-registry/utils";
+} from "@tambo-ai/react-ui-base/toolcall-info";
+import { cn } from "@tambo-ai/ui-registry/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Check, ChevronDown, ExternalLink, Loader2, X } from "lucide-react";
 import * as React from "react";

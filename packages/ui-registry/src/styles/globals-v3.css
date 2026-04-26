@@ -18,7 +18,7 @@ body {
 
 @layer base {
   :root {
-    /* Default Tailwind CSS Variables customized with genui colors */
+    /* Default Tailwind CSS Variables customized with tambo colors */
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
@@ -43,7 +43,7 @@ body {
     --chart-4: 160 60% 45.1%;
     --chart-5: 280 64.7% 60%;
 
-    /* Genui Specific Variables needed for genui components */
+    /* Tambo Specific Variables needed for tambo components */
     --radius: 0.5rem;
     --container: 210 29% 97%;
     --backdrop: 210 88% 14% / 0.25;
@@ -53,7 +53,7 @@ body {
     --sidebar-width: 3rem;
   }
   .dark {
-    /* Default Tailwind CSS Variables customized with genui colors */
+    /* Default Tailwind CSS Variables customized with tambo colors */
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
     --card: 240 10% 3.9%;
@@ -78,7 +78,7 @@ body {
     --chart-4: 160 60% 45.1%;
     --chart-5: 280 64.7% 60%;
 
-    /* Genui Specific Variables needed for genui components */
+    /* Tambo Specific Variables needed for tambo components */
     --radius: 0.5rem;
     --container: 210 29% 97%;
     --backdrop: 210 88% 14% / 0.25;

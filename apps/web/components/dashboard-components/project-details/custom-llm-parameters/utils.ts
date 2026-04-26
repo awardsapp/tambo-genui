@@ -3,7 +3,7 @@ import {
   JSONValue,
   LlmParameterUIType,
   llmProviderConfig,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 import { ParameterEntry } from "./types";
 
 /**

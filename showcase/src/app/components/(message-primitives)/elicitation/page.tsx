@@ -1,16 +1,16 @@
 "use client";
 
 import { InstallationSection } from "@/components/installation-section";
-import { ElicitationUI } from "@workspace/ui-registry/components/elicitation-ui";
+import { ElicitationUI } from "@tambo-ai/ui-registry/components/elicitation-ui";
 import type {
-  GenuiElicitationRequest,
-  GenuiElicitationResponse,
-} from "@workspace/react/mcp";
+  TamboElicitationRequest,
+  TamboElicitationResponse,
+} from "@tambo-ai/react/mcp";
 import type { ReactNode } from "react";
 import { useState } from "react";
 
 // Request constants for all 8 examples
-const booleanRequest: GenuiElicitationRequest = {
+const booleanRequest: TamboElicitationRequest = {
   message: "Do you want to delete all temporary files?",
   requestedSchema: {
     type: "object",
@@ -24,7 +24,7 @@ const booleanRequest: GenuiElicitationRequest = {
   },
 };
 
-const enumRequest: GenuiElicitationRequest = {
+const enumRequest: TamboElicitationRequest = {
   message: "What would you like to do?",
   requestedSchema: {
     type: "object",
@@ -40,7 +40,7 @@ const enumRequest: GenuiElicitationRequest = {
   },
 };
 
-const textRequest: GenuiElicitationRequest = {
+const textRequest: TamboElicitationRequest = {
   message: "Please provide the API endpoint URL",
   requestedSchema: {
     type: "object",
@@ -55,7 +55,7 @@ const textRequest: GenuiElicitationRequest = {
   },
 };
 
-const numberRequest: GenuiElicitationRequest = {
+const numberRequest: TamboElicitationRequest = {
   message: "How many workers should be started?",
   requestedSchema: {
     type: "object",
@@ -71,7 +71,7 @@ const numberRequest: GenuiElicitationRequest = {
   },
 };
 
-const multipleFieldsRequest: GenuiElicitationRequest = {
+const multipleFieldsRequest: TamboElicitationRequest = {
   message: "Please provide database connection details",
   requestedSchema: {
     type: "object",
@@ -99,7 +99,7 @@ const multipleFieldsRequest: GenuiElicitationRequest = {
   },
 };
 
-const emailRequest: GenuiElicitationRequest = {
+const emailRequest: TamboElicitationRequest = {
   message: "Please provide your email address",
   requestedSchema: {
     type: "object",
@@ -114,7 +114,7 @@ const emailRequest: GenuiElicitationRequest = {
   },
 };
 
-const optionalRequest: GenuiElicitationRequest = {
+const optionalRequest: TamboElicitationRequest = {
   message: "Configure report settings",
   requestedSchema: {
     type: "object",
@@ -136,7 +136,7 @@ const optionalRequest: GenuiElicitationRequest = {
   },
 };
 
-const deploymentRequest: GenuiElicitationRequest = {
+const deploymentRequest: TamboElicitationRequest = {
   message: "Configure deployment settings",
   requestedSchema: {
     type: "object",
@@ -269,7 +269,7 @@ export default function ElicitationPage() {
             from MCP servers. For detailed information about elicitation in MCP,
             see the{" "}
             <a
-              href="https://docs.genui.co/concepts/model-context-protocol/features#elicitations"
+              href="https://docs.tambo.co/concepts/model-context-protocol/features#elicitations"
               className="text-primary-link hover:underline"
             >
               elicitation documentation
@@ -282,7 +282,7 @@ export default function ElicitationPage() {
       <section>
         <h2 className="text-2xl font-semibold">Installation</h2>
         <div className="not-prose space-y-4">
-          <InstallationSection cliCommand="npx genui add elicitation-ui" />
+          <InstallationSection cliCommand="npx tambo add elicitation-ui" />
           <div className="rounded-lg border border-border bg-muted/40 p-4 text-sm text-foreground">
             <p className="font-semibold mb-2">Note:</p>
             <p>
@@ -461,7 +461,7 @@ export default function ElicitationPage() {
               <tbody>
                 <tr>
                   <td>request</td>
-                  <td>GenuiElicitationRequest</td>
+                  <td>TamboElicitationRequest</td>
                   <td>-</td>
                   <td>
                     The active elicitation payload from the MCP server. Includes
@@ -471,7 +471,7 @@ export default function ElicitationPage() {
                 </tr>
                 <tr>
                   <td>onResponse</td>
-                  <td>(response: GenuiElicitationResponse) =&gt; void</td>
+                  <td>(response: TamboElicitationResponse) =&gt; void</td>
                   <td>-</td>
                   <td>
                     Callback fired when the user accepts, declines, or cancels
@@ -605,8 +605,8 @@ export default function ElicitationPage() {
   );
 }
 
-function ExamplePreview({ request }: { request: GenuiElicitationRequest }) {
-  const [response, setResponse] = useState<GenuiElicitationResponse | null>(
+function ExamplePreview({ request }: { request: TamboElicitationRequest }) {
+  const [response, setResponse] = useState<TamboElicitationResponse | null>(
     null,
   );
 
@@ -633,7 +633,7 @@ function ExamplePreview({ request }: { request: GenuiElicitationRequest }) {
   );
 }
 
-function RequestDisclosure({ request }: { request: GenuiElicitationRequest }) {
+function RequestDisclosure({ request }: { request: TamboElicitationRequest }) {
   return (
     <details className="rounded-md border border-dashed border-border bg-muted/40 p-3 text-sm text-muted-foreground">
       <summary className="cursor-pointer font-medium text-foreground">

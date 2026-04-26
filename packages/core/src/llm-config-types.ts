@@ -96,8 +96,8 @@ export interface LlmModelConfigInfo<ModelId extends string = string> {
   notes?: string;
   /** Link to external documentation about the model or its issues */
   docLink?: string;
-  /** Link to Genui's documentation about the model or its issues */
-  genuiDocLink?: string;
+  /** Link to Tambo's documentation about the model or its issues */
+  tamboDocLink?: string;
   /** Additional capabilities of the model */
   commonParametersDefaults?: CommonParametersDefaults;
   /** Any parameters that are specific to just this model, such as reasoning or modality */

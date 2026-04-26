@@ -10,7 +10,7 @@ import Image from "next/image";
 const testimonials = [
   {
     id: 1,
-    text: "genui ai has revolutionized how we build user interfaces. The AI-powered generation is incredibly intuitive.",
+    text: "tambo ai has revolutionized how we build user interfaces. The AI-powered generation is incredibly intuitive.",
     name: "Alice Johnson",
     company: "OpenMind Labs",
     image:
@@ -18,7 +18,7 @@ const testimonials = [
   },
   {
     id: 2,
-    text: "We've significantly reduced development time using genui ai. The rapid prototyping feature is a game-changer.",
+    text: "We've significantly reduced development time using tambo ai. The rapid prototyping feature is a game-changer.",
     name: "Bob Brown",
     company: "NeuralForge",
     image:
@@ -26,7 +26,7 @@ const testimonials = [
   },
   {
     id: 3,
-    text: "The seamless integration allowed us to incorporate genui ai into our existing React projects effortlessly.",
+    text: "The seamless integration allowed us to incorporate tambo ai into our existing React projects effortlessly.",
     name: "Charlie Davis",
     company: "CodeHarbor",
     image:
@@ -58,7 +58,7 @@ const testimonials = [
   },
   {
     id: 7,
-    text: "genui ai's ability to adapt to our project's design system has been invaluable for maintaining consistency across our application.",
+    text: "tambo ai's ability to adapt to our project's design system has been invaluable for maintaining consistency across our application.",
     name: "George Harris",
     company: "DesignFlow",
     image:
@@ -74,7 +74,7 @@ const testimonials = [
   },
   {
     id: 9,
-    text: "We've been able to iterate on our UI components much faster with genui ai's rapid prototyping capabilities.",
+    text: "We've been able to iterate on our UI components much faster with tambo ai's rapid prototyping capabilities.",
     name: "Ian Jackson",
     company: "AgileWorks",
     image:
@@ -90,7 +90,7 @@ const testimonials = [
   },
   {
     id: 11,
-    text: "genui ai has helped us reduce our development costs while improving the quality of our user interfaces.",
+    text: "tambo ai has helped us reduce our development costs while improving the quality of our user interfaces.",
     name: "Kevin Lee",
     company: "EfficientDev",
     image:
@@ -126,7 +126,7 @@ export function Testimonials({ count = 3 }: TestimonialsProps) {
         </h2>
         <p className="mt-4 text-lg text-muted-foreground max-w-2xl">
           Join thousands of developers who are already building amazing
-          experiences with genui ai.
+          experiences with tambo ai.
         </p>
       </div>
       <div className="border-t">

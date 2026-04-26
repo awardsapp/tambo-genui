@@ -1,14 +1,14 @@
 {
-  "name": "genui",
+  "name": "tambo",
   "version": "0.56.0",
-  "description": "Genui CLI for scaffolding and managing AI applications",
+  "description": "Tambo CLI for scaffolding and managing AI applications",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/awardsapp/tambo-genui.git",
+    "url": "https://github.com/tambo-ai/tambo.git",
     "directory": "cli"
   },
-  "homepage": "https://genui.co",
+  "homepage": "https://tambo.co",
   "module": "./dist/cli.js",
   "main": "./dist/cli.js",
   "bin": {
@@ -55,7 +55,8 @@
     ]
   },
   "dependencies": {
-    "@workspace/react": "*",
+    "@tambo-ai/react": "*",
+    "@tambo-ai/typescript-sdk": "^0.95.0",
     "@trpc/client": "^11.15.1",
     "@trpc/server": "^11.15.1",
     "chalk": "^5.6.0",
@@ -81,11 +82,10 @@
     "semver": "^7.7.3",
     "streamdown": "^2.3.0",
     "superjson": "^2.2.6",
-    "ts-morph": "^27.0.2",
-    "@tambo-ai/typescript-sdk": "^0.95.0"
+    "ts-morph": "^27.0.2"
   },
   "devDependencies": {
-    "@workspace/ui-registry": "*",
+    "@tambo-ai/ui-registry": "*",
     "@types/cross-spawn": "^6.0.6",
     "@types/diffable-html": "^5.0.2",
     "@types/jest": "^30.0.0",

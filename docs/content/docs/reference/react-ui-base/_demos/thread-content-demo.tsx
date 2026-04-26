@@ -1,10 +1,10 @@
 "use client";
 
 import { DemoPreview } from "@/components/demos/demo-preview";
-import { ThreadContent } from "@workspace/react-ui-base/thread-content";
+import { ThreadContent } from "@tambo-ai/react-ui-base/thread-content";
 
 export const threadContentDemoCode = `
-import { ThreadContent } from "@workspace/react-ui-base/thread-content";
+import { ThreadContent } from "@tambo-ai/react-ui-base/thread-content";
 
 export function DemoThreadContent() {
   return (

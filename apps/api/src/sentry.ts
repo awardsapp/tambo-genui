@@ -53,7 +53,7 @@ if (process.env.SENTRY_DSN) {
     // Tags that will be applied to all events
     initialScope: {
       tags: {
-        service: "genui-cloud",
+        service: "tambo-cloud",
         component: "api",
       },
     },
@@ -76,6 +76,6 @@ if (process.env.SENTRY_DSN) {
     });
 } else {
   console.log(
-    "Sentry DSN not provided, skipping Sentry initialization, if you want to use Sentry, please contact us at support@genui.co",
+    "Sentry DSN not provided, skipping Sentry initialization, if you want to use Sentry, please contact us at support@tambo.co",
   );
 }

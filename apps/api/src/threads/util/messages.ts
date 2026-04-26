@@ -7,14 +7,14 @@ import {
   ThreadMessage,
   UnsavedThreadMessage,
   validateThreadMessage,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 import {
   dbMessageToThreadMessage,
   HydraDb,
   HydraTransaction,
   operations,
   schema,
-} from "@workspace-cloud/db";
+} from "@tambo-ai-cloud/db";
 import { and, eq, isNull } from "drizzle-orm";
 import { MessageRequest, ThreadMessageDto } from "../dto/message.dto";
 import {

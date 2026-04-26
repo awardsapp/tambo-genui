@@ -101,7 +101,7 @@ export function MobileDrawer({
                 "justify-start text-base w-full",
               )}
             >
-              Ask Genui
+              Ask Tambo
             </button>
           </DrawerClose>
           {showLogoutButton && (

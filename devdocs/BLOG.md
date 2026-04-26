@@ -1,6 +1,6 @@
 # Blog Development Guide
 
-A comprehensive guide for developers adding blog posts to the Genui website.
+A comprehensive guide for developers adding blog posts to the Tambo website.
 
 ## How Does It Work?
 
@@ -157,7 +157,7 @@ apps/web/app/blog/posts/
 
 - **Use your full name**: e.g., "Akhilesh Rangani" instead of "akhilesh"
 - **Be consistent**: Use the same name format across all your posts
-- **Team posts**: Use "genui Team" for collaborative posts
+- **Team posts**: Use "tambo Team" for collaborative posts
 
 ## Advanced Features
 
@@ -275,10 +275,10 @@ We're excited to announce the release of our new streaming API that enables real
 Here's how to set up the streaming API in your application:
 
 ```typescript
-import { StreamingAPI } from "@genui/streaming";
+import { StreamingAPI } from "@tambo/streaming";
 
 const api = new StreamingAPI({
-  endpoint: "wss://api.genui.co/stream",
+  endpoint: "wss://api.tambo.co/stream",
   apiKey: "your-api-key",
 });
 

@@ -11,12 +11,12 @@ import { env } from "@/lib/env";
  *
  * Tailwind layout utilities intentionally avoid margin-left (`ml-*`).
  * Instead we pad the group with `pl-2` and rely on `gap-2` for spacing
- * between the Genui logo, partner logo, and partner name.
+ * between the Tambo logo, partner logo, and partner name.
  */
 export function WhitelabelBadge() {
   // Evaluate once so JSX stays tidy.
-  const hasLogo = Boolean(env.NEXT_PUBLIC_GENUI_WHITELABEL_ORG_LOGO);
-  const hasName = Boolean(env.NEXT_PUBLIC_GENUI_WHITELABEL_ORG_NAME);
+  const hasLogo = Boolean(env.NEXT_PUBLIC_TAMBO_WHITELABEL_ORG_LOGO);
+  const hasName = Boolean(env.NEXT_PUBLIC_TAMBO_WHITELABEL_ORG_NAME);
   const hasWhitelabelConfig = hasLogo || hasName;
 
   if (!hasWhitelabelConfig) return null;
@@ -25,7 +25,7 @@ export function WhitelabelBadge() {
     <span className="flex items-center gap-2 pl-2">
       {hasLogo && (
         <Image
-          src={env.NEXT_PUBLIC_GENUI_WHITELABEL_ORG_LOGO!}
+          src={env.NEXT_PUBLIC_TAMBO_WHITELABEL_ORG_LOGO!}
           // Use 24 px height (matching `h-6`) and generous width; CSS keeps it auto.
           height={24}
           width={96}
@@ -33,7 +33,7 @@ export function WhitelabelBadge() {
           className="h-6 w-auto"
           alt={
             hasName
-              ? `${env.NEXT_PUBLIC_GENUI_WHITELABEL_ORG_NAME} logo`
+              ? `${env.NEXT_PUBLIC_TAMBO_WHITELABEL_ORG_NAME} logo`
               : "Organization logo"
           }
           // Disable Next.js priority unless running on homepage; default is fine.
@@ -43,7 +43,7 @@ export function WhitelabelBadge() {
 
       {hasName && (
         <span className="text-sm font-medium">
-          {env.NEXT_PUBLIC_GENUI_WHITELABEL_ORG_NAME}
+          {env.NEXT_PUBLIC_TAMBO_WHITELABEL_ORG_NAME}
         </span>
       )}
     </span>

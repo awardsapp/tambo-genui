@@ -5,7 +5,7 @@ export * from "./sessions";
 export * from "./suggestions";
 export * from "./thread";
 export * from "./logs";
-export * from "./genui-user";
+export * from "./tambo-user";
 export * from "./mcp-usage";
 export * from "./runs";
 export * from "./skills";

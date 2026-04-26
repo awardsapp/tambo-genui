@@ -1,4 +1,4 @@
-import type { ThreadListResponse } from "@workspace/react";
+import type { ThreadListResponse } from "@tambo-ai/react";
 import * as React from "react";
 
 /** Thread item from the thread list API. */

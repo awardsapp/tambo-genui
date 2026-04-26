@@ -1,7 +1,7 @@
 /**
- * @workspace/react-ui-base
+ * @tambo-ai/react-ui-base
  *
- * Unstyled base components for building Genui UI.
+ * Unstyled base components for building Tambo UI.
  * These primitives provide structure and behavior without styling,
  * allowing consumers to apply their own design system.
  */
@@ -78,7 +78,7 @@ export type {
   ResourceProvider,
   StagedImage,
   StagedImageState,
-  GenuiEditor,
+  TamboEditor,
 } from "./message-input";
 
 // ThreadDropdown components

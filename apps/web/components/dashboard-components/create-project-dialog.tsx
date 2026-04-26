@@ -192,7 +192,7 @@ export function CreateProjectDialog({
             />
             <div className="space-y-1 p-2">
               <p className="text-xs text-foreground">
-                Try Genui instantly with 500 starter LLM calls. Genui is BYO
+                Try Tambo instantly with 500 starter LLM calls. Tambo is BYO
                 Model: add your own key when you’re ready to scale or experiment
                 with other providers.
               </p>

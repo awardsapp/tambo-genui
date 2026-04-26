@@ -1,4 +1,4 @@
-import GenuiAI from "@workspace/typescript-sdk";
+import TamboAI from "@tambo-ai/typescript-sdk";
 import type { PartialDeep } from "type-fest";
 
-export type PartialGenuiAI = PartialDeep<GenuiAI>;
+export type PartialTamboAI = PartialDeep<TamboAI>;

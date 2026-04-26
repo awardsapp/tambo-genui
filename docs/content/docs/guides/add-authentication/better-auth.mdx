@@ -1,9 +1,9 @@
 ---
 title: Better Auth
-description: Learn how to integrate Genui with Better Auth for user authentication.
+description: Learn how to integrate Tambo with Better Auth for user authentication.
 ---
 
-Better Auth is a modern authentication library that provides built-in support for multiple providers and plugins. This guide shows how to integrate it with Genui in a Next.js application.
+Better Auth is a modern authentication library that provides built-in support for multiple providers and plugins. This guide shows how to integrate it with Tambo in a Next.js application.
 
 <Callout type="info" title="Prerequisites">
   This guide assumes you've already set up Better Auth in your Next.js
@@ -16,7 +16,7 @@ Better Auth is a modern authentication library that provides built-in support fo
 Install the required packages:
 
 ```bash
-npm install better-auth @workspace/react
+npm install better-auth @tambo-ai/react
 ```
 
 ## Integration Options
@@ -60,7 +60,7 @@ export default async function RootLayout({
 ```tsx title="app/client-layout.tsx"
 "use client";
 
-import { GenuiProvider } from "@workspace/react";
+import { TamboProvider } from "@tambo-ai/react";
 import { ReactNode } from "react";
 
 interface ClientLayoutProps {
@@ -72,7 +72,7 @@ export default function ClientLayout({
   children,
   userToken,
 }: ClientLayoutProps) {
-  return <GenuiProvider userToken={userToken}>{children}</GenuiProvider>;
+  return <TamboProvider userToken={userToken}>{children}</TamboProvider>;
 }
 ```
 
@@ -90,7 +90,7 @@ Use this approach when you need real-time authentication state management or cli
 "use client";
 
 import { authClient } from "./lib/auth-client";
-import { GenuiProvider } from "@workspace/react";
+import { TamboProvider } from "@tambo-ai/react";
 import { ReactNode } from "react";
 
 interface ClientLayoutProps {
@@ -100,16 +100,16 @@ interface ClientLayoutProps {
 export default function ClientLayout({ children }: ClientLayoutProps) {
   const { data: session } = authClient.useSession();
 
-  return <GenuiProvider userToken={session?.token}>{children}</GenuiProvider>;
+  return <TamboProvider userToken={session?.token}>{children}</TamboProvider>;
 }
 ```
 
 ## Usage
 
-Once configured, you can use Genui components throughout your application. The authentication context is automatically handled:
+Once configured, you can use Tambo components throughout your application. The authentication context is automatically handled:
 
 ```tsx title="app/dashboard/page.tsx"
-import { MessageThreadFull } from "@components/genui/message-thread-full";
+import { MessageThreadFull } from "@components/tambo/message-thread-full";
 
 export default function Dashboard() {
   return (
@@ -123,9 +123,9 @@ export default function Dashboard() {
 
 ## Next Steps
 
-Your Genui integration is now complete. The `GenuiProvider` will automatically:
+Your Tambo integration is now complete. The `TamboProvider` will automatically:
 
-- Exchange your Better Auth token for a Genui token
-- Refresh the Genui token when it expires
+- Exchange your Better Auth token for a Tambo token
+- Refresh the Tambo token when it expires
 - Handle authentication state changes
-- Provide user isolation for all Genui API calls
+- Provide user isolation for all Tambo API calls

@@ -1,9 +1,9 @@
 ---
 title: Common Workflows
-description: Step-by-step Genui CLI workflows for new projects, existing React apps, component management, and ongoing maintenance.
+description: Step-by-step Tambo CLI workflows for new projects, existing React apps, component management, and ongoing maintenance.
 ---
 
-This guide covers the most common workflows you'll use with the Genui CLI, organized by scenario and use case.
+This guide covers the most common workflows you'll use with the Tambo CLI, organized by scenario and use case.
 
 ## Getting Started Workflows
 
@@ -38,7 +38,7 @@ npx tambo add message-thread-full
 
 <Callout type="info" title="API Key Required">
   After running `init` or `full-send`, make sure to add your API key to
-  `.env.local`: ``` NEXT_PUBLIC_GENUI_API_KEY=your_api_key_here ```
+  `.env.local`: ``` NEXT_PUBLIC_TAMBO_API_KEY=your_api_key_here ```
 </Callout>
 
 ## Component Management Workflows
@@ -178,7 +178,7 @@ npx tambo upgrade
 
 ## CI/CD Workflows
 
-The Genui CLI automatically detects non-interactive environments (CI/CD, piped input/output) and provides helpful guidance. Use these patterns for automated pipelines.
+The Tambo CLI automatically detects non-interactive environments (CI/CD, piped input/output) and provides helpful guidance. Use these patterns for automated pipelines.
 
 ### GitHub Actions Setup
 
@@ -202,7 +202,7 @@ jobs:
         run: npm ci
 
       - name: Initialize Tambo
-        run: npx tambo init --api-key="${{ secrets.GENUI_API_KEY }}"
+        run: npx tambo init --api-key="${{ secrets.TAMBO_API_KEY }}"
 
       - name: Add components
         run: npx tambo add message-thread-full form --yes
@@ -212,16 +212,16 @@ jobs:
 
 ```dockerfile
 # Pass API key as build argument
-ARG GENUI_API_KEY
+ARG TAMBO_API_KEY
 
-RUN npx tambo init --api-key="$GENUI_API_KEY"
+RUN npx tambo init --api-key="$TAMBO_API_KEY"
 RUN npx tambo add message-thread-full --yes
 ```
 
 Build with:
 
 ```bash
-docker build --build-arg GENUI_API_KEY="$GENUI_API_KEY" .
+docker build --build-arg TAMBO_API_KEY="$TAMBO_API_KEY" .
 ```
 
 ### Non-Interactive Flags
@@ -230,7 +230,7 @@ In CI/CD, always provide these flags to avoid prompts:
 
 ```bash
 # Initialize with direct API key
-npx tambo init --api-key="$GENUI_API_KEY"
+npx tambo init --api-key="$TAMBO_API_KEY"
 
 # Add components without prompts
 npx tambo add form graph --yes --prefix=src/components/tambo
@@ -244,7 +244,7 @@ npx tambo upgrade --yes
 The CLI uses exit code 2 when user action is required:
 
 ```bash
-npx tambo init --api-key="$GENUI_API_KEY"
+npx tambo init --api-key="$TAMBO_API_KEY"
 status=$?
 if [ $status -eq 2 ]; then
   echo "Missing required arguments"

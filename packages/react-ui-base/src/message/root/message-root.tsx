@@ -1,5 +1,5 @@
 import { useRender, UseRenderComponentProps } from "@base-ui/react/use-render";
-import { useTambo, type ReactTamboThreadMessage } from "@workspace/react";
+import { useTambo, type ReactTamboThreadMessage } from "@tambo-ai/react";
 import * as React from "react";
 import {
   hasComponentContent,

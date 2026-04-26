@@ -1,16 +1,16 @@
 ---
 title: TypeScript Types
-description: TypeScript interfaces and types exported by @workspace/react
+description: TypeScript interfaces and types exported by @tambo-ai/react
 ---
 
-The `@workspace/react` package exports TypeScript types and interfaces to help you build type-safe AI applications.
+The `@tambo-ai/react` package exports TypeScript types and interfaces to help you build type-safe AI applications.
 
-## GenuiTool
+## TamboTool
 
-The `GenuiTool` interface defines the structure for registering tools with Genui.
+The `TamboTool` interface defines the structure for registering tools with Tambo.
 
 ```typescript
-interface GenuiTool {
+interface TamboTool {
   name: string;
   description: string;
   tool: (params: Record<string, unknown>) => unknown;
@@ -27,7 +27,7 @@ interface GenuiTool {
 
 #### name
 
-The unique identifier for the tool. This is how Genui references the tool internally.
+The unique identifier for the tool. This is how Tambo references the tool internally.
 
 ```typescript
 name: string;
@@ -104,19 +104,19 @@ transformToContent: (result) => [
 
 [Learn more about returning rich content from tools](/guides/take-actions/register-tools#return-rich-content-optional).
 
-## GenuiComponent
+## TamboComponent
 
-The `GenuiComponent` interface defines the structure for registering React components with Genui.
+The `TamboComponent` interface defines the structure for registering React components with Tambo.
 
 ```typescript
-interface GenuiComponent {
+interface TamboComponent {
   name: string;
   description: string;
   component: ComponentType<any>;
   propsSchema?: z.ZodTypeAny | JSONSchema7;
   propsDefinition?: any;
   loadingComponent?: ComponentType<any>;
-  associatedTools?: GenuiTool[];
+  associatedTools?: TamboTool[];
 }
 ```
 
@@ -175,7 +175,7 @@ loadingComponent?: ComponentType<any>;
 An array of tools that are associated with this component.
 
 ```typescript
-associatedTools?: GenuiTool[];
+associatedTools?: TamboTool[];
 ```
 
 ## ChatCompletionContentPart
@@ -193,12 +193,12 @@ interface ChatCompletionContentPart {
 
 This type is used in the `transformToContent` function to define rich content responses.
 
-## GenuiThreadMessage
+## TamboThreadMessage
 
-A message in a Genui thread.
+A message in a Tambo thread.
 
 ```typescript
-interface GenuiThreadMessage {
+interface TamboThreadMessage {
   id: string;
   role: "user" | "assistant" | "system" | "tool";
   content: ChatCompletionContentPart[];
@@ -213,14 +213,14 @@ interface GenuiThreadMessage {
 }
 ```
 
-## GenuiThread
+## TamboThread
 
-A Genui conversation thread.
+A Tambo conversation thread.
 
 ```typescript
-interface GenuiThread {
+interface TamboThread {
   id: string;
-  messages: GenuiThreadMessage[];
+  messages: TamboThreadMessage[];
   contextKey?: string;
   createdAt: string;
   updatedAt: string;
@@ -292,7 +292,7 @@ type?: string;
 
 ## ContextAttachmentState
 
-The state interface returned by the `useGenuiContextAttachment` hook.
+The state interface returned by the `useTamboContextAttachment` hook.
 
 ```typescript
 interface ContextAttachmentState {
@@ -342,7 +342,7 @@ clearContextAttachments: () => void;
 
 ## StreamStatus
 
-Global stream status flags for a component during streaming. Returned by `useGenuiStreamStatus`.
+Global stream status flags for a component during streaming. Returned by `useTamboStreamStatus`.
 
 ```typescript
 interface StreamStatus {
@@ -356,7 +356,7 @@ interface StreamStatus {
 
 ## PropStatus
 
-Streaming status flags for individual component props. Returned by `useGenuiStreamStatus`.
+Streaming status flags for individual component props. Returned by `useTamboStreamStatus`.
 
 ```typescript
 interface PropStatus {
@@ -367,15 +367,15 @@ interface PropStatus {
 }
 ```
 
-## GenuiInteractableComponent
+## TamboInteractableComponent
 
-Represents a component instance that can be interacted with by Genui. Extends `GenuiComponent`.
+Represents a component instance that can be interacted with by Tambo. Extends `TamboComponent`.
 
 ```typescript
-interface GenuiInteractableComponent<
+interface TamboInteractableComponent<
   Props = Record<string, unknown>,
   State = Record<string, unknown>,
-> extends GenuiComponent {
+> extends TamboComponent {
   id: string; // Unique identifier for this instance
   props: Props; // Current props
   isSelected?: boolean; // Whether selected for interaction
@@ -400,12 +400,12 @@ interface InteractableConfig<
 }
 ```
 
-## WithGenuiInteractableProps
+## WithTamboInteractableProps
 
 Props injected by `withInteractable` HOC.
 
 ```typescript
-interface WithGenuiInteractableProps {
+interface WithTamboInteractableProps {
   interactableId?: string; // Optional custom ID
   onInteractableReady?: (id: string) => void; // Called when registered
   onPropsUpdate?: (newProps: Record<string, unknown>) => void; // Called on prop updates
@@ -430,11 +430,11 @@ Annotations describing a tool's behavior, aligned with the MCP specification.
 
 ```typescript
 type ToolAnnotations = MCPToolAnnotations & {
-  genuiStreamableHint?: boolean; // Safe to call repeatedly during streaming
+  tamboStreamableHint?: boolean; // Safe to call repeatedly during streaming
 };
 ```
 
-The `genuiStreamableHint` property indicates that the tool is safe to be called repeatedly while a response is being streamed. This is typically used for read-only tools that do not cause side effects.
+The `tamboStreamableHint` property indicates that the tool is safe to be called repeatedly while a response is being streamed. This is typically used for read-only tools that do not cause side effects.
 
 ## SupportedSchema
 

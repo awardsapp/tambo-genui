@@ -1,6 +1,6 @@
 import type { BaseEvent } from "@ag-ui/core";
-import { ThreadMessage } from "@workspace-cloud/core";
-import type { ProviderSkillConfig } from "@workspace-cloud/core";
+import { ThreadMessage } from "@tambo-ai-cloud/core";
+import type { ProviderSkillConfig } from "@tambo-ai-cloud/core";
 import type { ProviderOptions } from "@ai-sdk/provider-utils";
 import OpenAI from "openai";
 import { JSONSchema } from "openai/lib/jsonschema";

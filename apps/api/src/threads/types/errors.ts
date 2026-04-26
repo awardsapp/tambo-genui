@@ -30,7 +30,7 @@ export class EndpointDeprecatedException extends HttpException {
   }) {
     super(
       {
-        type: "https://docs.genui.co/reference/problems/endpoint-deprecated",
+        type: "https://docs.tambo.co/reference/problems/endpoint-deprecated",
         status: HttpStatus.GONE,
         title: "Endpoint Deprecated",
         detail,
@@ -96,11 +96,11 @@ export class FreeLimitReachedError extends HttpException {
         type: "https://problems-registry.smartbear.com/payment-required",
         status: HttpStatus.PAYMENT_REQUIRED,
         title: "Starter LLM Call Limit Reached",
-        detail: `You've used all ${FREE_MESSAGE_LIMIT} starter LLM calls. To continue, add your LLM provider key at https://console.genui.co.`,
+        detail: `You've used all ${FREE_MESSAGE_LIMIT} starter LLM calls. To continue, add your LLM provider key at https://console.tambo.co.`,
         code: "FREE_LIMIT_REACHED",
         details: {
           limit: FREE_MESSAGE_LIMIT,
-          settingsUrl: "https://console.genui.co",
+          settingsUrl: "https://console.tambo.co",
         },
       } satisfies ProblemDetails,
       HttpStatus.PAYMENT_REQUIRED,

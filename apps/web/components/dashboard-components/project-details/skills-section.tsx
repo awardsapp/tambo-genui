@@ -26,9 +26,9 @@ import {
   SKILLS_SUPPORTED_PROVIDERS,
   modelSupportsSkills,
   llmProviderConfig,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 import { api } from "@/trpc/react";
-import { withTamboInteractable } from "@workspace/react";
+import { withTamboInteractable } from "@tambo-ai/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { AlertTriangle, FileText, Import, Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";

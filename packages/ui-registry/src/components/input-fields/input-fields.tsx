@@ -1,7 +1,7 @@
 "use client";
 
-import { cn } from "@workspace/ui-registry/utils";
-import { useTambo, useTamboComponentState } from "@workspace/react";
+import { cn } from "@tambo-ai/ui-registry/utils";
+import { useTambo, useTamboComponentState } from "@tambo-ai/react";
 import { cva } from "class-variance-authority";
 import * as React from "react";
 import { z } from "zod/v3";

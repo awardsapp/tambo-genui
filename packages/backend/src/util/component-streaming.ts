@@ -9,7 +9,7 @@ import {
   type ComponentPropsDeltaEvent,
   type ComponentEndEvent,
   type PropStreamingStatus,
-} from "./genui-custom-events";
+} from "./tambo-custom-events";
 
 /** Maximum size for accumulated JSON (10MB) */
 const MAX_JSON_SIZE = 10 * 1024 * 1024;
@@ -19,7 +19,7 @@ const COMPONENT_TOOL_PREFIX = "show_component_";
 /**
  * Component streaming utilities.
  *
- * `genui.component.props_delta` uses RFC 6902 JSON Patch operations, where
+ * `tambo.component.props_delta` uses RFC 6902 JSON Patch operations, where
  * operation paths are RFC 6901 JSON Pointers. Prop keys are always escaped via
  * `escapePathComponent` from `fast-json-patch` so `~` becomes `~0` and `/`
  * becomes `~1`.

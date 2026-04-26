@@ -1,6 +1,6 @@
 # API Decorators
 
-Custom decorators for the Genui Cloud API that reduce boilerplate and ensure consistency.
+Custom decorators for the Tambo Cloud API that reduce boilerplate and ensure consistency.
 
 ## @ApiDiscriminatedUnion
 

@@ -1,13 +1,13 @@
 ---
 title: Kubernetes deployment
-description: Deploy self-hosted Genui to a Kubernetes cluster with example manifests.
+description: Deploy self-hosted Tambo to a Kubernetes cluster with example manifests.
 ---
 
 The Docker images can be deployed to Kubernetes. Below is a minimal example covering all three services. For production, add resource limits, health checks, and ingress configuration appropriate for your cluster.
 
 Unlike Docker Compose, Kubernetes does not guarantee startup order. The API and web pods may restart a few times before PostgreSQL is ready — this is normal, and Kubernetes keeps retrying until connections succeed.
 
-> **Want Helm charts or a more detailed Kubernetes setup?** [File an issue](https://github.com/genui-ai/genui/issues) or reach out on [Discord](https://discord.gg/dJNvPEHth6) and we'll prioritize it.
+> **Want Helm charts or a more detailed Kubernetes setup?** [File an issue](https://github.com/tambo-ai/tambo/issues) or reach out on [Discord](https://discord.gg/dJNvPEHth6) and we'll prioritize it.
 
 ## Secrets
 
@@ -17,13 +17,13 @@ Create a Kubernetes secret with your environment variables:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: genui-secrets
+  name: tambo-secrets
 type: Opaque
 stringData:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: your-secure-password
-  POSTGRES_DB: genui
-  DATABASE_URL: postgresql://postgres:your-secure-password@genui-postgres:5432/genui
+  POSTGRES_DB: tambo
+  DATABASE_URL: postgresql://postgres:your-secure-password@tambo-postgres:5432/tambo
   API_KEY_SECRET: your-32-character-api-key-secret
   PROVIDER_KEY_SECRET: your-32-character-provider-secret
   NEXTAUTH_SECRET: your-nextauth-secret
@@ -39,17 +39,17 @@ For production, consider a managed database (e.g., AWS RDS, GCP Cloud SQL). If r
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: genui-postgres
+  name: tambo-postgres
 spec:
-  serviceName: genui-postgres
+  serviceName: tambo-postgres
   replicas: 1
   selector:
     matchLabels:
-      app: genui-postgres
+      app: tambo-postgres
   template:
     metadata:
       labels:
-        app: genui-postgres
+        app: tambo-postgres
     spec:
       containers:
         - name: postgres
@@ -58,7 +58,7 @@ spec:
             - containerPort: 5432
           envFrom:
             - secretRef:
-                name: genui-secrets
+                name: tambo-secrets
           volumeMounts:
             - name: postgres-data
               mountPath: /var/lib/postgresql/data
@@ -74,10 +74,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: genui-postgres
+  name: tambo-postgres
 spec:
   selector:
-    app: genui-postgres
+    app: tambo-postgres
   ports:
     - port: 5432
       targetPort: 5432
@@ -89,20 +89,20 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: genui-api
+  name: tambo-api
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: genui-api
+      app: tambo-api
   template:
     metadata:
       labels:
-        app: genui-api
+        app: tambo-api
     spec:
       containers:
         - name: api
-          image: your-registry/genui-api:latest
+          image: your-registry/tambo-api:latest
           ports:
             - containerPort: 3000
           env:
@@ -110,15 +110,15 @@ spec:
               value: "3000"
           envFrom:
             - secretRef:
-                name: genui-secrets
+                name: tambo-secrets
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: genui-api
+  name: tambo-api
 spec:
   selector:
-    app: genui-api
+    app: tambo-api
   ports:
     - port: 8261
       targetPort: 3000
@@ -130,40 +130,40 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: genui-web
+  name: tambo-web
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: genui-web
+      app: tambo-web
   template:
     metadata:
       labels:
-        app: genui-web
+        app: tambo-web
     spec:
       containers:
         - name: web
-          image: your-registry/genui-web:latest
+          image: your-registry/tambo-web:latest
           ports:
             - containerPort: 3000
           env:
             - name: PORT
               value: "3000"
-            # NEXT_PUBLIC_GENUI_API_URL must be reachable from the browser,
+            # NEXT_PUBLIC_TAMBO_API_URL must be reachable from the browser,
             # not an internal cluster address. Set this to your external API URL.
-            - name: NEXT_PUBLIC_GENUI_API_URL
+            - name: NEXT_PUBLIC_TAMBO_API_URL
               value: https://api.your-domain.com
           envFrom:
             - secretRef:
-                name: genui-secrets
+                name: tambo-secrets
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: genui-web
+  name: tambo-web
 spec:
   selector:
-    app: genui-web
+    app: tambo-web
   ports:
     - port: 8260
       targetPort: 3000
@@ -174,20 +174,20 @@ spec:
 After deploying, run database migrations by executing into a running API pod:
 
 ```bash
-kubectl exec -it deployment/genui-api -- npm -w @workspace-cloud/db run db:migrate
+kubectl exec -it deployment/tambo-api -- npm -w @tambo-ai-cloud/db run db:migrate
 ```
 
 ## Build and push images
 
 ```bash
-./scripts/cloud/genui-build.sh
+./scripts/cloud/tambo-build.sh
 ```
 
 Tag and push to your container registry:
 
 ```bash
-docker tag genui-web:latest your-registry/genui-web:latest
-docker tag genui-api:latest your-registry/genui-api:latest
-docker push your-registry/genui-web:latest
-docker push your-registry/genui-api:latest
+docker tag tambo-web:latest your-registry/tambo-web:latest
+docker tag tambo-api:latest your-registry/tambo-api:latest
+docker push your-registry/tambo-web:latest
+docker push your-registry/tambo-api:latest
 ```

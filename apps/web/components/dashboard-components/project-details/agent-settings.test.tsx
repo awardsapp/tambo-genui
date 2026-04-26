@@ -1,4 +1,4 @@
-import type { AgentProviderType } from "@workspace-cloud/core";
+import type { AgentProviderType } from "@tambo-ai-cloud/core";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { AgentSettings } from "./agent-settings";
 

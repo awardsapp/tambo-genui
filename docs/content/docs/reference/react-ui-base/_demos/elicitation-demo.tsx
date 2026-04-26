@@ -1,11 +1,11 @@
 "use client";
 
 import { DemoPreview } from "@/components/demos/demo-preview";
-import { Elicitation } from "@workspace/react-ui-base/elicitation";
+import { Elicitation } from "@tambo-ai/react-ui-base/elicitation";
 import type {
-  GenuiElicitationRequest,
-  GenuiElicitationResponse,
-} from "@workspace/react/mcp";
+  TamboElicitationRequest,
+  TamboElicitationResponse,
+} from "@tambo-ai/react/mcp";
 import { Bot } from "lucide-react";
 import type { ReactNode } from "react";
 
@@ -38,7 +38,7 @@ const mockRequest = {
     },
     required: ["projectName", "framework"],
   },
-} satisfies GenuiElicitationRequest;
+} satisfies TamboElicitationRequest;
 
 function AssistantBubble({ children }: { children: ReactNode }) {
   return (
@@ -57,15 +57,15 @@ export const elicitationDemoCode = [
   {
     name: "elicitation-form.tsx",
     code: `
-import { Elicitation } from "@workspace/react-ui-base/elicitation";
-import type { GenuiElicitationRequest, GenuiElicitationResponse } from "@workspace/react/mcp";
+import { Elicitation } from "@tambo-ai/react-ui-base/elicitation";
+import type { TamboElicitationRequest, TamboElicitationResponse } from "@tambo-ai/react/mcp";
 
 export function ElicitationForm({
   request,
   onResponse,
 }: {
-  request: GenuiElicitationRequest;
-  onResponse: (response: GenuiElicitationResponse) => void;
+  request: TamboElicitationRequest;
+  onResponse: (response: TamboElicitationResponse) => void;
 }) {
   return (
     <Elicitation.Root request={request} onResponse={onResponse}>
@@ -104,7 +104,7 @@ export function ElicitationForm({
   {
     name: "mock-request.ts",
     code: `
-import type { GenuiElicitationRequest } from "@workspace/react/mcp";
+import type { TamboElicitationRequest } from "@tambo-ai/react/mcp";
 
 export const mockRequest = {
   message: "Please configure your project settings:",
@@ -122,7 +122,7 @@ export const mockRequest = {
     },
     required: ["projectName", "framework"],
   },
-} satisfies GenuiElicitationRequest;`.trimStart(),
+} satisfies TamboElicitationRequest;`.trimStart(),
   },
 ];
 
@@ -135,7 +135,7 @@ export function ElicitationDemoPreview() {
 }
 
 function ElicitationDemo() {
-  const handleResponse = (response: GenuiElicitationResponse) => {
+  const handleResponse = (response: TamboElicitationResponse) => {
     console.log("Elicitation response:", response);
   };
 

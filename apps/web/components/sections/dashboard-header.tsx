@@ -5,7 +5,7 @@ import { MobileDashboardNavigation } from "@/components/sections/mobile-dashboar
 import { ProjectDropdown } from "@/components/sections/project-dropdown";
 import { UserProfileDropdown } from "@/components/sections/user-profile-dropdown";
 import { buttonVariants } from "@/components/ui/button";
-import { GenuiChatTrigger } from "@/components/genui-chat-trigger";
+import { TamboChatTrigger } from "@/components/tambo-chat-trigger";
 import { siteConfig } from "@/lib/config";
 import { cn } from "@/lib/utils";
 // Whitelabel badge
@@ -47,7 +47,7 @@ export function DashboardHeader({ className }: DashboardHeaderProps) {
           <div className="flex h-full items-center justify-between pt-2 px-4">
             {/* Left side - Logo/Project Dropdown */}
             <div className="flex items-center gap-4">
-              {/* Show Genui logo when not on a project page */}
+              {/* Show Tambo logo when not on a project page */}
               {!projectId && (
                 <Link
                   href="/"
@@ -86,9 +86,9 @@ export function DashboardHeader({ className }: DashboardHeaderProps) {
                 Docs
               </a>
 
-              {/* Genui Assistant Trigger - Desktop only */}
+              {/* Tambo Assistant Trigger - Desktop only */}
               <div className="hidden md:block">
-                <GenuiChatTrigger />
+                <TamboChatTrigger />
               </div>
 
               {/* Desktop Profile Dropdown */}

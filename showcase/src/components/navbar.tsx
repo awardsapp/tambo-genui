@@ -36,7 +36,7 @@ export function Navbar() {
     <header className="sticky top-0 h-[var(--header-height)] z-50 p-0 bg-background/60 backdrop-blur w-full">
       <div className="flex justify-between items-center w-full px-4 md:px-6 p-2">
         <Link href="/" title="brand-logo" className="flex items-center">
-          <Icons.logo className="h-6 w-auto" aria-label="Genui" />
+          <Icons.logo className="h-6 w-auto" aria-label="Tambo" />
         </Link>
 
         {/* Mobile menu button */}

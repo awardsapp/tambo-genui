@@ -24,7 +24,7 @@ import type {
 } from "@ag-ui/core";
 import { EventType } from "@ag-ui/core";
 import {
-  asGenuiCustomEvent,
+  asTamboCustomEvent,
   type ComponentEndEvent,
   type ComponentPropsDeltaEvent,
   type ComponentStartEvent,
@@ -35,9 +35,9 @@ import {
 import type {
   Content,
   InitialInputMessage,
-  GenuiThreadMessage,
+  TamboThreadMessage,
 } from "../types/message";
-import type { StreamingState, GenuiThread } from "../types/thread";
+import type { StreamingState, TamboThread } from "../types/thread";
 import type { JSONSchema7 } from "json-schema";
 import { parse as parsePartialJson } from "partial-json";
 import { applyJsonPatch } from "./json-patch";
@@ -59,7 +59,7 @@ export class UnreachableCaseError extends Error {
  * Tracks thread data, streaming status, and accumulating data.
  */
 export interface ThreadState {
-  thread: GenuiThread;
+  thread: TamboThread;
   streaming: StreamingState;
   /**
    * Accumulating tool call arguments as JSON strings (for streaming).
@@ -110,7 +110,7 @@ export interface EventAction {
 export interface InitThreadAction {
   type: "INIT_THREAD";
   threadId: string;
-  initialThread?: Partial<GenuiThread>;
+  initialThread?: Partial<TamboThread>;
 }
 
 /**
@@ -128,7 +128,7 @@ export interface SetCurrentThreadAction {
 export interface StartNewThreadAction {
   type: "START_NEW_THREAD";
   threadId: string;
-  initialThread?: Partial<GenuiThread>;
+  initialThread?: Partial<TamboThread>;
 }
 
 /**
@@ -138,7 +138,7 @@ export interface StartNewThreadAction {
 export interface LoadThreadMessagesAction {
   type: "LOAD_THREAD_MESSAGES";
   threadId: string;
-  messages: GenuiThreadMessage[];
+  messages: TamboThreadMessage[];
   /**
    * If true, skip loading if the thread is currently streaming.
    * This prevents overwriting in-flight streaming messages.
@@ -239,7 +239,7 @@ export function createInitialState(): StreamState {
 
 /**
  * Create initial stream state with placeholder thread seeded with initial messages.
- * The messages are converted from InputMessage format to GenuiThreadMessage format
+ * The messages are converted from InputMessage format to TamboThreadMessage format
  * for immediate UI display before any API call.
  * @param initialMessages - Messages to seed the placeholder thread with
  * @returns Initial stream state with messages in the placeholder thread
@@ -248,7 +248,7 @@ export function createInitialStateWithMessages(
   initialMessages: InitialInputMessage[],
 ): StreamState {
   const placeholderState = createInitialThreadState(PLACEHOLDER_THREAD_ID);
-  const messages: GenuiThreadMessage[] = initialMessages.map((msg) => ({
+  const messages: TamboThreadMessage[] = initialMessages.map((msg) => ({
     id: `initial_${crypto.randomUUID()}`,
     role: msg.role,
     content: msg.content.map((c): Content => {
@@ -293,10 +293,10 @@ interface ContentLocation {
  * @returns New messages array with the message replaced
  */
 function updateMessageAtIndex(
-  messages: GenuiThreadMessage[],
+  messages: TamboThreadMessage[],
   index: number,
-  updatedMessage: GenuiThreadMessage,
-): GenuiThreadMessage[] {
+  updatedMessage: TamboThreadMessage,
+): TamboThreadMessage[] {
   return [
     ...messages.slice(0, index),
     updatedMessage,
@@ -338,7 +338,7 @@ function updateContentAtIndex(
  * @throws {Error} If content not found
  */
 function findContentById(
-  messages: GenuiThreadMessage[],
+  messages: TamboThreadMessage[],
   contentType: "component" | "tool_use",
   contentId: string,
   eventName: string,
@@ -362,7 +362,7 @@ function findContentById(
  */
 function updateThreadMessages(
   threadState: ThreadState,
-  messages: GenuiThreadMessage[],
+  messages: TamboThreadMessage[],
 ): ThreadState {
   return {
     ...threadState,
@@ -377,7 +377,7 @@ function updateThreadMessages(
 /**
  * Stream reducer that accumulates events into thread state.
  *
- * This reducer handles all AG-UI events and Genui custom events,
+ * This reducer handles all AG-UI events and Tambo custom events,
  * transforming them into immutable state updates per thread.
  * @param state - Current stream state
  * @param action - Action to process
@@ -831,7 +831,7 @@ function handleTextMessageStart(
   }
 
   // No existing message to reuse - create a new message
-  const newMessage: GenuiThreadMessage = {
+  const newMessage: TamboThreadMessage = {
     id: event.messageId,
     role: isAssistant ? "assistant" : "user",
     content: [],
@@ -897,7 +897,7 @@ function handleTextMessageContent(
         },
       ];
 
-  const updatedMessage: GenuiThreadMessage = {
+  const updatedMessage: TamboThreadMessage = {
     ...message,
     content: updatedContent,
   };
@@ -978,7 +978,7 @@ function handleToolCallStart(
   // If no suitable assistant message found, create a synthetic one for the tool call
   if (messageIndex === -1) {
     const syntheticMessageId = messageId ?? `msg_tool_${event.toolCallId}`;
-    const syntheticMessage: GenuiThreadMessage = {
+    const syntheticMessage: TamboThreadMessage = {
       id: syntheticMessageId,
       role: "assistant",
       content: [newContent],
@@ -1001,7 +1001,7 @@ function handleToolCallStart(
 
   const message = messages[messageIndex];
 
-  const updatedMessage: GenuiThreadMessage = {
+  const updatedMessage: TamboThreadMessage = {
     ...message,
     content: [...message.content, newContent],
   };
@@ -1095,7 +1095,7 @@ function handleToolCallArgs(
     input: parsedInput,
   };
 
-  const updatedMessage: GenuiThreadMessage = {
+  const updatedMessage: TamboThreadMessage = {
     ...message,
     content: updateContentAtIndex(
       message.content,
@@ -1178,7 +1178,7 @@ function handleToolCallEnd(
     input: parsedInput,
   };
 
-  const updatedMessage: GenuiThreadMessage = {
+  const updatedMessage: TamboThreadMessage = {
     ...message,
     content: updateContentAtIndex(
       message.content,
@@ -1236,7 +1236,7 @@ function handleToolCallResult(
     ],
   };
 
-  const updatedMessage: GenuiThreadMessage = {
+  const updatedMessage: TamboThreadMessage = {
     ...message,
     content: [...message.content, newContent],
   };
@@ -1248,7 +1248,7 @@ function handleToolCallResult(
 }
 
 /**
- * Handle custom events (Genui-specific).
+ * Handle custom events (Tambo-specific).
  * @param threadState - Current thread state
  * @param event - Custom event (already narrowed from AGUIEvent)
  * @returns Updated thread state
@@ -1257,8 +1257,8 @@ function handleCustomEvent(
   threadState: ThreadState,
   event: CustomEvent,
 ): ThreadState {
-  // Use centralized casting function to get properly typed Genui event
-  const customEvent = asGenuiCustomEvent(event);
+  // Use centralized casting function to get properly typed Tambo event
+  const customEvent = asTamboCustomEvent(event);
 
   if (!customEvent) {
     // Unknown custom event - log and return unchanged
@@ -1267,26 +1267,26 @@ function handleCustomEvent(
   }
 
   switch (customEvent.name) {
-    case "genui.component.start":
+    case "tambo.component.start":
       return handleComponentStart(threadState, customEvent);
 
-    case "genui.component.props_delta":
+    case "tambo.component.props_delta":
       return handleComponentDelta(threadState, customEvent, "props");
 
-    case "genui.component.state_delta":
+    case "tambo.component.state_delta":
       return handleComponentDelta(threadState, customEvent, "state");
 
-    case "genui.component.end":
+    case "tambo.component.end":
       return handleComponentEnd(threadState, customEvent);
 
-    case "genui.run.awaiting_input":
+    case "tambo.run.awaiting_input":
       return handleRunAwaitingInput(threadState, customEvent);
 
-    case "genui.message.parent":
+    case "tambo.message.parent":
       return handleMessageParent(threadState, customEvent);
 
     default: {
-      // Exhaustiveness check: if a new event type is added to GenuiCustomEvent
+      // Exhaustiveness check: if a new event type is added to TamboCustomEvent
       // and not handled here, TypeScript will error
       const _exhaustiveCheck: never = customEvent;
       throw new UnreachableCaseError(_exhaustiveCheck);
@@ -1295,7 +1295,7 @@ function handleCustomEvent(
 }
 
 /**
- * Handle genui.component.start event.
+ * Handle tambo.component.start event.
  * Adds a component content block to the message with 'started' streaming state.
  * @param threadState - Current thread state
  * @param event - Component start event
@@ -1314,7 +1314,7 @@ function handleComponentStart(
   let messageIndex = messages.findIndex((m) => m.id === messageId);
   if (messageIndex === -1) {
     // Create a new assistant message for this component
-    const newMessage: GenuiThreadMessage = {
+    const newMessage: TamboThreadMessage = {
       id: messageId,
       role: "assistant",
       content: [],
@@ -1338,7 +1338,7 @@ function handleComponentStart(
     streamingState: "started",
   };
 
-  const updatedMessage: GenuiThreadMessage = {
+  const updatedMessage: TamboThreadMessage = {
     ...message,
     content: [...message.content, newContent],
   };
@@ -1365,7 +1365,7 @@ function handleComponentDelta(
   const componentId = event.value.componentId;
   const operations = event.value.operations;
   const messages = threadState.thread.messages;
-  const eventName = `genui.component.${field}_delta`;
+  const eventName = `tambo.component.${field}_delta`;
 
   // Find the component content block
   const { messageIndex, contentIndex } = findContentById(
@@ -1400,7 +1400,7 @@ function handleComponentDelta(
     streamingState: "streaming",
   };
 
-  const updatedMessage: GenuiThreadMessage = {
+  const updatedMessage: TamboThreadMessage = {
     ...message,
     content: updateContentAtIndex(
       message.content,
@@ -1416,7 +1416,7 @@ function handleComponentDelta(
 }
 
 /**
- * Handle genui.component.end event.
+ * Handle tambo.component.end event.
  * Sets component streaming state to 'done'.
  * @param threadState - Current thread state
  * @param event - Component end event
@@ -1434,7 +1434,7 @@ function handleComponentEnd(
     messages,
     "component",
     componentId,
-    "genui.component.end event",
+    "tambo.component.end event",
   );
 
   const message = messages[messageIndex];
@@ -1442,7 +1442,7 @@ function handleComponentEnd(
 
   if (componentContent.type !== "component") {
     throw new Error(
-      `Content at index ${contentIndex} is not a component block for genui.component.end event`,
+      `Content at index ${contentIndex} is not a component block for tambo.component.end event`,
     );
   }
 
@@ -1452,7 +1452,7 @@ function handleComponentEnd(
     streamingState: "done",
   };
 
-  const updatedMessage: GenuiThreadMessage = {
+  const updatedMessage: TamboThreadMessage = {
     ...message,
     content: updateContentAtIndex(
       message.content,
@@ -1468,7 +1468,7 @@ function handleComponentEnd(
 }
 
 /**
- * Handle genui.run.awaiting_input event.
+ * Handle tambo.run.awaiting_input event.
  * Sets thread status to waiting for client-side tool execution.
  * @param threadState - Current thread state
  * @param _event - Run awaiting input event (unused)
@@ -1493,7 +1493,7 @@ function handleRunAwaitingInput(
 }
 
 /**
- * Handle genui.message.parent event.
+ * Handle tambo.message.parent event.
  * Sets parentMessageId on the target message, creating a new empty assistant
  * message if one doesn't already exist with the given ID.
  *
@@ -1517,7 +1517,7 @@ function handleMessageParent(
   if (messageIndex !== -1) {
     // Message already exists - set parentMessageId on it
     const message = messages[messageIndex];
-    const updatedMessage: GenuiThreadMessage = {
+    const updatedMessage: TamboThreadMessage = {
       ...message,
       parentMessageId,
     };
@@ -1528,7 +1528,7 @@ function handleMessageParent(
   }
 
   // Message doesn't exist yet - create a new empty assistant message
-  const newMessage: GenuiThreadMessage = {
+  const newMessage: TamboThreadMessage = {
     id: messageId,
     role: "assistant",
     content: [],
@@ -1561,7 +1561,7 @@ function generateEphemeralMessageId(): string {
  */
 function findOrCreateMessageForReasoning(threadState: ThreadState): {
   messageIndex: number;
-  messages: GenuiThreadMessage[];
+  messages: TamboThreadMessage[];
   threadState: ThreadState;
 } {
   const messageId = threadState.streaming.messageId;
@@ -1588,7 +1588,7 @@ function findOrCreateMessageForReasoning(threadState: ThreadState): {
 
   // No suitable assistant message - create an ephemeral one
   const ephemeralId = generateEphemeralMessageId();
-  const newMessage: GenuiThreadMessage = {
+  const newMessage: TamboThreadMessage = {
     id: ephemeralId,
     role: "assistant",
     content: [],
@@ -1636,7 +1636,7 @@ function handleThinkingTextMessageStart(
   const message = messages[messageIndex];
   const existingReasoning = message.reasoning ?? [];
 
-  const updatedMessage: GenuiThreadMessage = {
+  const updatedMessage: TamboThreadMessage = {
     ...message,
     reasoning: [...existingReasoning, ""],
   };
@@ -1680,7 +1680,7 @@ function handleThinkingTextMessageContent(
 
   if (existingReasoning.length === 0) {
     // No reasoning chunk started - start one implicitly
-    const updatedMessage: GenuiThreadMessage = {
+    const updatedMessage: TamboThreadMessage = {
       ...message,
       reasoning: [event.delta],
     };
@@ -1706,7 +1706,7 @@ function handleThinkingTextMessageContent(
     existingReasoning[existingReasoning.length - 1] + event.delta,
   ];
 
-  const updatedMessage: GenuiThreadMessage = {
+  const updatedMessage: TamboThreadMessage = {
     ...message,
     reasoning: updatedReasoning,
   };
@@ -1744,7 +1744,7 @@ function handleThinkingTextMessageEnd(
     ? endTime - reasoningStartTime
     : undefined;
 
-  const updatedMessage: GenuiThreadMessage = {
+  const updatedMessage: TamboThreadMessage = {
     ...message,
     reasoningDurationMS:
       reasoningDurationMS ?? message.reasoningDurationMS ?? undefined,

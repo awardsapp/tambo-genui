@@ -1,9 +1,9 @@
 ---
 title: Model Context Protocol (MCP)
-description: Connect Genui to external tools and services using the MCP standard
+description: Connect Tambo to external tools and services using the MCP standard
 ---
 
-Model Context Protocol (MCP) allows you to give Genui access to tools, data, and functionality defined by other services. Many popular applications publish MCP servers, and Genui provides a simple way to connect to them. This lets your users conversationally interact with external services without needing to write integration code yourself.
+Model Context Protocol (MCP) allows you to give Tambo access to tools, data, and functionality defined by other services. Many popular applications publish MCP servers, and Tambo provides a simple way to connect to them. This lets your users conversationally interact with external services without needing to write integration code yourself.
 
 ## What is MCP?
 
@@ -15,26 +15,26 @@ MCP is an open standard that enables AI applications to securely connect to exte
 - **Request input** - Pause for user confirmation or additional information (elicitations)
 - **Leverage AI** - Request LLM completions for analysis and generation (sampling)
 
-By using MCP, you can rapidly extend Genui's capabilities without building custom integrations for every external service.
+By using MCP, you can rapidly extend Tambo's capabilities without building custom integrations for every external service.
 
 ## Connection Architectures
 
-Genui supports two ways to connect to MCP servers, each with different architectural tradeoffs:
+Tambo supports two ways to connect to MCP servers, each with different architectural tradeoffs:
 
 ### Server-side Connections (Recommended)
 
-Server-side MCP connections are configured through the Genui dashboard and run on Genui's backend infrastructure. This approach provides the most efficient communication since tools execute via direct server-to-server connections.
+Server-side MCP connections are configured through the Tambo dashboard and run on Tambo's backend infrastructure. This approach provides the most efficient communication since tools execute via direct server-to-server connections.
 
 <Mermaid
   chart="
 sequenceDiagram
-    Browser->>Genui: Show me issues in the last 30 days
-    Note over Genui: Genui transforms the user's message into a tool call
-    Genui->>MCP: list_issues({since: '2025-04-29'})
-    MCP->>Genui: Issues list: [{...}, {...}, {...}]
-    Note over Genui: Genui chooses a component
-    Note over Genui: Genui reformats the data into component props
-    Genui->>Browser: '<IssuesTable issues={...} />'
+    Browser->>Tambo: Show me issues in the last 30 days
+    Note over Tambo: Tambo transforms the user's message into a tool call
+    Tambo->>MCP: list_issues({since: '2025-04-29'})
+    MCP->>Tambo: Issues list: [{...}, {...}, {...}]
+    Note over Tambo: Tambo chooses a component
+    Note over Tambo: Tambo reformats the data into component props
+    Tambo->>Browser: '<IssuesTable issues={...} />'
  "
 />
 
@@ -43,12 +43,12 @@ sequenceDiagram
 - **Authentication:** Supports OAuth-based authentication and custom API key headers
 - **Performance:** Most efficient due to direct server-to-server communication
 - **Sharing:** MCP servers are shared across all users of your project
-- **Configuration:** Managed through the Genui dashboard
+- **Configuration:** Managed through the Tambo dashboard
 - **Ideal for:** Production applications, shared services, and scenarios requiring OAuth
 
 **Authentication model:** When an MCP server is authenticated via OAuth, the OAuth identity is currently shared across all users of your project. This means every user acts as the same MCP identity when using that server. Only configure servers this way if that shared access level is acceptable for your data and tools. Per-user MCP authentication is planned for the future.
 
-**End-user identity:** Per-user authentication is supported today via the `userToken` prop on `GenuiProvider` (an OAuth access token from your auth/SSO provider) — see [User Authentication](/concepts/user-authentication). MCP server auth and end-user auth are independent layers.
+**End-user identity:** Per-user authentication is supported today via the `userToken` prop on `TamboProvider` (an OAuth access token from your auth/SSO provider) — see [User Authentication](/concepts/user-authentication). MCP server auth and end-user auth are independent layers.
 
 ### Client-side Connections
 
@@ -58,23 +58,23 @@ Client-side MCP connections run directly in the user's browser, allowing you to 
 sequenceDiagram
     participant Browser
     participant MCP
-    participant Genui
+    participant Tambo
 
-    Browser->>Genui: "Show me issues in the last 30 days"
-    Note over Genui: Genui transforms the user's message into a tool call
-    Genui->>Browser: Please call tool: `list_issues({since: '2025-04-29'})`
+    Browser->>Tambo: "Show me issues in the last 30 days"
+    Note over Tambo: Tambo transforms the user's message into a tool call
+    Tambo->>Browser: Please call tool: `list_issues({since: '2025-04-29'})`
     Browser->>MCP: `list_issues({since: '2025-04-29'})`
     MCP->>Browser: Issues list: [{...}, {...}, {...}]
-    Browser->>Genui: Issues list: [{...}, {...}, {...}]
-    Note over Genui: Genui chooses a component
-    Note over Genui: Genui reformats the data into component props
-    Genui->>Browser: "<IssuesTable issues={...} />"
+    Browser->>Tambo: Issues list: [{...}, {...}, {...}]
+    Note over Tambo: Tambo chooses a component
+    Note over Tambo: Tambo reformats the data into component props
+    Tambo->>Browser: "<IssuesTable issues={...} />"
 ```
 
 **Key characteristics:**
 
 - **Authentication:** Leverages the browser's authentication state (cookies, session storage)
-- **Performance:** More chatty due to browser-to-Genui-to-MCP communication
+- **Performance:** More chatty due to browser-to-Tambo-to-MCP communication
 - **Local access:** Can connect to local MCP servers (e.g., `localhost`)
 - **Configuration:** Configured in your React application code
 - **Ideal for:** Local development, user-specific services, and services behind firewalls
@@ -89,7 +89,7 @@ sequenceDiagram
 | **Authentication** | OAuth + API keys supported       | Browser session only              |
 | **Local servers**  | No (must be internet-accessible) | Yes (can connect to localhost)    |
 | **Sharing**        | Shared across all users          | Per-user connections              |
-| **Configuration**  | Genui dashboard                  | React application code            |
+| **Configuration**  | Tambo dashboard                  | React application code            |
 | **Best for**       | Production, shared services      | Development, local tools          |
 
 ### When to Use Each
@@ -112,7 +112,7 @@ sequenceDiagram
 
 ### Server-side Setup
 
-1. Navigate to your [project dashboard](https://console.genui.co)
+1. Navigate to your [project dashboard](https://console.tambo.co)
 2. Click on your project
 3. Find the "MCP Servers" section
 4. Click "Add MCP Server"
@@ -125,7 +125,7 @@ Once configured, the MCP servers will be available to all users without any clie
 
 > **Dependency note**
 >
-> The `@workspace/react/mcp` subpath declares `@modelcontextprotocol/sdk`, `zod`, and `zod-to-json-schema` as optional peer dependencies. If you import this subpath, install these packages:
+> The `@tambo-ai/react/mcp` subpath declares `@modelcontextprotocol/sdk`, `zod`, and `zod-to-json-schema` as optional peer dependencies. If you import this subpath, install these packages:
 >
 > ```bash
 > npm install @modelcontextprotocol/sdk@^1.24.0 zod@^4.0.0 zod-to-json-schema@^3.25.0
@@ -134,12 +134,12 @@ Once configured, the MCP servers will be available to all users without any clie
 Configure MCP servers in your React application:
 
 ```tsx
-import { GenuiProvider } from "@workspace/react";
-import { MCPTransport } from "@workspace/react/mcp";
+import { TamboProvider } from "@tambo-ai/react";
+import { MCPTransport } from "@tambo-ai/react/mcp";
 
 function MyApp() {
   return (
-    <GenuiProvider
+    <TamboProvider
       components={...}
       mcpServers={[
         {
@@ -151,24 +151,24 @@ function MyApp() {
       ]}
     >
       {/* Your application components */}
-    </GenuiProvider>
+    </TamboProvider>
   );
 }
 ```
 
-`GenuiProvider` automatically establishes connections to the specified MCP servers and makes their capabilities available to Genui.
+`TamboProvider` automatically establishes connections to the specified MCP servers and makes their capabilities available to Tambo.
 
 ## Server Namespacing
 
-Genui **always prefixes** MCP capabilities with a `serverKey` to identify which server they come from:
+Tambo **always prefixes** MCP capabilities with a `serverKey` to identify which server they come from:
 
 - **Prompts:** `serverKey:promptName` (e.g., `linear:new-issue`)
 - **Resources:**
-  - Server-side: `serverKey:serverSidePrefix:resourceUri` (e.g., `linear:genui:issue://TAM-123`)
+  - Server-side: `serverKey:serverSidePrefix:resourceUri` (e.g., `linear:tambo:issue://TAM-123`)
   - Client-side: `serverKey:resourceUri` (e.g., `linear:issue://TAM-123`)
 - **Tools:** `serverKey__toolName` (e.g., `linear__create_issue`)
 
-If you don't specify `serverKey`, Genui derives one from the server URL hostname (e.g., `https://mcp.linear.app/mcp` becomes `linear`). For predictable behavior across environments, set `serverKey` explicitly.
+If you don't specify `serverKey`, Tambo derives one from the server URL hostname (e.g., `https://mcp.linear.app/mcp` becomes `linear`). For predictable behavior across environments, set `serverKey` explicitly.
 
 **Naming guidelines:**
 
@@ -178,7 +178,7 @@ If you don't specify `serverKey`, Genui derives one from the server URL hostname
 
 ## Rich Content Support
 
-MCP tools automatically support rich content responses. When MCP servers return content arrays (text, images, and other media types), Genui automatically passes them through to the AI without converting them to plain text. This means MCP tools can seamlessly return images, formatted content, and other rich media.
+MCP tools automatically support rich content responses. When MCP servers return content arrays (text, images, and other media types), Tambo automatically passes them through to the AI without converting them to plain text. This means MCP tools can seamlessly return images, formatted content, and other rich media.
 
 If you're building custom tools that need similar capabilities, you can use the `transformToContent` parameter when registering tools. [Learn more about returning rich content from tools](/guides/take-actions/register-tools#return-rich-content-optional).
 

@@ -1,16 +1,16 @@
 "use client";
 
-import { useGenuiMcpPrompt } from "@workspace/react/mcp";
-import { ElicitationUI } from "@workspace/ui-registry/components/elicitation-ui";
+import { useTamboMcpPrompt } from "@tambo-ai/react/mcp";
+import { ElicitationUI } from "@tambo-ai/ui-registry/components/elicitation-ui";
 import {
   McpPromptButton,
   McpResourceButton,
-} from "@workspace/ui-registry/components/mcp-components";
+} from "@tambo-ai/ui-registry/components/mcp-components";
 import {
   Tooltip,
   TooltipProvider,
-} from "@workspace/ui-registry/components/message-suggestions";
-import { cn } from "@workspace/ui-registry/utils";
+} from "@tambo-ai/ui-registry/components/message-suggestions";
+import { cn } from "@tambo-ai/ui-registry/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import {
   ArrowUp,
@@ -29,7 +29,7 @@ import {
   TextEditor,
   type PromptItem,
   type ResourceItem,
-  type GenuiEditor,
+  type TamboEditor,
 } from "./text-editor";
 
 // Import base compound components and constants
@@ -40,7 +40,7 @@ import {
   type PromptProvider,
   type ResourceProvider,
   type StagedImageState,
-} from "@workspace/react-ui-base/message-input";
+} from "@tambo-ai/react-ui-base/message-input";
 
 // Lazy load DictationButton for code splitting (framework-agnostic alternative to next/dynamic)
 // eslint-disable-next-line @typescript-eslint/promise-function-async
@@ -108,8 +108,8 @@ const messageInputVariants = cva("w-full", {
 export interface MessageInputProps extends React.HTMLAttributes<HTMLFormElement> {
   /** Optional styling variant for the input container. */
   variant?: VariantProps<typeof messageInputVariants>["variant"];
-  /** Optional ref to forward to the GenuiEditor instance. */
-  inputRef?: React.RefObject<GenuiEditor | null>;
+  /** Optional ref to forward to the TamboEditor instance. */
+  inputRef?: React.RefObject<TamboEditor | null>;
   /** The child elements to render within the form container. */
   children?: React.ReactNode;
 }
@@ -249,7 +249,7 @@ const MessageInputTextarea = ({
   const [selectedMcpPromptName, setSelectedMcpPromptName] = React.useState<
     string | null
   >(null);
-  const { data: selectedMcpPromptData } = useGenuiMcpPrompt(
+  const { data: selectedMcpPromptData } = useTamboMcpPrompt(
     selectedMcpPromptName ?? "",
   );
 
@@ -316,7 +316,7 @@ const MessageInputTextarea = ({
               onComplete={() => setSelectedMcpPromptName(null)}
             />
             <TextEditor
-              ref={editorRef as React.RefObject<GenuiEditor>}
+              ref={editorRef as React.RefObject<TamboEditor>}
               value={value}
               onChange={setValue}
               onResourceNamesChange={setResourceNames}
@@ -351,7 +351,7 @@ interface McpPromptEffectProps {
     | { messages?: Array<{ content?: { type: string; text?: string } }> }
     | null
     | undefined;
-  editorRef: React.RefObject<GenuiEditor | null>;
+  editorRef: React.RefObject<TamboEditor | null>;
   setValue: (value: string) => void;
   onComplete: () => void;
 }

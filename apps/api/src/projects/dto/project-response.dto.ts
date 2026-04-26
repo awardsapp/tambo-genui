@@ -2,7 +2,7 @@ import {
   AgentProviderType,
   AiProviderType,
   CustomLlmParameters,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 
 export class ProjectCreateRequest {
   projectName!: string;

@@ -7,7 +7,7 @@ import { McpResourcesDemoPreview } from "./_demos/mcp-resources-demo";
 
 # McpResources
 
-`McpResources` in `@workspace/react-ui-base` owns MCP resource discovery — listing available resources, search filtering, and selection handling — while keeping styling in `@workspace/ui-registry` or your own UI layer.
+`McpResources` in `@tambo-ai/react-ui-base` owns MCP resource discovery — listing available resources, search filtering, and selection handling — while keeping styling in `@tambo-ai/ui-registry` or your own UI layer.
 
 ## Demo
 
@@ -29,7 +29,7 @@ import { McpResourcesDemoPreview } from "./_demos/mcp-resources-demo";
 
 ### Resource Search and Selection
 
-The `Root` manages search state internally and passes it to `useGenuiMcpResourceList`. The `Search` input updates the search state, and the `List` provides the filtered results.
+The `Root` manages search state internally and passes it to `useTamboMcpResourceList`. The `Search` input updates the search state, and the `List` provides the filtered results.
 
 ```tsx
 <McpResources.Root

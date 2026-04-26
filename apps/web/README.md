@@ -1,6 +1,6 @@
-# @workspace-cloud/web
+# @tambo-ai-cloud/web
 
-Next.js 15 dashboard + marketing surface for Genui Cloud. Uses App Router, React 18, tRPC, Tailwind/Shadcn UI, and React Query. Read `apps/web/AGENTS.md` for the detailed rules before touching code.
+Next.js 15 dashboard + marketing surface for Tambo Cloud. Uses App Router, React 18, tRPC, Tailwind/Shadcn UI, and React Query. Read `apps/web/AGENTS.md` for the detailed rules before touching code.
 
 ## Quick Start
 
@@ -34,7 +34,7 @@ app/          # App Router routes + layouts (client/server segments)
 components/   # Feature + shared UI (shadcn derivatives)
 hooks/        # Client hooks (React Query helpers, form hooks)
 lib/          # Pure utilities (formatters, env helpers)
-providers/    # Client providers (NextAuth, Genui, theming)
+providers/    # Client providers (NextAuth, Tambo, theming)
 server/       # Server-only helpers (db access, tRPC routers)
 trpc/         # React Query client + provider bindings
 styles/       # Tailwind + global CSS
@@ -50,7 +50,7 @@ __mocks__/    # Jest mocks
 ## Providers & State
 
 - `app/providers.tsx` wires NextAuth, font loaders, analytics, and global providers.
-- `providers/genui-provider.tsx` wraps any AI-interactive UI. Do not re-implement provider trees per page.
+- `providers/tambo-provider.tsx` wraps any AI-interactive UI. Do not re-implement provider trees per page.
 - Use React Query loading states (see `devdocs/LOADING_STATES.md`) instead of bespoke spinners.
 
 ## Styling & Components

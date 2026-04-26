@@ -6,7 +6,7 @@ export default function CliSessionsPage() {
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">CLI Sessions</h1>
         <p className="text-muted-foreground mt-2">
-          Manage devices that have access to your genui account via the CLI.
+          Manage devices that have access to your tambo account via the CLI.
         </p>
       </div>
       <CliSessionsList />

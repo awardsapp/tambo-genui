@@ -29,9 +29,9 @@ export function BlogPage({ posts }: BlogPageProps) {
   const blogListSchema = {
     "@context": "https://schema.org",
     "@type": "Blog",
-    name: "genui Blog",
+    name: "tambo Blog",
     description:
-      "Latest updates, tutorials, and insights about genui - the AI orchestration framework for React frontends.",
+      "Latest updates, tutorials, and insights about tambo - the AI orchestration framework for React frontends.",
     url: "/blog",
     blogPost: posts.map((post) => ({
       "@type": "BlogPosting",
@@ -39,7 +39,7 @@ export function BlogPage({ posts }: BlogPageProps) {
       description: post.description,
       author: {
         "@type": "Person",
-        name: post.author || "genui team",
+        name: post.author || "tambo team",
       },
       datePublished: post.date,
       url: `/blog/posts/${post.slug}`,
@@ -59,10 +59,10 @@ export function BlogPage({ posts }: BlogPageProps) {
         {/* Header */}
         <header className="text-center mb-8">
           <h1 className="text-4xl font-bold tracking-tight mb-2">
-            genui updates
+            tambo updates
           </h1>
           <p className="text-muted-foreground">
-            Latest features, fixes, changes, and events from the genui team.
+            Latest features, fixes, changes, and events from the tambo team.
           </p>
         </header>
 

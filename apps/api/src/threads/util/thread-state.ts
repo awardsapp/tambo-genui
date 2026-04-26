@@ -1,5 +1,5 @@
 import { Logger } from "@nestjs/common";
-import type { DecisionStreamItem } from "@workspace-cloud/backend";
+import type { DecisionStreamItem } from "@tambo-ai-cloud/backend";
 import {
   ActionType,
   type ChatCompletionContentPart,
@@ -15,8 +15,8 @@ import {
   ThreadToolMessage,
   ThreadUserMessage,
   ToolCallRequest,
-} from "@workspace-cloud/core";
-import { HydraDb, operations, schema } from "@workspace-cloud/db";
+} from "@tambo-ai-cloud/core";
+import { HydraDb, operations, schema } from "@tambo-ai-cloud/db";
 import { eq } from "drizzle-orm";
 import { ComponentDecisionV2Dto } from "../dto/component-decision.dto";
 import {

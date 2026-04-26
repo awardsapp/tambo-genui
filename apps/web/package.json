@@ -1,7 +1,7 @@
 {
-  "name": "@workspace-cloud/web",
+  "name": "@tambo-ai-cloud/web",
   "version": "0.134.0",
-  "description": "Genui Cloud web dashboard",
+  "description": "Tambo Cloud web dashboard",
   "private": true,
   "type": "module",
   "scripts": {
@@ -44,9 +44,10 @@
     "@splinetool/runtime": "^1.12.81",
     "@svgr/webpack": "^8.1.0",
     "@t3-oss/env-nextjs": "^0.13.11",
-    "@workspace-cloud/db": "*",
-    "@workspace/react": "*",
-    "@workspace/ui-registry": "*",
+    "@tambo-ai-cloud/db": "*",
+    "@tambo-ai/react": "*",
+    "@tambo-ai/typescript-sdk": "^0.95.0",
+    "@tambo-ai/ui-registry": "*",
     "@tanstack/react-query": "^5.90.16",
     "@theguild/remark-mermaid": "^0.3.0",
     "@tiptap/extension-mention": "^3.22.1",
@@ -114,13 +115,12 @@
     "use-debounce": "^10.0.6",
     "usehooks-ts": "^3.1.1",
     "vaul": "^1.1.1",
-    "zod": "^3.25.76",
-    "@tambo-ai/typescript-sdk": "^0.95.0"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.19",
-    "@workspace/eslint-config": "*",
-    "@workspace/typescript-config": "*",
+    "@tambo-ai/eslint-config": "*",
+    "@tambo-ai/typescript-config": "*",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",

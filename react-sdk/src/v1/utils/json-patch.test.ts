@@ -1,5 +1,5 @@
 import type { Operation } from "fast-json-patch";
-import { applyJsonPatch } from "@workspace/client";
+import { applyJsonPatch } from "@tambo-ai/client";
 
 describe("applyJsonPatch error handling", () => {
   it("includes operation summary in error message", () => {

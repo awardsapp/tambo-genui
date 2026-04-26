@@ -13,7 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { api } from "@/trpc/react";
-import { type TamboTool, useTambo } from "@workspace/react";
+import { type TamboTool, useTambo } from "@tambo-ai/react";
 import {
   MessageInput,
   MessageInputError,
@@ -22,23 +22,23 @@ import {
   MessageInputSubmitButton,
   MessageInputTextarea,
   MessageInputToolbar,
-} from "@workspace/ui-registry/components/message-input";
+} from "@tambo-ai/ui-registry/components/message-input";
 import {
   MessageSuggestions,
   MessageSuggestionsList,
   MessageSuggestionsStatus,
-} from "@workspace/ui-registry/components/message-suggestions";
+} from "@tambo-ai/ui-registry/components/message-suggestions";
 import {
   ThreadContent,
   ThreadContentMessages,
-} from "@workspace/ui-registry/components/thread-content";
+} from "@tambo-ai/ui-registry/components/thread-content";
 import {
   ThreadHistory,
   ThreadHistoryHeader,
   ThreadHistoryList,
   ThreadHistoryNewButton,
   ThreadHistorySearch,
-} from "@workspace/ui-registry/components/thread-history";
+} from "@tambo-ai/ui-registry/components/thread-history";
 import { TRPCClientErrorLike } from "@trpc/client";
 import { X } from "lucide-react";
 import {

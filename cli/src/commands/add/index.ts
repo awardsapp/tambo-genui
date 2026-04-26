@@ -64,7 +64,7 @@ export async function handleAddComponents(
       );
       console.log(
         chalk.gray(
-          "   Use @workspace/react hooks directly to build your native UI.\n",
+          "   Use @tambo-ai/react hooks directly to build your native UI.\n",
         ),
       );
 
@@ -113,25 +113,25 @@ export async function handleAddComponents(
         isExplicitPrefix,
       );
 
-      // Get known Genui component names to filter
-      const knownGenuiComponents = getKnownComponentNames();
+      // Get known Tambo component names to filter
+      const knownTamboComponents = getKnownComponentNames();
 
-      // Check for Genui components specifically in legacy location
-      const hasGenuiComponentsInLegacy =
+      // Check for Tambo components specifically in legacy location
+      const hasTamboComponentsInLegacy =
         fs.existsSync(legacyPath) &&
         fs
           .readdirSync(legacyPath)
           .filter((f) => f.endsWith(".tsx"))
           .map((f) => f.replace(".tsx", ""))
-          .some((componentName) => knownGenuiComponents.has(componentName));
+          .some((componentName) => knownTamboComponents.has(componentName));
 
-      // Check for any components in new location (this is fine since it's the designated Genui directory)
+      // Check for any components in new location (this is fine since it's the designated Tambo directory)
       const hasNewComponents =
         fs.existsSync(newPath) &&
         fs.readdirSync(newPath).some((f) => f.endsWith(".tsx"));
 
-      if (hasGenuiComponentsInLegacy && !hasNewComponents) {
-        // Only install to ui/ if there are actual Genui components there
+      if (hasTamboComponentsInLegacy && !hasNewComponents) {
+        // Only install to ui/ if there are actual Tambo components there
         console.log(
           chalk.yellow(
             `\n⚠️  Found existing components in ${LEGACY_COMPONENT_SUBDIR}/. ` +
@@ -143,9 +143,9 @@ export async function handleAddComponents(
             `💡 To migrate all components to the new location (${COMPONENT_SUBDIR}/), you'll need to:\n` +
               `   1. Move all components from ${LEGACY_COMPONENT_SUBDIR}/ to ${COMPONENT_SUBDIR}/\n` +
               `   2. Update all import paths from @/components/${LEGACY_COMPONENT_SUBDIR}/ to @/components/${COMPONENT_SUBDIR}/\n` +
-              `   3. Update any custom component registrations in genui.ts\n` +
+              `   3. Update any custom component registrations in tambo.ts\n` +
               `\n` +
-              `   or you can run ${chalk.bold("npx genui migrate")} to migrate all components to the new location\n`,
+              `   or you can run ${chalk.bold("npx tambo migrate")} to migrate all components to the new location\n`,
           ),
         );
 
@@ -154,8 +154,8 @@ export async function handleAddComponents(
         // Override to use legacy location for consistency
         installPath = path.join(installPath, LEGACY_COMPONENT_SUBDIR);
         isExplicitPrefix = true; // This prevents adding COMPONENT_SUBDIR again
-      } else if (hasGenuiComponentsInLegacy && hasNewComponents) {
-        // Only show warning if there are actual Genui components in legacy location
+      } else if (hasTamboComponentsInLegacy && hasNewComponents) {
+        // Only show warning if there are actual Tambo components in legacy location
         console.log(
           chalk.red(
             `\n❌ Found components in both ${LEGACY_COMPONENT_SUBDIR}/ and ${COMPONENT_SUBDIR}/ locations.\n` +
@@ -165,7 +165,7 @@ export async function handleAddComponents(
         console.log(
           chalk.yellow(
             `   Please consolidate your components to one location:\n` +
-              `   - Move all to ${COMPONENT_SUBDIR}/ (recommended): npx genui migrate\n` +
+              `   - Move all to ${COMPONENT_SUBDIR}/ (recommended): npx tambo migrate\n` +
               `   - Or manually move components from ${COMPONENT_SUBDIR}/ back to ${LEGACY_COMPONENT_SUBDIR}/\n`,
           ),
         );

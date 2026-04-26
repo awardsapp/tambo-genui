@@ -230,7 +230,7 @@ export default config`;
 
     // Ask user for confirmation before making CSS changes
     console.log(
-      `\n${chalk.yellow("⚠")} Genui needs to add CSS variables to your globals.css file.`,
+      `\n${chalk.yellow("⚠")} Tambo needs to add CSS variables to your globals.css file.`,
     );
     console.log(
       `${chalk.blue("ℹ")} This will preserve your existing styles and only add missing variables.`,
@@ -245,7 +245,7 @@ export default config`;
       }>({
         type: "confirm",
         name: "proceedWithCss",
-        message: "Allow Genui to modify your globals.css file?",
+        message: "Allow Tambo to modify your globals.css file?",
         default: true,
       });
       proceedWithCss = response.proceedWithCss;
@@ -336,7 +336,7 @@ export default config`;
 
       if (hasMissingVariables) {
         console.log(
-          `\n${chalk.blue("ℹ")} Missing CSS variables that genui components need:`,
+          `\n${chalk.blue("ℹ")} Missing CSS variables that tambo components need:`,
         );
 
         if (missingRootVars.size > 0) {
@@ -369,14 +369,14 @@ export default config`;
         }
 
         console.log(
-          `\n${chalk.blue("ℹ")} Setup guide: ${chalk.underline("https://docs.genui.co")}`,
+          `\n${chalk.blue("ℹ")} Setup guide: ${chalk.underline("https://docs.tambo.co")}`,
         );
       } else {
         console.log(
           `\n${chalk.green("✔")} All required CSS variables are already present in your globals.css!`,
         );
         console.log(
-          `${chalk.blue("ℹ")} Your genui components should work without any additional setup.`,
+          `${chalk.blue("ℹ")} Your tambo components should work without any additional setup.`,
         );
       }
 

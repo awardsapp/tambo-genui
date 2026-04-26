@@ -11,7 +11,7 @@ import { THREADS_PER_PAGE } from "../utils";
 /**
  * Self-contained wrapper for ThreadTable that handles TRPC data fetching and state management.
  *
- * Created to make ThreadTable compatible with Genui's component system, which requires simple props.
+ * Created to make ThreadTable compatible with Tambo's component system, which requires simple props.
  * The original ThreadTable needed complex props (threads, handlers, loading state) that come from
  * TRPC calls and local state, making it difficult for AI to use directly.
  *

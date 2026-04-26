@@ -1,11 +1,11 @@
 ---
 title: Models and Providers
-description: Understanding AI model providers and how they integrate with Genui
+description: Understanding AI model providers and how they integrate with Tambo
 ---
 
 import { Card, Cards } from "fumadocs-ui/components/card";
 
-AI models are the foundation of agent behavior in Genui. Different models excel at different tasks—some are optimized for speed, others for reasoning depth, and others for cost efficiency. Understanding the characteristics of available models helps you choose the right tool for your application's needs.
+AI models are the foundation of agent behavior in Tambo. Different models excel at different tasks—some are optimized for speed, others for reasoning depth, and others for cost efficiency. Understanding the characteristics of available models helps you choose the right tool for your application's needs.
 
 ## Why Model Selection Matters
 
@@ -17,11 +17,11 @@ The model you choose significantly impacts:
 - **Capabilities** - Some models support vision, reasoning, or extended context windows
 - **Behavior** - Models have different "personalities" and instruction-following abilities
 
-Genui makes it easy to switch between providers and models, letting you optimize for your specific use case.
+Tambo makes it easy to switch between providers and models, letting you optimize for your specific use case.
 
 ## Available Providers
 
-Genui integrates with five major AI providers, each with unique strengths:
+Tambo integrates with five major AI providers, each with unique strengths:
 
 | Provider      | Description                                                                        | Best For                                                            |
 | ------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
@@ -35,7 +35,7 @@ For detailed capabilities of each provider's models, see the official docs of th
 
 ## Provider Configuration
 
-Model providers are configured at the project level in Genui Cloud. Each project has:
+Model providers are configured at the project level in Tambo Cloud. Each project has:
 
 - A default provider and model
 - API keys for authentication
@@ -48,9 +48,9 @@ Learn how to configure providers in the [Configure LLM Provider guide](/guides/s
 
 ## Model Status Labels
 
-Each model carries a status label indicating how thoroughly it has been tested with Genui:
+Each model carries a status label indicating how thoroughly it has been tested with Tambo:
 
-- **Tested** - Validated on common Genui tasks; recommended for production
+- **Tested** - Validated on common Tambo tasks; recommended for production
 - **Untested** - Available but not yet validated; use with caution and test in your context
 - **Known Issues** - Usable but with observed behaviors worth noting
 
@@ -98,7 +98,7 @@ Learn more in [Reasoning Models](/reference/llm-providers/reasoning-models).
     How projects, models, and instructions combine to control agent behavior
   </Card>
   <Card href="/reference/llm-providers/labels" title="Model Labels & Status">
-    Understand model testing status and known behaviors with Genui
+    Understand model testing status and known behaviors with Tambo
   </Card>
   <Card
     href="/reference/llm-providers/reasoning-models"

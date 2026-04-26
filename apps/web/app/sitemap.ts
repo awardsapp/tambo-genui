@@ -44,7 +44,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Return at least the homepage as fallback
     return [
       {
-        url: "https://genui.co",
+        url: "https://tambo.co",
         lastModified: new Date(),
         changeFrequency: "weekly" as const,
         priority: 1.0,

@@ -1,20 +1,20 @@
 import { EventType } from "@ag-ui/core";
 import type { JSONSchema7 } from "json-schema";
-import type { GenuiTool } from "../../model/component-metadata";
-import { ToolCallTracker } from "@workspace/client";
+import type { TamboTool } from "../../model/component-metadata";
+import { ToolCallTracker } from "@tambo-ai/client";
 
 /**
  * Minimal tool definition for tests — only name + inputSchema are needed.
- * @returns A GenuiTool with test defaults.
+ * @returns A TamboTool with test defaults.
  */
-function fakeTool(name: string, inputSchema: JSONSchema7): GenuiTool {
+function fakeTool(name: string, inputSchema: JSONSchema7): TamboTool {
   return {
     name,
     description: "",
     tool: () => null,
     inputSchema,
     outputSchema: {},
-  } as GenuiTool;
+  } as TamboTool;
 }
 
 /**
@@ -24,7 +24,7 @@ function fakeTool(name: string, inputSchema: JSONSchema7): GenuiTool {
 function createTrackerWithToolCall(
   toolCallId = "call_1",
   toolCallName = "get_weather",
-  toolRegistry?: Record<string, GenuiTool>,
+  toolRegistry?: Record<string, TamboTool>,
 ): ToolCallTracker {
   const tracker = new ToolCallTracker(toolRegistry);
   tracker.handleEvent({
@@ -148,7 +148,7 @@ describe("ToolCallTracker", () => {
       required: ["city"],
     };
 
-    const registry: Record<string, GenuiTool> = {
+    const registry: Record<string, TamboTool> = {
       get_weather: fakeTool("get_weather", schema),
     };
 
@@ -213,7 +213,7 @@ describe("ToolCallTracker", () => {
       });
     });
 
-    it("preserves _genui_* pass-through params", () => {
+    it("preserves _tambo_* pass-through params", () => {
       const tracker = createTrackerWithToolCall(
         "call_1",
         "get_weather",
@@ -223,7 +223,7 @@ describe("ToolCallTracker", () => {
         type: EventType.TOOL_CALL_ARGS,
         toolCallId: "call_1",
         delta:
-          '{"city":"Seattle","units":null,"_genui_statusMessage":"Loading"}',
+          '{"city":"Seattle","units":null,"_tambo_statusMessage":"Loading"}',
       });
       tracker.handleEvent({
         type: EventType.TOOL_CALL_END,
@@ -233,7 +233,7 @@ describe("ToolCallTracker", () => {
       const result = tracker.getToolCallsById(["call_1"]);
       expect(result.get("call_1")?.input).toEqual({
         city: "Seattle",
-        _genui_statusMessage: "Loading",
+        _tambo_statusMessage: "Loading",
       });
     });
   });
@@ -248,7 +248,7 @@ describe("ToolCallTracker", () => {
       required: ["required_string"],
     };
 
-    const registry: Record<string, GenuiTool> = {
+    const registry: Record<string, TamboTool> = {
       my_tool: fakeTool("my_tool", schema),
     };
 

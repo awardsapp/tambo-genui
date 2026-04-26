@@ -5,7 +5,7 @@ import {
   Resource,
   ResourceFetchResult,
   ThreadMessage,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 import {
   extractResourcesFromMessages,
   extractServerKeyFromResource,

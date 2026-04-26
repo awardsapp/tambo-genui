@@ -91,7 +91,7 @@ export function loadToken(): StoredToken | null {
     // Validate basic structure (sessionToken, expiresAt, user object)
     if (!token.sessionToken || !token.expiresAt || !token.user) {
       console.warn(
-        `Warning: Auth token file has invalid format. Run 'genui auth login' to re-authenticate.`,
+        `Warning: Auth token file has invalid format. Run 'tambo auth login' to re-authenticate.`,
       );
       return null;
     }
@@ -100,7 +100,7 @@ export function loadToken(): StoredToken | null {
   } catch {
     // Invalid JSON or read error
     console.warn(
-      `Warning: Could not read auth token file. Run 'genui auth login' to re-authenticate.`,
+      `Warning: Could not read auth token file. Run 'tambo auth login' to re-authenticate.`,
     );
     return null;
   }
@@ -194,7 +194,7 @@ export function getTokenStoragePath(): string {
 
 /**
  * In-memory token for temporary use during auth flows.
- * Takes precedence over disk storage but below GENUI_TOKEN env var.
+ * Takes precedence over disk storage but below TAMBO_TOKEN env var.
  */
 let inMemoryToken: string | null = null;
 
@@ -208,10 +208,10 @@ export function setInMemoryToken(token: string | null): void {
 
 /**
  * Environment variable override for CI/testing
- * Priority: GENUI_TOKEN env var > in-memory token > stored token on disk
+ * Priority: TAMBO_TOKEN env var > in-memory token > stored token on disk
  */
 export function getEffectiveSessionToken(): string | null {
-  const envToken = process.env.GENUI_TOKEN;
+  const envToken = process.env.TAMBO_TOKEN;
   if (envToken) {
     return envToken;
   }

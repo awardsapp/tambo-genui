@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
-import { cn } from "@workspace/ui-registry/utils";
+import { cn } from "@tambo-ai/ui-registry/utils";
 
 /**
  * Represents a tooltip component

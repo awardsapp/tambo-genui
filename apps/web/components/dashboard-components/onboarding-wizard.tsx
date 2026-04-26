@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dialog";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cn } from "@/lib/utils";
-import { REFERRAL_SOURCES, type ReferralSource } from "@workspace-cloud/core";
+import { REFERRAL_SOURCES, type ReferralSource } from "@tambo-ai-cloud/core";
 import { api } from "@/trpc/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -168,14 +168,14 @@ const templates = [
     name: "Standard",
     description:
       "General purpose AI app template with tools and MCP integration",
-    command: "npx create-genui-app@latest my-app --template=standard",
+    command: "npx create-tambo-app@latest my-app --template=standard",
     recommended: true,
   },
   {
     id: "vite",
     name: "Vite",
     description: "Tambo + TanStack Router + Vite for fast, lightweight apps",
-    command: "npx create-genui-app@latest my-app --template=vite",
+    command: "npx create-tambo-app@latest my-app --template=vite",
     recommended: false,
   },
   {
@@ -183,14 +183,14 @@ const templates = [
     name: "Analytics",
     description:
       "Generative UI analytics template with drag-and-drop canvas and data visualization",
-    command: "npx create-genui-app@latest my-app --template=analytics",
+    command: "npx create-tambo-app@latest my-app --template=analytics",
     recommended: false,
   },
   {
     id: "expo",
     name: "Expo",
     description: "Tambo + Expo + React Native mobile app template",
-    command: "npx create-genui-app@latest my-app --template=expo",
+    command: "npx create-tambo-app@latest my-app --template=expo",
     recommended: false,
   },
 ];

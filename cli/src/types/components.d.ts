@@ -23,14 +23,14 @@
  */
 type ComponentVariant = "default" | "solid" | "bordered" | null | undefined;
 
-declare module "@/components/genui/message" {
-  import type { GenuiThreadMessage } from "@workspace/react";
+declare module "@/components/tambo/message" {
+  import type { TamboThreadMessage } from "@tambo-ai/react";
   export interface MessageProps {
     className?: string;
     role: "user" | "assistant";
     content?: string | { type: string; text?: string }[];
     variant?: ComponentVariant;
-    message: GenuiThreadMessage;
+    message: TamboThreadMessage;
     isLoading?: boolean;
     children?: React.ReactNode;
   }
@@ -88,7 +88,7 @@ declare module "@/components/genui/message" {
   >;
 }
 
-declare module "@/components/genui/thread-content" {
+declare module "@/components/tambo/thread-content" {
   export interface ThreadContentProps extends React.HTMLAttributes<HTMLDivElement> {
     variant?: ComponentVariant;
     enableCanvasSpace?: boolean;
@@ -115,7 +115,7 @@ declare module "@/components/genui/thread-content" {
   >;
 }
 
-declare module "@/components/genui/message-input" {
+declare module "@/components/tambo/message-input" {
   export interface MessageInputProps extends React.HTMLAttributes<HTMLFormElement> {
     variant?: ComponentVariant;
     contextKey?: string;
@@ -227,7 +227,7 @@ declare module "@/components/genui/message-input" {
   >;
 }
 
-declare module "@/components/genui/message-input/text-editor" {
+declare module "@/components/tambo/message-input/text-editor" {
   import type { Editor } from "@tiptap/react";
 
   export interface ResourceItem {
@@ -277,8 +277,8 @@ declare module "@/components/genui/message-input/text-editor" {
   export function hasExistingMention(editor: Editor, label: string): boolean;
 }
 
-declare module "@/components/genui/message-suggestions" {
-  import type { Suggestion } from "@workspace/react";
+declare module "@/components/tambo/message-suggestions" {
+  import type { Suggestion } from "@tambo-ai/react";
 
   export interface MessageSuggestionsProps extends React.HTMLAttributes<HTMLDivElement> {
     variant?: ComponentVariant;
@@ -315,7 +315,7 @@ declare module "@/components/genui/message-suggestions" {
   >;
 }
 
-declare module "@/components/genui/markdown-components" {
+declare module "@/components/tambo/markdown-components" {
   export const createMarkdownComponents: (
     theme?: string,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -324,7 +324,7 @@ declare module "@/components/genui/markdown-components" {
   export const markdownComponents: Record<string, React.ComponentType<any>>;
 }
 
-declare module "@/components/genui/thread-history" {
+declare module "@/components/tambo/thread-history" {
   export interface ThreadHistoryProps extends React.HTMLAttributes<HTMLDivElement> {
     contextKey?: string;
     onThreadChange?: () => void;
@@ -371,10 +371,10 @@ declare module "@/components/genui/thread-history" {
   >;
 }
 
-declare module "@/components/genui/thread-list" {
+declare module "@/components/tambo/thread-list" {
   export interface ThreadListProps extends React.HTMLAttributes<HTMLDivElement> {
     variant?: ComponentVariant;
-    threads: GenuiThread[];
+    threads: TamboThread[];
     selectedThreadId?: string | null;
     onThreadSelect?: (threadId: string) => void;
     isLoading?: boolean;
@@ -393,7 +393,7 @@ declare module "@/components/genui/thread-list" {
   };
 }
 
-declare module "@/components/genui/message-generation-stage" {
+declare module "@/components/tambo/message-generation-stage" {
   export interface GenerationStageProps extends React.HTMLAttributes<HTMLDivElement> {
     showLabel?: boolean;
   }
@@ -402,7 +402,7 @@ declare module "@/components/genui/message-generation-stage" {
   >;
 }
 
-declare module "@/components/genui/suggestions-tooltip" {
+declare module "@/components/tambo/suggestions-tooltip" {
   export interface TooltipProps {
     content: React.ReactNode;
     children: React.ReactNode;
@@ -431,7 +431,7 @@ declare module "@/components/genui/suggestions-tooltip" {
   export const TooltipTrigger: any;
 }
 
-declare module "@/components/genui/thread-dropdown" {
+declare module "@/components/tambo/thread-dropdown" {
   export interface ThreadDropdownProps extends React.HTMLAttributes<HTMLDivElement> {
     variant?: ComponentVariant;
     contextKey?: string | undefined;
@@ -442,28 +442,28 @@ declare module "@/components/genui/thread-dropdown" {
   >;
 }
 
-declare module "@/components/genui/scrollable-message-container" {
+declare module "@/components/tambo/scrollable-message-container" {
   export const ScrollableMessageContainer: React.ForwardRefExoticComponent<
     React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>
   >;
 }
 
-declare module "@/components/genui/elicitation-ui" {
+declare module "@/components/tambo/elicitation-ui" {
   import type {
-    GenuiElicitationRequest,
-    GenuiElicitationResponse,
-  } from "@workspace/react/mcp";
+    TamboElicitationRequest,
+    TamboElicitationResponse,
+  } from "@tambo-ai/react/mcp";
 
   export interface ElicitationUIProps {
-    request: GenuiElicitationRequest;
-    onResponse: (response: GenuiElicitationResponse) => void;
+    request: TamboElicitationRequest;
+    onResponse: (response: TamboElicitationResponse) => void;
     className?: string;
   }
 
   export const ElicitationUI: React.FC<ElicitationUIProps>;
 }
 
-declare module "@/components/genui/mcp-components" {
+declare module "@/components/tambo/mcp-components" {
   export interface McpPromptButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     onInsertText: (text: string) => void;
     value: string;
@@ -486,7 +486,7 @@ declare module "@/components/genui/mcp-components" {
 }
 
 declare module "@/lib/thread-hooks" {
-  import type { GenuiThreadMessage } from "@workspace/react";
+  import type { TamboThreadMessage } from "@tambo-ai/react";
 
   export function useMergeRefs<Instance>(
     ...refs: (React.Ref<Instance> | undefined)[]
@@ -507,19 +507,19 @@ declare module "@/lib/thread-hooks" {
   };
 
   export function getSafeContent(
-    content: GenuiThreadMessage["content"] | React.ReactNode | undefined | null,
+    content: TamboThreadMessage["content"] | React.ReactNode | undefined | null,
   ): string | React.ReactElement;
 
   export function checkHasContent(
-    content: GenuiThreadMessage["content"] | React.ReactNode | undefined | null,
+    content: TamboThreadMessage["content"] | React.ReactNode | undefined | null,
   ): boolean;
 
   export function getMessageImages(
-    content: GenuiThreadMessage["content"] | React.ReactNode | undefined | null,
+    content: TamboThreadMessage["content"] | React.ReactNode | undefined | null,
   ): string[];
 }
 
-declare module "@/components/genui/thread-container" {
+declare module "@/components/tambo/thread-container" {
   export interface ThreadContainerProps extends React.HTMLAttributes<HTMLDivElement> {
     disableSidebarSpacing?: boolean;
   }
@@ -537,7 +537,7 @@ declare module "@/components/genui/thread-container" {
   };
 }
 
-declare module "@/components/genui/mcp-config-modal" {
+declare module "@/components/tambo/mcp-config-modal" {
   export const McpConfigModal: React.FC<{
     isOpen: boolean;
     onClose: () => void;

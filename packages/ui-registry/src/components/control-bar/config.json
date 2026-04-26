@@ -3,7 +3,7 @@
   "description": "Provides controls and actions in the interface",
   "componentName": "ControlBar",
   "dependencies": [
-    "@workspace/react@rc",
+    "@tambo-ai/react@rc",
     "radix-ui",
     "class-variance-authority"
   ],

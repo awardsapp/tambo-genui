@@ -7,7 +7,7 @@ metadata:
 
 # AI SDK Model Manager
 
-This skill helps maintain AI SDK model configurations in the Genui Cloud codebase. It automates the process of keeping model definitions up-to-date with the latest AI SDK releases.
+This skill helps maintain AI SDK model configurations in the Tambo Cloud codebase. It automates the process of keeping model definitions up-to-date with the latest AI SDK releases.
 
 ## What This Skill Does
 
@@ -25,7 +25,7 @@ Use this skill when:
 - You want to check if AI SDK packages need updating
 - New models have been released by OpenAI, Google, Anthropic, or other providers
 - You're getting TypeScript errors about model IDs not being in SDK types
-- You want to ensure Genui supports the latest models
+- You want to ensure Tambo supports the latest models
 
 ## Files This Skill Works With
 
@@ -113,7 +113,7 @@ For each model being added, ensure these required fields:
 - `status`: "untested" | "tested" | "known-issues"
 - `notes`: Brief description of capabilities and use cases
 - `docLink`: Official provider documentation URL
-- `genuiDocLink`: "https://docs.genui.co"
+- `tamboDocLink`: "https://docs.tambo.co"
 - `inputTokenLimit`: Context window size in tokens
 - `modelSpecificParams`: Any special parameters (reasoning, thinking, etc.)
 
@@ -128,7 +128,7 @@ Example:
   status: "untested",
   notes: "Experimental next-generation reasoning model with extended context",
   docLink: "https://platform.openai.com/docs/models/gpt-6-preview",
-  genuiDocLink: "https://docs.genui.co",
+  tamboDocLink: "https://docs.tambo.co",
   inputTokenLimit: 200000,
   modelSpecificParams: reasoningParameters,
 },

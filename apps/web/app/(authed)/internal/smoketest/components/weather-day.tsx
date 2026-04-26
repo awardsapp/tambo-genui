@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useGenuiComponentState } from "@workspace/react";
+import { useTamboComponentState } from "@tambo-ai/react";
 import { ReactNode } from "react";
 
 interface WeatherDayInfo {
@@ -37,7 +37,7 @@ const kmhToMph = (kmh: number): number => Math.round(kmh * 0.621371);
 const mmToInches = (mm: number): number => Number((mm * 0.0393701).toFixed(2));
 
 export const WeatherDay = ({ data }: WeatherDayProps): ReactNode => {
-  const [imperialUnits, setUseImperialUnits] = useGenuiComponentState(
+  const [imperialUnits, setUseImperialUnits] = useTamboComponentState(
     "imperialUnits",
     false,
   );

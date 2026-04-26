@@ -83,9 +83,9 @@ describe("telemetry", () => {
 
   beforeEach(() => {
     originalEnv = { ...process.env };
-    delete process.env.GENUI_TELEMETRY_DISABLED;
+    delete process.env.TAMBO_TELEMETRY_DISABLED;
     delete process.env.CI;
-    delete process.env.GENUI_TELEMETRY_HOST;
+    delete process.env.TAMBO_TELEMETRY_HOST;
   });
 
   afterEach(() => {
@@ -97,20 +97,20 @@ describe("telemetry", () => {
       expect(telemetry.isTelemetryDisabled()).toBe(false);
     });
 
-    it("returns true when GENUI_TELEMETRY_DISABLED is set", () => {
-      process.env.GENUI_TELEMETRY_DISABLED = "1";
+    it("returns true when TAMBO_TELEMETRY_DISABLED is set", () => {
+      process.env.TAMBO_TELEMETRY_DISABLED = "1";
       expect(telemetry.isTelemetryDisabled()).toBe(true);
     });
 
-    it("returns false when GENUI_TELEMETRY_DISABLED is '0'", () => {
-      process.env.GENUI_TELEMETRY_DISABLED = "0";
+    it("returns false when TAMBO_TELEMETRY_DISABLED is '0'", () => {
+      process.env.TAMBO_TELEMETRY_DISABLED = "0";
       expect(telemetry.isTelemetryDisabled()).toBe(false);
     });
   });
 
   describe("initTelemetry", () => {
     it("skips init when telemetry is disabled", () => {
-      process.env.GENUI_TELEMETRY_DISABLED = "1";
+      process.env.TAMBO_TELEMETRY_DISABLED = "1";
       telemetry.initTelemetry("1.0.0");
       expect(mockExistsSync).not.toHaveBeenCalled();
     });
@@ -128,7 +128,7 @@ describe("telemetry", () => {
       telemetry.initTelemetry("1.0.0");
 
       expect(stderrSpy).toHaveBeenCalledWith(
-        expect.stringContaining("Genui collects CLI usage data"),
+        expect.stringContaining("Tambo collects CLI usage data"),
       );
       expect(mockWriteFileSync).toHaveBeenCalledWith(
         "/mock/data/dir/telemetry.json",
@@ -173,7 +173,7 @@ describe("telemetry", () => {
     });
 
     it("uses custom telemetry host from env", () => {
-      process.env.GENUI_TELEMETRY_HOST = "https://custom-host.example.com";
+      process.env.TAMBO_TELEMETRY_HOST = "https://custom-host.example.com";
       mockReadFileSync.mockReturnValue(
         JSON.stringify({ anonymousId: MOCK_UUID }),
       );

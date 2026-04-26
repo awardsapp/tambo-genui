@@ -18,7 +18,7 @@ Styled wrappers should **compose** base components, not **re-implement** their l
 ```tsx
 // WRONG - re-implementing what base already does
 const StyledInput = ({ children, className }) => {
-  const { value, setValue, submit } = useGenuiThreadInput(); // Duplicated!
+  const { value, setValue, submit } = useTamboThreadInput(); // Duplicated!
   const [isDragging, setIsDragging] = useState(false); // Duplicated!
   const handleDrop = useCallback(/* ... */); // Duplicated!
 
@@ -59,7 +59,7 @@ Styled Wrapper Refactoring:
 
 Look for patterns that indicate logic should come from base:
 
-- SDK hooks (`useGenuiThread`, `useGenuiThreadInput`, etc.)
+- SDK hooks (`useTamboThread`, `useTamboThreadInput`, etc.)
 - Context creation (`React.createContext`)
 - State management that mirrors base component state
 - Event handlers (drag, submit, etc.) that base components handle
@@ -67,7 +67,7 @@ Look for patterns that indicate logic should come from base:
 ### Step 2: Import Base Components
 
 ```tsx
-import { MessageInput as MessageInputBase } from "@workspace/react-ui-base/message-input";
+import { MessageInput as MessageInputBase } from "@tambo-ai/react-ui-base/message-input";
 ```
 
 ### Step 3: Wrap with Base Root
@@ -241,7 +241,7 @@ Handle ref type differences between base and styled components:
 ```tsx
 // Base context may have RefObject<T | null>
 // Styled component may need RefObject<T>
-<TextEditor ref={editorRef as React.RefObject<GenuiEditor>} />
+<TextEditor ref={editorRef as React.RefObject<TamboEditor>} />
 ```
 
 ## Anti-Patterns

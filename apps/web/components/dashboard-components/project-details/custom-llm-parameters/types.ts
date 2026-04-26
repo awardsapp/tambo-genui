@@ -2,7 +2,7 @@ import {
   JSONValue,
   LlmParameterUIType,
   PARAMETER_METADATA,
-} from "@workspace-cloud/core";
+} from "@tambo-ai-cloud/core";
 
 /** Source of a parameter value */
 export type ParameterSource = "provider-default" | "model-default" | "custom";
