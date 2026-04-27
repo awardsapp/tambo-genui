@@ -128,7 +128,11 @@ services:
     # Traefik to filter and return 503. The Dockerfile already does the right
     # thing (wget http://${HOSTNAME}:${PORT}); replicate that pattern here.
     healthcheck:
-      test: ["CMD-SHELL", "wget -q --spider http://$$HOSTNAME:3000/health || exit 1"]
+      test:
+        [
+          "CMD-SHELL",
+          "wget -q --spider http://$$HOSTNAME:3000/health || exit 1",
+        ]
       interval: 15s
       timeout: 5s
       retries: 5
@@ -192,7 +196,11 @@ services:
     # same pattern here so this compose-level healthcheck doesn't override
     # the Dockerfile's correct one with a broken localhost-based test.
     healthcheck:
-      test: ["CMD-SHELL", "wget -q --spider http://$$HOSTNAME:3000/health || exit 1"]
+      test:
+        [
+          "CMD-SHELL",
+          "wget -q --spider http://$$HOSTNAME:3000/health || exit 1",
+        ]
       interval: 15s
       timeout: 5s
       retries: 5
